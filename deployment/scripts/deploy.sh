@@ -15,9 +15,9 @@ ssh "$SSH_USER"@"$SSH_HOST" "cd '$PROJECT_DIR' && git pull $CI_REPOSITORY_URL $C
 
 echo "########## Copy .env files ##########"
 scp .env          "$SSH_USER"@"$SSH_HOST":"$PROJECT_DIR"
-scp .env.backend  "$SSH_USER"@"$SSH_HOST":"$PROJECT_DIR"
+#scp .env.backend  "$SSH_USER"@"$SSH_HOST":"$PROJECT_DIR"
 scp .env.frontend "$SSH_USER"@"$SSH_HOST":"$PROJECT_DIR"
-scp .env.db       "$SSH_USER"@"$SSH_HOST":"$PROJECT_DIR"
+#scp .env.db       "$SSH_USER"@"$SSH_HOST":"$PROJECT_DIR"
 
 echo "########## Pull images from Gitlab Container Registry ##########"
 ssh "$SSH_USER"@"$SSH_HOST" "docker login -u '$CI_REGISTRY_USER' -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
