@@ -21,9 +21,9 @@ echo "########## Testing env variables ##########"
 
 ERROR="false"
 
-test -n "$ENV_BACKEND" || ERROR="ENV_BACKEND"
+#test -n "$ENV_BACKEND" || ERROR="ENV_BACKEND"
 test -n "$ENV_FRONTEND" || ERROR="ENV_FRONTEND"
-test -n "$ENV_DB" || ERROR="ENV_DB"
+#test -n "$ENV_DB" || ERROR="ENV_DB"
 test -n "$SSH_USER" || ERROR="SSH_USER"
 test -n "$SSH_HOST" || ERROR="SSH_HOST"
 test -n "$SSH_PRIVATE_KEY" || ERROR="SSH_PRIVATE_KEY"
