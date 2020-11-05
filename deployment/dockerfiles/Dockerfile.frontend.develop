@@ -1,0 +1,19 @@
+FROM node:13.8-buster
+
+ENV DEBUG=False
+ENV ENV=develop
+ENV NODE_ENV=develop
+ENV HOST=0.0.0.0
+ENV PORT=3020
+ENV API_URL=https://neutrino-dev.elastoo.com/api/
+ENV API_URL_BROWSER=https://neutrino-dev.elastoo.com/api/
+ENV SENTRY_DSN=https://bb1b04ad5e4047ca9933340331136de3@sentry.elastoo.com/14
+
+COPY ./frontend/ /app/
+WORKDIR /app/
+
+# Install Yarn if it is not installed
+RUN yarn -v || npm install -g yarn
+
+# Install requirements
+RUN yarn install && yarn build

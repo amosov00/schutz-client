@@ -1,0 +1,10 @@
+FROM node:13.8-buster
+# env vars goes here
+
+RUN mkdir /frontend/
+WORKDIR /frontend/
+
+RUN yarn -v || npm install -g yarn
+
+# Install requirements
+RUN yarn install

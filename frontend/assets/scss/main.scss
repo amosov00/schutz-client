@@ -1,0 +1,67 @@
+// Customize
+$text: #555555;
+$link: #0495FB;
+$link-hover: #0495FB;
+$info: #E66696;
+$background1: #0495FB;
+$background2: #fff;
+$radius: 6px;
+$primary: #0495FB;
+
+$light: #fff;
+
+$body-family: "Fira Sans", "Verdana", "Arial", sans-serif;
+
+h1.is-1 {
+  font-weight: 500;
+  font-size: 38px;
+  color: #555555;
+  line-height: 46px;
+}
+
+.box {
+  padding: 28px 30px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(176, 176, 176, 0.5) !important;
+}
+
+.wb-all {
+  word-break: break-all;
+}
+
+.table-custom {
+  .level {
+    padding-bottom: 0!important;
+  }
+
+  .table-footer th {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .table {
+    border: 0!important;
+
+    td, th {
+      border: 0
+    }
+  }
+  .table-wrapper {
+    margin-left: -30px;
+    margin-right: -30px;
+  }
+}
+
+.table-custom-m0 > * {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.faq-quill .ql-editor {
+  min-height: 120px;
+}
+
+// Then import other variables
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+@import "./helpers.sass";
