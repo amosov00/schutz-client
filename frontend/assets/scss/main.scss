@@ -1,16 +1,19 @@
 // Customize
-$text: #555555;
+$text: #ffffff;
 $link: #0495FB;
 $link-hover: #0495FB;
 $info: #E66696;
 $background1: #0495FB;
 $background2: #fff;
 $radius: 6px;
-$primary: #0495FB;
+$primary: #FAD896;
 
 $light: #fff;
 
-$body-family: "Fira Sans", "Verdana", "Arial", sans-serif;
+$body-family: "Nunito", "Verdana", "Arial", sans-serif;
+$fullhd: 860px + (2 * 32px);
+$widescreen: 860px + (2 * 32px);
+$desktop: 860px + (2 * 32px);
 
 h1.is-1 {
   font-weight: 500;
@@ -31,7 +34,7 @@ h1.is-1 {
 
 .table-custom {
   .level {
-    padding-bottom: 0!important;
+    padding-bottom: 0 !important;
   }
 
   .table-footer th {
@@ -40,7 +43,7 @@ h1.is-1 {
   }
 
   .table {
-    border: 0!important;
+    border: 0 !important;
 
     td, th {
       border: 0
@@ -53,8 +56,8 @@ h1.is-1 {
 }
 
 .table-custom-m0 > * {
-    margin-left: 0;
-    margin-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .faq-quill .ql-editor {
@@ -62,6 +65,45 @@ h1.is-1 {
 }
 
 // Then import other variables
-@import "~bulma";
+@import "~bulma/bulma.sass";
 @import "~buefy/src/scss/buefy";
 @import "./helpers.sass";
+
+.input,
+.taginput .taginput-container.is-focusable,
+.textarea,
+.select select {
+  background-color: transparent;
+  border-radius: 0;
+  color: #363636;
+  border: none;
+  box-shadow: none;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.secondary-text {
+  color: #AAB9C5;
+}
+
+body {
+  background-color: #164A75;
+}
+
+.is-fullheight {
+  height: 100%;
+}
+.dialog.modal {
+  .modal-card {
+    color: #000000;
+  }
+}
+.dialog.modal.is-active {
+  .modal-background {
+    transition: all .3s;
+    background: rgba(66, 118, 178, 0.5);
+    backdrop-filter: blur(10px);
+  }
+}
