@@ -1,45 +1,38 @@
-<template lang="pug">
-  div.wrapper
-    div.container.is-flex
-      LeftMenu
-      div.main
-        div.nav-container
-          NavbarPersonalArea
-          div.separator
-        div.content-box
-          nuxt
+<template>
+  <div class="layout">
+    <Navbar :links="links" />
+    <nuxt />
+    <DefaultFooter />
+  </div>
 </template>
 
 <script>
-  import LeftMenu from "~/components/LeftMenu";
-  import NavbarPersonalArea from "~/components/NavBar/NavbarPersonalArea";
+import Navbar from '../components/Navbar'
+import DefaultFooter from '../components/DefaultFooter'
 
-  export default {
-    components: {
-      LeftMenu, NavbarPersonalArea
-    },
-    middleware: ['fetchUser'],
-  }
+export default {
+  components: {
+    DefaultFooter,
+    Navbar,
+  },
+  middleware: ['fetchUser'],
+  data: () => ({
+    links: [
+      { name: 'Панель управления', link: '/profile' },
+      { name: 'Инвестиции', link: '/investment' },
+      { name: 'Дивиденды', link: '/dividends' },
+      { name: 'Партнерская программа', link: '/partner' },
+    ]
+  })
+}
 </script>
-
-<style lang="sass" scoped>
-.wrapper
-  margin: 0 auto
-  background: #F9F9FB
-.container
-  max-width: 1440px
-.main
-  flex: 1 1 0
-  background: #ffffff
-  min-height: 100vh
-  padding-bottom: 100px
-.nav-container
-  padding: 24px 40px 0 40px
-.separator
-  margin-top: 24px
-  border-bottom: 1px solid rgba(176, 176, 176, 0.25)
-.content-box
-  padding: 24px 60px
-  flex: 1 1 0
-  background: #ffffff
+<style lang="scss" scoped>
+.layout {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg width='366' height='167' viewBox='0 0 366 167' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='364.414' y1='83.4142' x2='282.414' y2='165.414' stroke='url(%23paint0_linear)' stroke-width='4'/%3E%3Cline opacity='0.4' x1='83.4142' y1='35.4142' x2='1.41421' y2='117.414' stroke='url(%23paint1_linear)' stroke-width='4'/%3E%3Cline x1='99.4142' y1='1.41421' x2='17.4142' y2='83.4142' stroke='url(%23paint2_linear)' stroke-width='4'/%3E%3Cdefs%3E%3ClinearGradient id='paint0_linear' x1='363' y1='82' x2='283.5' y2='161.5' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%234FAAFF'/%3E%3Cstop offset='1' stop-color='%232365A3' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='paint1_linear' x1='82' y1='34' x2='2.5' y2='113.5' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%234FAAFF'/%3E%3Cstop offset='1' stop-color='%232365A3' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='paint2_linear' x1='98' y1='0' x2='18.5' y2='79.5' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%234FAAFF'/%3E%3Cstop offset='1' stop-color='%232365A3' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-position: top 72px left 15%;
+  background-color: #164A75;
+}
 </style>

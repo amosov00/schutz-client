@@ -2,14 +2,14 @@
   <div class="custom-slider">
     <div class="container">
       <div class="inner">
-        <div class="content-slot">
+        <div class="content-slot is-flex is-flex-direction-column">
           <slot name="content"></slot>
         </div>
         <nuxt-link :to="prevPage" class="arrow left-arrow">
-          <img src="../static/slider-left.svg" />
+          <img src="~/static/slider-left.svg" />
         </nuxt-link>
         <nuxt-link  :to="nextPage" class="arrow right-arrow">
-          <img src="../static/slider-right.svg" />
+          <img src="~/static/slider-right.svg" />
         </nuxt-link>
       </div>
       <div class="extra-text">

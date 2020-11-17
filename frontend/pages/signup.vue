@@ -1,8 +1,9 @@
 <template>
   <div>
-    <custom-slider :activeDot="1" :dots="2" next-page="/" prev-page="/">
-      <template slot="content">
-        <ValidationObserver v-slot="{ invalid }">
+    <ValidationObserver v-slot="{ invalid }">
+      <custom-slider :activeDot="1" :dots="2" next-page="/" prev-page="/">
+        <template slot="content">
+
           <div class="columns is-fullheight">
             <div class="column pt-0 pb-0 is-half is-flex flex-column is-justify-content-space-between">
               <div class="is-size-5 mb-20">
@@ -17,6 +18,7 @@
                   v-slot="{ errors, valid }"
                 >
                   <base-input
+                    size="6"
                     type="email"
                     label="E-mail:"
                     class="mb-20"
@@ -34,6 +36,7 @@
                   slim="slim"
                   v-slot="{ errors, valid }">
                   <base-input
+                    size="6"
                     label="Telegram"
                     type="text"
                     placeholder="@nickname"
@@ -46,6 +49,7 @@
                 </ValidationProvider>
 
                 <base-input
+                  size="6"
                   label="Ethereum wallet"
                   type="text"
                   class="mb-20"
@@ -58,6 +62,7 @@
                   slim="slim"
                   v-slot="{ errors, valid }">
                   <base-input
+                    size="6"
                     label="Имя"
                     type="text"
                     placeholder="first"
@@ -76,6 +81,7 @@
                   slim="slim"
                   v-slot="{ errors, valid }">
                   <base-input
+                    size="6"
                     label="Фамилия"
                     type="text"
                     placeholder="last"
@@ -94,6 +100,7 @@
                   slim="slim"
                   v-slot="{ errors, valid }">
                   <base-input
+                    size="6"
                     label="Пароль"
                     type="password"
                     placeholder="password"
@@ -113,6 +120,7 @@
                   v-slot="{ errors, valid }"
                 >
                   <base-input
+                    size="6"
                     label="Подтвердите пароль"
                     type="password"
                     placeholder="confirm password"
@@ -125,6 +133,7 @@
                 </ValidationProvider>
 
                 <base-input
+                  size="6"
                   label="Referral ID"
                   type="text"
                   placeholder="Referral ID"
@@ -135,7 +144,7 @@
               </div>
               <div class="left-link">
                 <b-checkbox v-model="acceptedConditions">
-                  Я принимаю <a  href="#terms">условия соглашения</a>
+                  Я принимаю <a href="#terms">условия соглашения</a>
                 </b-checkbox>
               </div>
             </div>
@@ -149,234 +158,227 @@
               </custom-button>
             </div>
           </div>
-        </ValidationObserver>
-      </template>
-    </custom-slider>
-    <div class="container">
-      <div class="terms mb-6" id="terms">
-        <p class="is-size-4 has-text-primary mb-2">Terms and conditions</p>
-        <p class="is-size-6 mb-5">«15» мая 2020 г.</p>
-        <p class="is-size-7 has-text-weight-light mb-6">
-          NTS Crypto, именуемый в дальнейшем «Управляющий», с одной стороны, и пользователь математического кода
-          «0x5dfb0d30ac6fe828ed6ba9cffde6b60d166d8d1f», именуемый в дальнейшем «Инвестор», с другой стороны, совместно
-          именуемые в дальнейшем «Стороны», заключили настоящее Соглашение о нижеследующем:
-        </p>
-        <div class="is-flex mb-4 has-text-weight-light is-size-7">
-          <span class="num">1</span>
-          <p>ПРЕДМЕТ СОГЛАШЕНИЯ</p>
-        </div>
 
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.1</span>
-          <p>
-            Управляющий обязуется принять в управление цифровые активы и управлять ими в течение срока действия
-            настоящего вклада.
+        </template>
+      </custom-slider>
+      <div class="container">
+        <div class="terms mb-6" id="terms">
+          <p class="is-size-4 has-text-primary mb-2">Terms and conditions</p>
+          <p class="is-size-6 mb-5">«15» мая 2020 г.</p>
+          <p class="is-size-7 has-text-weight-light mb-6">
+            NTS Crypto, именуемый в дальнейшем «Управляющий», с одной стороны, и пользователь математического кода
+            «0x5dfb0d30ac6fe828ed6ba9cffde6b60d166d8d1f», именуемый в дальнейшем «Инвестор», с другой стороны, совместно
+            именуемые в дальнейшем «Стороны», заключили настоящее Соглашение о нижеследующем:
           </p>
-        </div>
+          <div class="is-flex mb-4 has-text-weight-light is-size-7">
+            <span class="num">1</span>
+            <p>ПРЕДМЕТ СОГЛАШЕНИЯ</p>
+          </div>
 
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.2</span>
-          <p>
-            Технологией по приему и выдачи цифровых активов выступает централизованный смарт-контракт на
-            базе блокчейна
-            Эфириума (Ethereum) Neutrino Token Standart (NTS). Данный смарт-контракт не влияет на получение прибыли
-            Управляющим, а лишь является автоматизированной платформой - электронным бухгалтером NTS Crypto.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.3</span>
-          <p>
-            Управляющий обязуется управлять цифровыми активами, совершая спекулятивные операции на биржевом
-            рынке в целях извлечения в пользу Инвестора прибыли от колебаний курсов в течение расчетного периода.
-            Управляющий имеет
-            право на свое усмотрение выбирать любые спекулятивные сделки для извлечения прибыли в пользу Инвестора.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.4</span>
-          <p>
-            Расчетный период определяется условиями тарифного плана.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.5</span>
-          <p>
-            Заключение Соглашения между Управляющим и Инвестором, вместе именуемыми – «Стороны»,
-            осуществляется путем
-            полного и безоговорочного присоединения Клиента к Соглашению (акцепта Соглашения) в соответствии со ст.
-            428
-            Гражданского кодекса Российской Федерации.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.6</span>
-          <p>
-            В рамках настоящего Соглашения допускается внесение цифровых токенов на криптовалютный кошелек
-            Управляющего.
-            Возврат объектов управления или процентов по ним осуществляются в цифровых токенах. Передача цифровых
-            активов
-            в доверительное управление не влечет перехода права собственности на них к Управляющему.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.7</span>
-          <p>
-            Передача в доверительное управление цифровых активов осуществляется Инвестором путем
-            перечисления цифровых
-            активов на кошелек Управляющего. Днем передачи цифровых активов Инвестора в доверительное управление
-            считается
-            день их поступления на кошелек Управляющего.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">1.8</span>
-          <p>
-            Перечисления начисленных процентов на суммы переданных в управление средств («тела депозита»)
-            происходит за
-            каждый квартал (первый квартал 15-20 апреля, второй квартал 15-20 июля, третий квартал 15-20
-            октября,
-            четвертый
-            квартал 15-20 января), за исключением выходных и праздничных дней.
-          </p>
-        </div>
-        <div class="is-flex mb-6 has-text-weight-light is-size-7">
-          <span class="num">1.9</span>
-          <p>
-            Выгодоприобретателем по Договору является Инвестор.
-          </p>
-        </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.1</span>
+            <p>
+              Управляющий обязуется принять в управление цифровые активы и управлять ими в течение срока действия
+              настоящего вклада.
+            </p>
+          </div>
 
-        <div class="is-flex mb-4 has-text-weight-light is-size-7">
-          <span class="num">2</span>
-          <p>
-            ПРАВА И ОБЯЗАННОСТИ СТОРОН
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.1</span>
-          <p>
-            Права и обязанности Управляющего:
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.1.1</span>
-          <p>
-            Использовать переданные Инвестором в управление средства исключительно в целях извлечения
-            в
-            пользу Инвестора
-            спекулятивной прибыли, управляя средствами путем совершения сделок купли-продажи на
-            биржевом рынке с целевой
-            доходностью согласно условиям тарифного плана. Действовать добросовестно и тем способом,
-            который является
-            наилучшим для интересов Инвестора.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.1.2</span>
-          <p>
-            В случае наступления форс-мажорных обстоятельств Управляющий вправе менять (повышать или
-            снижать) процент
-            прибыли, заявленный согласно тарифному плану, уведомив другую Сторону в срок не менее,
-            чем за 30 календарных
-            дней.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.1.3</span>
-          <p>
-            Управляющий вправе изменять данное «Соглашение», «Ограничение отвественности» и
-            «Регламент
-            ввода/вывода
-            средств», без обязательства уведомления клиента о внесенных изменениях в
-            вышеупомянутые документы.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.2</span>
-          <p>
-            Права и обязанности Инвестора:
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.2.1</span>
-          <p>
-            Инвестор обязан принять условия тарифного плана, в том числе предусмотренные им
-            регламент
-            ввода/вывода цифровых
-            активов.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.2.2</span>
-          <p>
-            Инвестор не праве вмешиваться в деятельность управляющего по Доверительному
-            управлению активами.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.2.3</span>
-          <p>
-            Инвестор обязуется фиксировать полученную путем вывода или реинвестирования
-            всего объема
-            полученной прибыли в
-            срок до 3-х календарных лет с даты открытого депозита. В противном случае
-            итоговый баланс (итоговая сумма
-            депозита и ежеквартальных выплат) будет списан со счета Инвестора в пользу
-            Компании.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.2.4</span>
-          <p>
-            Инвестор обязуется по истечении полного срока работы депозита произвести
-            вывод тела депозита,
-            нажав «вывод тела
-            депозита». В противном случае, во избежание риска потери средств инвестором
-            Управляющий автоматически продлит
-            срок работы депозита на период следующих 12 месяцев (или на период,
-            установленный тарифным планом).
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.2.5</span>
-          <p>
-            Инвестор несет ответственность за уплату всех налоговых обязательств
-            (налог на доходы физических
-            лиц), Инвестор
-            обязан исполнять (исчислять и уплачивать) все выплаты самостоятельно.
-            Ответственность за неисполнение
-            (ненадлежащее исполнение) налоговых обязательств Инвестор несет
-            самостоятельно.
-          </p>
-        </div>
-        <div class="is-flex mb-3 has-text-weight-light is-size-7">
-          <span class="num">2.2.6</span>
-          <p>
-            Инвестор подтверждает, что он уведомлен о возможных рисках по ведению
-            спекулятивных сделок с
-            цифровыми активами.
-          </p>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.2</span>
+            <p>
+              Технологией по приему и выдачи цифровых активов выступает централизованный смарт-контракт на
+              базе блокчейна
+              Эфириума (Ethereum) Neutrino Token Standart (NTS). Данный смарт-контракт не влияет на получение прибыли
+              Управляющим, а лишь является автоматизированной платформой - электронным бухгалтером NTS Crypto.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.3</span>
+            <p>
+              Управляющий обязуется управлять цифровыми активами, совершая спекулятивные операции на биржевом
+              рынке в целях извлечения в пользу Инвестора прибыли от колебаний курсов в течение расчетного периода.
+              Управляющий имеет
+              право на свое усмотрение выбирать любые спекулятивные сделки для извлечения прибыли в пользу Инвестора.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.4</span>
+            <p>
+              Расчетный период определяется условиями тарифного плана.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.5</span>
+            <p>
+              Заключение Соглашения между Управляющим и Инвестором, вместе именуемыми – «Стороны»,
+              осуществляется путем
+              полного и безоговорочного присоединения Клиента к Соглашению (акцепта Соглашения) в соответствии со ст.
+              428
+              Гражданского кодекса Российской Федерации.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.6</span>
+            <p>
+              В рамках настоящего Соглашения допускается внесение цифровых токенов на криптовалютный кошелек
+              Управляющего.
+              Возврат объектов управления или процентов по ним осуществляются в цифровых токенах. Передача цифровых
+              активов
+              в доверительное управление не влечет перехода права собственности на них к Управляющему.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.7</span>
+            <p>
+              Передача в доверительное управление цифровых активов осуществляется Инвестором путем
+              перечисления цифровых
+              активов на кошелек Управляющего. Днем передачи цифровых активов Инвестора в доверительное управление
+              считается
+              день их поступления на кошелек Управляющего.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">1.8</span>
+            <p>
+              Перечисления начисленных процентов на суммы переданных в управление средств («тела депозита»)
+              происходит за
+              каждый квартал (первый квартал 15-20 апреля, второй квартал 15-20 июля, третий квартал 15-20
+              октября,
+              четвертый
+              квартал 15-20 января), за исключением выходных и праздничных дней.
+            </p>
+          </div>
+          <div class="is-flex mb-6 has-text-weight-light is-size-7">
+            <span class="num">1.9</span>
+            <p>
+              Выгодоприобретателем по Договору является Инвестор.
+            </p>
+          </div>
+
+          <div class="is-flex mb-4 has-text-weight-light is-size-7">
+            <span class="num">2</span>
+            <p>
+              ПРАВА И ОБЯЗАННОСТИ СТОРОН
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.1</span>
+            <p>
+              Права и обязанности Управляющего:
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.1.1</span>
+            <p>
+              Использовать переданные Инвестором в управление средства исключительно в целях извлечения
+              в
+              пользу Инвестора
+              спекулятивной прибыли, управляя средствами путем совершения сделок купли-продажи на
+              биржевом рынке с целевой
+              доходностью согласно условиям тарифного плана. Действовать добросовестно и тем способом,
+              который является
+              наилучшим для интересов Инвестора.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.1.2</span>
+            <p>
+              В случае наступления форс-мажорных обстоятельств Управляющий вправе менять (повышать или
+              снижать) процент
+              прибыли, заявленный согласно тарифному плану, уведомив другую Сторону в срок не менее,
+              чем за 30 календарных
+              дней.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.1.3</span>
+            <p>
+              Управляющий вправе изменять данное «Соглашение», «Ограничение отвественности» и
+              «Регламент
+              ввода/вывода
+              средств», без обязательства уведомления клиента о внесенных изменениях в
+              вышеупомянутые документы.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.2</span>
+            <p>
+              Права и обязанности Инвестора:
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.2.1</span>
+            <p>
+              Инвестор обязан принять условия тарифного плана, в том числе предусмотренные им
+              регламент
+              ввода/вывода цифровых
+              активов.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.2.2</span>
+            <p>
+              Инвестор не праве вмешиваться в деятельность управляющего по Доверительному
+              управлению активами.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.2.3</span>
+            <p>
+              Инвестор обязуется фиксировать полученную путем вывода или реинвестирования
+              всего объема
+              полученной прибыли в
+              срок до 3-х календарных лет с даты открытого депозита. В противном случае
+              итоговый баланс (итоговая сумма
+              депозита и ежеквартальных выплат) будет списан со счета Инвестора в пользу
+              Компании.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.2.4</span>
+            <p>
+              Инвестор обязуется по истечении полного срока работы депозита произвести
+              вывод тела депозита,
+              нажав «вывод тела
+              депозита». В противном случае, во избежание риска потери средств инвестором
+              Управляющий автоматически продлит
+              срок работы депозита на период следующих 12 месяцев (или на период,
+              установленный тарифным планом).
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.2.5</span>
+            <p>
+              Инвестор несет ответственность за уплату всех налоговых обязательств
+              (налог на доходы физических
+              лиц), Инвестор
+              обязан исполнять (исчислять и уплачивать) все выплаты самостоятельно.
+              Ответственность за неисполнение
+              (ненадлежащее исполнение) налоговых обязательств Инвестор несет
+              самостоятельно.
+            </p>
+          </div>
+          <div class="is-flex mb-3 has-text-weight-light is-size-7">
+            <span class="num">2.2.6</span>
+            <p>
+              Инвестор подтверждает, что он уведомлен о возможных рисках по ведению
+              спекулятивных сделок с
+              цифровыми активами.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </ValidationObserver>
   </div>
 </template>
 
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import CustomSlider from '../components/CustomSlider'
-import CustomInput from '../components/ui/CustomInput'
-import CustomButton from '../components/ui/CustomButton'
-import BaseInput from '../components/ui/BaseInput'
 
 export default {
   name: 'signup',
   layout: 'auth',
   components: {
-    BaseInput,
-    CustomButton,
-    CustomInput,
-    CustomSlider,
     ValidationObserver,
     ValidationProvider
   },

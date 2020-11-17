@@ -1,12 +1,13 @@
 // Customize
 $text: #ffffff;
-$link: #0495FB;
-$link-hover: #0495FB;
+$link: #30A1FF;
+$link-hover: #1B75FF;
 $info: #E66696;
 $background1: #0495FB;
 $background2: #fff;
 $radius: 6px;
 $primary: #FAD896;
+$danger: #D60D0D;
 
 $light: #fff;
 
@@ -100,7 +101,7 @@ body {
     color: #000000;
   }
 }
-.dialog.modal.is-active {
+.dialog.modal.is-active, .modal.is-active {
   .modal-background {
     transition: all .3s;
     background: rgba(66, 118, 178, 0.5);

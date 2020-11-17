@@ -2,10 +2,11 @@
   <div
     class="custom-input"
     :class="{'has-icon': hasIcon, 'is-danger': isDanger, 'is-success': isSuccess}">
-    <label :for="label" class="base-label">{{ label }}</label>
+    <label v-if="label" :for="label" class="base-label">{{ label }}</label>
     <input
       :id="label"
       class="input"
+      :class="[`is-size-${size}`]"
       :type="type"
       placeholder=""
       :value="value"

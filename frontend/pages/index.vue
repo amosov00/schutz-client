@@ -10,13 +10,13 @@
             <div class="mb-5">
               <base-input
                 type="text"
-                size="5"
+                size="6"
                 label="E-mail:"
                 class="mb-5"
                 v-model="email" />
               <base-input
                 type="password"
-                size="5"
+                size="6"
                 label="Пароль:"
                 v-model="password"
                 v-on:keypress.enter.native="login"
@@ -39,20 +39,10 @@
 
 
 <script>
-import CustomSlider from '../components/CustomSlider'
-import CustomInput from '../components/ui/CustomInput'
-import CustomButton from '../components/ui/CustomButton'
-import BaseInput from '../components/ui/BaseInput'
 
 export default {
   name: 'login',
   layout: 'auth',
-  components: {
-    BaseInput,
-    CustomButton,
-    CustomInput,
-    CustomSlider
-  },
   middleware: ['userRedirect'],
   data() {
     return {
