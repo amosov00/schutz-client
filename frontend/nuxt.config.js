@@ -1,5 +1,9 @@
+const isProduction = process.env.NODE_ENV === "production"
+
 export default {
   ssr: false,
+
+  target: 'server',
 
   head: {
     title: 'SCHUTZ',
@@ -55,10 +59,10 @@ export default {
   },
 
   server: {
-    host: 'localhost',
+    host: '0.0.0.0',
   },
 
-  loading: { color: '#0495FB' },
+  loading: {color: '#0495FB'},
 
   css: [
     {
@@ -90,7 +94,7 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/sentry',
-    ['nuxt-buefy', { css: false }],
+    ['nuxt-buefy', {css: false}],
     'cookie-universal-nuxt',
     ['nuxt-i18n', {
       detectBrowserLanguage: {
@@ -125,6 +129,14 @@ export default {
       environment: process.env.NODE_ENV,
     },
   },
+
+  vue: {
+    config: {
+      productionTip: true,
+      devtools: !isProduction,
+    }
+  },
+
   build: {
     transpile: [
       'vee-validate/dist/rules'
