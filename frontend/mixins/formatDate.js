@@ -34,6 +34,12 @@ export default {
       return moment(timestamp)
         .utc()
         .format("DD MMMM YYYY");
+    },
+    formatDate(time) {
+      const offset = moment().utcOffset()
+      return moment(time)
+        .add(offset, 'minutes')
+        .format('DD/MM/YYYY')
     }
   }
 };

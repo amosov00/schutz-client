@@ -8,7 +8,8 @@ export const state = () => ({
   partners: [],
   referralLink: null,
   userTxData: null,
-  isTermsAcceped: false
+  isTermsAcceped: false,
+  contractAgreements: null
 });
 
 export const getters = {
@@ -36,7 +37,8 @@ export const getters = {
   partners: s => s.partners,
   referralLink: s => s.referralLink,
   userTxData: s => s.userTxData,
-  isTermsAcceped: s => s.isTermsAcceped
+  isTermsAcceped: s => s.isTermsAcceped,
+  contractAgreements: s => s.contractAgreements
 };
 
 export const mutations = {
@@ -71,7 +73,8 @@ export const mutations = {
   setUsers: (state, payload) => (state.users = payload),
   setPartners: (state, payload) => (state.partners = payload),
   setReferralLink: (state, payload) => (state.referralLink = payload),
-  setIsTermsAcceped: (state, payload) => (state.isTermsAcceped = payload)
+  setIsTermsAcceped: (state, payload) => (state.isTermsAcceped = payload),
+  setContractAgreements: (state, payload) => (state.contractAgreements = payload)
 };
 
 export const actions = {
@@ -130,7 +133,6 @@ export const actions = {
           : Array.from(resp.response.data);
       });
   },
-
   async startRecover({}, data) {
     return await this.$axios
       .post("/account/recover/", data)
@@ -189,6 +191,10 @@ export const actions = {
     const { data } = await this.$axios.get(`/transactions/?q=${type}`);
     commit("setTransactions", data);
   },
+  async fetchContractAgreements({ commit }, type) {
+    const { data } = await this.$axios.get("/account/contracts_agreement");
+    commit("setContractAgreements", data);
+  },
   async updateUser({}, user) {
     return await this.$axios
       .put(`/admin/users/${user._id}/`, {
@@ -216,6 +222,26 @@ export const actions = {
       });
   },
   async fetchUser({}, id) {
-    return await this.$axios.get(`/admin/users/${id}/`);
-  }
+    return await this.$axios.get(`/admin/users/${id}/`)
+  },
+  async prolongAgreement({commit}, id) {
+    return await this.$axios
+      .get(`/account/mark_prolong_agreement/${id}`, {})
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
+  },
+  async closeAgreement({commit}, id) {
+    return await this.$axios
+      .get(`/account/mark_close_agreement/${id}`, {})
+      .then(() => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
+  },
 };

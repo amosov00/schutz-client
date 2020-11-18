@@ -12,7 +12,7 @@
             <nuxt-link
               :to="link.link"
               class="link"
-              :class="{active: link.link === activePage}"
+              :class="{active: link.link === activePage || `${link.link}/` === activePage}"
             >
               {{link.name}}
             </nuxt-link>

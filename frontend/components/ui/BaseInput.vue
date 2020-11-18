@@ -8,7 +8,7 @@
       class="input"
       :class="[`is-size-${size}`]"
       :type="type"
-      placeholder=""
+      :placeholder="placeholder"
       :value="value"
       @input="onInput"
       step="any"
@@ -52,6 +52,10 @@ export default {
       default: () => ''
     },
     label: {
+      type: String,
+      default: () => ''
+    },
+    placeholder: {
       type: String,
       default: () => ''
     },

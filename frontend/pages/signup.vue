@@ -466,9 +466,6 @@ export default {
     max-width: 810px;
   }
 }
-.mb-20 {
-  margin-bottom: 20px;
-}
 .left-link {
   line-height: 80px;
 }
