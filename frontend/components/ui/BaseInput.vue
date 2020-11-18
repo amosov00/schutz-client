@@ -14,7 +14,9 @@
       step="any"
       :maxLength="maxLength"
       :max="max"
-      :pattern="onlyNumber ? '\d*': ''"
+      :min="min"
+      :pattern="onlyNumber ? '[0-9]+': ''"
+      v-model="input"
     />
     <div class="bottom-line" :class="{'is-danger': isDanger, 'is-success': isSuccess}"></div>
     <div class="error is-size-7" v-if="error">
@@ -43,9 +45,13 @@ export default {
       type: Number,
       default: () => null
     },
-    max: {
+    min: {
       type: Number,
       default: () => 0
+    },
+    max: {
+      type: Number,
+      default: () => 99999999
     },
     value: {
       type: String,
@@ -123,8 +129,7 @@ export default {
     color: #666666;
     cursor: text;
   }
-  input[type="text"],
-  input[type="password"] {
+  input {
     position: relative;
     padding: 0;
     font-weight: 300;
