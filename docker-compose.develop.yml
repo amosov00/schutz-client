@@ -6,9 +6,9 @@ services:
     command: yarn start
     image: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/frontend:develop-latest
     expose:
-      - 3020
+      - "3020"
     ports:
-      - 3020:3020
+      - "3020:3020"
     env_file:
       - .env
       - .env.frontend
