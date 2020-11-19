@@ -181,45 +181,6 @@ export default {
       }
       await this.$store.dispatch('fetchContractAgreements')
     },
-    // async onSubmit() {
-    //   let fieldsList = ''
-    //   let foundChanges = false
-    //   let data = {}
-    //
-    //   for (let prop in this.profile) {
-    //     if (this.profile[prop].value !== this.user[prop]) {
-    //       foundChanges = true
-    //       data[prop] = this.profile[prop].value
-    //       fieldsList += `<li><b class="is-capitalized">${this.profile[prop].label}:</b> ${this.profile[prop].value}</li>`
-    //     }
-    //   }
-    //
-    //   if (foundChanges) {
-    //     fieldsList = `<ul>${fieldsList}</ul>`
-    //
-    //     this.$buefy.dialog.confirm({
-    //       message: `<div>Your profile data will be changed:</div><br>${fieldsList}`,
-    //       onConfirm: async() => {
-    //         this.isProfileUpdating = true
-    //         const resp = await this.$store.dispatch('changeProfile', data)
-    //         if (resp) {
-    //           // Обновление данных юзера на странице, чтобы не перезагружать страницу
-    //           await this.$store.$authFetchUser()
-    //           this.$buefy.toast.open({
-    //             message: 'Your profile is updated!',
-    //             type: 'is-primary'
-    //           })
-    //         } else {
-    //           this.$buefy.toast.open({
-    //             message: 'Sorry! Can\'t update your profile right now!',
-    //             type: 'is-danger'
-    //           })
-    //         }
-    //         this.isProfileUpdating = false
-    //       }
-    //     })
-    //   }
-    // },
   },
   computed: {
     ...mapGetters(['user', 'contractAgreements']),

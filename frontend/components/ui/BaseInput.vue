@@ -16,7 +16,6 @@
       :max="max"
       :min="min"
       :pattern="onlyNumber ? '[0-9]+': ''"
-      v-model="input"
     />
     <div class="bottom-line" :class="{'is-danger': isDanger, 'is-success': isSuccess}"></div>
     <div class="error is-size-7" v-if="error">

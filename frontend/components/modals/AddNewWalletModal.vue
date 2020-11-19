@@ -33,6 +33,7 @@
 <script>
 
 export default {
+  name: 'add-new-wallet-modal',
   data() {
     return {
       wallet: '0x'
