@@ -16,6 +16,32 @@ $fullhd: 860px + (2 * 32px);
 $widescreen: 860px + (2 * 32px);
 $desktop: 860px + (2 * 32px);
 
+.custom-table .table,
+.custom-table .table-wrapper {
+  color: #FFFFFF;
+  background-color: transparent;
+  td, th,
+  thead th,
+  thead td {
+    color: #FFFFFF;
+    border: none;
+  }
+  thead th,
+  thead td {
+    font-size: 14px;
+    line-height: 19px;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+
+  td {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+}
+
 h1.is-1 {
   font-weight: 500;
   font-size: 38px;
@@ -68,7 +94,7 @@ h1.is-1 {
 // Then import other variables
 @import "~bulma/bulma.sass";
 @import "~buefy/src/scss/buefy";
-@import "./helpers.sass";
+@import "./helpers.scss";
 
 .input,
 .taginput .taginput-container.is-focusable,

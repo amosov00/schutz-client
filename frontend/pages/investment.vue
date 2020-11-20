@@ -63,7 +63,14 @@
               </div>
             </div>
             <custom-button
-              v-if="user.is_deposit_open && allowance !== 0"
+              v-if="!isMetaMaskInstalled"
+              @click.native="isMetaMaskInstallModalActive = true"
+              class="mt-auto"
+            >
+              Авторизовать кошлек
+            </custom-button>
+            <custom-button
+              v-else-if="user.is_deposit_open && allowance !== 0"
               @click.native="approve"
               class="mt-auto"
               :disabled="!user.ethereum_wallet || status!=='online'"
@@ -72,7 +79,7 @@
             </custom-button>
             <custom-button
               v-else
-              @click.native="promptNumber"
+              @click.native="isAddFundsModalActive = true"
               class="mt-auto"
               :disabled="!user.ethereum_wallet || status!=='online'"
             >
@@ -82,8 +89,107 @@
         </div>
       </template>
     </custom-slider>
+    <div class="container">
+      <div class="level">
+        <div
+          class="level-left is-size-5 has-text-primary mb-4"
+        >
+          История транзакций
+        </div>
+      </div>
+      <b-table
+        :data="filteredData"
+        v-if="filteredData"
+        default-sort="args.timestamp"
+        pagination-position="bottom"
+        class="custom-table mb-6"
+      >
+        <template slot-scope="props">
+          <b-table-column
+            field="args.timestamp"
+            label="Дата и время"
+            sortable="sortable"
+            width="20%"
+          >
+            {{ timestampToDateTime(props.row.args.timestamp) }}
+          </b-table-column>
+          <b-table-column
+            field="event"
+            label="Событие"
+            width="20%"
+          >
+            <span class="text-nowrap">{{ props.row.event }}</span>
+            <span
+              class="tag is-link"
+              v-if="props.row.isReinvested"
+            >
+              Reinvested
+            </span>
+          </b-table-column>
+          <b-table-column
+            class="has-text-primary overflow-reset"
+            field="txHash"
+            label="Хэш"
+            width="20%"
+          >
+            <b-tooltip
+              class="w-100"
+              :label="props.row.transactionHash"
+              type="is-black"
+              position="is-bottom"
+            >
+              <a
+                class="text-clamp"
+                :style="{maxWidth: `80px`}"
+                :href="'https://etherscan.io/tx/' + props.row.transactionHash"
+                target="_blank"
+              >
+                {{ props.row.transactionHash }}
+              </a>
+            </b-tooltip>
+          </b-table-column>
+          <b-table-column
+            field="contract"
+            label="Контракт"
+            header-class="right-align"
+            cell-class="text-right"
+            width="20%"
+          >
+            {{ props.row.contract }}
+          </b-table-column>
+          <b-table-column
+            field="amountUSDT"
+            label="Сумма, USDT"
+            cell-class="text-right"
+            header-class="has-text-right"
+            width="20%"
+          >
+            {{ formatCurrency(props.row.args.USDT, 'usdt') }}
+          </b-table-column>
+        </template>
+        <!--<template slot="footer">-->
+        <!--<div class="divider"></div>-->
+        <!--</template>-->
+        <template slot="bottom-left">
+
+        </template>
+
+      </b-table>
+      <div class="is-size-5 has-background-primary total-withdraw mb-6">
+        Всего выведено: {{`${formatCurrency(filteredTotals, 'usdt')}` }} USDT
+      </div>
+    </div>
     <b-modal :active.sync="isWalletModalActive" has-modal-card>
       <add-new-wallet-modal></add-new-wallet-modal>
+    </b-modal>
+    <b-modal :active.sync="isMetaMaskInstallModalActive" has-modal-card>
+      <install-meta-mask-modal />
+    </b-modal>
+    <b-modal
+      :active.sync="isAddFundsModalActive"
+      has-modal-card
+    >
+      <AddFundsModal   :preparedData="input"  has-modal-card />
     </b-modal>
   </div>
 </template>
@@ -96,6 +202,7 @@ import formatCurrency from '~/mixins/formatCurrency'
 import moment from 'moment'
 import gsap from 'gsap'
 import AddNewWalletModal from '../components/modals/AddNewWalletModal'
+import InstallMetaMaskModal from '../components/modals/installMetaMaskModal'
 
 export default {
   name: 'investment',
@@ -103,6 +210,7 @@ export default {
   middleware: ['authRequired', 'contracts', 'metamask'],
   mixins: [formatDate, formatCurrency],
   components: {
+    InstallMetaMaskModal,
     AddNewWalletModal,
     AddFundsModal
   },
@@ -123,16 +231,6 @@ export default {
       })
   },
   methods: {
-    promptNumber() {
-      this.$buefy.modal.open({
-        parent: this,
-        component: AddFundsModal,
-        hasModalCard: true,
-        customClass: 'custom-class custom-class-2',
-        trapFocus: true,
-        confirmText: 'Ok'
-      })
-    },
     getProductClass(product) {
       if (this.product === product) {
         return 'product-link-active'
@@ -224,6 +322,12 @@ export default {
         .add(13, 'month')
         .add(19, 'days')
         .format('DD MMM YYYY')
+    },
+    isMetaMaskInstalled() {
+      if (typeof web3 !== 'undefined') {
+        return web3.currentProvider.isMetaMask === true
+      }
+      return false
     }
   },
   data: () => ({
@@ -234,6 +338,8 @@ export default {
     currentProduct: 'All',
     products: ['All', 'NTS80', 'NTS81', 'NTS165'],
     isWalletModalActive: false,
+    isMetaMaskInstallModalActive: false,
+    isAddFundsModalActive: false
   }),
   async asyncData({ store }) {
     return await store.dispatch('fetchTransactions', 'investments')
@@ -242,6 +348,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.total-withdraw {
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: black;
+}
 .calc {
   max-width: 260px;
 }

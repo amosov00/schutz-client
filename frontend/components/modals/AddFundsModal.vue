@@ -62,6 +62,12 @@ export default {
       value: ''
     }
   },
+  props: {
+    preparedData: {
+      type: String,
+      default: () => '500'
+    }
+  },
   components: { ValidationObserver, ValidationProvider },
   methods: {
     addFunds() {
@@ -86,6 +92,9 @@ export default {
         this.$store.commit('setIsTermsAcceped', newValue)
       }
     }
+  },
+  mounted() {
+    this.value = this.preparedData
   }
 }
 </script>
