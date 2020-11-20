@@ -20,6 +20,8 @@
                 label="Пароль:"
                 v-model="password"
                 v-on:keypress.enter.native="login"
+                :is-danger="passwordError"
+                has-icon
               />
             </div>
             <div class="left-link">
@@ -48,7 +50,13 @@ export default {
     return {
       email: '',
       password: '',
-      loading: false
+      loading: false,
+      passwordError: false
+    }
+  },
+  watch: {
+    password() {
+      this.passwordError = false
     }
   },
   methods: {
@@ -58,11 +66,11 @@ export default {
       if (resp === false) {
         this.$buefy.toast.open({
           message: 'Check your email/password and make sure you activated your account',
-          type: 'is-danger',
+          type: 'is-warning',
           duration: 6000
         })
       }
-      this.password = ''
+      this.passwordError = true
       this.loading = false
     }
   },

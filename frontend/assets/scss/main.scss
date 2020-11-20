@@ -15,6 +15,7 @@ $body-family: "Nunito", "Verdana", "Arial", sans-serif;
 $fullhd: 860px + (2 * 32px);
 $widescreen: 860px + (2 * 32px);
 $desktop: 860px + (2 * 32px);
+$toast-border-radius: 0;
 
 .custom-table .table,
 .custom-table .table-wrapper {
@@ -132,5 +133,25 @@ body {
     transition: all .3s;
     background: rgba(66, 118, 178, 0.5);
     backdrop-filter: blur(10px);
+  }
+}
+.notices .toast {
+  color: #fff;
+  border: 1px solid #76CEFF;
+  box-sizing: border-box;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 19px;
+  &.is-danger,
+  &.is-warning{
+    border: 1px solid #FF3C3C;
+    color: #fff;
+    background: linear-gradient(360deg, rgba(118, 206, 255, 0.126) 0%, rgba(118, 206, 255, 0) 100%);
+  }
+  &.is-primary,
+  &.is-success,
+  &.is-dark {
+    color: #fff;
+    background: linear-gradient(360deg, rgba(118, 206, 255, 0.126) 0%, rgba(118, 206, 255, 0) 100%);
   }
 }
