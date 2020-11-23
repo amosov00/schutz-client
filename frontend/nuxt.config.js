@@ -96,6 +96,7 @@ export default {
     '@nuxtjs/sentry',
     ['nuxt-buefy', {css: false}],
     'cookie-universal-nuxt',
+    'vue-social-sharing/nuxt',
     ['nuxt-i18n', {
       detectBrowserLanguage: {
         useCookie: true,

@@ -143,15 +143,15 @@ body {
   font-size: 14px;
   line-height: 19px;
   &.is-danger,
-  &.is-warning{
+  &.is-warning {
     border: 1px solid #FF3C3C;
     color: #fff;
-    background: linear-gradient(360deg, rgba(118, 206, 255, 0.126) 0%, rgba(118, 206, 255, 0) 100%);
+    background-color: #174B76;
   }
   &.is-primary,
   &.is-success,
   &.is-dark {
     color: #fff;
-    background: linear-gradient(360deg, rgba(118, 206, 255, 0.126) 0%, rgba(118, 206, 255, 0) 100%);
+    background: #174B76;
   }
 }

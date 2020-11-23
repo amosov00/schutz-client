@@ -422,7 +422,7 @@ export default {
         this.$buefy.toast.open({
           message: 'Successfully registered! Please check your email to verify your account',
           type: 'is-success',
-          duration: 10000
+          duration: 5000
         })
         this.$router.push('/')
       } else {

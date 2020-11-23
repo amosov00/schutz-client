@@ -167,16 +167,10 @@
             {{ formatCurrency(props.row.args.USDT, 'usdt') }}
           </b-table-column>
         </template>
-        <!--<template slot="footer">-->
-        <!--<div class="divider"></div>-->
-        <!--</template>-->
-        <template slot="bottom-left">
-
-        </template>
 
       </b-table>
       <div class="is-size-5 has-background-primary total-withdraw mb-6">
-        Всего выведено: {{`${formatCurrency(filteredTotals, 'usdt')}` }} USDT
+        Всего: {{`${formatCurrency(filteredTotals, 'usdt')}` }} USDT
       </div>
     </div>
     <b-modal :active.sync="isWalletModalActive" has-modal-card>
