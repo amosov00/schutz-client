@@ -1,10 +1,5 @@
-import _ from 'lodash';
-
-export default async function({store}) {
-  if (
-    _.isEmpty(store.getters['contract/contract']('NTSCD')) ||
-    _.isEmpty(store.getters['contract/contract']('USDT'))
-  ) {
-    await store.dispatch('contract/fetchContracts')
+export default async function ({store}) {
+  if (store.getters['contract/contracts'].length === 0) {
+    await store.dispatch('contract/fetchContractsV2')
   }
 }

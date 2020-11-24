@@ -1,22 +1,28 @@
-import web3 from "@/plugins/web3";
-
 export const state = () => ({
-  NTSCD: {},
-  USDT: {},
-  OperatorNTS: {},
+  contracts: [],
+  infura: {
+    http: null,
+    ws: null,
+  },
 });
 export const getters = {
-  contract: s => contact => s[contact],
-  contracts: s => s,
+  contract: s => contact => s.contracts.filter(i => i.title === contact),
+  contracts: s => s.contracts,
+  infura: s => s.infura,
 };
 export const mutations = {
-  setContract: (state, payload) => state[payload.title] = payload,
+  setContracts: (state, payload) => state.contracts = payload,
+  setInfuraLinks: (state, payload) => state.infura = payload,
 };
 export const actions = {
-  async fetchContracts({commit}) {
-    const {data} = await this.$axios.get("/meta/contract/");
-    data.map(i => {
-      commit("setContract", i);
+  async fetchContractsV2({commit}) {
+    await this.$axios.get("/meta/v2/contract/").then(resp => {
+      commit("setContracts", resp.data.contracts)
+      commit("setInfuraLinks", {
+        "http": resp.data.infura_http,
+        "ws": resp.data.infura_ws,
+      })
+    }).catch(_ => {
     })
     return true
   },
