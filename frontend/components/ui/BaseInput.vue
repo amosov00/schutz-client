@@ -8,13 +8,13 @@
       class="input"
       :class="[`is-size-${size}`]"
       :type="type"
-      placeholder=""
+      :placeholder="placeholder"
       :value="value"
       @input="onInput"
       step="any"
       :maxLength="maxLength"
       :max="max"
-      :pattern="onlyNumber ? '\d*': ''"
+      :min="min"
     />
     <div class="bottom-line" :class="{'is-danger': isDanger, 'is-success': isSuccess}"></div>
     <div class="error is-size-7" v-if="error">
@@ -43,15 +43,23 @@ export default {
       type: Number,
       default: () => null
     },
-    max: {
+    min: {
       type: Number,
       default: () => 0
+    },
+    max: {
+      type: Number,
+      default: () => 99999999
     },
     value: {
       type: String,
       default: () => ''
     },
     label: {
+      type: String,
+      default: () => ''
+    },
+    placeholder: {
       type: String,
       default: () => ''
     },
@@ -119,8 +127,7 @@ export default {
     color: #666666;
     cursor: text;
   }
-  input[type="text"],
-  input[type="password"] {
+  input {
     position: relative;
     padding: 0;
     font-weight: 300;

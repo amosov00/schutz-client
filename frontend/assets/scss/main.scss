@@ -8,13 +8,40 @@ $background2: #fff;
 $radius: 6px;
 $primary: #FAD896;
 $danger: #D60D0D;
-
+$grey: #666666;
 $light: #fff;
 
 $body-family: "Nunito", "Verdana", "Arial", sans-serif;
 $fullhd: 860px + (2 * 32px);
 $widescreen: 860px + (2 * 32px);
 $desktop: 860px + (2 * 32px);
+$toast-border-radius: 0;
+
+.custom-table .table,
+.custom-table .table-wrapper {
+  color: #FFFFFF;
+  background-color: transparent;
+  td, th,
+  thead th,
+  thead td {
+    color: #FFFFFF;
+    border: none;
+  }
+  thead th,
+  thead td {
+    font-size: 14px;
+    line-height: 19px;
+    white-space: nowrap;
+    font-weight: 400;
+  }
+
+  td {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 19px;
+  }
+
+}
 
 h1.is-1 {
   font-weight: 500;
@@ -68,7 +95,7 @@ h1.is-1 {
 // Then import other variables
 @import "~bulma/bulma.sass";
 @import "~buefy/src/scss/buefy";
-@import "./helpers.sass";
+@import "./helpers.scss";
 
 .input,
 .taginput .taginput-container.is-focusable,
@@ -106,5 +133,25 @@ body {
     transition: all .3s;
     background: rgba(66, 118, 178, 0.5);
     backdrop-filter: blur(10px);
+  }
+}
+.notices .toast {
+  color: #fff;
+  border: 1px solid #76CEFF;
+  box-sizing: border-box;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 19px;
+  &.is-danger,
+  &.is-warning {
+    border: 1px solid #FF3C3C;
+    color: #fff;
+    background-color: #174B76;
+  }
+  &.is-primary,
+  &.is-success,
+  &.is-dark {
+    color: #fff;
+    background: #174B76;
   }
 }

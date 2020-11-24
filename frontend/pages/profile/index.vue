@@ -6,19 +6,24 @@
           <div class="column mb-4 is-flex flex-column">
             <div class="data-item">
               <div class="icon name"></div>
-              <div class="value">{{`${profile.first_name.value} ${profile.last_name.value}`}}</div>
+              <div class="value">{{`${user.first_name} ${user.last_name}`}}</div>
             </div>
             <div class="data-item">
               <div class="icon email"></div>
-              <div class="value">{{profile.email.value}}</div>
+              <div class="value">{{user.email}}</div>
             </div>
-            <div class="data-item" v-if="profile.telegram.value">
+            <div class="data-item" v-if="user.telegram">
               <div class="icon telegram"></div>
-              <div class="value">{{profile.telegram.value}}</div>
+              <div class="value">{{user.telegram}}</div>
             </div>
             <div class="data-item">
               <div class="icon password"></div>
-              <a class="value has-text-link">Сменить пароль</a>
+              <a
+                class="value has-text-link"
+                @click="isComponentModalActive = true"
+              >
+                Сменить пароль
+              </a>
             </div>
             <div class="data-item" v-if="!user.ethereum_wallet">
               <div class="icon metamask"></div>
@@ -30,7 +35,7 @@
             </div>
             <div class="data-item" v-else>
               <div class="icon metamask"></div>
-              <div class="value">{{profile.ethereum_wallet_payout.value}}</div>
+              <div class="value">{{user.ethereum_wallet}}</div>
             </div>
           </div>
         </div>
@@ -39,6 +44,16 @@
             <div>
               <div class="is-size-5">Вклад USDT:</div>
               <div class="is-size-2">{{ formatCurrency(totalDeposit) }}</div>
+              <div
+                class="is-size-7"
+                v-if="lastContract">
+                Дата закрытия
+              </div>
+              <div
+                class="is-size-7"
+                v-if="lastContract">
+                {{formatDate(lastContract.close_date)}}
+              </div>
             </div>
             <a
               class="has-text-link is-cursor-pointer exit-btn is-size-5"
@@ -49,7 +64,43 @@
             </a>
           </div>
           <div class="column is-half is-flex is-flex-direction-column">
-            <custom-button :disabled="!user.ethereum_wallet">Открыть вклад</custom-button>
+            <custom-button
+              @click.native="isAddFundsModalActive = true"
+              v-if="user.is_deposit_open && allowance !== 0"
+              :disabled="!user.ethereum_wallet" class="mb-2"
+            >
+              Пополнить депозит
+            </custom-button>
+            <custom-button
+              v-else
+              :disabled="!user.ethereum_wallet"
+              class="mb-2"
+              @click.native="$router.push('/investment')"
+            >
+              Открыть вклад
+            </custom-button>
+            <custom-button
+              v-if="lastContract"
+              class="mb-2"
+              @click.native="prolongAgreement(lastContract._id)"
+            >
+              Продлить
+            </custom-button>
+            <custom-button
+              v-if="lastContract"
+              class="mb-2"
+              @click.native="closeAgreement(lastContract._id)"
+            >
+              Закрыть
+            </custom-button>
+
+            <custom-button
+              class="mb-2"
+              v-if="totalDividends"
+              @click.native="withdraw"
+            >
+              Вывести {{ formatCurrency(totalDividends) }}
+            </custom-button>
             <div
               class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered"
               v-if="!user.ethereum_wallet"
@@ -63,6 +114,18 @@
     <b-modal :active.sync="isWalletModalActive" has-modal-card>
       <AddNewWalletModal></AddNewWalletModal>
     </b-modal>
+    <b-modal
+      :active.sync="isComponentModalActive"
+      has-modal-card
+    >
+      <PasswordChange />
+    </b-modal>
+    <b-modal
+      :active.sync="isAddFundsModalActive"
+      has-modal-card
+    >
+      <AddFundsModal />
+    </b-modal>
   </div>
 </template>
 
@@ -73,20 +136,26 @@ import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { mapGetters } from 'vuex'
 import AddNewWalletModal from '~/components/modals/AddNewWalletModal'
 import formatCurrency from '~/mixins/formatCurrency'
+import formatDate from '~/mixins/formatDate'
+import AddFundsModal from '~/components/modals/AddFundsModal'
 
 export default {
   name: 'index',
   layout: 'profile',
   middleware: ['authRequired', 'contracts'],
-  mixins: [formatCurrency],
+  mixins: [formatCurrency, formatDate],
   components: {
     InlineSvg,
     PasswordChange,
     ValidationProvider,
     ValidationObserver,
-    AddNewWalletModal
+    AddNewWalletModal,
+    AddFundsModal
   },
   methods: {
+    withdraw() {
+      this.$store.dispatch('dividends/withdraw')
+    },
     focusInput(e) {
       e.target.select()
     },
@@ -98,48 +167,29 @@ export default {
         )
       }
     },
-    async onSubmit() {
-      let fieldsList = ''
-      let foundChanges = false
-      let data = {}
-
-      for (let prop in this.profile) {
-        if (this.profile[prop].value !== this.user[prop]) {
-          foundChanges = true
-          data[prop] = this.profile[prop].value
-          fieldsList += `<li><b class="is-capitalized">${this.profile[prop].label}:</b> ${this.profile[prop].value}</li>`
-        }
+    async prolongAgreement(id) {
+      const res = await this.$store.dispatch('prolongAgreement', id)
+      if (!res) {
+        this.$buefy.toast.open({ message: this.$t('investment.errorMessage'), type: 'is-danger', queue: false })
       }
-
-      if (foundChanges) {
-        fieldsList = `<ul>${fieldsList}</ul>`
-
-        this.$buefy.dialog.confirm({
-          message: `<div>Your profile data will be changed:</div><br>${fieldsList}`,
-          onConfirm: async() => {
-            this.isProfileUpdating = true
-            const resp = await this.$store.dispatch('changeProfile', data)
-            if (resp) {
-              // Обновление данных юзера на странице, чтобы не перезагружать страницу
-              await this.$store.$authFetchUser()
-              this.$buefy.toast.open({
-                message: 'Your profile is updated!',
-                type: 'is-primary'
-              })
-            } else {
-              this.$buefy.toast.open({
-                message: 'Sorry! Can\'t update your profile right now!',
-                type: 'is-danger'
-              })
-            }
-            this.isProfileUpdating = false
-          }
-        })
+      await this.$store.dispatch('fetchContractAgreements')
+    },
+    async closeAgreement(id) {
+      const res = await this.$store.dispatch('closeAgreement', id)
+      if (!res) {
+        this.$buefy.toast.open({ message: this.$t('investment.errorMessage'), type: 'is-danger', queue: false })
       }
-    }
+      await this.$store.dispatch('fetchContractAgreements')
+    },
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapGetters(['user', 'contractAgreements']),
+    lastContract() {
+      if (this.contractAgreements && this.contractAgreements.length) {
+        return this.contractAgreements[0]
+      }
+      return null
+    },
     userWallet: {
       get: function() {
         return this.user.ethereum_wallet
@@ -155,13 +205,27 @@ export default {
       const total = this.$store.getters['deposit/totalDeposit']
       return total ? total : 0
     },
+    gasPrice() {
+      return this.$store.getters['metamask/gasPrice']
+    },
+    totalDividends() {
+      return this.$store.getters['deposit/totalDividends']
+    },
+    allowance() {
+      return this.$store.getters['deposit/allowance']
+    },
   },
   async created() {
-    this.$store.dispatch("deposit/fetchBalanceData").then(() => {
-    }).catch((e) => {
-      console.warn("Failed to fetch deposits data")
-      console.warn(e)
-    })
+    this.$store.dispatch('deposit/fetchBalanceData')
+      .then(() => {})
+      .catch((e) => {
+        console.warn('Failed to fetch deposits data')
+        console.warn(e)
+      })
+    if (!this.$store.state.metamask.gasPrice) {
+      await this.$store.dispatch('metamask/getGasPrice')
+    }
+    await this.$store.dispatch('fetchContractAgreements')
   },
   mounted() {
     for (let prop in this.profile) {
@@ -180,7 +244,8 @@ export default {
     },
     newEthereumWallet: '',
     isComponentModalActive: false,
-    isWalletModalActive: false
+    isWalletModalActive: false,
+    isAddFundsModalActive: false
   })
 }
 </script>

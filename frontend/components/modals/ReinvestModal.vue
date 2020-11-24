@@ -1,58 +1,86 @@
 <template>
-  <div class="add-wallet-card">
-    <p class="is-size-5">Укажите адрес кошелька</p>
-    <p class="is-size-7 mb-60">
-      Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды.
-    </p>
-    <div class="is-flex is-align-items-flex-start mb-60">
-      <base-input type="text" size="4" class="is-flex-grow-1 mt-3" v-model="wallet" />
-      <div class="mm-copy ml-2 mb-2" @click="pasteFromMM">
-        <a class="has-text-link">копировать из MM</a>
-      </div>
-    </div>
-
-    <div class="support">
-      <p class="is-size-7 mb-2">
-        Также, вы всегда можете обратиться за поддержкой:
+  <ValidationObserver v-slot="{ invalid }">
+    <div class="add-funds-card">
+      <p class="is-size-5">Укажите сумму реинвестирования</p>
+      <p class="is-size-7 mb-60">
+        Вы можете <a class="is-link">реинвестировать всю сумму</a> или часть начисленных дивидендов, остальные вывести.
       </p>
-      <div class="links">
-        <a href="/" class="is-size-7 has-text-link has-text-weight-light telegram">Чат telegram (2,7K)</a>
+      <div class="is-flex is-align-items-flex-start mb-60 mw-600">
+        <ValidationProvider
+          rules="required|min_value:500"
+          slim
+          v-slot="{ errors, valid }"
+        >
+          <base-input
+            type="number"
+            v-model="value"
+            placeholder="2,500.00"
+            required
+            :is-danger="!!errors[0]"
+            :is-success="!!valid"
+            :error="errors[0]"
+            size="4"
+            class="is-flex-grow-1"
+          />
+        </ValidationProvider>
+        <div class="is-flex ml-5 is-align-items-center">
+          <b-checkbox
+            v-model="isTermsAcceped"
+            required
+          />
+          <span
+            class="is-size-7"
+            @click="$parent.close()"
+          > Я принимаю
+            <nuxt-link
+              class="terms-link "
+              to="/terms-and-conditions"
+            >
+              условия соглашения
+            </nuxt-link>
+          </span>
+        </div>
+      </div>
+
+      <div class="actions is-flex is-justify-content-space-between is-align-items-center ">
+        <a
+          @click="$parent.close()"
+          class="cancel has-text-link is-size-7 is-cursor-pointer"
+        > Отменить, я передумал </a>
+        <custom-button
+          :disabled="invalid || !isTermsAcceped"
+          @click.native="withdraw"
+        >
+          Реинвестировать
+        </custom-button>
       </div>
     </div>
-    <div class="actions is-flex is-justify-content-space-between is-align-items-center ">
-      <a
-        @click="$parent.close()"
-        class="cancel has-text-link is-size-7 is-cursor-pointer"
-      >
-        Отменить, я передумал
-      </a>
-      <custom-button @click.native="addWallet">Сохранить</custom-button>
-    </div>
-  </div>
+  </ValidationObserver>
 </template>
+
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 
 export default {
-  name: 'add-new-wallet-modal',
+  name: 'reinvest-modal',
   data() {
     return {
-      wallet: '0x'
+      value: ''
     }
   },
+  components: { ValidationObserver, ValidationProvider },
   methods: {
-    async addWallet() {
-      if (this.wallet) {
-        const res = await this.$store.dispatch('wallet/addWallet', this.wallet)
-        if (res) {
-          this.$authFetchUser()
-          this.$parent.close()
-        }
-      }
+    reinvest() {
+      this.$store.dispatch("dividends/reinvest");
     },
-    pasteFromMM() {
-      const wallet = window?.ethereum?.selectedAddress
-      if (wallet) {
-        this.wallet = wallet
+  },
+  computed: {
+    isTermsAcceped: {
+      get() {
+        return this.$store.getters.isTermsAcceped
+      },
+      set(newValue) {
+        this.$store.commit('setIsTermsAcceped', newValue)
       }
     }
   }
@@ -65,6 +93,9 @@ export default {
   button {
     width: 400px;
   }
+}
+.mw-600 {
+  max-width: 600px;
 }
 .links {
   a {
@@ -113,7 +144,7 @@ export default {
     background-size: contain;
   }
 }
-.add-wallet-card {
+.add-funds-card {
   width: 860px;
   height: 560px;
   position: relative;
