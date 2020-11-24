@@ -45,7 +45,7 @@
 export default {
   name: 'login',
   layout: 'auth',
-  middleware: ['userRedirect'],
+  middleware: ['fetchUser','userRedirect'],
   data() {
     return {
       email: '',
@@ -65,7 +65,7 @@ export default {
       let resp = await this.$authLogin(this.email, this.password)
       if (resp === false) {
         this.$buefy.toast.open({
-          message: 'Check your email/password and make sure you activated your account',
+          message: 'Неверный логин или пароль.',
           type: 'is-warning',
           duration: 6000
         })

@@ -64,9 +64,10 @@
         <b-table-column
           field="amountUSDT"
           label="Сумма, USDT"
-          width="20%"
+          width="10%"
           header-class="right-align"
           cell-class="text-right"
+          align="right"
         >
           {{ formatCurrency(props.row.args.USDT, 'usdt') }}
         </b-table-column>

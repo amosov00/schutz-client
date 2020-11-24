@@ -74,7 +74,11 @@ h1.is-1 {
     border: 0 !important;
 
     td, th {
-      border: 0
+      border: 0;
+
+      &:last-child {
+        text-align: right;
+      }
     }
   }
   .table-wrapper {

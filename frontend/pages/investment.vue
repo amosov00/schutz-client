@@ -70,8 +70,8 @@
               Авторизовать кошлек
             </custom-button>
             <custom-button
-              v-else-if="user.is_deposit_open && allowance !== 0"
-              @click.native="approve"
+              v-else-if="totalDeposit > 0"
+              @click.native="isAddFundsModalActive = true"
               class="mt-auto"
               :disabled="!user.ethereum_wallet || status!=='online'"
             >
@@ -162,7 +162,8 @@
             label="Сумма, USDT"
             cell-class="text-right"
             header-class="has-text-right"
-            width="20%"
+            width="10%"
+            align="right"
           >
             {{ formatCurrency(props.row.args.USDT, 'usdt') }}
           </b-table-column>

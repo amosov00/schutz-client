@@ -71,7 +71,7 @@ export default {
   components: { ValidationObserver, ValidationProvider },
   methods: {
     withdraw() {
-      this.$store.dispatch("dividends/withdraw");
+      this.$store.dispatch("userContractIntegration/withdraw");
     },
   },
   computed: {

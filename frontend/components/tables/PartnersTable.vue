@@ -38,6 +38,8 @@
           class="text-clamp"
           field="referral_level"
           :label="$t('level')"
+          align="right"
+          width="10%"
         >{{ props.row.referral_level }}
         </b-table-column>
       </template>

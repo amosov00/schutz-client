@@ -18,7 +18,7 @@ export default {
     links: [
       { name: 'Регистрация', link: '/signup' },
       { name: 'Авторизация', link: '/' },
-    ]
+    ],
   })
 };
 </script>

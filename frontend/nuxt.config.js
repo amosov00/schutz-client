@@ -123,6 +123,12 @@ export default {
       defaultLocale: 'ru',
     }]
   ],
+  dotenv: 'local'
+    ? {
+      filename: '.env.local'
+    }
+    : {},
+  buildModules: [['@nuxtjs/dotenv', this.dotenv]],
 
   sentry: {
     initialize: true,
@@ -143,6 +149,13 @@ export default {
       'vee-validate/dist/rules'
     ],
     extend(config, ctx) {
+      config.module.rules.push({
+        test: /\.xml$/,
+        loader: 'xml-loader'
+      })
+      const assetsLoader = config.module.rules.find(rule => rule.test.test('.png'));
+      assetsLoader.test = /\.(png|jpe?g|gif|svg|webp|pdf|ico)$/i;
+      return config;
     }
   }
 }
