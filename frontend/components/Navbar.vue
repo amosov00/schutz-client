@@ -43,8 +43,11 @@ export default {
     }
   },
   data: () => ({
-    closeLink: this.$config.LANDING_BASE_URL
+    closeLink: ''
   }),
+  mounted() {
+    this.closeLink = this.$config.LANDING_BASE_URL
+  },
   computed: {
     activePage() {
       return this.$route.path

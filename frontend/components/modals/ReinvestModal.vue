@@ -49,7 +49,7 @@
         > Отменить, я передумал </a>
         <custom-button
           :disabled="invalid || !isTermsAcceped"
-          @click.native="withdraw"
+          @click.native="reinvest"
         >
           Реинвестировать
         </custom-button>
@@ -71,7 +71,7 @@ export default {
   components: { ValidationObserver, ValidationProvider },
   methods: {
     reinvest() {
-      this.$store.dispatch("dividends/reinvest");
+      this.$store.dispatch("userContractIntegration/reinvest", this.value);
     },
   },
   computed: {

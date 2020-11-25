@@ -33,7 +33,7 @@ export const actions = {
         return false
       })
   },
-  async withdraw({rootGetters}) {
+  async withdraw({rootGetters}, value) {
     const gasPrice = rootGetters['metamask/gasPrice']
     return await window.ethereum
       .request({
@@ -41,11 +41,13 @@ export const actions = {
         params: [
           {
             from: window.ethereum.selectedAddress,
-            to: this.$contracts().NTSCD._address,
+            to: this.$contracts().Schutz._address,
             value: "0x00",
             gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
             gas: web3.utils.toHex("250000"),
-            data: this.$contracts().NTSCD.methods.withdraw().encodeABI()
+            data: this.$contracts().Schutz.methods.withdraw(
+              value * 1e6
+            ).encodeABI()
           }]
       })
       .then(async tx => {
@@ -55,7 +57,7 @@ export const actions = {
         return false
       })
   },
-  async reinvest({rootGetters}) {
+  async reinvest({rootGetters}, value) {
     const gasPrice = rootGetters['metamask/gasPrice']
     return await window.ethereum
       .request({
@@ -63,11 +65,13 @@ export const actions = {
         params: [
           {
             from: window.ethereum.selectedAddress,
-            to: this.$contracts().NTSCD._address,
+            to: this.$contracts().Schutz._address,
             value: "0x00",
             gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
             gas: web3.utils.toHex("250000"),
-            data: this.$contracts().NTSCD.methods.reinvest().encodeABI()
+            data: this.$contracts().Schutz.methods.reinvest(
+              value * 1e6
+            ).encodeABI()
           }]
       })
       .then(async tx => {
