@@ -43,7 +43,7 @@ export default {
     }
   },
   data: () => ({
-    closeLink: process.env.LANDING_BASE_URL
+    closeLink: this.$config.LANDING_BASE_URL
   }),
   computed: {
     activePage() {

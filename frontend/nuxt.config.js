@@ -6,7 +6,7 @@ export default {
   target: 'server',
 
   head: {
-    title: 'SCHUTZ',
+    title: 'Schutz',
     meta: [
       { charset: 'utf-8' },
       {
@@ -16,7 +16,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'NTS Fund'
+        content: 'Schutz fund'
       }
     ],
     link: [
@@ -123,12 +123,10 @@ export default {
       defaultLocale: 'ru',
     }]
   ],
-  dotenv: 'local'
-    ? {
-      filename: '.env.local'
-    }
-    : {},
-  buildModules: [['@nuxtjs/dotenv', this.dotenv]],
+
+  publicRuntimeConfig: {
+    LANDING_BASE_URL: process.env.LANDING_BASE_URL || ''
+  },
 
   sentry: {
     initialize: true,
@@ -139,7 +137,7 @@ export default {
 
   vue: {
     config: {
-      productionTip: true,
+      productionTip: false,
       devtools: !isProduction,
     }
   },
