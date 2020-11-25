@@ -5,9 +5,15 @@
       <div class="page-footer__info">
         <div class="copyright"><span class="has-text-weight-light">© 2017—2020,</span> SCHUTZ</div>
         <div class="links">
-          <a href="/" class="mr-3 is-size-7 has-text-weight-light telegram">Чат telegram (2,7K)</a>
+          <a
+            :href="telegramSupport"
+            class="mr-3 is-size-7 has-text-weight-light telegram"
+          >Чат telegram (2,7K)</a>
           <div class="link-separate"></div>
-          <a href="/" class="ml-3 is-size-7 has-text-weight-light">Контактная информация</a>
+          <a
+            :href="contacts"
+            class="ml-3 is-size-7 has-text-weight-light"
+          >Контактная информация</a>
         </div>
       </div>
     </div>
@@ -16,11 +22,22 @@
 
 <script>
 export default {
-  name: 'DefaultFooter'
+  name: 'DefaultFooter',
+  data: () => ({
+    telegramSupport: '',
+    contacts: ''
+  }),
+  mounted() {
+    this.contacts = `${this.$config.LANDING_BASE_URL}/contacts`
+    this.telegramSupport = this.$config.TELEGRAM_SUPPORT_URL
+  }
 }
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss"
+>
 .page-footer {
   margin-top: 20px;
   padding-top: 30px;
@@ -65,7 +82,7 @@ export default {
           }
         }
 
-        &:hover{
+        &:hover {
           color: #8af3ff;
         }
       }

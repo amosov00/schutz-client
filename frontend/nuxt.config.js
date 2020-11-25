@@ -125,7 +125,8 @@ export default {
   ],
 
   publicRuntimeConfig: {
-    LANDING_BASE_URL: process.env.LANDING_BASE_URL || ''
+    LANDING_BASE_URL: process.env.LANDING_BASE_URL || '',
+    TELEGRAM_SUPPORT_URL: 'https://t.me/Neutrino_NTS_RU'
   },
 
   sentry: {
