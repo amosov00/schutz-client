@@ -4,6 +4,7 @@ export const state = () => ({});
 export const mutations = {};
 export const actions = {
   addFunds({ rootState, commit, dispatch, rootGetters }, value) {
+    const gasPrice = rootGetters['metamask/gasPrice']
     dispatch("passTermsAgreement", {}, { root: true });
     ethereum.sendAsync(
       {
@@ -13,7 +14,7 @@ export const actions = {
             from: ethereum.selectedAddress,
             to: this.$contracts().NTSCD._address,
             value: "0x00",
-            gasPrice: web3.utils.toHex(web3.utils.toWei('100', "gwei")),
+            gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
             gas: web3.utils.toHex("250000"),
             data: web3.eth.abi.encodeFunctionCall(
               {

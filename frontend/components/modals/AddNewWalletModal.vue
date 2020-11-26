@@ -5,8 +5,16 @@
       Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды.
     </p>
     <div class="is-flex is-align-items-flex-start mb-60">
-      <base-input type="text" size="4" class="is-flex-grow-1 mt-3" v-model="wallet" />
-      <div class="mm-copy ml-2 mb-2" @click="pasteFromMM">
+      <base-input
+        type="text"
+        size="4"
+        class="is-flex-grow-1 mt-3"
+        v-model="wallet"
+      />
+      <div
+        class="mm-copy ml-2 mb-2"
+        @click="pasteFromMM"
+      >
         <a class="has-text-link">копировать из MM</a>
       </div>
     </div>
@@ -16,16 +24,18 @@
         Также, вы всегда можете обратиться за поддержкой:
       </p>
       <div class="links">
-        <a href="/" class="is-size-7 has-text-link has-text-weight-light telegram">Чат telegram (2,7K)</a>
+        <a
+          :href="telegramSupport"
+          target="_blank"
+          class="is-size-7 has-text-link has-text-weight-light telegram"
+        >Чат telegram (2,7K)</a>
       </div>
     </div>
     <div class="actions is-flex is-justify-content-space-between is-align-items-center ">
       <a
         @click="$parent.close()"
         class="cancel has-text-link is-size-7 is-cursor-pointer"
-      >
-        Отменить, я передумал
-      </a>
+      > Отменить, я передумал </a>
       <custom-button @click.native="addWallet">Сохранить</custom-button>
     </div>
   </div>
@@ -36,8 +46,12 @@ export default {
   name: 'add-new-wallet-modal',
   data() {
     return {
+      telegramSupport: '',
       wallet: '0x'
     }
+  },
+  mounted() {
+    this.telegramSupport = this.$config.TELEGRAM_SUPPORT_URL
   },
   methods: {
     async addWallet() {

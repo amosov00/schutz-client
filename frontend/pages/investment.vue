@@ -1,18 +1,28 @@
 <template>
   <div>
-    <custom-slider :activeDot="2" :dots="4" next-page="/dividends" prev-page="/profile">
+    <custom-slider
+      :activeDot="2"
+      :dots="4"
+      next-page="/dividends"
+      prev-page="/profile"
+    >
       <template slot="content">
         <div class="columns">
           <div class="column is-half">
             <div>
               <div class="is-size-5 mb-5">
-                Откройте вклад<br />
-                и начните зарабатывать<br />
-                до 101% годовых в USDT
+                Откройте вклад<br /> и начните зарабатывать<br /> до 101% годовых в USDT
               </div>
               <div class="mb-5 calc">
                 <div class="is-size-7 mb-2 has-text-grey">Укажите сумму вклада в долларе США</div>
-                <base-input v-model="input" type="number" size="4" :max="999999" :maxLength="8" onlyNumber />
+                <base-input
+                  v-model="input"
+                  type="number"
+                  size="4"
+                  :max="999999"
+                  :maxLength="8"
+                  onlyNumber
+                />
               </div>
               <div class="mb-5">
                 <div class="is-size-7">ваш доход составит:</div>
@@ -24,8 +34,7 @@
               </div>
               <div>
                 <div class="is-size-7 mb-4 has-text-grey">
-                  Вклад будет доступен к выводу<br />
-                  после {{getWithdrawDate}}
+                  Вклад будет доступен к выводу<br /> после {{getWithdrawDate}}
                 </div>
               </div>
             </div>
@@ -35,13 +44,12 @@
               <div class="is-size-4">Вклад USDT:</div>
               <div class="is-size-2 mb-5">{{ formatCurrency(totalDeposit) }}</div>
               <div class="is-size-7 ethereum">Ethereum адрес:</div>
-              <div class="is-size-6 mb-5 has-text-weight-bold text-clamp">
-                <span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
-                <a v-else
-                   @click="isWalletModalActive = true"
-                   class="value has-text-link has-text-weight-light">
-                  Добавить кошелек
-                </a>
+              <div class="ethereum-address mb-5">
+                <span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span> <a
+                v-else
+                @click="isWalletModalActive = true"
+                class="value has-text-link has-text-weight-light"
+              > Добавить кошелек </a>
               </div>
               <div class="is-flex mb-3 is-align-items-center">
                 <div
@@ -52,13 +60,22 @@
                 </div>
                 <div class="is-size-6">Gas price (fast): {{gasPrice}}</div>
               </div>
-              <div v-if="status==='online'" class="is-size-7 has-text-grey">
+              <div
+                v-if="status==='online'"
+                class="is-size-7 has-text-grey"
+              >
                 Кошелек готов к работе.
               </div>
-              <div v-else-if="!user.ethereum_wallet" class="is-size-7 status-offline">
+              <div
+                v-else-if="!user.ethereum_wallet"
+                class="is-size-7 status-offline"
+              >
                 Добавьте кошелек
               </div>
-              <div v-else class="is-size-7 status-offline">
+              <div
+                v-else
+                class="is-size-7 status-offline"
+              >
                 Выберите этот кошелек в вашем MetaMask.
               </div>
             </div>
@@ -118,13 +135,10 @@
             label="Событие"
             width="20%"
           >
-            <span class="text-nowrap">{{ props.row.event }}</span>
-            <span
-              class="tag is-link"
-              v-if="props.row.isReinvested"
-            >
-              Reinvested
-            </span>
+            <span class="text-nowrap">{{ props.row.event }}</span> <span
+            class="tag is-link"
+            v-if="props.row.isReinvested"
+          > Reinvested </span>
           </b-table-column>
           <b-table-column
             class="has-text-primary overflow-reset"
@@ -139,12 +153,10 @@
               position="is-bottom"
             >
               <a
-                class="text-clamp"
-                :style="{maxWidth: `80px`}"
                 :href="'https://etherscan.io/tx/' + props.row.transactionHash"
                 target="_blank"
-              >
-                {{ props.row.transactionHash }}
+                class="is-flex"
+              > {{ hashSlice(props.row.transactionHash) }}
               </a>
             </b-tooltip>
           </b-table-column>
@@ -174,17 +186,26 @@
         Всего: {{`${formatCurrency(filteredTotals, 'usdt')}` }} USDT
       </div>
     </div>
-    <b-modal :active.sync="isWalletModalActive" has-modal-card>
+    <b-modal
+      :active.sync="isWalletModalActive"
+      has-modal-card
+    >
       <add-new-wallet-modal></add-new-wallet-modal>
     </b-modal>
-    <b-modal :active.sync="isMetaMaskInstallModalActive" has-modal-card>
+    <b-modal
+      :active.sync="isMetaMaskInstallModalActive"
+      has-modal-card
+    >
       <install-meta-mask-modal />
     </b-modal>
     <b-modal
       :active.sync="isAddFundsModalActive"
       has-modal-card
     >
-      <AddFundsModal   :preparedData="input"  has-modal-card />
+      <AddFundsModal
+        :preparedData="input"
+        has-modal-card
+      />
     </b-modal>
   </div>
 </template>
@@ -194,6 +215,7 @@ import { mapGetters } from 'vuex'
 import formatDate from '~/mixins/formatDate'
 import AddFundsModal from '../components/modals/AddFundsModal'
 import formatCurrency from '~/mixins/formatCurrency'
+import formatText from '~/mixins/formatText'
 import moment from 'moment'
 import gsap from 'gsap'
 import AddNewWalletModal from '../components/modals/AddNewWalletModal'
@@ -203,7 +225,7 @@ export default {
   name: 'investment',
   layout: 'profile',
   middleware: ['authRequired', 'contracts', 'metamask'],
-  mixins: [formatDate, formatCurrency],
+  mixins: [formatDate, formatCurrency, formatText],
   components: {
     InstallMetaMaskModal,
     AddNewWalletModal,
@@ -342,7 +364,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style
+  lang="scss"
+  scoped
+>
+.ethereum-address {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: bold;
+}
 .total-withdraw {
   padding: 10px 20px;
   border-radius: 12px;

@@ -1,5 +1,8 @@
 <template>
-  <ValidationObserver v-slot="{ invalid }">
+  <ValidationObserver
+    ref="observer"
+    v-slot="{ invalid }"
+  >
     <div class="add-funds-card">
       <p class="is-size-5">Укажите сумму вклада в USDT</p>
       <p class="is-size-7 mb-60">
@@ -7,14 +10,13 @@
       </p>
       <div class="is-flex is-align-items-flex-start mb-60 mw-600">
         <ValidationProvider
-          rules="required|min_value:500"
+          rules="required|min_value:50"
           slim
           v-slot="{ errors, valid }"
         >
           <base-input
             type="number"
             v-model="value"
-            :min="500"
             placeholder="2,500.00"
             required
             :is-danger="!!errors[0]"
@@ -22,13 +24,23 @@
             :error="errors[0]"
             size="4"
             class="is-flex-grow-1"
+            setFocus
           />
         </ValidationProvider>
         <div class="is-flex ml-5 is-align-items-center">
-          <b-checkbox v-model="isTermsAcceped" required />
-          <span class="is-size-7" @click="$parent.close()">
-            Я принимаю
-            <nuxt-link class="terms-link " to="/terms-and-conditions">
+          <b-checkbox
+            v-model="isTermsAcceped"
+            required
+            @keydown.native="(e)=>{e.stopPropagation()}"
+          />
+          <span
+            class="is-size-7"
+            @click="$parent.close()"
+          > Я принимаю
+            <nuxt-link
+              class="terms-link "
+              to="/terms-and-conditions"
+            >
               условия соглашения
             </nuxt-link>
           </span>
@@ -39,9 +51,7 @@
         <a
           @click="$parent.close()"
           class="cancel has-text-link is-size-7 is-cursor-pointer"
-        >
-          Отменить, я передумал
-        </a>
+        > Отменить, я передумал </a>
         <custom-button
           :disabled="invalid || !isTermsAcceped"
           @click.native="addFunds"
@@ -70,16 +80,22 @@ export default {
   },
   components: { ValidationObserver, ValidationProvider },
   methods: {
-    addFunds() {
-      if (!this.isTermsAcceped) {
+    logKey(e) {
+      if (e.code === 'Enter') {
+        this.addFunds()
+      }
+    },
+    async addFunds() {
+      const isValid = await this.$refs.observer.validate()
+
+      if (isValid && this.isTermsAcceped) {
+        this.$store.dispatch('transactions/addFunds', this.value)
+        this.$parent.close()
+      } else if (!this.isTermsAcceped) {
         this.$buefy.toast.open({
           message: 'You have to confirm terms of the agreement',
           type: 'is-warning'
         })
-        return false
-      } else {
-        this.$store.dispatch('transactions/addFunds', this.value)
-        this.$parent.close()
       }
     }
   },
@@ -95,6 +111,11 @@ export default {
   },
   mounted() {
     this.value = this.preparedData
+    document.addEventListener('keydown', this.logKey)
+  },
+  beforeDestroy() {
+    this.$store.commit('setIsTermsAcceped', false)
+    document.removeEventListener('keydown', this.logKey)
   }
 }
 </script>

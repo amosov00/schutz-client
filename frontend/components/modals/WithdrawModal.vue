@@ -1,5 +1,8 @@
 <template>
-  <ValidationObserver v-slot="{ invalid }">
+  <ValidationObserver
+    ref="observer"
+    v-slot="{ invalid }"
+  >
     <div class="add-funds-card">
       <p class="is-size-5">Укажите сумму вывода</p>
       <p class="is-size-7 mb-60">
@@ -7,7 +10,7 @@
       </p>
       <div class="is-flex is-align-items-flex-start mb-60 mw-600">
         <ValidationProvider
-          rules="required|min_value:500"
+          rules="required|min_value:1"
           slim
           v-slot="{ errors, valid }"
         >
@@ -21,12 +24,14 @@
             :error="errors[0]"
             size="4"
             class="is-flex-grow-1"
+            setFocus
           />
         </ValidationProvider>
         <div class="is-flex ml-5 is-align-items-center">
           <b-checkbox
             v-model="isTermsAcceped"
             required
+            @keydown.native="(e)=>{e.stopPropagation()}"
           />
           <span
             class="is-size-7"
@@ -70,9 +75,18 @@ export default {
   },
   components: { ValidationObserver, ValidationProvider },
   methods: {
-    withdraw() {
-      this.$store.dispatch("userContractIntegration/withdraw", this.value);
+    async withdraw() {
+      const isValid = await this.$refs.observer.validate()
+      if (isValid && this.isTermsAcceped) {
+        this.$store.dispatch('userContractIntegration/withdraw', this.value)
+        this.$parent.close()
+      }
     },
+    logKey(e) {
+      if (e.code === 'Enter') {
+        this.withdraw()
+      }
+    }
   },
   computed: {
     isTermsAcceped: {
@@ -83,6 +97,13 @@ export default {
         this.$store.commit('setIsTermsAcceped', newValue)
       }
     }
+  },
+  mounted() {
+    document.addEventListener('keydown', this.logKey)
+  },
+  beforeDestroy() {
+    this.$store.commit('setIsTermsAcceped', false)
+    document.removeEventListener('keydown', this.logKey)
   }
 }
 </script>

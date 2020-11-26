@@ -1,23 +1,34 @@
 <template>
   <div
     class="custom-input"
-    :class="{'has-icon': hasIcon, 'is-danger': isDanger, 'is-success': isSuccess}">
-    <label v-if="label" :for="label" class="base-label">{{ label }}</label>
-    <input
-      :id="label"
-      class="input"
-      :class="[`is-size-${size}`]"
-      :type="type"
-      :placeholder="placeholder"
-      :value="value"
-      @input="onInput"
-      step="any"
-      :maxLength="maxLength"
-      :max="max"
-      :min="min"
-    />
-    <div class="bottom-line" :class="{'is-danger': isDanger, 'is-success': isSuccess}"></div>
-    <div class="error is-size-7" v-if="error">
+    :class="{'has-icon': hasIcon, 'is-danger': isDanger, 'is-success': isSuccess}"
+  >
+    <label
+      v-if="label"
+      :for="label"
+      class="base-label"
+    >{{ label }}</label> <input
+    :id="label"
+    class="input"
+    :class="[`is-size-${size}`]"
+    :type="type"
+    :placeholder="placeholder"
+    :value="value"
+    @input="onInput"
+    step="any"
+    :maxLength="maxLength"
+    :max="max"
+    :min="min"
+    ref="input"
+  />
+    <div
+      class="bottom-line"
+      :class="{'is-danger': isDanger, 'is-success': isSuccess}"
+    ></div>
+    <div
+      class="error is-size-7"
+      v-if="error"
+    >
       {{ error }}
     </div>
   </div>
@@ -78,17 +89,31 @@ export default {
     hasIcon: {
       type: Boolean,
       default: () => false
+    },
+    setFocus: {
+      type: Boolean,
+      default: () => false
     }
   },
   methods: {
     onInput(e) {
       this.$emit('input', e.target.value)
     }
+  },
+  mounted() {
+    if (this.setFocus) {
+      setTimeout(() => {
+        this.$refs.input.focus()
+      }, 10)
+    }
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss"
+>
 .custom-input {
   position: relative;
   display: flex;

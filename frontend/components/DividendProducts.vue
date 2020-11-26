@@ -21,7 +21,7 @@
           <div class="column is-half is-flex is-flex-direction-column ">
             <div>
               <div class="is-size-7 ethereum">Ethereum адрес:</div>
-              <div class="is-size-6 mb-5 has-text-weight-bold text-clamp">
+              <div class="mb-5 ethereum-address">
                 <span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span> <a
                 v-else
                 @click="isWalletModalActive = true"
@@ -143,6 +143,11 @@ export default {
   lang="scss"
   scoped
 >
+.ethereum-address {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: bold;
+}
 .ethereum {
   padding-top: 120px;
   position: relative;

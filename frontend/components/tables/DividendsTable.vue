@@ -45,11 +45,9 @@
             position="is-bottom"
           >
             <a
-              class="text-clamp"
-              :style="{maxWidth: `80px`}"
               :href="'https://etherscan.io/tx/' + props.row.transactionHash"
               target="_blank"
-            > {{ props.row.transactionHash }} </a>
+            > {{ hashSlice(props.row.transactionHash) }} </a>
           </b-tooltip>
         </b-table-column>
         <b-table-column
@@ -83,10 +81,11 @@
 import { mapGetters } from 'vuex'
 import formatDate from '~/mixins/formatDate'
 import formatCurrency from '~/mixins/formatCurrency'
+import formatText from '~/mixins/formatText'
 
 export default {
   name: 'DividendsTable',
-  mixins: [formatDate, formatCurrency],
+  mixins: [formatDate, formatCurrency, formatText],
   computed: {
     ...mapGetters(['user']),
     tableData() {
