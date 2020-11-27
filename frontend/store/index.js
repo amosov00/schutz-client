@@ -222,7 +222,7 @@ export const actions = {
       });
   },
   async fetchUser({}, id) {
-    return await this.$axios.get(`/admin/users/${id}/`)
+    return await this.$axios.get(`/admin/users/${id}/`).then(resp => resp.data).catch(_ => false);
   },
   async prolongAgreement({commit}, id) {
     return await this.$axios

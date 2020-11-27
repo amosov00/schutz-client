@@ -2,7 +2,7 @@
   div.left-menu
     figure.image
       nuxt-link(to="/investment")
-        img.logo(src="~/assets/img/logo.svg")
+        img.logo(src="~/static/logo-invert.svg")
     div.link-list
       n-link.link(v-for="(link, index) in links_main" :to="localePath(`${link.url}`, `${$i18n.locale}`)" :key="index" exact-active-class="active")
         div.icon-wrap
@@ -44,7 +44,8 @@ export default {
         // { url: "/", icon: "dashboard", text: this.$t("dashboard"), perm: this.$userIsManager},
         {url: "/users", icon: "profile", text: this.$t("users"), perm: this.$userIsManager},
         {url: "/reports", icon: "reports", text: this.$t("reports"), perm: this.$userIsManager},
-        {url: "/bills", icon: "bills", text: this.$t("bills"), perm: this.$userIsSuperuser}
+        {url: "/bills", icon: "bills", text: this.$t("bills"), perm: this.$userIsSuperuser},
+        {url: "/deposit-accural", icon: "reports", text: this.$t("Начисление депозита"), perm: this.$userIsSuperuser}
       ];
     }
   }

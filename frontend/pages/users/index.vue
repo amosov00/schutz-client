@@ -44,7 +44,7 @@ import formatDate from '~/mixins/formatDate'
 import XLSX from "xlsx";
 export default {
   name: "users",
-  layout: "profile",
+  layout: "admin",
   middleware: ["managerRequired", "contracts"],
   mixins: [formatDate],
   computed: {

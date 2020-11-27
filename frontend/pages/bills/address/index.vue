@@ -3,7 +3,7 @@
 <script>
 export default {
   name: "bills_address",
-  layout: "profile",
+  layout: "admin",
   middleware: ["authRequired", "adminRequired", "contracts"],
   asyncData({redirect}) {
     redirect('/bills/')

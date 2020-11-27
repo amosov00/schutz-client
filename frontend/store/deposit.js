@@ -136,6 +136,81 @@ export const actions = {
     }).catch(err => {
       Toast.open({message: err, type: 'is-danger'})
     })
+  },
+  async passRepaySingle({rootGetters}, data) {
+    if (!window.ethereum) {
+      console.error("Metamask is not found")
+      return
+    }
+    const gasPrice = rootGetters["metamask/gasPrice"];
+
+    return await window.ethereum
+      .request({
+        method: "eth_sendTransaction",
+        params: [
+          {
+            from: window.ethereum.selectedAddress,
+            to: this.$contracts().NTSCD._address,
+            value: "0x00",
+            gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
+            gas: web3.utils.toHex("250000"),
+            data: this.$contracts().NTSCD.methods.passRepay(
+              data.amount,
+              data.ethereum_wallet,
+              `${data.contract} close`
+            ).encodeABI()
+          }
+        ]
+      })
+      .then(txHash => {
+        Toast.open({type: "is-success", message: "Success", duration: 1000})
+        return true
+      })
+      .catch(err => {
+        Toast.open({type: "is-danger", message: "Error", duration: 1000})
+        return false
+      })
+  },
+  async passRepayMany({rootGetters}, data) {
+    /* формат данных
+    data: {
+      values: [Intereger, ],
+      customerAddresses: [String, ],
+      comments: [String, ]
+    }
+   */
+    if (!window.ethereum) {
+      console.error("Metamask is not found")
+      return
+    }
+    const gasPrice = rootGetters["metamask/gasPrice"];
+
+    return await window.ethereum
+      .request({
+        method: "eth_sendTransaction",
+        params: [
+          {
+            from: window.ethereum.selectedAddress,
+            to: this.$contracts().OperatorNTS._address,
+            value: "0x00",
+            gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
+            gas: web3.utils.toHex("7500000"),
+            data: this.$contracts().OperatorNTS.methods.passRepayNTSCD(
+              data.values,
+              data.customerAddresses,
+              data.comments,
+              0
+            ).encodeABI()
+          }
+        ]
+      })
+      .then(txHash => {
+        Toast.open({type: "is-success", message: "Success", duration: 1000})
+        return true
+      })
+      .catch(err => {
+        Toast.open({type: "is-danger", message: "Error", duration: 1000})
+      })
   }
 };
 
