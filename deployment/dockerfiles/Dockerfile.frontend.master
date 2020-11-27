@@ -5,10 +5,10 @@ ENV ENV=production
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3020
-ENV API_URL=https://my.nts.fund/api
-ENV API_URL_BROWSER=https://my.nts.fund/api
+ENV API_URL=https://my.schutz.capital/api
+ENV API_URL_BROWSER=https://my.schutz.capital/api
 ENV SENTRY_DSN=https://ce48edd71b494b9f870ae411b73a1097@sentry.elastoo.com/20
-ENV LANDING_BASE_URL=https://nts.fund/
+ENV LANDING_BASE_URL=https://schutz.capital/
 
 COPY ./frontend/ /frontend/
 WORKDIR /frontend/
