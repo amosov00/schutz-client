@@ -6,7 +6,7 @@ export default {
   target: 'server',
 
   head: {
-    title: 'Schutz',
+    title: 'My Schutz Capital',
     meta: [
       { charset: 'utf-8' },
       {
@@ -16,7 +16,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Schutz fund'
+        content: 'Schutz Capital',
       }
     ],
     link: [

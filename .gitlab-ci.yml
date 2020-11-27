@@ -5,13 +5,6 @@ services:
 variables:
   DOCKER_DRIVER: overlay2
 
-.rules_backend:
-  rules: &rules_backend
-    - if: "$CI_COMMIT_REF_NAME == 'master' || $CI_COMMIT_REF_NAME == 'develop'"
-      changes:
-        - "backend/**/*"
-        - "deployment/**/*"
-
 .rules_frontend:
   rules: &rules_frontend
     - if: "$CI_COMMIT_REF_NAME == 'master' || $CI_COMMIT_REF_NAME == 'develop'"
@@ -38,17 +31,6 @@ after_script:
 stages:
   - build
   - deploy
-
-.build-backend:
-  stage: build
-  variables:
-    CONTAINER_NAME: 'backend'
-    DOCKERFILE_PATH: './deployment/dockerfiles/Dockerfile.backend.common'
-  script:
-    - docker build --pull -t "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CONTAINER_NAME:$CI_COMMIT_REF_SLUG-latest" . -f $DOCKERFILE_PATH --no-cache
-    - docker push "$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$CONTAINER_NAME:$CI_COMMIT_REF_SLUG-latest"
-  rules: *rules_backend
-
 
 build-frontend:
   stage: build
