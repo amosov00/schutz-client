@@ -5,18 +5,29 @@
         <div class="content-slot is-flex is-flex-direction-column">
           <slot name="content"></slot>
         </div>
-        <nuxt-link :to="prevPage" class="arrow left-arrow">
+        <nuxt-link
+          :to="prevPage"
+          class="arrow left-arrow"
+        >
           <img src="~/static/slider-left.svg" />
         </nuxt-link>
-        <nuxt-link  :to="nextPage" class="arrow right-arrow">
+        <nuxt-link
+          :to="nextPage"
+          class="arrow right-arrow"
+        >
           <img src="~/static/slider-right.svg" />
         </nuxt-link>
       </div>
+      <div class="dots">
+        <div
+          class="dot"
+          :class="{active: num === activeDot}"
+          v-for="num in dots"
+          :key="num"
+        ></div>
+      </div>
       <div class="extra-text">
         <slot name="extra-text"></slot>
-      </div>
-      <div class="dots">
-        <div class="dot" :class="{active: num === activeDot}" v-for="num in dots" :key="num"></div>
       </div>
     </div>
   </div>
@@ -46,7 +57,10 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style
+  scoped
+  lang="scss"
+>
 .custom-slider {
   color: #000;
   margin-bottom: 20px;
@@ -78,7 +92,7 @@ export default {
   }
 }
 .inner {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   min-height: 560px;
   width: 100%;
   position: relative;
