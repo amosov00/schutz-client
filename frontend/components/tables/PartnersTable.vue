@@ -35,6 +35,16 @@
 				</b-table-column>
 				<b-table-column
 					class="text-clamp"
+					field="deposited"
+					label="Вклад, USDT"
+					>{{
+						new Intl.NumberFormat("en-US").format(
+							props.row.deposited
+						)
+					}}
+				</b-table-column>
+				<b-table-column
+					class="text-clamp"
 					field="referral_level"
 					:label="$t('level')"
 					align="left"
@@ -42,6 +52,16 @@
 				>
 					{{ props.row.referral_level }}
 					({{ getPercent(props.row.referral_level) }}%)
+				</b-table-column>
+				<b-table-column
+					class="text-clamp"
+					field="bonus"
+					label="Бонус, USDT"
+					header-class="text-right"
+					align="right"
+					>{{
+						new Intl.NumberFormat("en-US").format(props.row.bonus)
+					}}
 				</b-table-column>
 			</template>
 		</b-table>
@@ -58,7 +78,8 @@
 		</div>
 
 		<div class="is-size-5 has-background-primary total-withdraw mb-6">
-			Всего начислено: 0 USDT
+			Всего начислено:
+			{{ new Intl.NumberFormat("en-US").format(total) }} USDT
 		</div>
 	</div>
 </template>
@@ -72,9 +93,14 @@ export default {
 		// ...mapGetters(["partners"])
 		partners() {
 			let d = this.$store.getters.partners;
-			console.log(d);
+			if (this.limit > d.length) {
+				this.hide_button = true;
+			}
 
 			return d.slice(0, this.limit);
+		},
+		total() {
+			return this.$store.state.partners_total;
 		}
 	},
 	data() {
@@ -104,4 +130,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.text-right {
+	text-align: right;
+	.th-wrap {
+		justify-content: flex-end;
+	}
+}
+</style>

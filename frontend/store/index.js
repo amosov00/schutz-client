@@ -7,6 +7,7 @@ export const state = () => ({
 	findedAddress: null,
 	users: [],
 	partners: [],
+	partners_total: null,
 	referralLink: null,
 	userTxData: null,
 	isTermsAcceped: false,
@@ -74,6 +75,7 @@ export const mutations = {
 	setFindedAddress: (state, payload) => (state.findedAddress = payload),
 	setUsers: (state, payload) => (state.users = payload),
 	setPartners: (state, payload) => (state.partners = payload),
+	setPartnersNotal: (state, payload) => (state.partners_total = payload),
 	setReferralLink: (state, payload) => (state.referralLink = payload),
 	setIsTermsAcceped: (state, payload) => (state.isTermsAcceped = payload),
 	setContractAgreements: (state, payload) =>
@@ -184,7 +186,8 @@ export const actions = {
 	},
 	async fetchPartners({ commit }) {
 		const { data } = await this.$axios.get("/account/partners/extended/");
-		commit("setPartners", data);
+		commit("setPartners", data.referrals);
+		commit("setPartnersNotal", data.total);
 	},
 	async fetchReferralLink({ commit }) {
 		const { data } = await this.$axios.get("/account/referral_link/");
