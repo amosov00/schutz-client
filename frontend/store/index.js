@@ -183,7 +183,7 @@ export const actions = {
 		commit("setUsers", data);
 	},
 	async fetchPartners({ commit }) {
-		const { data } = await this.$axios.get("/account/partners/");
+		const { data } = await this.$axios.get("/account/partners/extended/");
 		commit("setPartners", data);
 	},
 	async fetchReferralLink({ commit }) {
