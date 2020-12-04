@@ -99,7 +99,10 @@ export const actions = {
 				ethereum_wallet: address
 			})
 			.then(_ => {
-				Toast.open({ message: "Wallet changed!", type: "is-success" });
+				Toast.open({
+					message: "Адрес кошелька сохранен",
+					type: "is-success"
+				});
 			})
 			.catch(err => {
 				Toast.open({
@@ -237,6 +240,10 @@ export const actions = {
 		return await this.$axios
 			.get(`/account/mark_prolong_agreement/${id}`, {})
 			.then(() => {
+				Toast.open({
+					message: "Вклад успешно пролонгирован",
+					type: "is-success"
+				});
 				return true;
 			})
 			.catch(() => {
@@ -247,6 +254,10 @@ export const actions = {
 		return await this.$axios
 			.get(`/account/mark_close_agreement/${id}`, {})
 			.then(() => {
+				Toast.open({
+					message: "Вклад успешно закрыт",
+					type: "is-success"
+				});
 				return true;
 			})
 			.catch(() => {

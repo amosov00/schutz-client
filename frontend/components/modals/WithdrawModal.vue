@@ -92,6 +92,10 @@ export default {
 		async withdraw() {
 			const isValid = await this.$refs.observer.validate();
 			if (isValid && this.isTermsAcceped) {
+				this.$buefy.toast.open({
+					message: "Запрос в Metamask отправлен (ВЫВОД)",
+					type: "is-success"
+				});
 				this.$store.dispatch(
 					"userContractIntegration/withdraw",
 					this.value

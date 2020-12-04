@@ -92,6 +92,10 @@ export default {
 		async reinvest() {
 			const isValid = await this.$refs.observer.validate();
 			if (isValid && this.isTermsAcceped) {
+				this.$buefy.toast.open({
+					message: "Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)",
+					type: "is-success"
+				});
 				this.$store.dispatch(
 					"userContractIntegration/reinvest",
 					this.value
