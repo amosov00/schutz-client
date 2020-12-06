@@ -79,12 +79,14 @@
 <script>
 import { mapGetters } from 'vuex'
 import PartnersTable from '~/components/tables/PartnersTable'
+import { mainSliderController } from "@/utils/slider";
 
 export default {
   name: 'partner',
   layout: 'profile',
   middleware: ['authRequired', 'contracts'],
-  components: {
+	transition: mainSliderController,
+	components: {
     PartnersTable
   },
   async asyncData({ store }) {
@@ -148,6 +150,8 @@ export default {
   lang="scss"
   scoped
 >
+@import "~@/assets/scss/transitions/slide-fade.scss";
+
 .social-link {
   display: flex;
   width: 32px;
