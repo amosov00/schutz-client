@@ -41,11 +41,13 @@
 
 
 <script>
+import { authSliderController } from '@/utils/slider';
 
 export default {
   name: 'login',
   layout: 'auth',
   middleware: ['fetchUser','userRedirect'],
+	transition: authSliderController,
   data() {
     return {
       email: '',
@@ -78,6 +80,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/transitions/slide-fade.scss";
+
 .left-link {
   line-height: 80px;
 }

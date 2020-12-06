@@ -245,12 +245,14 @@ import moment from "moment";
 import gsap from "gsap";
 import AddNewWalletModal from "../components/modals/AddNewWalletModal";
 import InstallMetaMaskModal from "../components/modals/installMetaMaskModal";
+import { mainSliderController } from "@/utils/slider";
 
 export default {
 	name: "investment",
 	layout: "profile",
 	middleware: ["authRequired", "contracts", "metamask"],
 	mixins: [formatDate, formatCurrency, formatText],
+	transition: mainSliderController,
 	components: {
 		InstallMetaMaskModal,
 		AddNewWalletModal,
@@ -404,6 +406,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/transitions/slide-fade.scss";
+
 .ethereum-address {
 	font-size: 14px;
 	line-height: 19px;

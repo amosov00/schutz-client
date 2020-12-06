@@ -414,6 +414,8 @@
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
+import { authSliderController } from "@/utils/slider";
+
 export default {
 	name: "signup",
 	layout: "auth",
@@ -422,6 +424,7 @@ export default {
 		ValidationProvider,
 		TermsAndConditionsModal
 	},
+	transition: authSliderController,
 	middleware: ["userRedirect"],
 	data() {
 		return {
@@ -508,6 +511,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/transitions/slide-fade.scss";
+
 .terms {
 	.num {
 		width: 50px;
