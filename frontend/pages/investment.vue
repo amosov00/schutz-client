@@ -17,7 +17,7 @@
 							</div>
 							<div class="mb-5 calc">
 								<div class="is-size-7 mb-2 has-text-grey">
-									Укажите сумму вклада в долларе США
+									Укажите сумму вклада в USDT
 								</div>
 								<base-input
 									v-model="input"
@@ -31,7 +31,7 @@
 							<div class="mb-5">
 								<div class="is-size-7">ваш доход составит:</div>
 								<div class="is-size-2">
-									$ {{ Math.round(profit) }}
+									{{ Math.round(profit) }}
 								</div>
 							</div>
 							<div class="mb-5">
@@ -39,7 +39,7 @@
 									с учетом реинвестирования:
 								</div>
 								<div class="is-size-1">
-									$ {{ Math.round(reinvest) }}
+									{{ Math.round(reinvest) }}
 								</div>
 							</div>
 							<div>
@@ -50,9 +50,7 @@
 							</div>
 						</div>
 					</div>
-					<div
-						class="column is-half is-flex is-flex-direction-column "
-					>
+					<div class="column is-half is-flex is-flex-direction-column ">
 						<div>
 							<div class="is-size-4">Вклад USDT:</div>
 							<div class="is-size-2 mb-5">
@@ -76,22 +74,15 @@
 							<div class="is-flex mb-3 is-align-items-center">
 								<div
 									:class="[
-										status === 'online'
-											? 'status-online'
-											: 'status-offline'
+										status === 'online' ? 'status-online' : 'status-offline'
 									]"
 									class="is-size-4 status mr-5"
 								>
 									{{ status }}
 								</div>
-								<div class="is-size-6">
-									Gas price (fast): {{ gasPrice }}
-								</div>
+								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div
-								v-if="status === 'online'"
-								class="is-size-7 has-text-grey"
-							>
+							<div v-if="status === 'online'" class="is-size-7 has-text-grey">
 								Кошелек готов к работе.
 							</div>
 							<div
@@ -115,9 +106,7 @@
 							v-else-if="totalDeposit > 0"
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
-							:disabled="
-								!user.ethereum_wallet || status !== 'online'
-							"
+							:disabled="!user.ethereum_wallet || status !== 'online'"
 						>
 							Пополнить депозит
 						</custom-button>
@@ -125,9 +114,7 @@
 							v-else
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
-							:disabled="
-								!user.ethereum_wallet || status !== 'online'
-							"
+							:disabled="!user.ethereum_wallet || status !== 'online'"
 						>
 							Открыть вклад
 						</custom-button>
@@ -176,10 +163,7 @@
 							position="is-bottom"
 						>
 							<a
-								:href="
-									'https://etherscan.io/tx/' +
-										props.row.transactionHash
-								"
+								:href="'https://etherscan.io/tx/' + props.row.transactionHash"
 								target="_blank"
 								class="is-flex"
 							>
@@ -341,9 +325,7 @@ export default {
 			return this.$store.getters["metamask/status"];
 		},
 		filteredData() {
-			let d = this.$store.getters.investmentsWithFilter(
-				this.currentProduct
-			);
+			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
 			console.log(d);
 
 			return d.slice(0, this.limit);

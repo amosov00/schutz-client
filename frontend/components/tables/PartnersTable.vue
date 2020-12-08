@@ -33,15 +33,8 @@
 				<b-table-column class="text-clamp" field="email" label="E-mail"
 					>{{ props.row.email }}
 				</b-table-column>
-				<b-table-column
-					class="text-clamp"
-					field="deposited"
-					label="Вклад, USDT"
-					>{{
-						new Intl.NumberFormat("en-US").format(
-							props.row.deposited
-						)
-					}}
+				<b-table-column class="text-clamp" field="deposited" label="Вклад, USDT"
+					>{{ sliceNumber(props.row.deposited) }}
 				</b-table-column>
 				<b-table-column
 					class="text-clamp"
@@ -59,9 +52,7 @@
 					label="Бонус, USDT"
 					header-class="text-right"
 					align="right"
-					>{{
-						new Intl.NumberFormat("en-US").format(props.row.bonus)
-					}}
+					>{{ sliceNumber(props.row.bonus) }}
 				</b-table-column>
 			</template>
 		</b-table>
@@ -110,6 +101,10 @@ export default {
 		};
 	},
 	methods: {
+		sliceNumber(number) {
+			let n = Math.round(number / 10000) / 100;
+			return new Intl.NumberFormat("en-US").format(n);
+		},
 		showMore() {
 			this.limit += 5;
 			if (this.limit > this.partners.length) {
