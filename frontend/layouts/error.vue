@@ -5,16 +5,15 @@
 				<h1 class="title">{{ $t("pageNotFound") }}</h1>
 				<div class="section">
 					<nuxt-link to="/profile" class="button is-info">
-						Go to my.nts.fund
+						Go to my.schutz.capital
 					</nuxt-link>
-					<a href="https://nts.fund/" class="button is-primary">
-						Go to nts.fund
+					<a href="https://schutz.capital/" class="button is-primary">
+						Go to schutz.capital
 					</a>
 				</div>
 			</div>
 		</div>
-		<br />
-		<br />
+		<br/>
 	</div>
 </template>
 
@@ -37,7 +36,6 @@ export default {
 	height: 100%;
 	position: relative;
 	border-radius: 12px;
-	height: 500px;
 	display: flex;
 	align-items: center;
 	justify-content: center;

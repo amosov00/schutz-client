@@ -18,7 +18,7 @@
 					:label="$t('registrationDate')"
 					width="200"
 					sortable="sortable"
-					>{{
+				>{{
 						props.row.created_at
 							? new Date(props.row.created_at).toLocaleString()
 							: ""
@@ -28,13 +28,13 @@
 					class="text-clamp"
 					field="fullname"
 					:label="$t('fullName')"
-					>{{ props.row.first_name }} {{ props.row.last_name }}
+				>{{ props.row.first_name }} {{ props.row.last_name }}
 				</b-table-column>
 				<b-table-column class="text-clamp" field="email" label="E-mail"
-					>{{ props.row.email }}
+				>{{ props.row.email }}
 				</b-table-column>
 				<b-table-column class="text-clamp" field="deposited" label="Вклад, USDT"
-					>{{ sliceNumber(props.row.deposited) }}
+				>{{ sliceNumber(props.row.deposited) }}
 				</b-table-column>
 				<b-table-column
 					class="text-clamp"
@@ -52,14 +52,14 @@
 					label="Бонус, USDT"
 					header-class="text-right"
 					align="right"
-					>{{ sliceNumber(props.row.bonus) }}
+				>{{ sliceNumber(props.row.bonus) }}
 				</b-table-column>
 			</template>
 		</b-table>
 
 		<div class="center mb-6">
 			<button
-				v-if="!hide_button"
+				v-if="!hideButton"
 				type="button"
 				@click="showMore()"
 				class="show-more"
@@ -70,24 +70,23 @@
 
 		<div class="is-size-5 has-background-primary total-withdraw mb-6">
 			Всего начислено:
-			{{ new Intl.NumberFormat("en-US").format(total) }} USDT
+			{{ formatCurrency(total, "usdt") }} USDT
 		</div>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import formatCurrency from "~/mixins/formatCurrency";
 
 export default {
 	name: "PartnersTable",
+	mixins: [formatCurrency],
 	computed: {
-		// ...mapGetters(["partners"])
 		partners() {
 			let d = this.$store.getters.partners;
 			if (this.limit > d.length) {
-				this.hide_button = true;
+				this.hideButton = true;
 			}
-
 			return d.slice(0, this.limit);
 		},
 		total() {
@@ -97,7 +96,7 @@ export default {
 	data() {
 		return {
 			limit: 5,
-			hide_button: false
+			hideButton: false
 		};
 	},
 	methods: {
@@ -108,7 +107,7 @@ export default {
 		showMore() {
 			this.limit += 5;
 			if (this.limit > this.partners.length) {
-				this.hide_button = true;
+				this.hideButton = true;
 			}
 		},
 
@@ -128,6 +127,7 @@ export default {
 <style lang="scss">
 .text-right {
 	text-align: right;
+
 	.th-wrap {
 		justify-content: flex-end;
 	}

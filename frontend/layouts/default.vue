@@ -1,18 +1,18 @@
 <template lang="pug">
-div
-	nuxt
+	div
+		nuxt
 
 </template>
 
 <script>
-	import LeftMenu from "~/components/LeftMenu";
+import LeftMenu from "~/components/LeftMenu";
 
-	export default {
-		components: {
-			LeftMenu
-		},
-		middleware: ['fetchUser'],
-	}
+export default {
+	components: {
+		LeftMenu
+	},
+	middleware: ['fetchUser', 'metamask'],
+}
 </script>
 
 <style scoped>

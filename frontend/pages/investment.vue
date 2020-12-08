@@ -11,8 +11,8 @@
 					<div class="column is-half">
 						<div>
 							<div class="is-size-5 mb-5">
-								Откройте вклад<br />
-								и начните зарабатывать<br />
+								Откройте вклад<br/>
+								и начните зарабатывать<br/>
 								до 101% годовых в USDT
 							</div>
 							<div class="mb-5 calc">
@@ -44,7 +44,7 @@
 							</div>
 							<div>
 								<div class="is-size-7 mb-4 has-text-grey">
-									Вклад будет доступен к выводу<br />
+									Вклад будет доступен к выводу<br/>
 									после {{ getWithdrawDate }}
 								</div>
 							</div>
@@ -61,8 +61,8 @@
 							</div>
 							<div class="ethereum-address mb-5">
 								<span v-if="user.ethereum_wallet">{{
-									user.ethereum_wallet
-								}}</span>
+										user.ethereum_wallet
+									}}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
@@ -73,22 +73,17 @@
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
 								<div
-									:class="[
-										status === 'online' ? 'status-online' : 'status-offline'
-									]"
+									:class="[isConnected ? 'status-online' : 'status-offline']"
 									class="is-size-4 status mr-5"
 								>
-									{{ status }}
+									{{ isConnected ? "Online" : "Offline" }}
 								</div>
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div v-if="status === 'online'" class="is-size-7 has-text-grey">
+							<div v-if="isConnected" class="is-size-7 has-text-grey">
 								Кошелек готов к работе.
 							</div>
-							<div
-								v-else-if="!user.ethereum_wallet"
-								class="is-size-7 status-offline"
-							>
+							<div v-else-if="!user.ethereum_wallet" class="is-size-7 status-offline">
 								Добавьте кошелек
 							</div>
 							<div v-else class="is-size-7 status-offline">
@@ -106,7 +101,7 @@
 							v-else-if="totalDeposit > 0"
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
-							:disabled="!user.ethereum_wallet || status !== 'online'"
+							:disabled="!user.ethereum_wallet || !isConnected"
 						>
 							Пополнить депозит
 						</custom-button>
@@ -114,7 +109,7 @@
 							v-else
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
-							:disabled="!user.ethereum_wallet || status !== 'online'"
+							:disabled="!user.ethereum_wallet || !isConnected"
 						>
 							Открыть вклад
 						</custom-button>
@@ -211,16 +206,16 @@
 			<add-new-wallet-modal></add-new-wallet-modal>
 		</b-modal>
 		<b-modal :active.sync="isMetaMaskInstallModalActive" has-modal-card>
-			<install-meta-mask-modal />
+			<install-meta-mask-modal/>
 		</b-modal>
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
-			<AddFundsModal :preparedData="input" has-modal-card />
+			<AddFundsModal :preparedData="input" has-modal-card/>
 		</b-modal>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "../components/modals/AddFundsModal";
 import formatCurrency from "~/mixins/formatCurrency";
@@ -229,12 +224,12 @@ import moment from "moment";
 import gsap from "gsap";
 import AddNewWalletModal from "../components/modals/AddNewWalletModal";
 import InstallMetaMaskModal from "../components/modals/installMetaMaskModal";
-import { mainSliderController } from "@/utils/slider";
+import {mainSliderController} from "@/utils/slider";
 
 export default {
 	name: "investment",
 	layout: "profile",
-	middleware: ["authRequired", "contracts", "metamask"],
+	middleware: ["authRequired", "contracts"],
 	mixins: [formatDate, formatCurrency, formatText],
 	transition: mainSliderController,
 	components: {
@@ -248,12 +243,12 @@ export default {
 			await this.$store.dispatch("metamask/getGasPrice");
 		}
 		if (this.$store.state.deposit.repayBalance === null) {
-			console.log("Get repay balance");
 			await this.$store.dispatch("deposit/getRepayBalance");
 		}
 		this.$store
 			.dispatch("deposit/fetchBalanceData")
-			.then(() => {})
+			.then(() => {
+			})
 			.catch(e => {
 				console.warn("Failed to fetch deposits data");
 				console.warn(e);
@@ -296,42 +291,17 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(["user"]),
-		gasPrice() {
-			return this.$store.getters["metamask/gasPrice"];
-		},
+		...mapGetters(["user", "txTotals"]),
+		...mapGetters("metamask", ["gasPrice", "isConnected"]),
+		...mapGetters("deposit", ["repayBalance", "allowance", "totalDeposit"]),
 		tableData() {
 			return this.$store.getters.transactions.transactions !== null
 				? this.$store.getters.transactions.transactions
 				: [];
 		},
-		getStatusClass() {
-			if (this.status === "online") {
-				return "status-online";
-			}
-			return "status-offline";
-		},
-		repayBalance() {
-			return this.$store.getters["deposit/repayBalance"];
-		},
-		allowance() {
-			return this.$store.getters["deposit/allowance"];
-		},
-		totalDeposit() {
-			const total = this.$store.getters["deposit/totalDeposit"];
-			return total ? total : 0;
-		},
-		status() {
-			return this.$store.getters["metamask/status"];
-		},
 		filteredData() {
 			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
-			console.log(d);
-
 			return d.slice(0, this.limit);
-		},
-		txTotals() {
-			return this.$store.getters.txTotals;
 		},
 		filteredTotals() {
 			let result = 0;
@@ -362,10 +332,7 @@ export default {
 				.format("DD MMM YYYY");
 		},
 		isMetaMaskInstalled() {
-			if (typeof web3 !== "undefined") {
-				return web3.currentProvider.isMetaMask === true;
-			}
-			return false;
+			return Boolean(window.ethereum);
 		}
 	},
 	data: () => ({
@@ -381,7 +348,7 @@ export default {
 		isMetaMaskInstallModalActive: false,
 		isAddFundsModalActive: false
 	}),
-	async asyncData({ store }) {
+	async asyncData({store}) {
 		return await store.dispatch("fetchTransactions", "investments");
 	}
 };
@@ -395,14 +362,17 @@ export default {
 	line-height: 19px;
 	font-weight: bold;
 }
+
 .total-withdraw {
 	padding: 10px 20px;
 	border-radius: 12px;
 	color: black;
 }
+
 .calc {
 	max-width: 260px;
 }
+
 .ethereum {
 	padding-top: 70px;
 	position: relative;
@@ -421,6 +391,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .status {
 	display: flex;
 	align-items: center;
@@ -447,6 +418,7 @@ export default {
 
 	&-online {
 		color: #00c236;
+
 		&:before {
 			background-color: #00c236;
 		}

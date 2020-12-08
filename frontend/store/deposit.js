@@ -12,7 +12,7 @@ export const state = () => ({
 
 export const getters = {
   allowance: s => s.allowance,
-  totalDeposit: s => s.totalDeposit,
+  totalDeposit: s => s.totalDeposit || 0,
   totalDividends: s => s.totalDividends,
   repayBalance: s => s.repayBalance || 0,
 };

@@ -1,19 +1,14 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="3"
-			:dots="4"
-			next-page="/partner"
-			prev-page="/investment"
-		>
+		<custom-slider :activeDot="3" :dots="4" next-page="/partner" prev-page="/investment">
 			<template slot="content">
 				<div class="columns is-fullheight">
 					<div
 						class="column is-half is-flex is-flex-direction-column"
 					>
 						<div class="is-size-5 mb-5">
-							Выводите<br />
-							или реинвестируйте<br />
+							Выводите<br/>
+							или реинвестируйте<br/>
 							полученные дивиденды
 						</div>
 						<div class="is-size-4">Доступно USDT:</div>
@@ -21,7 +16,7 @@
 							{{ formatCurrency(totalDividends) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
-							Ближайшие дивиденды поступят<br />
+							Ближайшие дивиденды поступят<br/>
 							15 января, 2021
 						</div>
 					</div>
@@ -34,8 +29,8 @@
 							</div>
 							<div class="mb-5 ethereum-address">
 								<span v-if="user.ethereum_wallet">{{
-									user.ethereum_wallet
-								}}</span>
+										user.ethereum_wallet
+									}}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
@@ -46,21 +41,17 @@
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
 								<div
-									:class="[
-										status === 'online'
-											? 'status-online'
-											: 'status-offline'
-									]"
+									:class="[isConnected ? 'status-online' : 'status-offline']"
 									class="is-size-4 status mr-5"
 								>
-									{{ status }}
+									{{ isConnected ? "Online" : "Offline" }}
 								</div>
 								<div class="is-size-6">
 									Gas price (fast): {{ gasPrice }}
 								</div>
 							</div>
 							<div
-								v-if="status === 'online'"
+								v-if="isConnected"
 								class="is-size-7 has-text-grey"
 							>
 								Кошелек готов к работе.
@@ -76,22 +67,14 @@
 							</div>
 						</div>
 						<custom-button
-							:disabled="
-								!totalDividends ||
-									!user.ethereum_wallet ||
-									status !== 'online'
-							"
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
 							@click.native="withdrawModalActive = true"
 							class="mt-auto mb-2"
 						>
 							Вывести
 						</custom-button>
 						<custom-button
-							:disabled="
-								!totalDividends ||
-									!user.ethereum_wallet ||
-									status !== 'online'
-							"
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
 							@click.native="reinvestModalActive = true"
 						>
 							Реинвестировать
@@ -101,23 +84,23 @@
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="withdrawModalActive" has-modal-card>
-			<withdraw-modal />
+			<withdraw-modal/>
 		</b-modal>
 		<b-modal :active.sync="reinvestModalActive" has-modal-card>
-			<reinvest-modal />
+			<reinvest-modal/>
 		</b-modal>
 	</div>
 </template>
 
 <script>
 import formatCurrency from "~/mixins/formatCurrency";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import WithdrawModal from "./modals/WithdrawModal";
 import ReinvestModal from "./modals/ReinvestModal";
 
 export default {
 	name: "DividendProducts",
-	components: { ReinvestModal, WithdrawModal },
+	components: {ReinvestModal, WithdrawModal},
 	mixins: [formatCurrency],
 
 	async created() {
@@ -135,25 +118,13 @@ export default {
 		}
 	},
 	data: () => ({
-		productList: [{ name: "NTSCD", amount: 2013.35, available: 200.35 }],
 		withdrawModalActive: false,
 		reinvestModalActive: false
 	}),
 	computed: {
 		...mapGetters(["user"]),
-		status() {
-			return this.$store.getters["metamask/status"];
-		},
-		gasPrice() {
-			return this.$store.getters["metamask/gasPrice"];
-		},
-		totalDeposit() {
-			return this.$store.getters["deposit/totalDeposit"];
-		},
-		totalDividends() {
-			const dividents = this.$store.getters["deposit/totalDividends"];
-			return dividents ? dividents : 0;
-		}
+		...mapGetters("metamask", ["isConnected", "gasPrice"]),
+		...mapGetters("deposit", ["totalDeposit", "totalDividends"]),
 	}
 };
 </script>
@@ -164,6 +135,7 @@ export default {
 	line-height: 19px;
 	font-weight: bold;
 }
+
 .ethereum {
 	padding-top: 120px;
 	position: relative;
@@ -182,6 +154,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .status {
 	display: flex;
 	align-items: center;
@@ -208,6 +181,7 @@ export default {
 
 	&-online {
 		color: #00c236;
+
 		&:before {
 			background-color: #00c236;
 		}

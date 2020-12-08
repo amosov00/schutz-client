@@ -7,7 +7,6 @@ function getWeb3(infuraURL) {
 	if (window?.ethereum) {
 		try {
 			web3 = new Web3(window.ethereum)
-			window.ethereum.enable();
 		} catch (e) {
 			console.error(e)
 		}
