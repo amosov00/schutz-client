@@ -67,13 +67,15 @@
 							</div>
 						</div>
 						<custom-button
-							@click.native="withdrawModalActive = true"
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
+							@click.native="() => {this.withdrawModalActive = true}"
 							class="mt-auto mb-2"
 						>
 							Вывести
 						</custom-button>
 						<custom-button
-							@click.native="reinvestModalActive = true"
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
+							@click.native="() => {this.reinvestModalActive = true}"
 						>
 							Реинвестировать
 						</custom-button>
