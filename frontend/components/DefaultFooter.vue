@@ -11,21 +11,40 @@
 			<nuxt-link to="/">Комьюнити</nuxt-link>
 		</div>
 		<div class="footer__social-container">
+			<div>
+				<a
+					href="/files/Ogranicheniye_otvetstvennosti.pdf"
+					class="mr-50"
+					target="_blank"
+					>Ограничение ответственности</a
+				>
+				<a href="/files/Usloviya_i_polozheniya.pdf" target="_blank"
+					>Условия и положения</a
+				>
+			</div>
 			<div class="footer__social">
-				<a href="#"><img src="/social/telegram.png" alt="telegram"/></a>
-				<a href="#"
+				<a href="https://t.me/neutrinofund" target="_blank"
+					><img src="/social/telegram.png" alt="telegram"
+				/></a>
+				<a href="https://www.instagram.com/schutz.capital/" target="_blank"
 					><img src="/social/instagram.png" alt="instagram"
 				/></a>
-				<a href="#"><img src="/social/medium.png" alt="medium"/></a>
-				<a href="#"><img src="/social/twitter.png" alt="twitter"/></a>
-				<a href="#"><img src="/social/vk.png" alt="vk"/></a>
-				<a href="#"><img src="/social/reddit.png" alt="reddit"/></a>
+				<a href="https://schutzcapital.medium.com/" target="_blank"
+					><img src="/social/medium.png" alt="medium"
+				/></a>
+				<a href="https://t.me/Neutrino_NTS_RU" target="_blank"
+					><img src="/social/telegram.png" alt="telegram"
+				/></a>
+				<a href="https://twitter.com/SCHUTZru" target="_blank"
+					><img src="/social/twitter.png" alt="twitter"
+				/></a>
+				<a href="https://www.facebook.com/schutz.capital" target="_blank"
+					><img src="/social/fb.png" alt="fb"
+				/></a>
 			</div>
 		</div>
 		<div class="footer__bottom">
-			<div class="footer__copyright">
-				© 2017—2020, <span>SCHUTZ</span>
-			</div>
+			<div class="footer__copyright">© 2017—2020, <span>SCHUTZ</span></div>
 			<a href="/Презентация_NTS.pdf" class="footer__ppt">
 				Скачать презентацию
 			</a>
@@ -60,6 +79,9 @@ export default {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+.mr-50 {
+	margin-right: 50px;
+}
 .footer {
 	padding-bottom: 50px;
 	&__nav {
@@ -78,7 +100,13 @@ export default {
 	}
 	&__social-container {
 		display: flex;
-		justify-content: flex-end;
+		justify-content: space-between;
+		a {
+			font-weight: 300;
+			font-size: 14px;
+			line-height: 19px;
+			color: #b1ecff;
+		}
 	}
 	&__ppt {
 		font-weight: 300;
