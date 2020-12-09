@@ -3,18 +3,18 @@ import {ToastProgrammatic as Toast} from 'buefy'
 import _ from "lodash";
 
 export const state = () => ({
-  allowance: "",
-  totalDeposit: "",
-  totalDividends: "",
-  repayBalance: null,
+  allowance: 0,
+  totalDeposit: 0,
+  totalDividends: 0,
+  repayBalance: 0,
 });
 
 
 export const getters = {
   allowance: s => s.allowance,
-  totalDeposit: s => s.totalDeposit || 0,
+  totalDeposit: s => s.totalDeposit,
   totalDividends: s => s.totalDividends,
-  repayBalance: s => s.repayBalance || 0,
+  repayBalance: s => s.repayBalance,
 };
 export const mutations = {
   setAllowance: (state, allowance) => (state.allowance = allowance),
@@ -33,34 +33,34 @@ export const actions = {
     if (_.isEmpty(getters["totalDeposit"])) {
       await dispatch("getDeposit", address);
     }
-    if (_.isEmpty(getters["deposit/totalDividends"])) {
+    if (_.isEmpty(getters["totalDividends"])) {
       await dispatch("getDividends", address);
     }
-    if (_.isEmpty(getters["deposit/allowance"])) {
+    if (_.isEmpty(getters["allowance"])) {
       await dispatch("getAllowance", address);
     }
   },
-  async getAllowance({commit, dispatch}, address) {
-    return await this.$contracts()
-      .USDT.methods.allowance(address, this.$contracts().NTSCD._address)
-      .call()
-      .then(allowance => {
-        if (allowance === "0") {
-          dispatch("depositToggle", false);
-          commit("setAllowance", allowance / 1e6);
-        } else {
-          commit("setAllowance", allowance / 1e6);
-        }
-        return true;
-      })
-      .catch(err => {
-        console.error(err)
-        return false;
-      });
-  },
+	async getAllowance({commit, dispatch}, address) {
+		return await this.$contracts().USDT.methods
+			.allowance(address, this.$contracts().Schutz._address)
+			.call()
+			.then(allowance => {
+				allowance = parseInt(allowance)
+				if (allowance === 0) {
+					commit("setAllowance", allowance);
+				} else {
+					commit("setAllowance", Math.round(allowance / 1e6));
+				}
+				return true;
+			})
+			.catch(err => {
+				console.error(err)
+				return false;
+			});
+	},
   async getDeposit({commit}, address) {
     return await this.$contracts()
-      .NTSCD.methods.balanceOf(address)
+      .Schutz.methods.balanceOf(address)
       .call()
       .then(balance => {
         commit("setTotalDeposit", balance / 1e18);
@@ -72,7 +72,7 @@ export const actions = {
   },
   async getDividends({commit}, address) {
     return await this.$contracts()
-      .NTSCD.methods.referralBalance_(address)
+      .Schutz.methods.interestBalance_(address)
       .call()
       .then(balance => {
         commit("setTotalDividends", balance / 1e6);
@@ -87,7 +87,7 @@ export const actions = {
     if (!address) {
       address = rootGetters["user"].ethereum_wallet
     }
-    const repayBalance = await this.$contracts().NTSCD.methods.repayBalance_(address).call();
+    const repayBalance = await this.$contracts().Schutz.methods.repayBalance_(address).call();
     commit("setRepayBalance", parseInt(repayBalance))
   },
   async depositToggle({}, value) {
@@ -104,7 +104,7 @@ export const actions = {
   },
   async getRepay({rootGetters}) {
     const gasPrice = rootGetters["metamask/gasPrice"];
-    const methodABI = this.$contracts().NTSCD._jsonInterface.find(
+    const methodABI = this.$contracts().Schutz._jsonInterface.find(
       el => el.name === "getRepay"
     );
     ethereum.sendAsync(
@@ -113,7 +113,7 @@ export const actions = {
         params: [
           {
             from: ethereum.selectedAddress,
-            to: this.$contracts().NTSCD._address,
+            to: this.$contracts().Schutz._address,
             value: "0x00",
             gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
             gas: web3.utils.toHex("250000"),
@@ -144,17 +144,17 @@ export const actions = {
     }
     const gasPrice = rootGetters["metamask/gasPrice"];
 
-    return await window.ethereum
+    return window.ethereum
       .request({
         method: "eth_sendTransaction",
         params: [
           {
             from: window.ethereum.selectedAddress,
-            to: this.$contracts().NTSCD._address,
+            to: this.$contracts().Schutz._address,
             value: "0x00",
             gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
             gas: web3.utils.toHex("250000"),
-            data: this.$contracts().NTSCD.methods.passRepay(
+            data: this.$contracts().Schutz.methods.passRepay(
               data.amount,
               data.ethereum_wallet,
               `${data.contract} close`
@@ -185,7 +185,7 @@ export const actions = {
     }
     const gasPrice = rootGetters["metamask/gasPrice"];
 
-    return await window.ethereum
+    return window.ethereum
       .request({
         method: "eth_sendTransaction",
         params: [

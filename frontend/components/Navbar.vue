@@ -42,17 +42,25 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    closeLink: ''
-  }),
-  mounted() {
-    this.closeLink = this.$config.LANDING_BASE_URL
-  },
   computed: {
+		closeLink() {
+			return this.$config.LANDING_BASE_URL
+		},
     activePage() {
       return this.$route.path
     }
-  }
+  },
+	async created() {
+  	if (this.$userIsLoggedIn) {
+			this.$store.dispatch("deposit/fetchBalanceData")
+				.then(_ => {
+				})
+				.catch((e) => {
+					console.warn("Failed to fetch deposits data")
+					console.warn(e)
+				})
+		}
+	},
 }
 </script>
 

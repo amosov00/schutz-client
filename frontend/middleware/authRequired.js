@@ -1,3 +1,5 @@
 export default async function ({app}) {
-  return app.$userIsLoggedIn()
+	if (!app.$userIsLoggedIn()) {
+		return await redirect('/login/')
+	}
 };

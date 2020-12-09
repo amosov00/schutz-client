@@ -37,7 +37,7 @@ import formatCurrency from '~/mixins/formatCurrency'
 import moment from "moment";
 
 export default {
-  name: "NavbarMain",
+  name: "NavbarPersonalArea",
   components: {PayoutButton, LangSwitcher, InlineSvg},
   mixins: [formatCurrency],
   data: () => ({

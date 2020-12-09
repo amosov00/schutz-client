@@ -102,7 +102,7 @@ export default {
 			const isValid = await this.$refs.observer.validate();
 
 			if (isValid && this.isTermsAcceped) {
-				this.$store.dispatch("transactions/addFunds", this.value);
+				await this.$store.dispatch("userContractIntegration/deposit", this.value);
 				this.$parent.close();
 			} else if (!this.isTermsAcceped) {
 				this.$buefy.toast.open({

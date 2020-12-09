@@ -96,10 +96,7 @@ export default {
 					message: "Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)",
 					type: "is-success"
 				});
-				this.$store.dispatch(
-					"userContractIntegration/reinvest",
-					this.value
-				);
+				await this.$store.dispatch("userContractIntegration/reinvest", this.value);
 				this.$parent.close();
 			}
 		},

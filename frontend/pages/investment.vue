@@ -60,14 +60,8 @@
 								Ethereum адрес:
 							</div>
 							<div class="ethereum-address mb-5">
-								<span v-if="user.ethereum_wallet">{{
-										user.ethereum_wallet
-									}}</span>
-								<a
-									v-else
-									@click="isWalletModalActive = true"
-									class="value has-text-link has-text-weight-light"
-								>
+								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
+								<a v-else @click="isWalletModalActive = true" class="value has-text-link has-text-weight-light">
 									Добавить кошелек
 								</a>
 							</div>
@@ -96,6 +90,14 @@
 							class="mt-auto"
 						>
 							Авторизовать кошлек
+						</custom-button>
+						<custom-button
+							v-else-if="allowance === 0"
+							@click.native="allowUSDT"
+							class="mt-auto"
+							:disabled="!user.ethereum_wallet || !isConnected"
+						>
+							Одобрить USDT
 						</custom-button>
 						<custom-button
 							v-else-if="totalDeposit > 0"
@@ -245,14 +247,6 @@ export default {
 		if (this.$store.state.deposit.repayBalance === null) {
 			await this.$store.dispatch("deposit/getRepayBalance");
 		}
-		this.$store
-			.dispatch("deposit/fetchBalanceData")
-			.then(() => {
-			})
-			.catch(e => {
-				console.warn("Failed to fetch deposits data");
-				console.warn(e);
-			});
 	},
 	methods: {
 		showMore() {
@@ -261,16 +255,11 @@ export default {
 				this.hide_button = true;
 			}
 		},
-		getProductClass(product) {
-			if (this.product === product) {
-				return "product-link-active";
-			}
-		},
 		setProduct(product) {
 			this.currentProduct = product;
 		},
-		approve() {
-			this.$store.dispatch("transactions/getApprove");
+		allowUSDT() {
+			this.$store.dispatch("userContractIntegration/allowUSDT");
 		},
 		getRepay() {
 			this.$store.dispatch("deposit/getRepay");

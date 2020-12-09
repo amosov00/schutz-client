@@ -67,14 +67,12 @@
 							</div>
 						</div>
 						<custom-button
-							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
 							@click.native="withdrawModalActive = true"
 							class="mt-auto mb-2"
 						>
 							Вывести
 						</custom-button>
 						<custom-button
-							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
 							@click.native="reinvestModalActive = true"
 						>
 							Реинвестировать
@@ -106,15 +104,6 @@ export default {
 	async created() {
 		if (!this.$store.state.metamask.gasPrice) {
 			await this.$store.dispatch("metamask/getGasPrice");
-		}
-	},
-
-	methods: {
-		withdraw() {
-			this.$store.dispatch("dividends/withdraw");
-		},
-		reinvest() {
-			this.$store.dispatch("dividends/reinvest");
 		}
 	},
 	data: () => ({

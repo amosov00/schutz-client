@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { ToastProgrammatic as Toast } from "buefy";
+import {ToastProgrammatic as Toast} from "buefy";
 
 export const state = () => ({
 	terms_modal: false,
@@ -122,7 +122,7 @@ export const actions = {
 				return false;
 			});
 	},
-	async signUp({ commit }, data) {
+	async signUp({commit}, data) {
 		if (!data) return false;
 		return await this.$axios
 			.post("/account/signup/", data)
@@ -173,8 +173,8 @@ export const actions = {
 				return false;
 			});
 	},
-	async searchAddress({ commit }, address) {
-		const { data } = await this.$axios.get("/transactions/all/");
+	async searchAddress({commit}, address) {
+		const {data} = await this.$axios.get("/transactions/all/");
 
 		const finded = data.find(el => el.args.customerAddress === address);
 		if (finded) {
@@ -183,25 +183,25 @@ export const actions = {
 			commit("setFindedAddress", false);
 		}
 	},
-	async fetchUsers({ commit }) {
-		const { data } = await this.$axios.get("/admin/users/");
+	async fetchUsers({commit}) {
+		const {data} = await this.$axios.get("/admin/users/");
 		commit("setUsers", data);
 	},
-	async fetchPartners({ commit }) {
-		const { data } = await this.$axios.get("/account/partners/extended/");
+	async fetchPartners({commit}) {
+		const {data} = await this.$axios.get("/account/partners/extended/");
 		commit("setPartners", data.referrals);
 		commit("setPartnersNotal", data.total);
 	},
-	async fetchReferralLink({ commit }) {
-		const { data } = await this.$axios.get("/account/referral_link/");
+	async fetchReferralLink({commit}) {
+		const {data} = await this.$axios.get("/account/referral_link/");
 		commit("setReferralLink", data);
 	},
-	async fetchTransactions({ commit }, type) {
-		const { data } = await this.$axios.get(`/transactions/?q=${type}`);
+	async fetchTransactions({commit}, type) {
+		const {data} = await this.$axios.get(`/transactions/?q=${type}`);
 		commit("setTransactions", data);
 	},
-	async fetchContractAgreements({ commit }, type) {
-		const { data } = await this.$axios.get("/account/contracts_agreement");
+	async fetchContractAgreements({commit}, type) {
+		const {data} = await this.$axios.get("/account/contracts_agreement");
 		commit("setContractAgreements", data);
 	},
 	async updateUser({}, user) {
@@ -216,7 +216,7 @@ export const actions = {
 				return err;
 			});
 	},
-	async passTermsAgreement({ commit }) {
+	async passTermsAgreement({commit}) {
 		return await this.$axios
 			.post("/account/terms_agreement/", {
 				agree: true
@@ -236,7 +236,7 @@ export const actions = {
 			.then(resp => resp.data)
 			.catch(_ => false);
 	},
-	async prolongAgreement({ commit }, id) {
+	async prolongAgreement({commit}, id) {
 		return await this.$axios
 			.get(`/account/mark_prolong_agreement/${id}`, {})
 			.then(() => {
@@ -250,7 +250,7 @@ export const actions = {
 				return false;
 			});
 	},
-	async closeAgreement({ commit }, id) {
+	async closeAgreement({commit}, id) {
 		return await this.$axios
 			.get(`/account/mark_close_agreement/${id}`, {})
 			.then(() => {
@@ -258,6 +258,18 @@ export const actions = {
 					message: "Вклад успешно закрыт",
 					type: "is-success"
 				});
+				return true;
+			})
+			.catch(() => {
+				return false;
+			});
+	},
+	async depositToggle({}, value) {
+		return await this.$axios
+			.put("/account/user/", {
+				is_deposit_open: value
+			})
+			.then(() => {
 				return true;
 			})
 			.catch(() => {

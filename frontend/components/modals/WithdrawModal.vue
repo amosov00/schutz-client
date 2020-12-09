@@ -96,10 +96,7 @@ export default {
 					message: "Запрос в Metamask отправлен (ВЫВОД)",
 					type: "is-success"
 				});
-				this.$store.dispatch(
-					"userContractIntegration/withdraw",
-					this.value
-				);
+				await this.$store.dispatch("userContractIntegration/withdraw", this.value);
 				this.$parent.close();
 			}
 		},

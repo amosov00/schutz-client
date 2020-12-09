@@ -218,12 +218,6 @@ export default {
     },
   },
   async created() {
-    this.$store.dispatch('deposit/fetchBalanceData')
-      .then(() => {})
-      .catch((e) => {
-        console.warn('Failed to fetch deposits data')
-        console.warn(e)
-      })
     if (!this.$store.state.metamask.gasPrice) {
       await this.$store.dispatch('metamask/getGasPrice')
     }
