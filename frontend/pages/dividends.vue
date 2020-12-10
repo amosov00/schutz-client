@@ -8,13 +8,15 @@
 <script>
 import DividendProducts from '~/components/DividendProducts'
 import DividendsTable from '~/components/tables/DividendsTable'
+import { mainSliderController } from "@/utils/slider";
 
 export default {
   layout: 'profile',
   name: 'dividents',
   middleware: ['authRequired', 'contracts'],
   components: { DividendProducts, DividendsTable },
-  async asyncData({ store }) {
+	transition: mainSliderController,
+	async asyncData({ store }) {
     return await store.dispatch('fetchTransactions', 'dividends')
   },
   computed: {},
@@ -32,4 +34,7 @@ export default {
 <style
   lang="sass"
   scoped
-></style>
+>
+@import "~@/assets/scss/transitions/slide-fade.scss";
+
+</style>

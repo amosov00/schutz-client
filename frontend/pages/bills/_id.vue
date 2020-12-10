@@ -57,7 +57,7 @@ import {saveAs} from 'file-saver';
 
 export default {
   name: "bills_id",
-  layout: "profile",
+  layout: "admin",
   mixins: [formatCurrency, formatDate],
   components: {PayInvoiceButton},
   middleware: ["authRequired", "adminRequired", "contracts"],

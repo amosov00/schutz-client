@@ -14,7 +14,7 @@ import ReportsTable from "~/components/tables/ReportsTable";
 
 export default {
   name: "reports",
-  layout: "profile",
+  layout: "admin",
   middleware: ["authRequired", "adminRequired", "contracts"],
   components: {ReportsTable},
   computed: {

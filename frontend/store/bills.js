@@ -1,4 +1,4 @@
-import web3 from "~/plugins/web3";
+import web3 from "~/utils/web3";
 import moment from "moment";
 import _ from "lodash";
 

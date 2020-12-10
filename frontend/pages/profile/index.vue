@@ -138,6 +138,7 @@ import AddNewWalletModal from '~/components/modals/AddNewWalletModal'
 import formatCurrency from '~/mixins/formatCurrency'
 import formatDate from '~/mixins/formatDate'
 import AddFundsModal from '~/components/modals/AddFundsModal'
+import { mainSliderController } from "@/utils/slider";
 
 export default {
   name: 'index',
@@ -152,6 +153,7 @@ export default {
     AddNewWalletModal,
     AddFundsModal
   },
+	transition: mainSliderController,
   methods: {
     withdraw() {
       this.$store.dispatch('dividends/withdraw')
@@ -216,12 +218,6 @@ export default {
     },
   },
   async created() {
-    this.$store.dispatch('deposit/fetchBalanceData')
-      .then(() => {})
-      .catch((e) => {
-        console.warn('Failed to fetch deposits data')
-        console.warn(e)
-      })
     if (!this.$store.state.metamask.gasPrice) {
       await this.$store.dispatch('metamask/getGasPrice')
     }
@@ -251,6 +247,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/transitions/slide-fade.scss";
+
 .exit-btn {
   margin-top: auto;
 }

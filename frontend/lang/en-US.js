@@ -1,4 +1,13 @@
 export default {
+  investment: {
+    prolong: 'Renew deposit',
+    close: 'Close deposit',
+    amount: 'Amount',
+    closeDate: 'Close date',
+    contract: 'Contract',
+    errorMessage: 'Something went wrong'
+  },
+  depositAccural: "Deposit Accural",
   profile: "Profile",
   investments: "Investments",
   dividends: "Dividends",

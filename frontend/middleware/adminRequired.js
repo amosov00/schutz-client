@@ -1,3 +1,5 @@
-export default function ({store, redirect, app}) {
-  return app.$userIsSuperuser()
+export default async function ({redirect, app}) {
+	if (!app.$userIsSuperuser()) {
+		return await redirect('/profile/')
+	}
 };

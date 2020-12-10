@@ -1,5 +1,5 @@
-export default function ({store, redirect, app}) {
+export default async function ({redirect, app}) {
   if (app.$userIsLoggedIn()) {
-    return redirect('/profile/')
+    return await redirect('/profile/')
   }
 };

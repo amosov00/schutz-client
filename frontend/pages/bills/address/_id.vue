@@ -58,7 +58,7 @@ import PayInvoiceButton from "~/components/PayInvoiceButton";
 
 export default {
   name: "bills_address",
-  layout: "profile",
+  layout: "admin",
   mixins: [formatDate, formatCurrency],
   components: {PayInvoiceButton},
   middleware: ["authRequired", "adminRequired", "contracts"],

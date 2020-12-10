@@ -1,4 +1,13 @@
 export default {
+  investment: {
+    prolong: 'Продлить вклад',
+    close: 'Закрыть вклад',
+    amount: 'Количество',
+    closeDate: 'Дата закрытия',
+    contract: 'Вклад',
+    errorMessage: 'Что то пошло не так'
+  },
+  depositAccural: "Начисление депозита",
   profile: "Профиль",
   investments: "Инвестиции",
   dividends: "Дивиденды",

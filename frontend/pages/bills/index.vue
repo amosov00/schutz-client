@@ -29,7 +29,7 @@ import PayInvoiceModal from "~/components/modals/PayInvoiceModal";
 
 export default {
   name: "bills",
-  layout: "profile",
+  layout: "admin",
   mixins: [formatCurrency, formatDate],
   middleware: ["adminRequired", "contracts"],
   data() {

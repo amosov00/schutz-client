@@ -1,16 +1,16 @@
 export const state = () => ({
   ethAddress: null,
-  status: "offline",
+  isConnected: false,
   gasPrice: null,
 });
 export const getters = {
-  status: s => s.status,
+	isConnected: s => s.isConnected,
   ethAddress: s => s.ethAddress || "",
   gasPrice: s => s.gasPrice || 50,
 }
 export const mutations = {
   setEthAddress: (state, payload) => (state.ethAddress = payload),
-  setStatus: (state, status) => (state.status = status),
+  setIsConnected: (state, payload) => (state.isConnected = payload),
   setGasPrice: (state, gasPrice) => (state.gasPrice = gasPrice)
 };
 export const actions = {
