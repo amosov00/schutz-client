@@ -187,8 +187,7 @@
 					<p class="is-size-6 mb-5">«15» мая 2020 г.</p>
 					<p class="is-size-7 has-text-weight-light mb-6">
 						NTS Crypto, именуемый в дальнейшем «Управляющий», с
-						одной стороны, и пользователь математического кода
-						«0x5dfb0d30ac6fe828ed6ba9cffde6b60d166d8d1f», именуемый
+						одной стороны, и пользователь математического кода {{ethAddress}}, именуемый
 						в дальнейшем «Инвестор», с другой стороны, совместно
 						именуемые в дальнейшем «Стороны», заключили настоящее
 						Соглашение о нижеследующем:
@@ -492,7 +491,10 @@ export default {
 			set(newValue) {
 				this.$store.commit("toggleTermsModal", newValue);
 			}
-		}
+		},
+		ethAddress() {
+			return this.$store.getters['metamask/ethAddress'] ? `«${this.$store.getters['metamask/ethAddress']}»` : ""
+		},
 	},
 	mounted() {
 		let idFromCookies = this.$cookies.get("referral_id");
