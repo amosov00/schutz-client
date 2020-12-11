@@ -165,7 +165,7 @@
 								>
 									Я принимаю
 									<a href="#" @click="$store.commit('toggleTermsModal', true)"
-										>условия соглашения</a
+										>условия и положения</a
 									>
 								</b-checkbox>
 							</div>
@@ -432,7 +432,6 @@ export default {
 	},
 	methods: {
 		handleBlur() {
-			console.log(this.status_image);
 			if (
 				this.data.email &&
 				this.data.first_name &&

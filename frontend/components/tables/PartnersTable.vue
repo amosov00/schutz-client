@@ -18,7 +18,7 @@
 					:label="$t('registrationDate')"
 					width="200"
 					sortable="sortable"
-				>{{
+					>{{
 						props.row.created_at
 							? new Date(props.row.created_at).toLocaleString()
 							: ""
@@ -28,13 +28,13 @@
 					class="text-clamp"
 					field="fullname"
 					:label="$t('fullName')"
-				>{{ props.row.first_name }} {{ props.row.last_name }}
+					>{{ props.row.first_name }} {{ props.row.last_name }}
 				</b-table-column>
 				<b-table-column class="text-clamp" field="email" label="E-mail"
-				>{{ props.row.email }}
+					>{{ props.row.email }}
 				</b-table-column>
 				<b-table-column class="text-clamp" field="deposited" label="Вклад, USDT"
-				>{{ sliceNumber(props.row.deposited) }}
+					>{{ sliceNumber(props.row.deposited) }}
 				</b-table-column>
 				<b-table-column
 					class="text-clamp"
@@ -52,7 +52,7 @@
 					label="Бонус, USDT"
 					header-class="text-right"
 					align="right"
-				>{{ sliceNumber(props.row.bonus) }}
+					>{{ sliceNumber(props.row.bonus) }}
 				</b-table-column>
 			</template>
 		</b-table>
@@ -113,7 +113,7 @@ export default {
 
 		getPercent(level) {
 			if (level == 1) {
-				return 9;
+				return 5;
 			} else if (level == 2) {
 				return 3;
 			} else {

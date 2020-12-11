@@ -3,8 +3,8 @@
 		<div class="add-funds-card">
 			<p class="is-size-5">Укажите сумму реинвестирования</p>
 			<p class="is-size-7 mb-60">
-				Вы можете <a class="is-link">реинвестировать всю сумму</a> или
-				часть начисленных дивидендов, остальные вывести.
+				Вы можете <a class="is-link">реинвестировать всю сумму</a> или часть
+				начисленных дивидендов, остальные вывести.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
@@ -42,7 +42,7 @@
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							условия соглашения
+							условия и положения
 						</a>
 					</span>
 				</div>
@@ -96,7 +96,10 @@ export default {
 					message: "Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)",
 					type: "is-success"
 				});
-				await this.$store.dispatch("userContractIntegration/reinvest", this.value);
+				await this.$store.dispatch(
+					"userContractIntegration/reinvest",
+					this.value
+				);
 				this.$parent.close();
 			}
 		},
