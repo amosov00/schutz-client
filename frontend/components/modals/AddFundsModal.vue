@@ -41,7 +41,7 @@
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							условия соглашения
+							условия и положения
 						</a>
 					</span>
 				</div>
@@ -102,7 +102,10 @@ export default {
 			const isValid = await this.$refs.observer.validate();
 
 			if (isValid && this.isTermsAcceped) {
-				await this.$store.dispatch("userContractIntegration/deposit", this.value);
+				await this.$store.dispatch(
+					"userContractIntegration/deposit",
+					this.value
+				);
 				this.$parent.close();
 			} else if (!this.isTermsAcceped) {
 				this.$buefy.toast.open({

@@ -45,7 +45,7 @@
 		</div>
 		<div class="footer__bottom">
 			<div class="footer__copyright">© 2017—2020, <span>SCHUTZ</span></div>
-			<a href="/Презентация_NTS.pdf" class="footer__ppt">
+			<a href="/files/presentation_nts.pdf" class="footer__ppt" target="_blank">
 				Скачать презентацию
 			</a>
 			<lang-switcher />
