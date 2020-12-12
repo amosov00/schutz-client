@@ -1,14 +1,17 @@
 <template>
 	<div>
-		<custom-slider :activeDot="3" :dots="4" next-page="/partner" prev-page="/investment">
+		<custom-slider
+			:activeDot="3"
+			:dots="4"
+			next-page="/partner"
+			prev-page="/investment"
+		>
 			<template slot="content">
 				<div class="columns is-fullheight">
-					<div
-						class="column is-half is-flex is-flex-direction-column"
-					>
+					<div class="column is-half is-flex is-flex-direction-column">
 						<div class="is-size-5 mb-5">
-							Выводите<br/>
-							или реинвестируйте<br/>
+							Выводите<br />
+							или реинвестируйте<br />
 							полученные дивиденды
 						</div>
 						<div class="is-size-4">Доступно USDT:</div>
@@ -16,21 +19,19 @@
 							{{ formatCurrency(totalDividends) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
-							Ближайшие дивиденды поступят<br/>
+							Ближайшие дивиденды поступят<br />
 							15 января, 2021
 						</div>
 					</div>
-					<div
-						class="column is-half is-flex is-flex-direction-column "
-					>
+					<div class="column is-half is-flex is-flex-direction-column ">
 						<div>
 							<div class="is-size-7 ethereum">
 								Ethereum адрес:
 							</div>
 							<div class="mb-5 ethereum-address">
 								<span v-if="user.ethereum_wallet">{{
-										user.ethereum_wallet
-									}}</span>
+									user.ethereum_wallet
+								}}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
@@ -46,14 +47,9 @@
 								>
 									{{ isConnected ? "Online" : "Offline" }}
 								</div>
-								<div class="is-size-6">
-									Gas price (fast): {{ gasPrice }}
-								</div>
+								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div
-								v-if="isConnected"
-								class="is-size-7 has-text-grey"
-							>
+							<div v-if="isConnected" class="is-size-7 has-text-grey">
 								Кошелек готов к работе.
 							</div>
 							<div
@@ -67,15 +63,27 @@
 							</div>
 						</div>
 						<custom-button
-							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
-							@click.native="() => {this.withdrawModalActive = true}"
+							:disabled="
+								!totalDividends || !user.ethereum_wallet || !isConnected
+							"
+							@click.native="
+								() => {
+									this.withdrawModalActive = true;
+								}
+							"
 							class="mt-auto mb-2"
 						>
 							Вывести
 						</custom-button>
 						<custom-button
-							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
-							@click.native="() => {this.reinvestModalActive = true}"
+							:disabled="
+								!totalDividends || !user.ethereum_wallet || !isConnected
+							"
+							@click.native="
+								() => {
+									this.reinvestModalActive = true;
+								}
+							"
 						>
 							Реинвестировать
 						</custom-button>
@@ -84,23 +92,23 @@
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="withdrawModalActive" has-modal-card>
-			<withdraw-modal/>
+			<withdraw-modal />
 		</b-modal>
 		<b-modal :active.sync="reinvestModalActive" has-modal-card>
-			<reinvest-modal/>
+			<reinvest-modal />
 		</b-modal>
 	</div>
 </template>
 
 <script>
 import formatCurrency from "~/mixins/formatCurrency";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import WithdrawModal from "./modals/WithdrawModal";
 import ReinvestModal from "./modals/ReinvestModal";
 
 export default {
 	name: "DividendProducts",
-	components: {ReinvestModal, WithdrawModal},
+	components: { ReinvestModal, WithdrawModal },
 	mixins: [formatCurrency],
 
 	async created() {
@@ -115,7 +123,7 @@ export default {
 	computed: {
 		...mapGetters(["user"]),
 		...mapGetters("metamask", ["isConnected", "gasPrice"]),
-		...mapGetters("deposit", ["totalDeposit", "totalDividends"]),
+		...mapGetters("deposit", ["totalDeposit", "totalDividends"])
 	}
 };
 </script>
