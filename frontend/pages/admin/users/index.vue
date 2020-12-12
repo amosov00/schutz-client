@@ -38,7 +38,7 @@ import CustomInput from "@/components/ui/CustomInput";
 export default {
 	name: "users",
 	layout: "profile",
-	middleware: ["managerRequired", "contracts"],
+	middleware: ["adminRequired"],
 	mixins: [formatDate],
 	components: {
 		UsersTable,
