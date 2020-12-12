@@ -3,18 +3,31 @@
 		Navbar(:links="links")
 		nuxt
 		DefaultFooter
+
+		ModalStack(v-if="modals.length" :stack="modals")
+
 </template>
 
 <script>
 import Navbar from '../components/Navbar'
 import DefaultFooter from '../components/DefaultFooter'
+import ModalStack from "@/components/ModalStack";
+import { mapGetters } from "vuex";
 
 export default {
 	components: {
 		DefaultFooter,
 		Navbar,
+		ModalStack,
 	},
 	middleware: ['fetchUser', 'metamask'],
+
+	computed: {
+		...mapGetters({
+			modals: 'modal/stack'
+		})
+	},
+
 	data: () => ({
 		links: [
 			{name: 'Панель управления', link: '/profile'},
@@ -22,7 +35,10 @@ export default {
 			{name: 'Дивиденды', link: '/dividends'},
 			{name: 'Партнерская программа', link: '/partner'},
 		]
-	})
+	}),
+
+	methods: {
+	}
 }
 </script>
 <style lang="scss" scoped>

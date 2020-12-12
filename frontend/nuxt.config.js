@@ -72,7 +72,8 @@ export default {
 		"~/plugins/contract.js",
 		"~/plugins/text-highlight.js",
 		"~/plugins/vue-clipboard.js",
-		"~/plugins/global-ui"
+		"~/plugins/global-ui",
+		"~/plugins/modal.js"
 	],
 
 	modules: [

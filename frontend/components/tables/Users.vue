@@ -12,7 +12,7 @@
 					label="ID"
 					width="100"
 				)
-					nuxt-link(:to="`/users/${props.row._id}`")
+					a(@click.prevent="openUserModal(props.row._id)")
 						text-highlight(:queries="searchQuery") {{ props.row._id }}
 				b-table-column(field="email" label="Email" width="150")
 					text-highlight(:queries="searchQuery") {{ props.row.email }}
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import UserProfile from "@/components/modals/UserProfile";
+
 export default {
 	props: {
 		users: {
@@ -42,6 +44,18 @@ export default {
 			default: '',
 		}
 	},
+
+	methods: {
+		openUserModal(userId) {
+			this.$modal.open({
+				factory: () => UserProfile,
+				props: {
+					userId,
+				}
+			})
+		}
+
+	}
 }
 </script>
 
