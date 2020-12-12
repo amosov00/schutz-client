@@ -1,5 +1,14 @@
 <template >
-<b-table :data="activeDeposits.active_deposits" striped :loading="loading" :paginated='true' pagination-simple pagination-position="bottom" default-sort="amount_usdt" default-sort-direction="desc">
+<b-table
+	:data="activeDeposits.active_deposits"
+	striped
+	:loading="loading"
+	:paginated='true'
+	pagination-simple
+	pagination-position="bottom"
+	default-sort="amount_usdt"
+	default-sort-direction="desc"
+>
   <template slot-scope="props">
       <b-table-column class="overflow-reset" field="user_id" label="User ID" width="150">
         <nuxt-link :to="`/users/${props.row.user_id}`">
@@ -46,7 +55,7 @@
 <script>
 import formatCurrency from '~/mixins/formatCurrency'
 import XLSX from "xlsx";
-import { saveAs } from 'file-saver';
+import {saveAs} from 'file-saver';
 
 
 export default {
@@ -61,14 +70,13 @@ export default {
         : [];
     },
     exportedFileData() {
-      const data = this.activeDeposits.active_deposits.map(el => {
-        return {
-            "User ID": el.user_id,
-            Address: el.ethereum_wallet,
-            "Amount USDT": this.formatCurrency(el.amount_usdt, "usdt"),
-          };
-      })
-      return data
+			return this.activeDeposits.active_deposits.map(el => {
+				return {
+					"User ID": el.user_id,
+					Address: el.ethereum_wallet,
+					"Amount USDT": this.formatCurrency(el.amount_usdt, "usdt"),
+				};
+			})
     },
     exportedTotalsData() {
       return `Total:${this.formatCurrency(this.activeDeposits.total, 'usdt')} USDT`
