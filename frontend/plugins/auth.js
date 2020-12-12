@@ -32,13 +32,9 @@ export default ({ app, redirect }, inject) => {
 			});
 	});
 	inject("authLogout", () => {
-		console.log("out", 1);
 		app.store.commit("deleteUser");
-		console.log("out", 2);
 		app.$axios.setToken(null);
-		console.log("out", 3);
 		app.$cookies.remove("token");
-		console.log("out", 4);
 		redirect("/");
 	});
 	inject("authFetchUser", async () => {
