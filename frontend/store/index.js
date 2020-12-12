@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { ToastProgrammatic as Toast } from "buefy";
+import {ToastProgrammatic as Toast} from "buefy";
+import { users } from "@/consts/mock-data";
 
 export const state = () => ({
 	terms_modal: false,
@@ -40,7 +41,22 @@ export const getters = {
 	referralLink: s => s.referralLink,
 	userTxData: s => s.userTxData,
 	isTermsAcceped: s => s.isTermsAcceped,
-	contractAgreements: s => s.contractAgreements
+	contractAgreements: s => s.contractAgreements,
+
+	usersPagination: (state) => (page, limit) => {
+		const startWith = 0;
+		const endOn = state.users.length < page * limit
+			? state.users.length
+			: page * limit;
+
+		const users = [];
+
+		for (let i = startWith; i < endOn; i++) {
+			users.push(state.users[i])
+		}
+
+		return users;
+	},
 };
 
 export const mutations = {
@@ -89,7 +105,7 @@ export const actions = {
 			.then(_ => {
 				return true;
 			})
-			.catch(err => {
+			.catch(() => {
 				return false;
 			});
 	},
@@ -118,7 +134,7 @@ export const actions = {
 			.then(_ => {
 				return true;
 			})
-			.catch(err => {
+			.catch(() => {
 				return false;
 			});
 	},
@@ -149,7 +165,7 @@ export const actions = {
 			.then(_ => {
 				return true;
 			})
-			.catch(err => {
+			.catch(() => {
 				return false;
 			});
 	},
@@ -159,7 +175,7 @@ export const actions = {
 			.then(_ => {
 				return true;
 			})
-			.catch(err => {
+			.catch(() => {
 				return false;
 			});
 	},
@@ -185,9 +201,9 @@ export const actions = {
 			commit("setFindedAddress", false);
 		}
 	},
-	async fetchUsers({ commit }) {
-		const { data } = await this.$axios.get("/admin/users/");
-		commit("setUsers", data);
+	async fetchUsers({ commit }, { page, limit }) {
+		// const { data: { result: users } } = await this.$axios.get(`/admin/users`);
+		commit("setUsers", users);
 	},
 	async fetchPartners({ commit }) {
 		const { data } = await this.$axios.get("/account/partners/extended/");
