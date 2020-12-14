@@ -19,11 +19,11 @@
 						>
 							{{ $t(link.name) }}
 						</nuxt-link>
-						{{ lang }}
 					</p>
 				</div>
 			</div>
-			<div class="dropdown__container">
+
+			<div class="dropdown__container" v-if="showAdminDropdown">
 				<CustomDropdown :items="adminDropdownItems">
 					<div slot="label" class="dropdown__label">
 						{{ $t('adminPanel') }}
@@ -43,20 +43,24 @@
 <script>
 import LangSwitcher from "./LangSwitcher";
 import CustomDropdown from "@/components/ui/CustomDropdown";
+import {mapGetters} from "vuex";
 
 export default {
-	components: {
-		LangSwitcher,
-		CustomDropdown
-	},
-	props: {
-		links: {
-			type: Array,
-			required: true
-		}
-	},
+  components: {
+    LangSwitcher,
+		CustomDropdown,
+  },
+  props: {
+    links: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+  	...mapGetters({
+			user: 'user',
+		}),
 
-	computed: {
 		closeLink() {
 			return this.$config.LANDING_BASE_URL;
 		},
@@ -64,6 +68,10 @@ export default {
 			let path = this.$route.path.replace(`/${this.$i18n.locale}`, "");
 			if (path == "") path = "/";
 			return path;
+		},
+
+		showAdminDropdown() {
+  		return this.user.is_manager || this.user.is_superuser;
 		},
 
 		adminDropdownItems() {
