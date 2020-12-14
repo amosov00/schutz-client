@@ -109,7 +109,11 @@ export default {
 				langDir: "lang/",
 				defaultLocale: "ru"
 			}
-		]
+		],
+
+		['@nuxtjs/moment', {
+			locales: ['ru']
+		}]
 	],
 
 	publicRuntimeConfig: {
