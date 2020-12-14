@@ -18,11 +18,11 @@
       .nav-item.is-flex
         LangSwitcher
 
-    template(slot='end', v-if='$store.state.user')
+    template(slot='end', v-if='$store.state.users')
       div.is-flex.nav-item
         .column
           img(:src="require('~/assets/img/no-avatar.jpg')")
-        .column.username {{ $store.state.user.email }}
+        .column.username {{ $store.state.users.email }}
 
       b-navbar-item(@click='$authLogout')
         InlineSvg(:src="require('~/assets/icons/logout.svg')")

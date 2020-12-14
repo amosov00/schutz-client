@@ -26,7 +26,7 @@
 					:href="telegramSupport"
 					target="_blank"
 					class="is-size-7 has-text-link has-text-weight-light telegram"
-					>Чат telegram (2,7K)</a
+					>Чат telegram</a
 				>
 			</div>
 		</div>
@@ -58,10 +58,7 @@ export default {
 	methods: {
 		async addWallet() {
 			if (this.wallet) {
-				const res = await this.$store.dispatch(
-					"wallet/addWallet",
-					this.wallet
-				);
+				const res = await this.$store.dispatch("wallet/addWallet", this.wallet);
 				if (res) {
 					this.$authFetchUser();
 					this.$parent.close();

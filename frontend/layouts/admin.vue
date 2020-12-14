@@ -1,14 +1,14 @@
 <template>
 	<div class="wrapper">
 		<div class="container is-flex">
-			<LeftMenu></LeftMenu>
+			<LeftMenu />
 			<div class="main">
 				<div class="nav-container">
-					<NavbarPersonalArea></NavbarPersonalArea>
+					<NavbarPersonalArea />
 					<div class="separator"></div>
 				</div>
 				<div class="content-box admin-page">
-					<nuxt></nuxt>
+					<nuxt />
 				</div>
 			</div>
 		</div>

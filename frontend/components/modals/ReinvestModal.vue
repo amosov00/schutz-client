@@ -65,9 +65,9 @@
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
-				<terms-and-conditions-modal
+				<TermsAndConditionsModal
 					@accepted="isTermsAcceped = $event"
-				></terms-and-conditions-modal>
+				></TermsAndConditionsModal>
 			</b-modal>
 		</div>
 	</ValidationObserver>

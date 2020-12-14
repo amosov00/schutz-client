@@ -7,9 +7,10 @@
 				<div class="terms__body">
 					<p>
 						SCHUTZ именуемый в дальнейшем «Управляющий», с одной стороны, и
-						пользователь математического кода «....», именуемый в дальнейшем
-						«Инвестор», с другой стороны, совместно именуемые в дальнейшем
-						«Стороны», заключили настоящее Соглашение о нижеследующем:
+						пользователь математического кода «
+						{{ user.ethereum_wallet }} », именуемый в дальнейшем «Инвестор», с
+						другой стороны, совместно именуемые в дальнейшем «Стороны»,
+						заключили настоящее Соглашение о нижеследующем:
 					</p>
 
 					<div class="page__list">
@@ -385,13 +386,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-	name: "terms-and-conditions-modal",
 	methods: {
 		accept() {
 			this.$emit("accepted", true);
 			this.$store.commit("toggleTermsModal", false);
 		}
+	},
+	computed: {
+		...mapGetters(["user"])
 	}
 };
 </script>

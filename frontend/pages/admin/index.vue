@@ -1,14 +1,13 @@
 <template lang="pug">
 	div
-		nuxt
-
 </template>
 
 <script>
 export default {
-	middleware: ['fetchUser', 'metamask'],
+	middleware: ['authRequired', 'adminRequired'],
 }
 </script>
 
 <style scoped>
+
 </style>
