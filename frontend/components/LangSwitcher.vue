@@ -1,7 +1,21 @@
 <template>
-  <div class="lang-switcher pb-2">
-    <span>EN</span>
-    <img class="flag" :src="require(`~/static/img/en.png`)" alt="eng">
+  <div>
+    <div
+      class="lang-switcher pb-2"
+      v-if="$i18n.locale == 'ru'"
+      @click="$i18n.setLocale('en')"
+    >
+      <span>EN</span>
+      <img class="flag" :src="require(`~/static/img/en.png`)" alt="eng" />
+    </div>
+    <div
+      class="lang-switcher pb-2"
+      v-if="$i18n.locale == 'en'"
+      @click="$i18n.setLocale('ru')"
+    >
+      <span>RU</span>
+      <img class="flag" :src="require(`~/static/img/ru.png`)" alt="ru" />
+    </div>
   </div>
 </template>
 

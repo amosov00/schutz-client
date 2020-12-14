@@ -3,8 +3,8 @@
 		<custom-slider
 			:activeDot="2"
 			:dots="2"
-			next-page="/signup"
-			prev-page="/signup"
+			:next-page="localePath('/signup')"
+			:prev-page="localePath('/signup')"
 		>
 			<template slot="content">
 				<div class="columns is-fullheight">
@@ -12,7 +12,7 @@
 						class="column is-half is-flex flex-column is-justify-content-space-between"
 					>
 						<div class="is-size-5 mb-5">
-							Вход в систему
+							{{ $t('authTitle') }}
 						</div>
 						<div class="mb-5">
 							<base-input
@@ -26,7 +26,7 @@
 							<base-input
 								type="password"
 								size="6"
-								label="Пароль:"
+								:label="`${$t('password')}:`"
 								v-model="password"
 								v-on:keypress.enter.native="login"
 								:is-danger="passwordError"
@@ -34,8 +34,8 @@
 							/>
 						</div>
 						<div class="left-link">
-							Я забыл пароль.
-							<nuxt-link to="/forgot">Напомнить.</nuxt-link>
+							{{ $t('forgotPass') }}
+							<nuxt-link to="/forgot"> {{ $t('Напомнить.') }} </nuxt-link>
 						</div>
 					</div>
 					<div
@@ -44,7 +44,7 @@
 						<div class="auth-image">
 							<img :src="status_image" :class="animate_class" />
 						</div>
-						<custom-button @click.native="login">Войти</custom-button>
+						<custom-button @click.native="login"> {{ $t('login') }} </custom-button>
 					</div>
 				</div>
 			</template>
