@@ -153,5 +153,6 @@ export default {
   'Отчеты':'Reports',
   'Начисление дивидендов':'Accrual of dividends',
   'Начисление вкладов':'Accrual of deposits',
+  "Политика конфиденциальности":"Privacy policy",
   '':''
 };

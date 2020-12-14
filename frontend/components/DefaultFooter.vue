@@ -14,14 +14,19 @@
 			<div>
 				<a
 					:href="$i18n.locale == 'ru' ? '/files/Ogranicheniye_otvetstvennosti.pdf' : '/files/Limitation_of_liability.pdf'" 
-					class="mr-50"
 					target="_blank"
+					class="mr-50"
 				>
 					{{ $t("Ограничение ответственности") }}
 				</a>
-				<a :href="$i18n.locale == 'ru' ? '/files/Usloviya_i_polozheniya.pdf' : '/files/Terms_and_Conditions.pdf'" target="_blank">
-					{{ $t("Условия и положения") }}
+
+				<a
+					:href="$i18n.locale == 'ru' ? '/files/Politika_konfidensialnosti.pdf' : '/files/Privacy_Policy.pdf'" 
+					target="_blank"
+				>
+					{{ $t("Политика конфиденциальности") }}
 				</a>
+				
 			</div>
 			<div class="footer__social">
 				<a href="https://t.me/neutrinofund" target="_blank"
@@ -46,7 +51,7 @@
 		</div>
 		<div class="footer__bottom">
 			<div class="footer__copyright">© 2017—2020, <span>SCHUTZ</span></div>
-			<a href="/files/presentation_nts.pdf" class="footer__ppt" target="_blank">
+			<a v-if="false" href="/files/presentation_nts.pdf" class="footer__ppt" target="_blank">
 				{{ $t("Скачать презентацию") }}
 			</a>
 			<lang-switcher />
