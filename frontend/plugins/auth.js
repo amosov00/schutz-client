@@ -34,7 +34,10 @@ export default ({ app, redirect }, inject) => {
 	inject("authLogout", () => {
 		app.store.commit("deleteUser");
 		app.$axios.setToken(null);
-		app.$cookies.remove("token");
+		app.$cookies.remove("token", {
+			path: "/",
+			domain: app.$domainForCookie()
+		});
 		redirect("/");
 	});
 	inject("authFetchUser", async () => {
