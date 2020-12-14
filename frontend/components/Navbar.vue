@@ -19,7 +19,7 @@
           </p>
         </div>
       </div>
-			<div class="dropdown__container">
+			<div class="dropdown__container" v-if="showAdminDropdown">
 				<CustomDropdown :items="adminDropdownItems">
 					<div slot="label" class="dropdown__label">
 						Админпанель
@@ -39,6 +39,7 @@
 <script>
 import LangSwitcher from './LangSwitcher'
 import CustomDropdown from "@/components/ui/CustomDropdown";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -52,12 +53,20 @@ export default {
     }
   },
   computed: {
+  	...mapGetters({
+			user: 'user',
+		}),
+
 		closeLink() {
 			return this.$config.LANDING_BASE_URL
 		},
     activePage() {
       return this.$route.path
     },
+
+		showAdminDropdown() {
+  		return this.user.is_manager || this.user.is_superuser;
+		},
 
 		adminDropdownItems() {
 			return [
