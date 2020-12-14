@@ -71,7 +71,11 @@ export default {
 		},
 
 		showAdminDropdown() {
-  		return this.user.is_manager || this.user.is_superuser;
+			if(this.user){
+				return this.user.is_manager || this.user.is_superuser;
+			}else {
+				return false;
+			}
 		},
 
 		adminDropdownItems() {
