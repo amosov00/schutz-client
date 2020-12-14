@@ -1,5 +1,6 @@
 const MUTATION = {
-	SET_USER_DETAILS: 'SET_USER_DETAILS'
+	SET_USER_DETAILS: 'SET_USER_DETAILS',
+	SET_USERS: 'SET_USERS',
 }
 
 export const state = () => ({
@@ -31,5 +32,9 @@ export const mutations = {
 		selectedUser
 			? Object.assign(selectedUser, user)
 			: state.userDetails[user._id] = user;
+	},
+
+	[MUTATION.SET_USERS](state, users) {
+		state.users = users;
 	}
 };
