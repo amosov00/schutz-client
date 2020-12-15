@@ -35,6 +35,6 @@ export default {
   lang="sass"
   scoped
 >
-@import "~@/assets/scss/transitions/slide-fade.scss";
+@import "~@/assets/scss/transitions/slide-fade.scss"
 
 </style>

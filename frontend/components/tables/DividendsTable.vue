@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="level">
 			<div class="level-left is-size-5 has-text-primary mb-4">
-				История транзакций
+				{{$t('История транзакций')}}
 			</div>
 		</div>
 		<b-table
@@ -14,13 +14,13 @@
 			<template slot-scope="props">
 				<b-table-column
 					field="args.timestamp"
-					label="Дата и время"
+					:label="$t('Дата и время')"
 					sortable="sortable"
 					width="20%"
 				>
 					{{ timestampToDateTime(props.row.args.timestamp) }}
 				</b-table-column>
-				<b-table-column field="event" label="Событие" width="20%">
+				<b-table-column field="event" :label="$t('Событие')" width="20%">
 					{{ props.row.event }}
 					<span class="tag is-link" v-if="props.row.isReinvested">
 						Reinvested
@@ -29,7 +29,7 @@
 				<b-table-column
 					class="has-text-primary overflow-reset"
 					field="txHash"
-					label="Хэш"
+					:label="$t('Хэш')"
 					width="20%"
 				>
 					<b-tooltip
@@ -51,7 +51,7 @@
 				</b-table-column>
 				<b-table-column
 					field="contract"
-					label="Контракт"
+					:label="$t('Контракт')"
 					width="20%"
 					header-class="right-align"
 					cell-class="text-right"
@@ -60,7 +60,7 @@
 				</b-table-column>
 				<b-table-column
 					field="amountUSDT"
-					label="Сумма, USDT"
+					:label="$t('Сумма, USDT')"
 					width="10%"
 					header-class="right-align"
 					cell-class="text-right"
@@ -78,12 +78,12 @@
 				@click="showMore()"
 				class="show-more"
 			>
-				показать еще
+				{{$t('показать еще')}}
 			</button>
 		</div>
 
 		<div class="is-size-5 has-background-primary total-withdraw mb-6">
-			Всего выведено:
+			{{$t('Всего выведено:')}}
 			{{ `${formatCurrency(withdrawTotal, "usdt")}` }} USDT
 		</div>
 	</div>

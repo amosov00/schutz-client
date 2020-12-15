@@ -7,7 +7,7 @@
 			aria-role="listitem"
 			:class="{ 'active': button.active }"
 			@click="button.action"
-			:key="index" ) {{ button.text }}
+			:key="index" ) {{ $t(button.text) }}
 
 </template>
 

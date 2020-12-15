@@ -1,10 +1,9 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5">Укажите сумму вывода</p>
-			<p class="is-size-7 mb-60">
-				Вы можете <a class="is-link">вывести всю сумму</a> или часть начисленных
-				дивидендов, остальное реинвестировать.
+			<p class="is-size-5"> {{ $t('Укажите сумму вывода') }} </p>
+			<p class="is-size-7 mb-60" v-html="$t('withdrawalText')">
+				
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
@@ -36,13 +35,13 @@
 						"
 					/>
 					<span class="is-size-7">
-						<span @click="$parent.close()"> Я принимаю</span>
+						<span @click="$parent.close()">  {{$t('Я принимаю')}}  </span>
 						<a
 							href="#"
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							условия и положения
+							{{ $t('условия и положения') }}
 						</a>
 					</span>
 				</div>
@@ -55,13 +54,13 @@
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					Отменить, я передумал
+					{{ $t('Отменить, я передумал') }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="withdraw"
 				>
-					Вывести
+					{{ $t('Вывести') }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>

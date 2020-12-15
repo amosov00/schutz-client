@@ -31,9 +31,9 @@ export default {
 	data: () => ({
 		links: [
 			{name: 'Панель управления', link: '/profile'},
-			{name: 'Инвестиции', link: '/investment'},
-			{name: 'Дивиденды', link: '/dividends'},
-			{name: 'Партнерская программа', link: '/partner'},
+			{name: 'investments', link: '/investment'},
+			{name: 'dividends', link: '/dividends'},
+			{name: 'partnerProgram', link: '/partner'},
 		]
 	}),
 

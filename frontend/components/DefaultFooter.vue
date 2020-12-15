@@ -2,34 +2,40 @@
 	<div class="container footer">
 		<div class="separate"></div>
 		<div class="footer__nav">
-			<nuxt-link to="/">Криптодепозиты</nuxt-link>
-			<nuxt-link to="/about-us">О нас</nuxt-link>
-			<nuxt-link to="/payouts">Выплаты</nuxt-link>
-			<nuxt-link to="/strategies">Стратегии</nuxt-link>
-			<nuxt-link to="/help">Вопросы и ответы</nuxt-link>
-			<nuxt-link to="/contacts">Контакты</nuxt-link>
-			<nuxt-link to="/">Комьюнити</nuxt-link>
+			<nuxt-link :to="localePath('/')"> {{ $t("Криптодепозиты") }} </nuxt-link>
+			<nuxt-link :to="localePath('/about-us')"> {{ $t("О нас") }} </nuxt-link>
+			<nuxt-link :to="localePath('/payouts')">{{ $t("Выплаты") }}</nuxt-link>
+			<nuxt-link :to="localePath('/strategies')">{{ $t("Стратегии") }}</nuxt-link>
+			<nuxt-link :to="localePath('/help')">{{ $t("Вопросы и ответы") }}</nuxt-link>
+			<nuxt-link :to="localePath('/contacts')">{{ $t("Контакты") }}</nuxt-link>
+			<nuxt-link :to="localePath('/')"> {{ $t("Комьюнити") }}</nuxt-link>
 		</div>
 		<div class="footer__social-container">
 			<div>
 				<a
-					href="/files/Ogranicheniye_otvetstvennosti.pdf"
-					class="mr-50"
+					:href="$i18n.locale == 'ru' ? '/files/Ogranicheniye_otvetstvennosti.pdf' : '/files/Limitation_of_liability.pdf'" 
 					target="_blank"
-					>Ограничение ответственности</a
+					class="mr-50"
 				>
-				<a href="/files/Usloviya_i_polozheniya.pdf" target="_blank"
-					>Условия и положения</a
+					{{ $t("Ограничение ответственности") }}
+				</a>
+
+				<a
+					:href="$i18n.locale == 'ru' ? '/files/Politika_konfidensialnosti.pdf' : '/files/Privacy_Policy.pdf'" 
+					target="_blank"
 				>
+					{{ $t("Политика конфиденциальности") }}
+				</a>
+				
 			</div>
 			<div class="footer__social">
 				<a href="https://t.me/neutrinofund" target="_blank"
 					><img src="/social/telegram.png" alt="telegram"
 				/></a>
-				<a href="https://www.instagram.com/schutz.capital/" target="_blank"
+				<a href="https://www.instagram.com/schutz_capital" target="_blank"
 					><img src="/social/instagram.png" alt="instagram"
 				/></a>
-				<a href="https://schutzcapital.medium.com/" target="_blank"
+				<a href="https://medium.com/@schutzcapital" target="_blank"
 					><img src="/social/medium.png" alt="medium"
 				/></a>
 				<a href="https://t.me/Neutrino_NTS_RU" target="_blank"
@@ -45,8 +51,8 @@
 		</div>
 		<div class="footer__bottom">
 			<div class="footer__copyright">© 2017—2020, <span>SCHUTZ</span></div>
-			<a href="/files/presentation_nts.pdf" class="footer__ppt" target="_blank">
-				Скачать презентацию
+			<a v-if="false" href="/files/presentation_nts.pdf" class="footer__ppt" target="_blank">
+				{{ $t("Скачать презентацию") }}
 			</a>
 			<lang-switcher />
 		</div>

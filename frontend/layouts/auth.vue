@@ -16,8 +16,8 @@ export default {
 	},
 	data: () => ({
 		links: [
-			{name: 'Регистрация', link: '/signup'},
-			{name: 'Авторизация', link: '/'},
+			{name: 'registration', link: '/signup'},
+			{name: 'authorization', link: '/'},
 		],
 	})
 };

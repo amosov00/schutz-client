@@ -3,34 +3,58 @@
 		<custom-slider
 			:activeDot="4"
 			:dots="4"
-			prev-page="/dividends"
-			next-page="/profile"
+			:prev-page="localePath('/dividends')"
+			:next-page="localePath('/profile')"
 		>
 			<template slot="content">
 				<div class="columns">
 					<div class="column">
 						<div class="is-size-5 mb-4">
-							Получите 5%, 3% или 2%<br />
-							с каждого депозита внесенного по вашей ссылке.
+							{{ $t("Получите 5%, 3% или 2%") }} <br />
+							{{ $t("с каждого депозита внесенного по вашей ссылке.") }}
 						</div>
-						<p class="is-size-7 has-text-grey mb-4">
-							Поделитесь вашей партнерской ссылкой в своих соцсетях и с каждого,
-							кто пройдет по ней и зарегистрируется, пополнив депозит, вы
-							получите бонус 5%. Трехуровневая система строится таким образом,
-							что если ваш приглашенный ранее партнер решит также, как и вы,
-							принять участие в реферальной программе и пригласит человека по
-							своей ссылке, вы получите бонус в размере 3%. Третья линия
-							подразумевает получение вами 2% по аналогии.
-						</p>
-						<p class="is-size-7 has-text-grey mb-6">
-							Партнерская программа выступает одним из основных способов
-							продвижения инвестиционных продуктов Фонда. Данный способ
-							продвижения выбран в целях создания наибольшей лояльности к
-							продуктам Фонда и создания заинтересованного, участного комьюнити.
-							Ваш процент по депозиту не зависит от партнерской программы и
-							является фиксированным обозначенным процентом. Вы можете как
-							участвовать в реферальной программе, так и не участвовать в ней.
-						</p>
+						<div v-if="$i18n.locale == 'ru'">
+							<p class="is-size-7 has-text-grey mb-4">
+								Поделитесь вашей партнерской ссылкой в своих соцсетях и с
+								каждого, кто пройдет по ней и зарегистрируется, пополнив
+								депозит, вы получите бонус 5%. Трехуровневая система строится
+								таким образом, что если ваш приглашенный ранее партнер решит
+								также, как и вы, принять участие в реферальной программе и
+								пригласит человека по своей ссылке, вы получите бонус в размере
+								3%. Третья линия подразумевает получение вами 2% по аналогии.
+							</p>
+							<p class="is-size-7 has-text-grey mb-6">
+								Партнерская программа выступает одним из основных способов
+								продвижения инвестиционных продуктов Фонда. Данный способ
+								продвижения выбран в целях создания наибольшей лояльности к
+								продуктам Фонда и создания заинтересованного, участного
+								комьюнити. Ваш процент по депозиту не зависит от партнерской
+								программы и является фиксированным обозначенным процентом. Вы
+								можете как участвовать в реферальной программе, так и не
+								участвовать в ней.
+							</p>
+						</div>
+						<div v-else>
+							<p class="is-size-7 has-text-grey mb-4">
+								Share your affiliate link in your social networks and you will
+								get a 9% bonus from everyone who follows it and registers,
+								adding to the deposit. The three-level system is built in such a
+								way that if your previously invited partner decides to
+								participate in the referral program as well as you and invites a
+								person using their link, you will receive a bonus of 3%. The
+								third line implies that you get 2% by analogy.
+							</p>
+							<p class="is-size-7 has-text-grey mb-6">
+								The partner program is one of the main ways to promote the
+								Fund's investment products. This method of promotion was chosen
+								in order to create the greatest loyalty to the Fund's products
+								and create an interested, participating community. Your Deposit
+								percentage does not depend on the affiliate program and is a
+								fixed designated percentage. You can either participate in the
+								referral program or not participate in it.
+							</p>
+						</div>
+
 						<input
 							class="is-size-5 input"
 							type="text"
@@ -45,7 +69,7 @@
 					<div class="column is-12-mobile is-6-desktop">
 						<div>
 							<div class="is-size-7 mb-1">
-								Скачайте или поделитесь расчетом:
+								{{ $t('Поделитесь с друзьями:') }}
 							</div>
 							<div class="is-flex">
 								<ShareNetwork
@@ -68,7 +92,7 @@
 					</div>
 					<div class="column is-12-mobile is-6-desktop">
 						<custom-button @click.native="copy" class="is-fullwidth">
-							Копировать ссылку
+							{{ $t('Копировать ссылку') }}
 						</custom-button>
 					</div>
 				</div>

@@ -1,44 +1,49 @@
 <template>
-  <div class="container navbar__container">
-    <div class="header">
-      <div class="left">
-        <a class="logo" :href="localePath('/')">
-          <img src="../static/logo.svg" alt="Schutz" />
-          <span>вклады под защитой</span>
-        </a>
-        <div class="links">
-          <p class="link-item" v-for="link in links" :key="link.name">
-            <span class="hidden">{{link.name}}</span>
-            <nuxt-link
-              :to="link.link"
-              class="link"
-              :class="{active: link.link === activePage || `${link.link}/` === activePage}"
-            >
-              {{link.name}}
-            </nuxt-link>
-          </p>
-        </div>
-      </div>
-			<div class="dropdown__container">
+	<div class="container navbar__container">
+		<div class="header">
+			<div class="left">
+				<a class="logo" :href="localePath('/')">
+					<img src="../static/logo.svg" alt="Schutz" />
+					<span> {{ $t("logoText") }} </span>
+				</a>
+				<div class="links">
+					<p class="link-item" v-for="link in links" :key="link.name">
+						<span class="hidden">{{ $t(link.name) }}</span>
+						<nuxt-link
+							:to="localePath(link.link)"
+							class="link"
+							:class="{
+								active:
+									link.link === activePage || `${link.link}/` === activePage
+							}"
+						>
+							{{ $t(link.name) }}
+						</nuxt-link>
+					</p>
+				</div>
+			</div>
+
+			<div class="dropdown__container" v-if="showAdminDropdown">
 				<CustomDropdown :items="adminDropdownItems">
 					<div slot="label" class="dropdown__label">
-						Админпанель
+						{{ $t('adminPanel') }}
 					</div>
 				</CustomDropdown>
 			</div>
-      <div class="right">
-        <a :href="closeLink" class="profile">
-          <span>закрыть</span>
-        </a>
-        <lang-switcher />
-      </div>
-    </div>
-  </div>
+			<div class="right">
+				<a :href="closeLink" class="profile">
+					<span> {{ $t('closeProfile') }} </span>
+				</a>
+				<lang-switcher />
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-import LangSwitcher from './LangSwitcher'
+import LangSwitcher from "./LangSwitcher";
 import CustomDropdown from "@/components/ui/CustomDropdown";
+import {mapGetters} from "vuex";
 
 export default {
   components: {
@@ -52,50 +57,64 @@ export default {
     }
   },
   computed: {
+  	...mapGetters({
+			user: 'user',
+		}),
+
 		closeLink() {
-			return this.$config.LANDING_BASE_URL
+			return this.$config.LANDING_BASE_URL;
 		},
-    activePage() {
-      return this.$route.path
-    },
+		activePage() {
+			let path = this.$route.path.replace(`/${this.$i18n.locale}`, "");
+			if (path == "") path = "/";
+			return path;
+		},
+
+		showAdminDropdown() {
+			if(this.user){
+				return this.user.is_manager || this.user.is_superuser;
+			}else {
+				return false;
+			}
+		},
 
 		adminDropdownItems() {
 			return [
 				{
-					text: 'Пользователи',
-					action: () => this.$router.push('/admin/users'),
-					active: this.$route.path === '/admin/users'
+					text: "Пользователи",
+					action: () => this.$router.push("/admin/users"),
+					active: this.$route.path === "/admin/users"
 				},
 				{
-					text: 'Отчеты',
-					action: () => this.$router.push('/admin/orders'),
-					active: this.$route.path === '/admin/orders'
+					text: "Отчеты",
+					action: () => this.$router.push("/admin/orders"),
+					active: this.$route.path === "/admin/orders"
 				},
 				{
-					text: 'Начисление дивидендов',
-					action: () => this.$router.push('/admin/bills'),
-					active: this.$route.path === '/admin/bills'
+					text: "Начисление дивидендов",
+					action: () => this.$router.push("/admin/bills"),
+					active: this.$route.path === "/admin/bills"
 				},
 				{
-					text: 'Начисление вкладов',
-					action: () => this.$router.push('/admin/deposit-accural'),
-					active: this.$route.path === '/admin/deposit-accural'
-				},
-			]
-		}
-  },
-	async created() {
-  	if (this.$userIsLoggedIn) {
-			this.$store.dispatch("deposit/fetchBalanceData")
-				.then(_ => {
-				})
-				.catch((e) => {
-					console.warn("Failed to fetch deposits data")
-					console.warn(e)
-				})
+					text: "Начисление вкладов",
+					action: () => this.$router.push("/admin/deposit-accural"),
+					active: this.$route.path === "/admin/deposit-accural"
+				}
+			];
 		}
 	},
-}
+	async created() {
+		if (this.$userIsLoggedIn) {
+			this.$store
+				.dispatch("deposit/fetchBalanceData")
+				.then(_ => {})
+				.catch(e => {
+					console.warn("Failed to fetch deposits data");
+					console.warn(e);
+				});
+		}
+	}
+};
 </script>
 
 <style lang="scss">
@@ -105,30 +124,29 @@ export default {
 		margin-right: 62px;
 
 		.dropdown-menu {
-			background: #164D78;
+			background: #164d78;
 			border-radius: 12px;
 			left: -50%;
 
 			.dropdown-content {
-				background: #164D78;
+				background: #164d78;
 				border-radius: inherit;
 
-
 				.dropdown-item {
-					color: #B1ECFF;
+					color: #b1ecff;
 					height: 32px;
 					text-align: center;
 					padding-left: 0;
 					padding-right: 0;
 
 					&.active {
-						color: #FFFFFF;
-						background: #1A5889;
+						color: #ffffff;
+						background: #1a5889;
 					}
 
 					&:hover {
-						background: #1A5889;
-						color: #FFFFFF;
+						background: #1a5889;
+						color: #ffffff;
 					}
 				}
 			}
@@ -137,14 +155,13 @@ export default {
 			font-weight: 300;
 			font-size: 14px;
 			line-height: 19px;
-			color: #B1ECFF;
+			color: #b1ecff;
 			cursor: pointer;
 			user-select: none;
 		}
 
 		.custom__dropdown {
 			.custom_dropdown__label {
-
 			}
 		}
 	}
@@ -164,15 +181,16 @@ export default {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		width: 140px;
+		width: 158px;
 		span {
 			font-weight: 300;
 			font-size: 14px;
 			line-height: 19px;
-			color: #FFFFFF;
+			color: #ffffff;
 		}
 	}
-	.left, .right {
+	.left,
+	.right {
 		height: 137px;
 		display: flex;
 		flex-direction: column;
@@ -194,8 +212,8 @@ export default {
 				font-weight: 300;
 				font-size: 14px;
 				line-height: 19px;
-				color: #B1ECFF;
-				transition: all .3s;
+				color: #b1ecff;
+				transition: all 0.3s;
 				position: absolute;
 				left: 0;
 				top: 0;
@@ -204,7 +222,7 @@ export default {
 					font-weight: 500;
 					font-size: 14px;
 					line-height: 19px;
-					color: #FAD896;
+					color: #fad896;
 				}
 				&:hover:not(.active) {
 					color: #fff;
@@ -223,9 +241,9 @@ export default {
 			font-size: 14px;
 			line-height: 19px;
 			text-align: center;
-			color: #FFFFFF;
+			color: #ffffff;
 			&::before {
-				content: '';
+				content: "";
 				width: 24px;
 				height: 24px;
 				display: flex;

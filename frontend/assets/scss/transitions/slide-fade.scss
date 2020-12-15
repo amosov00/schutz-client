@@ -4,14 +4,14 @@
 }
 .slide-fade-right-leave-active {
 	transition: all .3s ease;
-	transform: translateX(100%);
+	transform: translateX(200%);
 }
 .slide-fade-right-enter {
-	transform: translateX(100%);
+	transform: translateX(200%);
 }
 
 .slide-fade-right-leave-to {
-	transform: translateX(-100%);
+	transform: translateX(-200%);
 }
 
 
@@ -22,13 +22,13 @@
 
 .slide-fade-left-leave-active {
 	transition: all .3s ease;
-	transform: translateX(100%);
+	transform: translateX(200%);
 }
 
 .slide-fade-left-enter {
-	transform: translateX(-100%)
+	transform: translateX(-200%)
 }
 
 .slide-fade-left-leave-to {
-	transform: translateX(100%);
+	transform: translateX(200%);
 }
