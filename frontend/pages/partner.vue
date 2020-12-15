@@ -3,8 +3,8 @@
 		<custom-slider
 			:activeDot="4"
 			:dots="4"
-			prev-page="/dividends"
-			next-page="/profile"
+			:prev-page="localePath('/dividends')"
+			:next-page="localePath('/profile')"
 		>
 			<template slot="content">
 				<div class="columns">

@@ -3,8 +3,8 @@
 		<custom-slider
 			:activeDot="3"
 			:dots="4"
-			next-page="/partner"
-			prev-page="/investment"
+			:next-page="localePath('/partner')"
+			:prev-page="localePath('/investment')"
 		>
 			<template slot="content">
 				<div class="columns is-fullheight">

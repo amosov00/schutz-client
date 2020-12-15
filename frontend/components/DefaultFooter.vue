@@ -2,13 +2,13 @@
 	<div class="container footer">
 		<div class="separate"></div>
 		<div class="footer__nav">
-			<nuxt-link to="/"> {{ $t("Криптодепозиты") }} </nuxt-link>
-			<nuxt-link to="/about-us"> {{ $t("О нас") }} </nuxt-link>
-			<nuxt-link to="/payouts">{{ $t("Выплаты") }}</nuxt-link>
-			<nuxt-link to="/strategies">{{ $t("Стратегии") }}</nuxt-link>
-			<nuxt-link to="/help">{{ $t("Вопросы и ответы") }}</nuxt-link>
-			<nuxt-link to="/contacts">{{ $t("Контакты") }}</nuxt-link>
-			<nuxt-link to="/"> {{ $t("Комьюнити") }}</nuxt-link>
+			<nuxt-link :to="localePath('/')"> {{ $t("Криптодепозиты") }} </nuxt-link>
+			<nuxt-link :to="localePath('/about-us')"> {{ $t("О нас") }} </nuxt-link>
+			<nuxt-link :to="localePath('/payouts')">{{ $t("Выплаты") }}</nuxt-link>
+			<nuxt-link :to="localePath('/strategies')">{{ $t("Стратегии") }}</nuxt-link>
+			<nuxt-link :to="localePath('/help')">{{ $t("Вопросы и ответы") }}</nuxt-link>
+			<nuxt-link :to="localePath('/contacts')">{{ $t("Контакты") }}</nuxt-link>
+			<nuxt-link :to="localePath('/')"> {{ $t("Комьюнити") }}</nuxt-link>
 		</div>
 		<div class="footer__social-container">
 			<div>
