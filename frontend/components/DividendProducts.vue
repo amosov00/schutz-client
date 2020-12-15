@@ -9,24 +9,22 @@
 			<template slot="content">
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex is-flex-direction-column">
-						<div class="is-size-5 mb-5">
-							Выводите<br />
-							или реинвестируйте<br />
-							полученные дивиденды
+						<div class="is-size-5 mb-5" v-html="$t('dividensTitle')">
+							
 						</div>
-						<div class="is-size-4">Доступно USDT:</div>
+						<div class="is-size-4"> {{ $t('Доступно USDT:') }} </div>
 						<div class="is-size-2 mb-5">
 							{{ formatCurrency(totalDividends) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
-							Ближайшие дивиденды поступят<br />
-							15 января, 2021
+							 {{ $t('Ближайшие дивиденды поступят') }} <br />
+							{{ $t('15 января, 2021') }}
 						</div>
 					</div>
 					<div class="column is-half is-flex is-flex-direction-column ">
 						<div>
 							<div class="is-size-7 ethereum">
-								Ethereum адрес:
+								{{ $t('Ethereum адрес') }}:
 							</div>
 							<div class="mb-5 ethereum-address">
 								<span v-if="user.ethereum_wallet">{{
@@ -37,7 +35,7 @@
 									@click="isWalletModalActive = true"
 									class="value has-text-link has-text-weight-light"
 								>
-									Добавить кошелек
+									{{$t('Добавить кошелек')}}
 								</a>
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
@@ -50,16 +48,16 @@
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
 							<div v-if="isConnected" class="is-size-7 has-text-grey">
-								Кошелек готов к работе.
+								{{ $t('Кошелек готов к работе.') }}
 							</div>
 							<div
 								v-else-if="!user.ethereum_wallet"
 								class="is-size-7 status-offline"
 							>
-								Добавьте кошелек
+								{{ $t('Добавьте кошелек') }}
 							</div>
 							<div v-else class="is-size-7 status-offline">
-								Выберите этот кошелек в вашем MetaMask.
+								{{ $t('Выберите этот кошелек в вашем MetaMask.') }}
 							</div>
 						</div>
 						<custom-button
@@ -73,7 +71,7 @@
 							"
 							class="mt-auto mb-2"
 						>
-							Вывести
+							{{ $t('Вывести') }}
 						</custom-button>
 						<custom-button
 							:disabled="
@@ -85,7 +83,7 @@
 								}
 							"
 						>
-							Реинвестировать
+							{{ $t('Реинвестировать') }}
 						</custom-button>
 					</div>
 				</div>

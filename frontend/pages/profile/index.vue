@@ -1,6 +1,6 @@
 <template>
   <div>
-    <custom-slider :activeDot="1" :dots="4" next-page="/investment" prev-page="/partner">
+    <custom-slider :activeDot="1" :dots="4" :next-page="localePath('/investment')" :prev-page="localePath('/partner')">
       <template slot="content">
         <div class="columns">
           <div class="column mb-4 is-flex flex-column">
@@ -22,7 +22,7 @@
                 class="value has-text-link"
                 @click="isComponentModalActive = true"
               >
-                Сменить пароль
+                {{ $t('Сменить пароль') }}
               </a>
             </div>
             <div class="data-item" v-if="!user.ethereum_wallet">
@@ -30,7 +30,7 @@
               <a
                 @click="isWalletModalActive = true"
                 class="value has-text-link">
-                Добавить кошелек
+                {{ $t('Добавить кошелек') }}
               </a>
             </div>
             <div class="data-item" v-else>
@@ -42,12 +42,12 @@
         <div class="columns is-flex-grow-1">
           <div class="column is-half is-flex flex-column">
             <div>
-              <div class="is-size-5">Вклад USDT:</div>
+              <div class="is-size-5"> {{ $t('Вклад USDT') }}:</div>
               <div class="is-size-2">{{ formatCurrency(totalDeposit) }}</div>
               <div
                 class="is-size-7"
                 v-if="lastContract">
-                Дата закрытия
+                {{ $t('Дата закрытия') }}
               </div>
               <div
                 class="is-size-7"
@@ -60,7 +60,7 @@
               @click='$authLogout'
             >
               <i class="fas fa-power-off"></i>
-              Выйти
+              {{ $t('Выйти') }}
             </a>
           </div>
           <div class="column is-half is-flex is-flex-direction-column">
@@ -69,7 +69,7 @@
               v-if="user.is_deposit_open && allowance !== 0"
               :disabled="!user.ethereum_wallet" class="mb-2"
             >
-              Пополнить депозит
+              {{ $t('Пополнить депозит') }}
             </custom-button>
             <custom-button
               v-else
@@ -77,21 +77,21 @@
               class="mb-2"
               @click.native="$router.push('/investment')"
             >
-              Открыть вклад
+              {{ $t('Открыть вклад') }}
             </custom-button>
             <custom-button
               v-if="lastContract"
               class="mb-2"
               @click.native="prolongAgreement(lastContract._id)"
             >
-              Продлить
+              {{ $t('Продлить') }}
             </custom-button>
             <custom-button
               v-if="lastContract"
               class="mb-2"
               @click.native="closeAgreement(lastContract._id)"
             >
-              Закрыть
+              {{ $t('Закрыть') }}
             </custom-button>
 
             <custom-button
@@ -99,13 +99,13 @@
               v-if="totalDividends"
               @click.native="withdraw"
             >
-              Вывести {{ formatCurrency(totalDividends) }}
+              {{ $t('Вывести') }} {{ formatCurrency(totalDividends) }}
             </custom-button>
             <div
               class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered"
               v-if="!user.ethereum_wallet"
             >
-              Для открытия вклада необходимо добавить кошелек!
+              {{ $t('Для открытия вклада необходимо добавить кошелек!') }}
             </div>
           </div>
         </div>

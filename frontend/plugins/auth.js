@@ -24,7 +24,7 @@ export default ({ app, redirect }, inject) => {
 					maxAge: 60 * 60 * 24 * 7,
 					domain: app.$domainForCookie()
 				});
-				redirect("/profile/");
+				redirect(app.localePath('/profile/'));
 				return true;
 			})
 			.catch(resp => {
@@ -38,14 +38,14 @@ export default ({ app, redirect }, inject) => {
 			path: "/",
 			domain: app.$domainForCookie()
 		});
-		redirect("/");
+		redirect(app.localePath('/'));
 	});
 	inject("authFetchUser", async () => {
 		let { data, status } = await app.$axios.get("/account/user/");
 		if (status === 200) {
 			app.store.commit("setUser", data);
 		} else {
-			redirect("/");
+			redirect(app.localePath('/'));
 		}
 	});
 	inject("userIsLoggedIn", () => {

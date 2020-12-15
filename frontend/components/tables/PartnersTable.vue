@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="level">
 			<div class="level-left is-size-5 has-text-primary mb-4">
-				История транзакций
+				{{ $t('История транзакций') }}
 			</div>
 		</div>
 		<b-table
@@ -33,7 +33,7 @@
 				<b-table-column class="text-clamp" field="email" label="E-mail"
 					>{{ props.row.email }}
 				</b-table-column>
-				<b-table-column class="text-clamp" field="deposited" label="Вклад, USDT"
+				<b-table-column class="text-clamp" field="deposited" :label="$t('Вклад, USDT')"
 					>{{ sliceNumber(props.row.deposited) }}
 				</b-table-column>
 				<b-table-column
@@ -49,7 +49,7 @@
 				<b-table-column
 					class="text-clamp"
 					field="bonus"
-					label="Бонус, USDT"
+					:label="$t('Бонус, USDT')"
 					header-class="text-right"
 					align="right"
 					>{{ sliceNumber(props.row.bonus) }}
@@ -64,12 +64,12 @@
 				@click="showMore()"
 				class="show-more"
 			>
-				показать еще
+				{{ $t('показать еще') }}
 			</button>
 		</div>
 
 		<div class="is-size-5 has-background-primary total-withdraw mb-6">
-			Всего начислено:
+			{{ $t('Всего начислено:') }}
 			{{ formatCurrency(total, "usdt") }} USDT
 		</div>
 	</div>

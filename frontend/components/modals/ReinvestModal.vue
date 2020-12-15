@@ -1,10 +1,9 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5">Укажите сумму реинвестирования</p>
-			<p class="is-size-7 mb-60">
-				Вы можете <a class="is-link">реинвестировать всю сумму</a> или часть
-				начисленных дивидендов, остальные вывести.
+			<p class="is-size-5"> {{ $t('Укажите сумму реинвестирования') }} </p>
+			<p class="is-size-7 mb-60" v-html="$t('reinveestText')">
+				
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
@@ -36,13 +35,13 @@
 						"
 					/>
 					<span class="is-size-7">
-						Я принимаю
+						{{ $t('Я принимаю') }}
 						<a
 							href="#"
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							условия и положения
+							{{ $t('условия и положения') }}
 						</a>
 					</span>
 				</div>
@@ -55,13 +54,13 @@
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					Отменить, я передумал
+					{{ $t('Отменить, я передумал') }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="reinvest"
 				>
-					Реинвестировать
+					{{ $t('Реинвестировать') }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>

@@ -10,14 +10,12 @@
 				<div class="columns">
 					<div class="column is-half">
 						<div>
-							<div class="is-size-5 mb-5">
-								Откройте вклад<br/>
-								и начните зарабатывать<br/>
-								до 101% годовых в USDT
+							<div class="is-size-5 mb-5" v-html="$t('investmentTitle')">
+							
 							</div>
 							<div class="mb-5 calc">
 								<div class="is-size-7 mb-2 has-text-grey">
-									Укажите сумму вклада в USDT
+									{{ $t('Укажите сумму вклада в USDT') }}
 								</div>
 								<base-input
 									v-model="input"
@@ -29,14 +27,14 @@
 								/>
 							</div>
 							<div class="mb-5">
-								<div class="is-size-7">ваш доход составит:</div>
+								<div class="is-size-7"> {{ $t('ваш доход составит:') }}</div>
 								<div class="is-size-2">
 									{{ Math.round(profit) }}
 								</div>
 							</div>
 							<div class="mb-5">
 								<div class="is-size-7">
-									с учетом реинвестирования:
+									{{ $t('с учетом реинвестирования:') }}
 								</div>
 								<div class="is-size-1">
 									{{ Math.round(reinvest) }}
@@ -44,25 +42,25 @@
 							</div>
 							<div>
 								<div class="is-size-7 mb-4 has-text-grey">
-									Вклад будет доступен к выводу<br/>
-									после {{ getWithdrawDate }}
+									 {{$t('Вклад будет доступен к выводу')}} <br/>
+									{{ $t('после') }} {{ getWithdrawDate }}
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="column is-half is-flex is-flex-direction-column ">
 						<div>
-							<div class="is-size-4">Вклад USDT:</div>
+							<div class="is-size-4">{{$t('Вклад USDT')}}:</div>
 							<div class="is-size-2 mb-5">
 								{{ formatCurrency(totalDeposit) }}
 							</div>
 							<div class="is-size-7 ethereum">
-								Ethereum адрес:
+								{{ $t('Ethereum адрес') }}:
 							</div>
 							<div class="ethereum-address mb-5">
 								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
 								<a v-else @click="isWalletModalActive = true" class="value has-text-link has-text-weight-light">
-									Добавить кошелек
+									{{ $t('Добавить кошелек') }}
 								</a>
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
@@ -75,13 +73,13 @@
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
 							<div v-if="isConnected" class="is-size-7 has-text-grey">
-								Кошелек готов к работе.
+								{{ $t('Кошелек готов к работе.') }}
 							</div>
 							<div v-else-if="!user.ethereum_wallet" class="is-size-7 status-offline">
-								Добавьте кошелек
+								{{ $t('Добавьте кошелек') }}
 							</div>
 							<div v-else class="is-size-7 status-offline">
-								Выберите этот кошелек в вашем MetaMask.
+								{{ $t('Выберите этот кошелек в вашем MetaMask.') }}
 							</div>
 						</div>
 						<custom-button
@@ -89,7 +87,7 @@
 							@click.native="isMetaMaskInstallModalActive = true"
 							class="mt-auto"
 						>
-							Авторизовать кошлек
+							{{ $t('Авторизовать кошлек') }}
 						</custom-button>
 						<custom-button
 							v-else-if="allowance === 0"
@@ -97,7 +95,7 @@
 							class="mt-auto"
 							:disabled="!user.ethereum_wallet || !isConnected"
 						>
-							Одобрить USDT
+							{{ $t('Одобрить USDT') }}
 						</custom-button>
 						<custom-button
 							v-else-if="totalDeposit > 0"
@@ -105,7 +103,7 @@
 							class="mt-auto"
 							:disabled="!user.ethereum_wallet || !isConnected"
 						>
-							Пополнить депозит
+							{{$t('Пополнить депозит')}}
 						</custom-button>
 						<custom-button
 							v-else
@@ -113,7 +111,7 @@
 							class="mt-auto"
 							:disabled="!user.ethereum_wallet || !isConnected"
 						>
-							Открыть вклад
+							{{ $t('Открыть вклад') }}
 						</custom-button>
 					</div>
 				</div>
@@ -122,7 +120,7 @@
 		<div class="container">
 			<div class="level">
 				<div class="level-left is-size-5 has-text-primary mb-4">
-					История транзакций
+					{{ $t('История транзакций') }}
 				</div>
 			</div>
 			<b-table
@@ -135,7 +133,7 @@
 				<template slot-scope="props">
 					<b-table-column
 						field="args.timestamp"
-						label="Дата и время"
+						:label="$t('Дата и время')"
 						sortable="sortable"
 						width="20%"
 					>
@@ -150,7 +148,7 @@
 					<b-table-column
 						class="has-text-primary overflow-reset"
 						field="txHash"
-						label="Хэш"
+						:label="$t('Хэш')"
 						width="20%"
 					>
 						<b-tooltip
@@ -170,7 +168,7 @@
 					</b-table-column>
 					<b-table-column
 						field="contract"
-						label="Контракт"
+						:label="$t('Контракт')"
 						header-class="right-align"
 						cell-class="text-right"
 						width="20%"
@@ -179,7 +177,7 @@
 					</b-table-column>
 					<b-table-column
 						field="amountUSDT"
-						label="Сумма, USDT"
+						:label="$t('Сумма, USDT')"
 						cell-class="text-right"
 						header-class="has-text-right"
 						width="10%"
@@ -197,11 +195,11 @@
 					@click="showMore()"
 					class="show-more"
 				>
-					показать еще
+					{{ $t('показать еще') }}
 				</button>
 			</div>
 			<div class="is-size-5 has-background-primary total-withdraw mb-6">
-				Всего: {{ `${formatCurrency(filteredTotals, "usdt")}` }} USDT
+				{{ $t('Всего:') }} {{ `${formatCurrency(filteredTotals, "usdt")}` }} USDT
 			</div>
 		</div>
 		<b-modal :active.sync="isWalletModalActive" has-modal-card>

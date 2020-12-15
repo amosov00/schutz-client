@@ -8,7 +8,7 @@
 				</a>
 				<div class="links">
 					<p class="link-item" v-for="link in links" :key="link.name">
-						<span class="hidden">{{ link.name }}</span>
+						<span class="hidden">{{ $t(link.name) }}</span>
 						<nuxt-link
 							:to="localePath(link.link)"
 							class="link"

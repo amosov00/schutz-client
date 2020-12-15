@@ -2,15 +2,11 @@
   <div class="add-metamask">
     <div class="columns">
       <div class="column is-12-mobile is-6-desktop">
-        <p class="is-size-5 mb-5">Установите MetaMask</p>
-        <p class="is-size-7 mb-3">Для полноценной работы в системе SCHUTZ
-          потребуется установить расширение-кошелек MetaMask.
-          Все финансовые операции будут проходить через него.
+        <p class="is-size-5 mb-5"> {{ $t('Установите MetaMask') }} </p>
+        <p class="is-size-7 mb-3"> {{ $t('installText') }}
         </p>
         <p class="is-size-7 mb-3">
-          Будьте внимательны!
-          Устанавливайте расширение только перейдя
-          по этой ссылке на официальный сайт:
+          {{ $t('noteText') }}
           <a
             target="_blank"
             href="https://metamask.io/"
@@ -18,7 +14,7 @@
             https://metamask.io/
           </a>
         </p>
-        <p class="is-size-7 mb-3">Поддерживаемые браузеры:</p>
+        <p class="is-size-7 mb-3"> {{ $t('Поддерживаемые браузеры:') }} </p>
         <div class="browsers">
           <div class="chrome"></div>
           <div class="firefox"></div>
@@ -36,7 +32,7 @@
         @click="$parent.close()"
         class="cancel has-text-link is-size-7 is-cursor-pointer"
       >
-        Понятно, спасибо, установлю позже
+        {{ $t('Понятно, спасибо, установлю позже') }}
       </a>
       <a
         href="https://metamask.io/download.html"
@@ -44,7 +40,7 @@
          @click="$parent.close()"
       >
         <custom-button>
-          Установить
+          {{ $t('Установить') }}
         </custom-button>
       </a>
     </div>
