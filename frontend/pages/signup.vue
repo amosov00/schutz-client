@@ -363,7 +363,9 @@ export default {
 		let idFromCookies = this.$cookies.get("referral_id");
 		if (this.$route.query.referral) {
 			this.$cookies.set("referral_id", this.$route.query.referral, {
-				maxAge: 60 * 60 * 24 * 365
+				maxAge: 60 * 60 * 24 * 365,
+				path: "/",
+				domain: this.$domainForCookie()
 			});
 			this.data.referral_id = this.$route.query.referral;
 			this.lockReferralIdInput = true;

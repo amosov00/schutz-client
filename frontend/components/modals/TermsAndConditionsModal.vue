@@ -1,7 +1,7 @@
 <template>
 	<div class="s-modal">
 		<div class="s-modal__scroll">
-			<div class="s-modal____content terms">
+			<div class="s-modal____content terms" v-if="$i18n.locale == 'ru'">
 				<div class="terms__title">Условия и положения</div>
 				<div class="terms__date">«8» декабря 2020 г.</div>
 				<div class="terms__body">
@@ -94,6 +94,12 @@
 							«Ограничение отвественности» без обязательства уведомления клиента
 							о внесенных изменениях в вышеупомянутые документы.
 						</div>
+						<div class="page__list_item" data-number="2.1.4">
+							Управляющий обязуется уведомлять клиента о начислении
+							ежеквартальных дивидендов, завершении работы тела депозита
+							посредством e-mail уведомления.
+						</div>
+
 						<div class="page__list_item" data-number="2.2">
 							Права и обязанности Инвестора:
 						</div>
@@ -185,7 +191,7 @@
 							По заявлению любой из Сторон настоящее Соглашение может быть
 							расторгнуто в одностороннем порядке в случае наступления
 							<a
-								href="/Ограничение_Отвественности.pdf"
+								href="/files/Ogranicheniye_otvetstvennosti.pdf"
 								target="_blank"
 								rel="noopener noreferrer"
 								>обстоятельств непреодолимой силы (форс-мажор), повлиявших на
@@ -367,19 +373,402 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="s-modal____content terms" v-else>
+				<div class="terms__title">Terms and Conditions</div>
+				<div class="terms__date">08 December 2020</div>
+				<div class="terms__body">
+					<p>
+						SCHUTZ, hereinafter referred to as the "Manager", on the one hand,
+						and the user of the mathematical code "....", hereinafter referred
+						to as the "Investor", on the other hand, collectively hereinafter
+						referred to as the "Parties", have entered into this Agreement as
+						follows:
+					</p>
+
+					<div class="page__list">
+						<div class="page__list_item" data-number="1">
+							SUBJECT OF THE AGREEMENT
+						</div>
+						<div class="page__list_item" data-number="1.1">
+							The manager undertakes to accept and manage digital assets during
+							the term of this investment.
+						</div>
+						<div class="page__list_item" data-number="1.2">
+							The technology for receiving and issuing digital assets is a
+							centralized smart contract based on the Ethereum Schutz
+							blockchain. This smart contract does not affect the receipt of
+							profit by the Manager, but is only an automated platform - the
+							SCHUTZ electronic accountant.
+						</div>
+						<div class="page__list_item" data-number="1.3">
+							The Manager undertakes to manage digital assets by performing
+							speculative transactions on the exchange market in order to
+							receive profit for the Investor from exchange rate fluctuations
+							during the settlement period. The Manager has the right, at his
+							own discretion, to choose any speculative transactions to make a
+							profit in favor of the Investor.
+						</div>
+						<div class="page__list_item" data-number="1.4">
+							The billing period is determined by the terms of the tariff plan.
+						</div>
+						<div class="page__list_item" data-number="1.5">
+							The conclusion of the Agreement between the Manager and the
+							Investor, collectively referred to as the "Parties", is carried
+							out by the complete and unconditional accession of the Client to
+							the Agreement (acceptance of the Agreement) in accordance with
+							Art. 428 of the Civil Code of the Russian Federation
+						</div>
+						<div class="page__list_item" data-number="1.6">
+							Within the framework of this Agreement, it is allowed to deposit
+							digital tokens to the Manager's cryptocurrency wallet. The return
+							of management objects or interest on them is carried out in
+							digital tokens. The transfer of digital assets into trust does not
+							entail the transfer of ownership of them to the Manager.
+						</div>
+						<div class="page__list_item" data-number="1.7">
+							The transfer of digital assets into trust is carried out by the
+							Investor by transferring digital assets to the Manager's wallet.
+							The day of transfer of the Investor's digital assets into trust is
+							the day they are received on the Manager's wallet.
+						</div>
+						<div class="page__list_item" data-number="1.8">
+							The transfer of accrued interest on the amounts transferred to
+							management of funds ("the body of the deposit") occurs for each
+							quarter (first quarter April 15-20, second quarter July 15-20,
+							third quarter October 15-20, fourth quarter January 15-20), for
+							excluding weekends and holidays.
+						</div>
+						<div class="page__list_item" data-number="1.9">
+							The Beneficiary under the Agreement is the Investor.
+						</div>
+
+						<div class="page__list_item" data-number="2">
+							RIGHTS AND OBLIGATIONS OF THE PARTIES
+						</div>
+						<div class="page__list_item" data-number="2.1">
+							Rights and obligations of the Manager:
+						</div>
+						<div class="page__list_item" data-number="2.1.1">
+							Use the funds transferred by the Investor for management solely
+							for the purpose of deriving speculative profits for the Investor,
+							managing funds by performing purchase and sale transactions on the
+							exchange market with target profitability in accordance with the
+							terms of the tariff plan. Act in good faith and in a manner that
+							is in the best interests of the Investor.
+						</div>
+						<div class="page__list_item" data-number="2.1.2">
+							In the event of force majeure circumstances, the Manager has the
+							right to change (increase or decrease) the percentage of profit
+							declared according to the tariff plan, notifying the other Party
+							at least 30 calendar days in advance.
+						</div>
+						<div class="page__list_item" data-number="2.1.3">
+							The manager has the right to change this "Agreement", as well as
+							the "Limitation of Liability" without the obligation to notify the
+							client about the changes made to the above documents.
+						</div>
+						<div class="page__list_item" data-number="2.1.4">
+							The manager undertakes to notify the client about the accrual of
+							quarterly dividends, the completion of the deposit body via e-mail
+							notification.
+						</div>
+						<div class="page__list_item" data-number="2.2">
+							Investor's rights and obligations:
+						</div>
+						<div class="page__list_item" data-number="2.2.1">
+							The investor is obliged to accept the terms of the tariff plan
+							described in this "Agreement", as well as the .
+							<a
+								href="/files/Limitation_of_liability.pdf"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								"Limitation of Liability"</a
+							>.
+						</div>
+						<div class="page__list_item" data-number="2.2.2">
+							The investor has no right to interfere with the activities of the
+							Asset Trust Manager
+						</div>
+						<div class="page__list_item" data-number="2.2.3">
+							The investor undertakes to fix the received profit by withdrawing
+							or reinvesting the entire amount of funds within a period not
+							later than 3 calendar years from the date of the open deposit.
+							Otherwise, the final balance (the total amount of the deposit and
+							quarterly payments) will be debited from the Investor's account in
+							favor of the Company.
+						</div>
+						<div class="page__list_item" data-number="2.2.4">
+							Upon the expiration of the term of the deposit, the Investor
+							undertakes to submit an application for withdrawal / prolongation
+							of the body of the deposit by clicking on the "Withdraw / prolong
+							my deposit" button in advance, by the end of the month after which
+							withdrawal / prolongation is planned. Otherwise, the project
+							administration will postpone the withdrawal / prolongation of the
+							Investor's deposit body 1 month later than provided for by the
+							tariff plan. <br />
+							Example: the withdrawal of the body of the deposit according to
+							the tariff plan is scheduled for February 20-22, 2021, the
+							Investor must submit an application for withdrawal / prolongation
+							by the end of January 2021. If the Investor is late in submitting
+							the application
+						</div>
+						<div class="page__list_item" data-number="2.2.5">
+							The investor has the right to replenish the deposit, as well as
+							reinvest the received quarterly interest throughout the entire
+							term of the deposit (12 months). In this case, the initial amount
+							of the deposit will be replenished by the amount of the
+							replenishment and / or reinvested funds. At the same time, the
+							amount of payments for the next reporting periods (quarters) will
+							increase accordingly. The withdrawal of the total amount of the
+							deposit will be made according to the initial date of opening the
+							deposit.
+						</div>
+						<div class="page__list_item" data-number="2.2.6">
+							Change of payment details of the recipient. If the Investor loses
+							access to the wallet (mathematical code), which is tied to the
+							personal account and from which the deposit was opened, the
+							Investor must notify the SCHUTZ support service via e-mail. The
+							Manager will offer the Investor a procedure for restoring access
+							to the deposit.
+						</div>
+
+						<div class="page__list_item" data-number="2.2.7">
+							The Investor is responsible for the payment of all tax liabilities
+							(personal income tax), the Investor is obliged to fulfill
+							(calculate and pay) all payments independently. The Investor bears
+							responsibility for non-fulfillment (improper fulfillment) of tax
+							obligations independently.
+						</div>
+						<div class="page__list_item" data-number="2.2.8">
+							The investor confirms that he is aware of the possible risks of
+							speculative transactions with digital assets.
+						</div>
+
+						<div class="page__list_item" data-number="3">
+							DURATION OF THE AGREEMENT
+						</div>
+						<div class="page__list_item" data-number="3.1">
+							The Investor's digital assets must be transferred to the Manager's
+							wallet within 1 (one) calendar day from the date of signing this
+							Agreement. This Agreement enters into force from the moment of
+							completion of the transaction in accordance with the terms of the
+							tariff plan and is valid until its termination.
+						</div>
+						<div class="page__list_item" data-number="3.2">
+							Termination of this Agreement is possible only at the end of the
+							term of the deposit. Each of the Parties to this Agreement has the
+							right to unilaterally terminate this Agreement by notifying the
+							other Party about it at least 5 (five) business days before the
+							end of the next billing period by e-mail notification.
+						</div>
+						<div class="page__list_item" data-number="3.3">
+							At the request of any of the Parties, this Agreement may be
+							terminated unilaterally in the event of force majeure
+							circumstances (force majeure) that affect the ability to execute
+							this Agreement (link to the document
+							<a
+								href="/files/Limitation_of_liability.pdf"
+								target="_blank"
+								rel="noopener noreferrer"
+								>"Limitation of Liability"</a
+							>
+							). At the same time, the Party referring to force majeure
+							circumstances as a basis for terminating this Agreement must
+							provide the other Party with evidence obtained from the competent
+							authorities of the occurrence of force majeure circumstances and
+							the degree of their influence on the impossibility of executing
+							this Agreement, for example, <br />
+
+							- the issuance of normative acts, the provisions of which
+							stipulate the impossibility of the proper fulfillment of
+							obligations; <br />
+							- occurrence of natural disasters, including floods, earthquakes,
+							fires, etc.; <br />
+							- the influence of socio-political factors, including strikes,
+							rallies, marches, actions of the authorities, military actions or
+							conflicts, terrorist acts; <br />
+							- termination (suspension) of the activities of auction
+							organizers; <br />
+							- non-payment by online exchanges <br />
+
+							<a
+								href="https://poloniex.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://poloniex.com</a
+							>
+							<a
+								href="https://www.binance.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://www.binance.com</a
+							>
+							<a
+								href="https://bitmex.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://bitmex.com</a
+							>
+							<a
+								href="https://bitfinex.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://bitfinex.com</a
+							>
+							<a
+								href="https://bittrex.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://bittrex.com</a
+							>
+							<a
+								href="https://hitbtc.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://hitbtc.com</a
+							>
+							<a
+								href="https://www.okex.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://www.okex.com</a
+							>
+							<a
+								href="https://www.hbg.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://www.hbg.com</a
+							>
+							<a
+								href="https://lykke.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://lykke.com</a
+							>
+							of due payments, making late payments or other actions beyond the
+							control of the Manager.
+							<br />
+							- Attack by fraudsters on manager accounts and theft of funds.
+							(The complete list of items contains the document
+							<a href="/files/Limitation_of_liability.pdf" target="_blank"
+								>"Disclaimer"</a
+							>
+							)
+						</div>
+						<div class="page__list_item" data-number="3.4">
+							This Agreement can also be terminated by mutual agreement of the
+							Parties.
+						</div>
+						<div class="page__list_item" data-number="4">
+							LIABILITY OF THE PARTIES
+						</div>
+
+						<div class="page__list_item" data-number="">
+							The offered digital financial assets are high-risk, and their
+							acquisition may result in the loss of the deposited funds in full.
+							Before transacting with proposed digital financial assets, you
+							should be familiar with the risks involved in acquiring them.
+						</div>
+						<div class="page__list_item" data-number="4.1">
+							By entering into this Agreement, the Investor is notified of the
+							property risks associated with the early withdrawal of digital
+							assets.
+						</div>
+						<div class="page__list_item" data-number="4.2">
+							The Manager or Investor will not be liable for non-fulfillment or
+							improper fulfillment of obligations under the Agreement if this is
+							the result of force majeure circumstances (force majeure)
+							specified in this Agreement (Force Majeure circumstances), or as a
+							result of nonfulfillment or improper fulfillment of obligations
+							under the Agreement by the other Party.
+						</div>
+						<div class="page__list_item" data-number="4.3">
+							The Investor assures the Manager that he assumes all risks beyond
+							the control of the Manager related to insurmountable circumstances
+							(force majeure) that do not depend on the actions of the Manager
+							and which the Manager cannot influence in any way.
+						</div>
+						<div class="page__list_item" data-number="4.4">
+							The investor confirms that he has basic knowledge of digital
+							assets and their possible types of trading on the market. The
+							Investor confirms that he transfers digital assets into trust with
+							the knowledge that the Manager will make speculative transactions
+							in the digital asset market in order to generate profit for the
+							Investor.
+						</div>
+						<div class="page__list_item" data-number="4.5">
+							If the relevant requirements for the regulation of
+							cryptocurrencies are introduced in the country of which the
+							investor is a resident, he must pass all the requirements
+							necessary by the country in order to be able to continue working
+							with the manager.
+						</div>
+						<div class="page__list_item" data-number="4.6">
+							All transfers of digital assets from the Investor's wallet are
+							converted into stablecoins solely for accurate calculation in
+							tariffs at the exchange rate on the online exchange
+							<a
+								href="https://poloniex.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								>https://poloniex.com</a
+							>
+							at the time the funds are received on the Manager's wallet.
+						</div>
+						<div class="page__list_item" data-number="5">
+							CONFIDENTIALITY
+						</div>
+						<div class="page__list_item" data-number="5.1">
+							None of the Parties to the Agreement shall have the right, except
+							at the request of the competent authority or the court, during the
+							term and after the termination of the Agreement within 3 (Three)
+							years, to disclose to any person not authorized by one of the
+							Parties, information related to the Agreement, with the exception
+							of information that can be obtained from publicly available
+							sources.
+						</div>
+						<div class="page__list_item" data-number="5.2">
+							The Investor gives his consent to the provision of his personal
+							data to the specified persons of the Manager and is notified of
+							his right to withdraw his consent to the processing of personal
+							data at any time.
+						</div>
+						<div class="page__list_item" data-number="6">
+							DISPUTE RESOLUTION PROCEDURE
+						</div>
+						<div class="page__list_item" data-number="6.1">
+							Disputes and disagreements that may arise during the execution of
+							this Agreement will, if possible, be resolved through negotiations
+							between the Parties.
+						</div>
+						<div class="page__list_item" data-number="7">
+							ADDITIONAL TERMS
+						</div>
+						<div class="page__list_item" data-number="7.1">
+							The parties acknowledge the validity of this Agreement
+						</div>
+						<div class="page__list_item" data-number="7.2">
+							By completing this agreement, the investor agrees to the
+							processing of his personal data by the manager.
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="terms__acception">
 			<div
 				class="terms__cancel"
 				@click="$store.commit('toggleTermsModal', false)"
 			>
-				Отменить, не согласен
+				{{ $t("Отменить, не согласен") }}
 			</div>
 			<button
 				@click="accept()"
 				class="button terms__accept custom-button is-primary is-size-5 has-text-weight-bold"
 			>
-				Принять
+				{{ $t("Принять") }}
 			</button>
 		</div>
 	</div>
