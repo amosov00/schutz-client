@@ -87,8 +87,8 @@ export default {
 				},
 				{
 					text: "Отчеты",
-					action: () => this.$router.push("/admin/orders"),
-					active: this.$route.path === "/admin/orders"
+					action: () => this.$router.push("/admin/reports"),
+					active: this.$route.path === "/admin/reports"
 				},
 				{
 					text: "Начисление дивидендов",
