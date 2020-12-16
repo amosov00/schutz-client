@@ -189,5 +189,28 @@ export const getters = {
   totals: s => s.reportData.totals,
   activeDeposits: s => s.activeDeposits,
   activeDepositsByID: s => s.activeDepositsByID,
-  activeDepositTransactions: s => s.activeDepositTransactions
+  activeDepositTransactions: s => s.activeDepositTransactions,
+
+	itemsPagination: (state) => (itemType) => (page, limit) => {
+  	const items = {
+  		transactions: state.reportData.transactions,
+			activeDeposits: state.activeDeposits.active_deposits,
+		}
+
+		if(!items[itemType]) return [];
+
+		const startWith = 0;
+		const endOn = items[itemType].length < page * limit
+			? items[itemType].length
+			: page * limit;
+
+		const elements = [];
+
+		for (let i = startWith; i < endOn; i++) {
+			elements.push(items[itemType][i])
+		}
+
+		return elements;
+	},
+
 }

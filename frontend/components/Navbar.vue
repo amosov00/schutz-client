@@ -71,11 +71,7 @@ export default {
 		},
 
 		showAdminDropdown() {
-			if(this.user){
-				return this.user.is_manager || this.user.is_superuser;
-			}else {
-				return false;
-			}
+			return this.$userIsManager();
 		},
 
 		adminDropdownItems() {
@@ -87,8 +83,8 @@ export default {
 				},
 				{
 					text: "Отчеты",
-					action: () => this.$router.push("/admin/orders"),
-					active: this.$route.path === "/admin/orders"
+					action: () => this.$router.push("/admin/reports"),
+					active: this.$route.path === "/admin/reports"
 				},
 				{
 					text: "Начисление дивидендов",

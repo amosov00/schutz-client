@@ -218,5 +218,5 @@ export default {
   'Вклад, USDT':'Deposit, USDT',
   'Бонус, USDT':'Bonus,USDT',
   'Всего начислено:':'Total accrued:',
-  '':''
+  'Отменить, не согласен':'Cancel, do not agree'
 };

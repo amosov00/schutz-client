@@ -16,6 +16,7 @@
     :value="value"
     @input="onInput"
     step="any"
+		@keypress="filterNumber"
     :maxLength="maxLength"
     :max="max"
     :min="min"
@@ -63,7 +64,7 @@ export default {
       default: () => 99999999
     },
     value: {
-      type: String,
+      type: [String, Number],
       default: () => ''
     },
     label: {
@@ -98,7 +99,19 @@ export default {
   methods: {
     onInput(e) {
       this.$emit('input', e.target.value)
-    }
+    },
+
+		filterNumber ($event) {
+			if (this.type !== 'number') {
+				return true;
+			}
+
+			const keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+
+			if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+				$event.preventDefault();
+			}
+		}
   },
   mounted() {
     if (this.setFocus) {
@@ -191,5 +204,16 @@ export default {
       background-color: #D60D0D;
     }
   }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+	-moz-appearance: textfield;
 }
 </style>
