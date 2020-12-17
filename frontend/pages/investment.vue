@@ -318,7 +318,7 @@ export default {
 			const offset = moment().utcOffset();
 			return moment()
 				.startOf("month")
-				.locale("ru")
+				.locale(this.$i18n.locale)
 				.add(offset, "minutes")
 				.add(13, "month")
 				.add(19, "days")
