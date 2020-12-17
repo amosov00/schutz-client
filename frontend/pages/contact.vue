@@ -34,113 +34,146 @@
 </template>
 
 <script>
-  import InlineSvg from 'vue-inline-svg'
-  import { mapGetters } from 'vuex'
+import InlineSvg from "vue-inline-svg";
+import { mapGetters } from "vuex";
 
-  export default {
-    name: "contact",
-    layout: "profile",
-    middleware: ["authRequired", "contracts"],
-    components: { InlineSvg },
-    computed: {
-      ...mapGetters(['user'])
-    },
+export default {
+	name: "contact",
+	layout: "profile",
+	middleware: ["authRequired", "contracts"],
+	components: { InlineSvg },
+	computed: {
+		...mapGetters(["user"])
+	},
 
-    methods: {
-      formClear() {
-        this.contactForm.topic = '';
-        this.contactForm.text = '';
-      },
-      formPost() {
-        this.isLoading = true;
+	methods: {
+		formClear() {
+			this.contactForm.topic = "";
+			this.contactForm.text = "";
+		},
+		formPost() {
+			this.isLoading = true;
 
-        // Формирование текста из формы + доп. данных согласно ТЗ
-        let data = this.contactForm;
-        data['id'] = this.user._id;
-        data['first_name'] = this.user.first_name;
-        data['last_name'] = this.user.last_name;
-        data['telegram'] = this.user.telegram;
-        data['ethereum_wallet'] = this.user.ethereum_wallet;
+			// Формирование текста из формы + доп. данных согласно ТЗ
+			let data = this.contactForm;
+			data["id"] = this.user._id;
+			data["first_name"] = this.user.first_name;
+			data["last_name"] = this.user.last_name;
+			data["telegram"] = this.user.telegram;
+			data["ethereum_wallet"] = this.user.ethereum_wallet;
 
-        if(this.contactForm.text.length < 1 || this.contactForm.topic.length < 1) {
-          this.$buefy.toast.open({message: 'Error: check form', type: 'is-danger'});
-          this.isLoading = false;
-        }
-        else {
-          // Отправка данных
-          this.isLoading = false;
-          this.$buefy.toast.open({message: 'Succesfully sent', type: 'is-primary'});
-          this.formClear();
-        }
-      }
-    },
+			if (
+				this.contactForm.text.length < 1 ||
+				this.contactForm.topic.length < 1
+			) {
+				this.$buefy.toast.open({
+					message: "Error: check form",
+					type: "is-danger"
+				});
+				this.isLoading = false;
+			} else {
+				// Отправка данных
+				this.isLoading = false;
+				this.$buefy.toast.open({
+					message: "Succesfully sent",
+					type: "is-primary"
+				});
+				this.formClear();
+			}
+		}
+	},
 
-    data: () => ({
-      isLoading: false,
+	data: () => ({
+		isLoading: false,
 
-      contactForm: {
-        topic: '',
-        text: ''
-      },
+		contactForm: {
+			topic: "",
+			text: ""
+		},
 
-      telegram_managers: [
-        { name: 'Валерия', link: 'Valeriya_crypto', isOnline: true },
-        { name: 'Алёна', link: '', isOnline: false },
-        { name: 'Даниил', link: '', isOnline: false },
-      ],
+		telegram_managers: [
+			{ name: "Валерия", link: "Valeriya_crypto", isOnline: true },
+			{ name: "Алёна", link: "", isOnline: false },
+			{ name: "Даниил", link: "", isOnline: false }
+		],
 
-      socials: [
-        { name: 'Facebook', icon: 'facebook.svg', bg: '#3B5998', link: '#'},
-        { name: 'Twitter', icon: 'twitter.svg', bg: '#0C85D0', link: 'https://twitter.com/nts_crypto' },
-        { name: 'Instagram', icon: 'instagram.svg', bg: '#D31E40', link: 'https://www.instagram.com/neutrino_fund/' },
-        { name: 'YouTube', icon: 'youtube.svg', bg: '#CC0000', link: '#' },
-        { name: 'Telegram', icon: 'telegram2.svg', bg: '#2CA5E0', link: 'https://t.me/neutrinobank' },
-        { name: 'GitHub', icon: 'github.svg', bg: '#000000', link: '#' },
-        { name: 'Bitcointalk', icon: 'bct.svg', bg: '#F99D31', link: '#' },
-        { name: 'Reddit', icon: 'reddit.svg', bg: '#FE4500', link: 'https://www.reddit.com/user/NeutrinoBank' },
-        { name: 'Medium', icon: 'medium.svg', bg: '#292929', link: 'https://medium.com/@neutrinofund' },
-      ]
-    })
-  }
+		socials: [
+			{ name: "Facebook", icon: "facebook.svg", bg: "#3B5998", link: "#" },
+			{
+				name: "Twitter",
+				icon: "twitter.svg",
+				bg: "#0C85D0",
+				link: "https://twitter.com/schutzcapital"
+			},
+			{
+				name: "Instagram",
+				icon: "instagram.svg",
+				bg: "#D31E40",
+				link: "https://www.instagram.com/neutrino_fund/"
+			},
+			{ name: "YouTube", icon: "youtube.svg", bg: "#CC0000", link: "#" },
+			{
+				name: "Telegram",
+				icon: "telegram2.svg",
+				bg: "#2CA5E0",
+				link: "https://t.me/neutrinobank"
+			},
+			{ name: "GitHub", icon: "github.svg", bg: "#000000", link: "#" },
+			{ name: "Bitcointalk", icon: "bct.svg", bg: "#F99D31", link: "#" },
+			{
+				name: "Reddit",
+				icon: "reddit.svg",
+				bg: "#FE4500",
+				link: "https://www.reddit.com/user/NeutrinoBank"
+			},
+			{
+				name: "Medium",
+				icon: "medium.svg",
+				bg: "#292929",
+				link: "https://medium.com/@neutrinofund"
+			}
+		]
+	})
+};
 </script>
 
 <style lang="sass" scoped>
-  .btn-wrapper
-    margin-top: 20px
-    .button
-      padding: 15px 59px
-      font-size: 14px
-      line-height: 17px
-      height: auto
+.btn-wrapper
+  margin-top: 20px
+  .button
+    padding: 15px 59px
+    font-size: 14px
+    line-height: 17px
+    height: auto
 
-  .custom-textarea
-    .control
-      flex: 1 10
+.custom-textarea
+  .control
+    flex: 1 10
 
-  .flex-1
-    flex: 1 1 0
+.flex-1
+  flex: 1 1 0
 
-  .contact-box
-    display: flex
-    flex-direction: column
+.contact-box
+  display: flex
+  flex-direction: column
 
-  .parent-height
-    height: 100%
+.parent-height
+  height: 100%
 
-  .soc-icon
-    margin-right: 5px
-    max-width: 24px
-    max-height: 24px
-    height: 24px
-    width: 24px
-  .soc-btn
-    border-color: transparent
-    color: #ffffff
-    margin: 8px 6px 0 0
-    &:hover
-      opacity: 0.75
-    &:active
-      transform: scale(0.98)
-  .tg-btn
-    margin-top: 10px
+.soc-icon
+  margin-right: 5px
+  max-width: 24px
+  max-height: 24px
+  height: 24px
+  width: 24px
+.soc-btn
+  border-color: transparent
+  color: #ffffff
+  margin: 8px 6px 0 0
+  &:hover
+    opacity: 0.75
+  &:active
+    transform: scale(0.98)
+.tg-btn
+  margin-top: 10px
 </style>

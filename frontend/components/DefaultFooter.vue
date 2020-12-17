@@ -5,15 +5,23 @@
 			<nuxt-link :to="localePath('/')"> {{ $t("Криптодепозиты") }} </nuxt-link>
 			<nuxt-link :to="localePath('/about-us')"> {{ $t("О нас") }} </nuxt-link>
 			<nuxt-link :to="localePath('/payouts')">{{ $t("Выплаты") }}</nuxt-link>
-			<nuxt-link :to="localePath('/strategies')">{{ $t("Стратегии") }}</nuxt-link>
-			<nuxt-link :to="localePath('/help')">{{ $t("Вопросы и ответы") }}</nuxt-link>
+			<nuxt-link :to="localePath('/strategies')">{{
+				$t("Стратегии")
+			}}</nuxt-link>
+			<nuxt-link :to="localePath('/help')">{{
+				$t("Вопросы и ответы")
+			}}</nuxt-link>
 			<nuxt-link :to="localePath('/contacts')">{{ $t("Контакты") }}</nuxt-link>
 			<nuxt-link :to="localePath('/')"> {{ $t("Комьюнити") }}</nuxt-link>
 		</div>
 		<div class="footer__social-container">
 			<div>
 				<a
-					:href="$i18n.locale == 'ru' ? '/files/Ogranicheniye_otvetstvennosti.pdf' : '/files/Limitation_of_liability.pdf'" 
+					:href="
+						$i18n.locale == 'ru'
+							? '/files/Ogranicheniye_otvetstvennosti.pdf'
+							: '/files/Limitation_of_liability.pdf'
+					"
 					target="_blank"
 					class="mr-50"
 				>
@@ -21,12 +29,15 @@
 				</a>
 
 				<a
-					:href="$i18n.locale == 'ru' ? '/files/Politika_konfidensialnosti.pdf' : '/files/Privacy_Policy.pdf'" 
+					:href="
+						$i18n.locale == 'ru'
+							? '/files/Politika_konfidensialnosti.pdf'
+							: '/files/Privacy_Policy.pdf'
+					"
 					target="_blank"
 				>
 					{{ $t("Политика конфиденциальности") }}
 				</a>
-				
 			</div>
 			<div class="footer__social">
 				<a href="https://t.me/neutrinofund" target="_blank"
@@ -41,7 +52,7 @@
 				<a href="https://t.me/Neutrino_NTS_RU" target="_blank"
 					><img src="/social/telegram.png" alt="telegram"
 				/></a>
-				<a href="https://twitter.com/SCHUTZru" target="_blank"
+				<a href="https://twitter.com/schutzcapital" target="_blank"
 					><img src="/social/twitter.png" alt="twitter"
 				/></a>
 				<a href="https://www.facebook.com/schutz.capital" target="_blank"
@@ -51,7 +62,12 @@
 		</div>
 		<div class="footer__bottom">
 			<div class="footer__copyright">© 2017—2020, <span>SCHUTZ</span></div>
-			<a v-if="false" href="/files/presentation_nts.pdf" class="footer__ppt" target="_blank">
+			<a
+				v-if="false"
+				href="/files/presentation_nts.pdf"
+				class="footer__ppt"
+				target="_blank"
+			>
 				{{ $t("Скачать презентацию") }}
 			</a>
 			<lang-switcher />
