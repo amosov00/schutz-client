@@ -1,7 +1,7 @@
 <template lang="pug">
 	b-table.custom-table.mb-4(
 		:data="data"
-		pagination-position="bottom"
+		:loading="loading"
 	)
 		template(slot-scope="{ row }")
 			b-table-column(field="args.timestamp" label="Date" sortable width="50") {{ timestampToDate(row.args.timestamp) }}

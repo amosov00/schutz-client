@@ -26,15 +26,11 @@
 						target="_blank"
 					).text-clamp {{ row.args.customerAddress }}
 			b-table-column(
-				field="txHash"
-				label="txHash"
+				field="transactionHash"
+				label="TxHash"
 				width="150"
 			).has-text-primary.overflow-reset
-				b-tooltip(
-					:label="row.transactionHash"
-					type="is-black"
-					position="is-bottom"
-				).w-100
+				b-tooltip(:label="row.transactionHash" type="is-black" position="is-bottom").w-100
 					a(
 						:href="getTxLink(row.transactionHash)"
 						target="_blank"
@@ -47,25 +43,15 @@
 				cell-class="text-right"
 			) {{ row.contract }}
 			b-table-column(
-				field="rate"
-				label="Rate"
-				width="50"
-				header-class="right-align"
-				cell-class="text-right"
-			).text-right {{ formatCurrency(row.args.RATE, 'rate') }}
-			b-table-column(
 				field="amountETH"
 				label="Amount, USDT"
 				width="50"
-				sortable
 				header-class="right-align"
 				cell-class="text-right"
 			).text-right {{ formatCurrency(row.args.USDT, 'usdt')}}
 		template(slot="footer")
 			div
-				div.mb-6.center
-					button.show-more(@click="$emit('more')") показать еще
-				p Dividends withdraw: {{`${formatCurrency(totals.dividend_withdraw, 'usdt')} USDT`}}
+				p Deposits withdraw: {{`${formatCurrency(totals.deposit_withdraw, 'usdt')} USDT`}}
 				.divider
 </template>
 
@@ -77,10 +63,9 @@ import tableMixin from "~/components/tables/ReportTables/tableMixin";
 
 export default {
 	mixins: [formatDate, formatCurrency, etherscan, tableMixin],
-
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 
 </style>

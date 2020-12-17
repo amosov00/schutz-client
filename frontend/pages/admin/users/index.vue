@@ -15,10 +15,11 @@
 							default-placeholder
 							align="center"
 							v-model="searchQuery"
+							debounce="800"
 						)
 
 		UsersTable(
-			:users="filteredUsers.length ? filteredUsers : usersPagination(page, limit)"
+			:users="users"
 			@more="onMore"
 		)
 		.export__container.container.is-flex.is-flex-direction-row-reverse
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 import formatDate from '~/mixins/formatDate'
 import XLSX from "xlsx";
 import { UsersTable } from "@/components/tables";
@@ -48,7 +49,7 @@ export default {
 	computed: {
 		...mapGetters({
 			usersPagination: 'usersPagination',
-			users: 'users',
+			users: 'users/users',
 		}),
 
 		exportedFileDate() {
@@ -74,19 +75,26 @@ export default {
 			searchQuery: "",
 			filteredUsers: [],
 			page: 1,
-			limit: 3,
+			limit: 20,
 		};
 	},
 
 	watch: {
 		searchQuery: {
-			handler() {
-				this.filter();
+			handler(value) {
+				this.page = 1;
+				this.limit = 20;
+
+				this.fetchUsers({ page: this.page, limit: this.limit, query: value });
 			}
 		}
 	},
 
 	methods: {
+		...mapActions({
+				fetchUsers: 'users/fetchUsers',
+			}),
+
 		changeInput() {
 			this.filter();
 		},
@@ -150,12 +158,14 @@ export default {
 			XLSX.writeFile(wb, `users.xlsx`);
 		},
 
-		onMore() {
+		async onMore() {
 			this.page = this.page + 1;
+
+			await this.fetchUsers({ page: this.page, limit: this.limit })
 		}
 	},
 	async asyncData({ store }) {
-		return await store.dispatch("fetchUsers", { page: 1, limit: 10, });
+		return await store.dispatch("users/fetchUsers", { page: 1, limit: 20, });
 	}
 };
 </script>
