@@ -51,6 +51,11 @@ export const actions = {
 			commit(MUTATION.ADD_USERS, users);
 		}
 	},
+	async fetchUsersV1({commit}) {
+		const {data} = await this.$axios.get("/admin/users/v1/");
+		commit(MUTATION.SET_USERS, data);
+	},
+
 };
 
 export const mutations = {
