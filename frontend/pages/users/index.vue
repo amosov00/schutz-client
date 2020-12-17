@@ -48,7 +48,7 @@ export default {
   middleware: ["managerRequired", "contracts"],
   mixins: [formatDate],
   computed: {
-    ...mapGetters(["users"]),
+    ...mapGetters("users", ["users"]),
     exportedFileDate() {
       const data = this.users.map(el => {
         return {
@@ -137,7 +137,7 @@ export default {
     }
   },
   async asyncData({ store }) {
-    return await store.dispatch("fetchUsers");
+    return await store.dispatch("fetchUsersV1");
   }
 };
 </script>

@@ -26,13 +26,13 @@
 			<div class="dropdown__container" v-if="showAdminDropdown">
 				<CustomDropdown :items="adminDropdownItems">
 					<div slot="label" class="dropdown__label">
-						{{ $t('adminPanel') }}
+						{{ $t("adminPanel") }}
 					</div>
 				</CustomDropdown>
 			</div>
 			<div class="right">
 				<a :href="closeLink" class="profile">
-					<span> {{ $t('closeProfile') }} </span>
+					<span> {{ $t("closeProfile") }} </span>
 				</a>
 				<lang-switcher />
 			</div>
@@ -43,26 +43,30 @@
 <script>
 import LangSwitcher from "./LangSwitcher";
 import CustomDropdown from "@/components/ui/CustomDropdown";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-  components: {
-    LangSwitcher,
-		CustomDropdown,
-  },
-  props: {
-    links: {
-      type: Array,
-      required: true
-    }
-  },
-  computed: {
-  	...mapGetters({
-			user: 'user',
+	components: {
+		LangSwitcher,
+		CustomDropdown
+	},
+	props: {
+		links: {
+			type: Array,
+			required: true
+		}
+	},
+	computed: {
+		...mapGetters({
+			user: "user"
 		}),
 
 		closeLink() {
-			return this.$config.LANDING_BASE_URL;
+			if (this.$i18n.locale == "ru") {
+				return this.$config.LANDING_BASE_URL;
+			} else {
+				return `${this.$config.LANDING_BASE_URL}/${this.$i18n.locale}`;
+			}
 		},
 		activePage() {
 			let path = this.$route.path.replace(`/${this.$i18n.locale}`, "");

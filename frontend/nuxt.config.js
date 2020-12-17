@@ -88,7 +88,6 @@ export default {
 				detectBrowserLanguage: {
 					useCookie: true,
 					cookieKey: "lang",
-					alwaysRedirect: true,
 					fallbackLocale: "ru"
 				},
 				locales: [
