@@ -63,7 +63,7 @@ export const actions = {
       .Schutz.methods.balanceOf(address)
       .call()
       .then(balance => {
-        commit("setTotalDeposit", balance / 1e18);
+        commit("setTotalDeposit", balance / 1e6);
         return true;
       })
       .catch(() => {

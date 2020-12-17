@@ -255,7 +255,7 @@ export default {
 	methods: {
 		showMore() {
 			this.limit += 5;
-			if (this.limit >= this.filteredData.length) {
+			if (this.limit > this.filteredData.length) {
 				this.hide_button = true;
 			}
 		},
@@ -297,9 +297,10 @@ export default {
 			return d.slice(0, this.limit);
 		},
 		filteredTotals() {
+			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
 			let result = 0;
 			let minus = 0;
-			this.filteredData.forEach(el => {
+			d.forEach(el => {
 				switch (el.event) {
 					case "Dividend Withdraw":
 						result -= el.args.USDT;
