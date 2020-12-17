@@ -10,12 +10,10 @@
 				<div class="columns">
 					<div class="column is-half">
 						<div>
-							<div class="is-size-5 mb-5" v-html="$t('investmentTitle')">
-							
-							</div>
+							<div class="is-size-5 mb-5" v-html="$t('investmentTitle')"></div>
 							<div class="mb-5 calc">
 								<div class="is-size-7 mb-2 has-text-grey">
-									{{ $t('Укажите сумму вклада в USDT') }}
+									{{ $t("Укажите сумму вклада в USDT") }}
 								</div>
 								<base-input
 									v-model="input"
@@ -27,14 +25,14 @@
 								/>
 							</div>
 							<div class="mb-5">
-								<div class="is-size-7"> {{ $t('ваш доход составит:') }}</div>
+								<div class="is-size-7">{{ $t("ваш доход составит:") }}</div>
 								<div class="is-size-2">
 									{{ Math.round(profit) }}
 								</div>
 							</div>
 							<div class="mb-5">
 								<div class="is-size-7">
-									{{ $t('с учетом реинвестирования:') }}
+									{{ $t("с учетом реинвестирования:") }}
 								</div>
 								<div class="is-size-1">
 									{{ Math.round(reinvest) }}
@@ -42,25 +40,29 @@
 							</div>
 							<div>
 								<div class="is-size-7 mb-4 has-text-grey">
-									 {{$t('Вклад будет доступен к выводу')}} <br/>
-									{{ $t('после') }} {{ getWithdrawDate }}
+									{{ $t("Вклад будет доступен к выводу") }} <br />
+									{{ $t("после") }} {{ getWithdrawDate }}
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="column is-half is-flex is-flex-direction-column ">
 						<div>
-							<div class="is-size-4">{{$t('Вклад USDT')}}:</div>
+							<div class="is-size-4">{{ $t("Вклад USDT") }}:</div>
 							<div class="is-size-2 mb-5">
 								{{ formatCurrency(totalDeposit) }}
 							</div>
-							<div class="is-size-7 ethereum">
-								{{ $t('Ethereum адрес') }}:
-							</div>
+							<div class="is-size-7 ethereum">{{ $t("Ethereum адрес") }}:</div>
 							<div class="ethereum-address mb-5">
-								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
-								<a v-else @click="isWalletModalActive = true" class="value has-text-link has-text-weight-light">
-									{{ $t('Добавить кошелек') }}
+								<span v-if="user.ethereum_wallet">{{
+									user.ethereum_wallet
+								}}</span>
+								<a
+									v-else
+									@click="isWalletModalActive = true"
+									class="value has-text-link has-text-weight-light"
+								>
+									{{ $t("Добавить кошелек") }}
 								</a>
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
@@ -73,13 +75,16 @@
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
 							<div v-if="isConnected" class="is-size-7 has-text-grey">
-								{{ $t('Кошелек готов к работе.') }}
+								{{ $t("Кошелек готов к работе.") }}
 							</div>
-							<div v-else-if="!user.ethereum_wallet" class="is-size-7 status-offline">
-								{{ $t('Добавьте кошелек') }}
+							<div
+								v-else-if="!user.ethereum_wallet"
+								class="is-size-7 status-offline"
+							>
+								{{ $t("Добавьте кошелек") }}
 							</div>
 							<div v-else class="is-size-7 status-offline">
-								{{ $t('Выберите этот кошелек в вашем MetaMask.') }}
+								{{ $t("Выберите этот кошелек в вашем MetaMask.") }}
 							</div>
 						</div>
 						<custom-button
@@ -87,7 +92,7 @@
 							@click.native="isMetaMaskInstallModalActive = true"
 							class="mt-auto"
 						>
-							{{ $t('Авторизовать кошлек') }}
+							{{ $t("Авторизовать кошлек") }}
 						</custom-button>
 						<custom-button
 							v-else-if="allowance === 0"
@@ -95,7 +100,7 @@
 							class="mt-auto"
 							:disabled="!user.ethereum_wallet || !isConnected"
 						>
-							{{ $t('Одобрить USDT') }}
+							{{ $t("Одобрить USDT") }}
 						</custom-button>
 						<custom-button
 							v-else-if="totalDeposit > 0"
@@ -103,7 +108,7 @@
 							class="mt-auto"
 							:disabled="!user.ethereum_wallet || !isConnected"
 						>
-							{{$t('Пополнить депозит')}}
+							{{ $t("Пополнить депозит") }}
 						</custom-button>
 						<custom-button
 							v-else
@@ -111,7 +116,7 @@
 							class="mt-auto"
 							:disabled="!user.ethereum_wallet || !isConnected"
 						>
-							{{ $t('Открыть вклад') }}
+							{{ $t("Открыть вклад") }}
 						</custom-button>
 					</div>
 				</div>
@@ -120,7 +125,7 @@
 		<div class="container">
 			<div class="level">
 				<div class="level-left is-size-5 has-text-primary mb-4">
-					{{ $t('История транзакций') }}
+					{{ $t("История транзакций") }}
 				</div>
 			</div>
 			<b-table
@@ -139,7 +144,7 @@
 					>
 						{{ timestampToDateTime(props.row.args.timestamp) }}
 					</b-table-column>
-					<b-table-column field="event" label="Событие" width="20%">
+					<b-table-column field="event" :label="$t('Событие')" width="20%">
 						<span class="text-nowrap">{{ props.row.event }}</span>
 						<span class="tag is-link" v-if="props.row.isReinvested">
 							Reinvested
@@ -195,27 +200,28 @@
 					@click="showMore()"
 					class="show-more"
 				>
-					{{ $t('показать еще') }}
+					{{ $t("показать еще") }}
 				</button>
 			</div>
 			<div class="is-size-5 has-background-primary total-withdraw mb-6">
-				{{ $t('Всего:') }} {{ `${formatCurrency(filteredTotals, "usdt")}` }} USDT
+				{{ $t("Всего:") }}
+				{{ `${formatCurrency(filteredTotals, "usdt")}` }} USDT
 			</div>
 		</div>
 		<b-modal :active.sync="isWalletModalActive" has-modal-card>
 			<add-new-wallet-modal></add-new-wallet-modal>
 		</b-modal>
 		<b-modal :active.sync="isMetaMaskInstallModalActive" has-modal-card>
-			<install-meta-mask-modal/>
+			<install-meta-mask-modal />
 		</b-modal>
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
-			<AddFundsModal :preparedData="input" has-modal-card/>
+			<AddFundsModal :preparedData="input" has-modal-card />
 		</b-modal>
 	</div>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "../components/modals/AddFundsModal";
 import formatCurrency from "~/mixins/formatCurrency";
@@ -224,7 +230,7 @@ import moment from "moment";
 import gsap from "gsap";
 import AddNewWalletModal from "../components/modals/AddNewWalletModal";
 import InstallMetaMaskModal from "../components/modals/installMetaMaskModal";
-import {mainSliderController} from "@/utils/slider";
+import { mainSliderController } from "@/utils/slider";
 
 export default {
 	name: "investment",
@@ -335,7 +341,7 @@ export default {
 		isMetaMaskInstallModalActive: false,
 		isAddFundsModalActive: false
 	}),
-	async asyncData({store}) {
+	async asyncData({ store }) {
 		return await store.dispatch("fetchTransactions", "investments");
 	}
 };

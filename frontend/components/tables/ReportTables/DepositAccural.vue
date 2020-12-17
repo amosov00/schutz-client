@@ -3,7 +3,6 @@
 		:data="data"
 		:loading="loading"
 		default-sort="args.timestamp"
-		pagination-position="bottom"
 	).custom-table.mb-4
 		template(slot-scope="{ row }")
 			b-table-column(

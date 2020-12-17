@@ -1,7 +1,7 @@
 <template lang="pug">
 	b-table.custom-table.mb-4(
-		pagination-position="bottom"
 		:data="data"
+		:loading="loading"
 	)
 		template(slot-scope="{ row }")
 			b-table-column(

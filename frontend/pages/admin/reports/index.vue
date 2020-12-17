@@ -9,57 +9,62 @@
 					.content.search_block.is-fullheight.is-fullwidth
 						.reports__container
 							.reports__title_block Отчеты
-								| {{ queryParams }}
 							.reports__body
 								.reports__body_form_block
 									base-input(
 										label="Адрес или хэш:"
 										v-model="queryParams.query"
-									).mb-4
+									).mb-5
 									base-select(
 										:options="contractOptions"
 										label="Контракт:"
 										v-model="queryParams.contract"
-									).mb-4
+									).mb-5
 									base-select(
 										:options="transactionOptions"
 										label="Тип:"
 										v-model="queryParams.transaction"
-									).mb-4
+									).mb-5
 									base-datepicker(
 										label="Дата старта:"
 										v-model="queryParams.toDate"
-									).mb-4
+									).mb-5
 									base-datepicker(
 										label="Дата финала:"
 										v-model="queryParams.fromDate"
-									).mb-4
+									).mb-5
 									base-input(
 										label="От USDT:"
 										type="number"
 										v-model.number="queryParams.fromUSDT"
-									).mb-4
+									).mb-5
 									base-input(
 										label="До USDT:"
 										type="number"
 										v-model="queryParams.toUSDT"
-									).mb-4
+									).mb-5
 								.reports__action_block
-									| Lorem ipsum dolor sit amet.
-
-		ReportsTable(table-type="depositAccural")
+									.reports__magnifier_image.is-fullheight
+									CustomButton(style="width: 100%" @click.native="search") Найти
+		ReportsTable(
+			:loading="loading"
+			:table-type="tableType"
+		)
 </template>
 
 <script>
 import CustomSlider from "~/components/ui/CustomSlider";
 import CustomInput from "~/components/ui/CustomInput";
+import CustomButton from "~/components/ui/CustomButton";
 import { ReportsTable } from "~/components/tables";
+import { mapActions } from "vuex";
 
 export default {
 	components: {
 		CustomSlider,
 		ReportsTable,
 		CustomInput,
+		CustomButton,
 	},
 
 	layout: "profile",
@@ -76,6 +81,9 @@ export default {
 				fromUSDT: '',
 				toUSDT: '',
 			},
+
+			tableType: 'all',
+			contractType: '',
 
 			contractOptions: [
 				{
@@ -129,8 +137,27 @@ export default {
 					text: "All",
 					value: "all"
 				}
-			]
+			],
+
+			loading: false,
 		}
+	},
+
+	methods: {
+		...mapActions({
+			fetchTransactionsByQuery: 'reports/fetchTransactionsByQuery',
+		}),
+
+		async search() {
+			this.loading = true;
+
+			await this.fetchTransactionsByQuery(this.queryParams);
+			this.contractType = this.queryParams.contract;
+
+			this.tableType = this.queryParams.transaction;
+
+			this.loading = false;
+		},
 	},
 
 	async asyncData({store}) {
@@ -161,6 +188,14 @@ export default {
 
 		.reports__action_block {
 			grid-column-start: 3;
+
+			.reports__magnifier_image {
+				background-image: url('~@/assets/img/search-magnifier.svg');
+				background-repeat: no-repeat;
+				background-position: center center;
+				background-size: 250px 330px;
+
+			}
 		}
 	}
 }

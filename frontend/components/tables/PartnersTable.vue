@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="level">
 			<div class="level-left is-size-5 has-text-primary mb-4">
-				{{ $t('История транзакций') }}
+				{{ $t("История транзакций") }}
 			</div>
 		</div>
 		<b-table
@@ -33,7 +33,10 @@
 				<b-table-column class="text-clamp" field="email" label="E-mail"
 					>{{ props.row.email }}
 				</b-table-column>
-				<b-table-column class="text-clamp" field="deposited" :label="$t('Вклад, USDT')"
+				<b-table-column
+					class="text-clamp"
+					field="deposited"
+					:label="$t('Вклад, USDT')"
 					>{{ sliceNumber(props.row.deposited) }}
 				</b-table-column>
 				<b-table-column
@@ -64,12 +67,12 @@
 				@click="showMore()"
 				class="show-more"
 			>
-				{{ $t('показать еще') }}
+				{{ $t("показать еще") }}
 			</button>
 		</div>
 
 		<div class="is-size-5 has-background-primary total-withdraw mb-6">
-			{{ $t('Всего начислено:') }}
+			{{ $t("Всего начислено:") }}
 			{{ formatCurrency(total, "usdt") }} USDT
 		</div>
 	</div>
@@ -113,7 +116,7 @@ export default {
 
 		getPercent(level) {
 			if (level == 1) {
-				return 5;
+				return 9;
 			} else if (level == 2) {
 				return 3;
 			} else {

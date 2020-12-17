@@ -5,12 +5,11 @@ export default {
 		data: {
 			type: Array,
 			required: true,
-		}
-	},
+		},
 
-	data() {
-		return {
-			loading: false
+		loading: {
+			type: Boolean,
+			default: () => false,
 		}
 	},
 

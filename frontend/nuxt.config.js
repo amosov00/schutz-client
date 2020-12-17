@@ -111,9 +111,12 @@ export default {
 			}
 		],
 
-		['@nuxtjs/moment', {
-			locales: ['ru']
-		}]
+		[
+			"@nuxtjs/moment",
+			{
+				locales: ["ru"]
+			}
+		]
 	],
 
 	publicRuntimeConfig: {

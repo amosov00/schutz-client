@@ -67,7 +67,7 @@ import CustomCheckbox from "~/components/ui/CustomCheckbox";
 import CustomSwitcher from "~/components/ui/CustomSwitcher";
 import CustomInput from "~/components/ui/CustomInput";
 import CustomButton from "~/components/ui/CustomButton";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
 	props: {
@@ -111,13 +111,22 @@ export default {
 	async created() {
 		this.loading = true;
 
-		this.user = await this.$store.dispatch('fetchUser', this.userId);
+		this.user = this.userDetailsById(this.userId)
+
+		if(!this.user) {
+			await this.$store.dispatch('users/getById', this.userId);
+			this.user = this.userDetailsById(this.userId)
+		}
+
 		Object.assign(this.form, this.user);
 
 		this.loading = false;
 	},
 
 	computed: {
+		...mapGetters({
+			userDetailsById: 'users/detailsById',
+		}),
 		balance() {
 			return '0'
 		},
@@ -133,8 +142,8 @@ export default {
 
 	methods: {
 		...mapActions({
-			updateUser: 'updateUser',
-			fetchUsers: 'fetchUsers',
+			updateUser: 'users/updateUser',
+			fetchUsers: 'users/fetchUsers',
 		}),
 
 		async update() {
