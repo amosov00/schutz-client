@@ -89,8 +89,7 @@ export default {
 					useCookie: true,
 					cookieKey: "lang",
 					alwaysRedirect: true,
-					fallbackLocale: "ru",
-					cookieDomain: isProduction ? "schutz.capital" : "elastoo.com"
+					fallbackLocale: "ru"
 				},
 				locales: [
 					{
