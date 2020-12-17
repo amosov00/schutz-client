@@ -1,6 +1,7 @@
 const MUTATION = {
 	SET_USER_DETAILS: 'SET_USER_DETAILS',
 	SET_USERS: 'SET_USERS',
+	ADD_USERS: 'ADD_USERS',
 }
 
 export const state = () => ({
@@ -10,6 +11,7 @@ export const state = () => ({
 
 export const getters = {
 	detailsById: state => id => state.userDetails[id],
+	users: state => state.users,
 };
 
 export const actions = {
@@ -22,7 +24,33 @@ export const actions = {
 		} catch (e) {
 			return null;
 		}
-	}
+	},
+
+	async updateUser({ commit }, user) {
+		try {
+			const { data } = await this.$axios.put(`/admin/users/${user._id}/`, user)
+
+			commit(MUTATION.SET_USER_DETAILS, data)
+		} catch (e) {
+			return null;
+		}
+	},
+
+	async fetchUsers({ commit }, { page, limit, query = '' }) {
+		const { data: { result: users } } = await this.$axios.get(`/admin/users/`, {
+			params: {
+				page,
+				page_size: limit,
+				q: query,
+			}
+		});
+
+		if (page === 1) {
+			commit(MUTATION.SET_USERS, users);
+		} else {
+			commit(MUTATION.ADD_USERS, users);
+		}
+	},
 };
 
 export const mutations = {
@@ -34,7 +62,11 @@ export const mutations = {
 			: state.userDetails[user._id] = user;
 	},
 
+	[MUTATION.ADD_USERS](state, users) {
+		state.users = [...state.users, ...users];
+	},
+
 	[MUTATION.SET_USERS](state, users) {
 		state.users = users;
-	}
+	},
 };

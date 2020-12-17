@@ -6,24 +6,22 @@
 			:is="table.component"
 			:data="table.data"
 			@more="onMore"
+			:loading="loading"
 		)
 </template>
 
 <script>
-import {
-	All,
-	Investment,
-	DividendWithdraw,
-	DepositAccural,
-	DividendAccural,
-	ActiveDeposit,
-} from '~/components/tables/ReportTables';
 import { mapGetters } from "vuex";
 
 export default {
 	props: {
 		tableType: {
 			type: String,
+			required: true,
+		},
+
+		loading: {
+			type: Boolean,
 			required: true,
 		}
 	},
@@ -41,12 +39,20 @@ export default {
 
 		tableComponent() {
 			return {
-				all: All,
-				investment: Investment,
-				dividendWithdraw: DividendWithdraw,
-				dividendAccural: DividendAccural,
-				depositAccural: DepositAccural,
-				activeDeposit: ActiveDeposit,
+				all: () => import('@/components/tables/ReportTables/All.vue'),
+				investments: () => import('@/components/tables/ReportTables/Investment.vue'),
+				dividend_withdraw: () => import('@/components/tables/ReportTables/DividendWithdraw.vue'),
+				dividend_accural: () => import('@/components/tables/ReportTables/DividendAccural.vue'),
+				deposit_accural: () => import('@/components/tables/ReportTables/DepositAccural.vue'),
+				deposits: () => import('@/components/tables/ReportTables/ActiveDeposit.vue'),
+				deposit_withdraw: () => import('@/components/tables/ReportTables/DepositWithdraw.vue'),
+			}
+		},
+
+		table() {
+			return {
+				component: this.tableComponent[this.tableType],
+				data: this.tableData[this.tableType]
 			}
 		},
 
@@ -61,28 +67,18 @@ export default {
 		tableData() {
 			return {
 				all: this.transactions(this.page, 10) || [],
-				investment: this.transactions(this.page, 10) || [],
-				dividendWithdraw: this.transactions(this.page, 10) || [],
-				dividendAccural: this.transactions(this.page, 10) || [],
-				depositAccural: this.transactions(this.page, 10) || [],
-				activeDeposit: this.activeDeposit(this.page, 10) || [],
+				investments: this.transactions(this.page, 10) || [],
+				dividend_withdraw: this.transactions(this.page, 10) || [],
+				dividend_accural: this.transactions(this.page, 10) || [],
+				deposit_accural: this.transactions(this.page, 10) || [],
+				deposit_withdraw: this.transactions(this.page, 10) || [],
+				deposits: this.activeDeposit(this.page, 10) || [],
 			}
 		},
-
-		table() {
-			return {
-				component: this.tableComponent[this.tableType],
-				data: this.tableData[this.tableType],
-			}
-		}
 	},
 
-	watch: {
-		tableType: {
-			handler() {
-				this.page = 1;
-			}
-		}
+	mounted() {
+		console.log(this.tableData[this.tableType])
 	},
 
 	methods: {
