@@ -6,41 +6,43 @@
 
 <script>
 export default {
-  name: "activate",
-  layout: "auth",
-  data: () => ({
-      query: {
-        verification_code: '',
-        email: ''
-      },
-      error_message: ''
-    }),
-    methods: {
-    },
-    async mounted() {
-      if(this.success) {
-        this.$axios.setToken(this.res.token, 'Bearer');
-        this.$cookies.set('token', this.res.token, {
-          path: '/',
-          maxAge: 60 * 60 * 24 * 7,
-        });
-        await this.$authFetchUser()
-        this.$nuxt.context.redirect('/profile/')
-        this.$buefy.toast.open({message: this.$i18n.t('activationSuccess'), type: 'is-primary'})
-      } else {
-        this.error_message = this.$i18n.t('activationError')
-      }
-    },
-    async asyncData({ query, store }) {
+	name: "activate",
+	layout: "auth",
+	data: () => ({
+		query: {
+			verification_code: "",
+			email: ""
+		},
+		error_message: ""
+	}),
+	methods: {},
+	async mounted() {
+		if (this.success) {
+			this.$axios.setToken(this.res.token, "Bearer");
+			this.$cookies.set("token", this.res.token, {
+				path: "/",
+				maxAge: 60 * 60 * 24 * 7,
+				domain: this.$domainForCookie()
+			});
+			await this.$authFetchUser();
+			this.$nuxt.context.redirect("/profile/");
+			this.$buefy.toast.open({
+				message: this.$i18n.t("activationSuccess"),
+				type: "is-primary"
+			});
+		} else {
+			this.error_message = this.$i18n.t("activationError");
+		}
+	},
+	async asyncData({ query, store }) {
+		let res = await store.dispatch("activateAccount", query);
 
-      let res = await store.dispatch('activateAccount', query);
-
-      if(res) {
-        return { success: true, res }
-      } else {
-        return { success: false }
-      }
-    }
+		if (res) {
+			return { success: true, res };
+		} else {
+			return { success: false };
+		}
+	}
 };
 </script>
 
