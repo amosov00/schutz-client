@@ -1,12 +1,10 @@
 import _ from "lodash";
-import {ToastProgrammatic as Toast} from "buefy";
-import { users } from "@/consts/mock-data";
+import { ToastProgrammatic as Toast } from "buefy";
 
 export const state = () => ({
 	terms_modal: false,
 	user: null,
 	findedAddress: null,
-	users: [],
 	partners: [],
 	partners_total: null,
 	referralLink: null,
@@ -17,7 +15,6 @@ export const state = () => ({
 
 export const getters = {
 	user: s => s.user,
-	userById: s => id => s.users.filter(i => i._id === id)[0],
 	transactions: s => s.transactions,
 	transactionsAllWithFilter: s => contract => {
 		return contract
@@ -36,27 +33,11 @@ export const getters = {
 			: s.transactions.transactions.filter(i => i.contract === contract);
 	},
 	findedAddress: s => s.findedAddress,
-	users: s => s.users,
 	partners: s => s.partners,
 	referralLink: s => s.referralLink,
 	userTxData: s => s.userTxData,
 	isTermsAcceped: s => s.isTermsAcceped,
 	contractAgreements: s => s.contractAgreements,
-
-	usersPagination: (state) => (page, limit) => {
-		const startWith = 0;
-		const endOn = state.users.length < page * limit
-			? state.users.length
-			: page * limit;
-
-		const users = [];
-
-		for (let i = startWith; i < endOn; i++) {
-			users.push(state.users[i])
-		}
-
-		return users;
-	},
 };
 
 export const mutations = {
@@ -89,7 +70,6 @@ export const mutations = {
 		state.transactions = payload;
 	},
 	setFindedAddress: (state, payload) => (state.findedAddress = payload),
-	setUsers: (state, payload) => (state.users = payload),
 	setPartners: (state, payload) => (state.partners = payload),
 	setPartnersNotal: (state, payload) => (state.partners_total = payload),
 	setReferralLink: (state, payload) => (state.referralLink = payload),
@@ -201,10 +181,7 @@ export const actions = {
 			commit("setFindedAddress", false);
 		}
 	},
-	async fetchUsers({ commit }, { page, limit }) {
-		// const { data: { result: users } } = await this.$axios.get(`/admin/users`);
-		commit("setUsers", users);
-	},
+
 	async fetchPartners({ commit }) {
 		const { data } = await this.$axios.get("/account/partners/extended/");
 		commit("setPartners", data.referrals);
@@ -247,12 +224,6 @@ export const actions = {
 				commit("setIsTermsAcceped", false);
 				return false;
 			});
-	},
-	async fetchUser({}, id) {
-		return await this.$axios
-			.get(`/admin/users/${id}/`)
-			.then(resp => resp.data)
-			.catch(_ => false);
 	},
 	async prolongAgreement({ commit }, id) {
 		return await this.$axios

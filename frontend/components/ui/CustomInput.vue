@@ -8,7 +8,7 @@
 				:type="type"
 				:placeholder="defaultPlaceholder ? placeholder : ''"
 				:value="value"
-				@input="onInput"
+				v-model="selectValue"
 				step="any"
 				:maxLength="maxLength"
 				:max="max"
@@ -62,13 +62,47 @@ export default {
 		fontSize: {
     	type: String,
 			default: () => 'inherit',
+		},
+
+		debounce: {
+    	type: [String, Number],
+			default: () => 0,
 		}
   },
-  methods: {
-    onInput(e) {
-      this.$emit('input', e.target.value)
-    }
-  }
+
+	data() {
+		return {
+			selectValue: '',
+			debouncer: null,
+		}
+	},
+
+	watch: {
+		selectValue: {
+			handler(value) {
+				if(this.debounce) {
+					clearTimeout(this.debouncer);
+
+					this.debouncer = setTimeout(() => {
+						this.$emit('input', value)
+						}, Number(this.debounce)
+					)
+				}
+
+				else {
+					this.$emit('input', value)
+				}
+			}
+		}
+	},
+
+	created() {
+  	this.selectValue = this.value;
+	},
+
+	beforeDestroy() {
+  	clearTimeout(this.debouncer);
+	}
 }
 </script>
 

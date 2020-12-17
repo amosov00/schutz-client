@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { formatCurrencyReversed } from '@/mixins/formatCurrency'
 
 export const state = () => ({
@@ -64,22 +63,6 @@ export const mutations = {
 }
 export const actions = {
   async fetchTransactionsByQuery({ commit }, queryParams) {
-    const fromDate = queryParams.fromDate
-      ? moment
-        .utc(queryParams.fromDate)
-        .add(1, 'days')
-        .startOf('day')
-        .subtract(3, 'hours')
-        .unix()
-      : 0
-    const toDate = queryParams.toDate
-      ? moment
-        .utc(queryParams.toDate)
-        .endOf('day')
-        .add(1, 'days')
-        .subtract(3, 'hours')
-        .unix()
-      : 0
     const fromUSDT = queryParams.fromUSDT ? formatCurrencyReversed(queryParams.fromUSDT, 'usdt') : null
     const toUSDT = queryParams.toUSDT ? formatCurrencyReversed(queryParams.toUSDT, 'usdt') : null
     const contract = queryParams.contract === 'all' ? '' : queryParams.contract
@@ -107,8 +90,8 @@ export const actions = {
               q: queryParams.query,
               contract: contract,
               transaction_type: queryParams.transaction,
-              timestamp_from: fromDate,
-              timestamp_to: toDate,
+              timestamp_from: queryParams.fromDate,
+              timestamp_to: queryParams.toDate,
               usdt_from: fromUSDT,
               usdt_to: toUSDT,
             }
