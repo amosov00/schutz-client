@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="level">
 			<div class="level-left is-size-5 has-text-primary mb-4">
-				{{$t('История транзакций')}}
+				{{ $t("История транзакций") }}
 			</div>
 		</div>
 		<b-table
@@ -39,10 +39,7 @@
 						position="is-bottom"
 					>
 						<a
-							:href="
-								'https://etherscan.io/tx/' +
-									props.row.transactionHash
-							"
+							:href="'https://etherscan.io/tx/' + props.row.transactionHash"
 							target="_blank"
 						>
 							{{ hashSlice(props.row.transactionHash) }}
@@ -78,12 +75,12 @@
 				@click="showMore()"
 				class="show-more"
 			>
-				{{$t('показать еще')}}
+				{{ $t("показать еще") }}
 			</button>
 		</div>
 
 		<div class="is-size-5 has-background-primary total-withdraw mb-6">
-			{{$t('Всего выведено:')}}
+			{{ $t("Всего выведено:") }}
 			{{ `${formatCurrency(withdrawTotal, "usdt")}` }} USDT
 		</div>
 	</div>
@@ -104,21 +101,23 @@ export default {
 			return this.$store.getters.transactions;
 		},
 		filteredData() {
-			let d = this.$store.getters.dividendsWithFilter(
-				this.currentProduct
-			);
+			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
 
 			return d.slice(0, this.limit);
 		},
 		withdrawTotal() {
+			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
 			let result = 0;
-			this.filteredData.forEach(el => {
+			d.forEach(el => {
 				switch (el.event) {
 					case "Dividend Withdraw":
 						result += el.args.USDT;
 						break;
 				}
 			});
+			if (this.limit > this.filteredData.length) {
+				this.hide_button = true;
+			}
 			return result;
 		},
 		accrualTotal() {
@@ -146,7 +145,7 @@ export default {
 	methods: {
 		showMore() {
 			this.limit += 5;
-			if (this.limit >= this.filteredData.length) {
+			if (this.limit > this.filteredData.length) {
 				this.hide_button = true;
 			}
 		}
