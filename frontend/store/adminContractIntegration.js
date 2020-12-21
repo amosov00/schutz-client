@@ -5,7 +5,7 @@ export const state = () => ({});
 export const getters = {};
 export const mutations = {};
 export const actions = {
-	async accrualInterest({rootGetters, dispatch}, {invoiceData, invoice, index}) {
+	async accrualInterest({rootGetters}, invoiceData) {
 		/* Начисление дивидендов пользователям
 
 		формат данных
@@ -41,14 +41,8 @@ export const actions = {
 				}],
 			})
 			.then(async (txHash) => {
-				await dispatch("bills/addPaymentTx", {
-					invoice: invoice,
-					index: index,
-					txHash: txHash,
-					customerAddresses: invoiceData.customerAddresses
-				}, {root: true})
 				Toast.open({type: "is-success", message: txHash, duration: 3000})
-				return true
+				return txHash
 			})
 			.catch((error) => {
 				Toast.open({type: "is-danger", message: "error", duration: 3000})
