@@ -2,8 +2,8 @@
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
 			<p class="is-size-5"> {{ $t('Укажите сумму реинвестирования') }} </p>
-			<p class="is-size-7 mb-60" v-html="$t('reinveestText')">
-				
+			<p class="is-size-7 mb-60" v-html="$t('reinvestText')">
+
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider

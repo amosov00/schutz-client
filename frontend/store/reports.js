@@ -142,9 +142,11 @@ export const actions = {
       })
       .catch(() => {return false})
   },
-  async updateAgreementPayment({}, ids) {
+	//
+  async updateAgreementPayment({}, {ids, txHash}) {
     return await this.$axios.post(`/admin/mailing/agreements/mark_paid/`, {
-        agreements_ids: ids
+        agreements_ids: ids,
+				tx_hash: txHash
       })
       .then(() => {return true})
       .catch(() => {return false})

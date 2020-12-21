@@ -137,6 +137,7 @@ export const actions = {
       Toast.open({message: err, type: 'is-danger'})
     })
   },
+	// TODO deprecated, delete after 01.01.2020
   async passRepaySingle({rootGetters}, data) {
     if (!window.ethereum) {
       console.error("Metamask is not found")
@@ -171,7 +172,8 @@ export const actions = {
         return false
       })
   },
-  async passRepayMany({rootGetters}, data) {
+	// TODO deprecated, delete after 01.01.2020
+  async _passRepayMany({rootGetters}, data) {
     /* формат данных
     data: {
       values: [Intereger, ],

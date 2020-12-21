@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     async payInvoice(index, data) {
-      return await this.$store.dispatch("bills/payGlobalInvoice", {
+      return await this.$store.dispatch("adminContractIntegration/accrualInterest", {
         invoice: this.invoice,
         index: index,
         invoiceData: data,
@@ -69,7 +69,7 @@ export default {
         formattedData.push({
           "address": data.customerAddresses[i],
           "value": this.formatCurrency(data.values[i], "usdt"),
-          "comment": data.comments[i],
+          "comment": data.comment,
         })
       }
       return formattedData
@@ -108,4 +108,7 @@ export default {
 
 .d-flex
   display: flex
+
+p, .subtitle, span
+	color: black
 </style>

@@ -15,9 +15,9 @@ export const getters = {
 };
 
 export const actions = {
-	async getById({ commit }, id) {
+	async getById({commit}, id) {
 		try {
-			const { data: user } = await this.$axios.get(`/admin/users/${id}/`)
+			const {data: user} = await this.$axios.get(`/admin/users/${id}/`)
 
 			commit(MUTATION.SET_USER_DETAILS, user)
 			return user;
@@ -26,9 +26,9 @@ export const actions = {
 		}
 	},
 
-	async updateUser({ commit }, user) {
+	async updateUser({commit}, user) {
 		try {
-			const { data } = await this.$axios.put(`/admin/users/${user._id}/`, user)
+			const {data} = await this.$axios.put(`/admin/users/${user._id}/`, user)
 
 			commit(MUTATION.SET_USER_DETAILS, data)
 		} catch (e) {
@@ -36,8 +36,8 @@ export const actions = {
 		}
 	},
 
-	async fetchUsers({ commit }, { page, limit, query = '' }) {
-		const { data: { result: users } } = await this.$axios.get(`/admin/users/`, {
+	async fetchUsers({commit}, {page, limit, query = ''}) {
+		const {data: {result: users}} = await this.$axios.get(`/admin/users/`, {
 			params: {
 				page,
 				page_size: limit,
@@ -55,7 +55,14 @@ export const actions = {
 		const {data} = await this.$axios.get("/admin/users/v1/");
 		commit(MUTATION.SET_USERS, data);
 	},
-
+	async fetchUser({commit}, _id) {
+		return await this.$axios.get(`/admin/users/${_id}/`)
+			.then(resp => {
+				return resp.data
+			}).catch(_ => {
+				return false
+			})
+	},
 };
 
 export const mutations = {
