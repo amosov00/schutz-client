@@ -155,8 +155,8 @@ export default {
   },
 	transition: mainSliderController,
   methods: {
-    withdraw() {
-      this.$store.dispatch('dividends/withdraw')
+    async withdraw() {
+      await this.$store.dispatch('userContractIntegration/withdraw', this.totalDeposit)
     },
     focusInput(e) {
       e.target.select()
@@ -186,6 +186,8 @@ export default {
   },
   computed: {
     ...mapGetters(['user', 'contractAgreements']),
+		...mapGetters("metamask", ['gasPrice']),
+		...mapGetters('deposit', ['totalDividends', 'allowance']),
     lastContract() {
       if (this.contractAgreements && this.contractAgreements.length) {
         return this.contractAgreements[0]
@@ -206,15 +208,6 @@ export default {
     totalDeposit() {
       const total = this.$store.getters['deposit/totalDeposit']
       return total ? total : 0
-    },
-    gasPrice() {
-      return this.$store.getters['metamask/gasPrice']
-    },
-    totalDividends() {
-      return this.$store.getters['deposit/totalDividends']
-    },
-    allowance() {
-      return this.$store.getters['deposit/allowance']
     },
   },
   async created() {
