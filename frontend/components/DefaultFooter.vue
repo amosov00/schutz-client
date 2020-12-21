@@ -2,24 +2,16 @@
 	<div class="container footer">
 		<div class="separate"></div>
 		<div class="footer__nav">
-			<a :href="`${landingLink}${localePath('/')}`">
+			<a :href="getLink('/')">
 				{{ $t("Криптодепозиты") }}
 			</a>
-			<a :href="`${landingLink}${localePath('/about-us')}`">
+			<a :href="getLink('/about-us')">
 				{{ $t("О нас") }}
 			</a>
-			<a :href="`${landingLink}${localePath('/payouts')}`">{{
-				$t("Выплаты")
-			}}</a>
-			<a :href="`${landingLink}${localePath('/strategies')}`">{{
-				$t("Стратегии")
-			}}</a>
-			<a :href="`${landingLink}${localePath('/help')}`">{{
-				$t("Вопросы и ответы")
-			}}</a>
-			<a :href="`${landingLink}${localePath('/contacts')}`">{{
-				$t("Контакты")
-			}}</a>
+			<a :href="getLink('/payouts')">{{ $t("Выплаты") }}</a>
+			<a :href="getLink('/strategies')">{{ $t("Стратегии") }}</a>
+			<a :href="getLink('/help')">{{ $t("Вопросы и ответы") }}</a>
+			<a :href="getLink('/contacts')">{{ $t("Контакты") }}</a>
 			<nuxt-link :to="localePath('/')"> {{ $t("Комьюнити") }}</nuxt-link>
 		</div>
 		<div class="footer__social-container">
@@ -95,13 +87,10 @@ export default {
 		contacts: ""
 	}),
 
-	computed: {
-		landingLink() {
-			return this.$config.LANDING_BASE_URL;
-			// if (this.$i18n.locale == "ru") {
-			// } else {
-			// 	return `${this.$config.LANDING_BASE_URL}/${this.$i18n.locale}`;
-			// }
+	methods: {
+		getLink(r) {
+			let page = `schutz.capital${this.localePath(r)}`.replace("//", "/");
+			return `https://${page}`;
 		}
 	},
 
