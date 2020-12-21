@@ -232,8 +232,8 @@ export const actions = {
       Toast.open({type: "is-danger", message: "Error", duration: 1000})
     })
   },
-
-  async payGlobalInvoice({dispatch, rootGetters}, {invoice, index, invoiceData}) {
+	// TODO remove after 01/01/2021
+  async _payGlobalInvoice({dispatch, rootGetters}, {invoice, index, invoiceData}) {
     const gasPrice = rootGetters["metamask/gasPrice"];
     let contract = this.$contracts().OperatorNTS
     return await window.ethereum
