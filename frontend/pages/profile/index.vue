@@ -43,7 +43,10 @@
 						</div>
 						<div class="data-item" v-else>
 							<div class="icon metamask"></div>
-							<div class="value" @click="isChangeWalletModalActive = true">
+							<div
+								class="value has-text-link"
+								@click="isChangeWalletModalActive = true"
+							>
 								{{ user.ethereum_wallet }}
 							</div>
 						</div>
@@ -162,7 +165,10 @@ export default {
 	transition: mainSliderController,
 	methods: {
 		async withdraw() {
-			await this.$store.dispatch('userContractIntegration/withdraw', this.totalDeposit)
+			await this.$store.dispatch(
+				"userContractIntegration/withdraw",
+				this.totalDeposit
+			);
 		},
 		focusInput(e) {
 			e.target.select();
@@ -200,8 +206,8 @@ export default {
 	},
 	computed: {
 		...mapGetters(["user", "contractAgreements"]),
-		...mapGetters("metamask", ['gasPrice']),
-		...mapGetters('deposit', ['totalDividends', 'allowance']),
+		...mapGetters("metamask", ["gasPrice"]),
+		...mapGetters("deposit", ["totalDividends", "allowance"]),
 		lastContract() {
 			if (this.contractAgreements && this.contractAgreements.length) {
 				return this.contractAgreements[0];
@@ -222,7 +228,7 @@ export default {
 		totalDeposit() {
 			const total = this.$store.getters["deposit/totalDeposit"];
 			return total ? total : 0;
-		},
+		}
 	},
 	async created() {
 		if (!this.$store.state.metamask.gasPrice) {
