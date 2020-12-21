@@ -122,7 +122,7 @@ export const actions = {
       is_approved: true
     });
   },
-  async passTxHash({commit}, data) {
+  async updateInvoiceAddessTxHash({commit}, data) {
     return await this.$axios
       .put(`/admin/invoices/address/${data.id}/`, {
         payment_transaction_hash: data.txHash
@@ -160,7 +160,19 @@ export const actions = {
         return null
       })
   },
-  async payInvoice({dispatch, rootGetters}, invoiceData) {
+	async fetchInvoiceAddressPaymentData({}, {invoiceId, invoicePaymentId}) {
+		return await this.$axios
+			.get(`/admin/invoices/${invoiceId}/payment/${invoicePaymentId}/`)
+			.then(resp => {
+				return resp.data
+			})
+			.catch(_ => {
+				Toast.open({type: "is-danger", message: "Failed to validate invoice data", duration: 2000})
+				return null
+			})
+	},
+	// TODO deprecated, delete after 01/01/2020
+  async _payInvoice({dispatch, rootGetters}, invoiceData) {
     const gasPrice = rootGetters["metamask/gasPrice"];
     let contract = this.$contracts().NTSCD;
     const fromDate = invoiceData.timestamp_from
@@ -197,7 +209,7 @@ export const actions = {
       })
       .then(txHash => {
         Toast.open({type: "is-success", message: txHash, duration: 5000})
-        dispatch("passTxHash", {
+        dispatch("updateInvoiceAddessTxHash", {
           id: invoiceData._id,
           txHash: txHash
         });
@@ -232,8 +244,8 @@ export const actions = {
       Toast.open({type: "is-danger", message: "Error", duration: 1000})
     })
   },
-
-  async payGlobalInvoice({dispatch, rootGetters}, {invoice, index, invoiceData}) {
+	// TODO remove after 01/01/2021
+  async _payGlobalInvoice({dispatch, rootGetters}, {invoice, index, invoiceData}) {
     const gasPrice = rootGetters["metamask/gasPrice"];
     let contract = this.$contracts().OperatorNTS
     return await window.ethereum

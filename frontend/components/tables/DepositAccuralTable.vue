@@ -113,7 +113,7 @@
           <b-button
             type="is-info is-small"
             :disabled="props.row.isPaid !== true && props.row.result !== 2"
-            @click="passRepaySingle(props.row)"
+            @click="accrualDeposit(props.row)"
           >
             {{$t('pay')}}
           </b-button>
@@ -184,19 +184,22 @@ export default {
         this.$buefy.toast.open({ message: this.$t('investment.errorMessage'), type: 'is-danger', queue: false })
       }
     },
-    async passRepaySingle(data) {
-      let userData = await this.$store.dispatch('fetchUser', data.user_id)
+    async accrualDeposit(data) {
+      let userData = await this.$store.dispatch('users/fetchUser', data.user_id)
       if (!userData) {
         this.$buefy.toast.open({ message: 'Failed to fetch user wallet', type: 'is-danger' })
         return
       }
-      await this.$store.dispatch('deposit/passRepaySingle', {
-        ethereum_wallet: userData.ethereum_wallet_payout || userData.ethereum_wallet,
-        amount: data.amount,
-        contract: data.contract
-      }).then(async isSuccess => {
-        if (isSuccess) {
-          await this.$store.dispatch('reports/updateAgreementPayment', [data._id])
+      await this.$store.dispatch('adminContractIntegration/accrualDeposit', {
+				values: [data.amount],
+				customerAddresses: [userData.ethereum_wallet_payout || userData.ethereum_wallet],
+      	comment: `${data.contract} close`,
+      }).then(async txHash => {
+        if (txHash) {
+          await this.$store.dispatch('reports/updateAgreementPayment', {
+          	ids: [data._id],
+						txHash: txHash
+					})
           await this.$emit('updateAgreements')
         }
       })

@@ -313,6 +313,9 @@ export default {
 				}
 				result += el.args.USDT;
 			});
+			if (this.limit > this.filteredData.length) {
+				this.hide_button = true;
+			}
 			return result - minus;
 		},
 		getWithdrawDate() {

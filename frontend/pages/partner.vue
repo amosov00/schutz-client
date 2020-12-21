@@ -56,6 +56,7 @@
 						</div>
 
 						<input
+							v-if="totalDeposit"
 							class="is-size-5 input"
 							type="text"
 							readonly
@@ -76,9 +77,12 @@
 									v-for="link in socialLinks"
 									:network="link.name"
 									:key="link.name"
-									:url="baseUrl()"
-									title="Реферальная ссылка"
-									:description="referralLink"
+									:url="referralLink"
+									:title="
+										$t(
+											'Получайте фиксированную доходность до 101% вместе с SCHUTZ.'
+										)
+									"
 								>
 									<div class="social-link mr-4">
 										<img
@@ -91,8 +95,19 @@
 						</div>
 					</div>
 					<div class="column is-12-mobile is-6-desktop">
-						<custom-button @click.native="copy" class="is-fullwidth">
+						<custom-button
+							@click.native="copy"
+							v-if="totalDeposit"
+							class="is-fullwidth"
+						>
 							{{ $t("Копировать ссылку") }}
+						</custom-button>
+						<custom-button
+							@click.native="$router.push(localePath('/investment'))"
+							class="is-fullwidth"
+							v-else
+						>
+							{{ $t("Открыть вклад") }}
 						</custom-button>
 					</div>
 				</div>
@@ -121,7 +136,11 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(["referralLink"])
+		...mapGetters(["referralLink"]),
+		totalDeposit() {
+			const total = this.$store.getters["deposit/totalDeposit"];
+			return total ? total : 0;
+		}
 	},
 	data: () => ({
 		isDepositOpen: true,
@@ -172,11 +191,9 @@ export default {
 		}
 	},
 	async mounted() {
-		if (!this.referralLink) {
-			this.loading.referralLink = true;
-			await this.$store.dispatch("fetchReferralLink");
-			this.loading.referralLink = false;
-		}
+		this.loading.referralLink = true;
+		await this.$store.dispatch("fetchReferralLink");
+		this.loading.referralLink = false;
 	}
 };
 </script>

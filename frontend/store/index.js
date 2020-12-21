@@ -7,7 +7,7 @@ export const state = () => ({
 	findedAddress: null,
 	partners: [],
 	partners_total: null,
-	referralLink: null,
+	referralLink: "https://schutz.capital/?referral=5eb8f8b17c7bc968dba37d51",
 	userTxData: null,
 	isTermsAcceped: false,
 	contractAgreements: null
@@ -37,7 +37,7 @@ export const getters = {
 	referralLink: s => s.referralLink,
 	userTxData: s => s.userTxData,
 	isTermsAcceped: s => s.isTermsAcceped,
-	contractAgreements: s => s.contractAgreements,
+	contractAgreements: s => s.contractAgreements
 };
 
 export const mutations = {
@@ -188,7 +188,9 @@ export const actions = {
 		commit("setPartnersNotal", data.total);
 	},
 	async fetchReferralLink({ commit }) {
-		const { data } = await this.$axios.get("/account/referral_link/");
+		const { data } = await this.$axios.get(
+			"/account/referral_link/?for_save=true"
+		);
 		commit("setReferralLink", data);
 	},
 	async fetchTransactions({ commit }, type) {

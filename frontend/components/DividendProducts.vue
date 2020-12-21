@@ -10,14 +10,14 @@
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex is-flex-direction-column">
 						<div class="is-size-5 mb-5" v-html="$t('dividensTitle')">
-							
+
 						</div>
-						<div class="is-size-4"> {{ $t('Доступно USDT:') }} </div>
+						<div class="is-size-4"> {{ $t('Доступно USDT:') }}</div>
 						<div class="is-size-2 mb-5">
 							{{ formatCurrency(totalDividends) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
-							 {{ $t('Ближайшие дивиденды поступят') }} <br />
+							{{ $t('Ближайшие дивиденды поступят') }} <br/>
 							{{ $t('15 января, 2021') }}
 						</div>
 					</div>
@@ -28,14 +28,14 @@
 							</div>
 							<div class="mb-5 ethereum-address">
 								<span v-if="user.ethereum_wallet">{{
-									user.ethereum_wallet
-								}}</span>
+										user.ethereum_wallet
+									}}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
 									class="value has-text-link has-text-weight-light"
 								>
-									{{$t('Добавить кошелек')}}
+									{{ $t('Добавить кошелек') }}
 								</a>
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
@@ -61,27 +61,15 @@
 							</div>
 						</div>
 						<custom-button
-							:disabled="
-								!totalDividends || !user.ethereum_wallet || !isConnected
-							"
-							@click.native="
-								() => {
-									this.withdrawModalActive = true;
-								}
-							"
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
+							@click.native="openModal('withdraw')"
 							class="mt-auto mb-2"
 						>
 							{{ $t('Вывести') }}
 						</custom-button>
 						<custom-button
-							:disabled="
-								!totalDividends || !user.ethereum_wallet || !isConnected
-							"
-							@click.native="
-								() => {
-									this.reinvestModalActive = true;
-								}
-							"
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
+							@click.native="openModal('reinvest')"
 						>
 							{{ $t('Реинвестировать') }}
 						</custom-button>
@@ -90,23 +78,23 @@
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="withdrawModalActive" has-modal-card>
-			<withdraw-modal />
+			<withdraw-modal/>
 		</b-modal>
 		<b-modal :active.sync="reinvestModalActive" has-modal-card>
-			<reinvest-modal />
+			<reinvest-modal/>
 		</b-modal>
 	</div>
 </template>
 
 <script>
 import formatCurrency from "~/mixins/formatCurrency";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import WithdrawModal from "./modals/WithdrawModal";
 import ReinvestModal from "./modals/ReinvestModal";
 
 export default {
 	name: "DividendProducts",
-	components: { ReinvestModal, WithdrawModal },
+	components: {ReinvestModal, WithdrawModal},
 	mixins: [formatCurrency],
 
 	async created() {
@@ -122,6 +110,15 @@ export default {
 		...mapGetters(["user"]),
 		...mapGetters("metamask", ["isConnected", "gasPrice"]),
 		...mapGetters("deposit", ["totalDeposit", "totalDividends"])
+	},
+	methods: {
+		openModal(modal) {
+			if (modal === "withdraw") {
+				this.withdrawModalActive = true
+			} else if (modal === "reinvest") {
+				this.reinvestModalActive = true
+			}
+		}
 	}
 };
 </script>

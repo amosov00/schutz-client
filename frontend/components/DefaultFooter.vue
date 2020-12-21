@@ -2,16 +2,24 @@
 	<div class="container footer">
 		<div class="separate"></div>
 		<div class="footer__nav">
-			<nuxt-link :to="localePath('/')"> {{ $t("Криптодепозиты") }} </nuxt-link>
-			<nuxt-link :to="localePath('/about-us')"> {{ $t("О нас") }} </nuxt-link>
-			<nuxt-link :to="localePath('/payouts')">{{ $t("Выплаты") }}</nuxt-link>
-			<nuxt-link :to="localePath('/strategies')">{{
+			<a :href="`${landingLink}${localePath('/')}`">
+				{{ $t("Криптодепозиты") }}
+			</a>
+			<a :href="`${landingLink}${localePath('/about-us')}`">
+				{{ $t("О нас") }}
+			</a>
+			<a :href="`${landingLink}${localePath('/payouts')}`">{{
+				$t("Выплаты")
+			}}</a>
+			<a :href="`${landingLink}${localePath('/strategies')}`">{{
 				$t("Стратегии")
-			}}</nuxt-link>
-			<nuxt-link :to="localePath('/help')">{{
+			}}</a>
+			<a :href="`${landingLink}${localePath('/help')}`">{{
 				$t("Вопросы и ответы")
-			}}</nuxt-link>
-			<nuxt-link :to="localePath('/contacts')">{{ $t("Контакты") }}</nuxt-link>
+			}}</a>
+			<a :href="`${landingLink}${localePath('/contacts')}`">{{
+				$t("Контакты")
+			}}</a>
 			<nuxt-link :to="localePath('/')"> {{ $t("Комьюнити") }}</nuxt-link>
 		</div>
 		<div class="footer__social-container">
@@ -86,6 +94,17 @@ export default {
 		telegramSupport: "",
 		contacts: ""
 	}),
+
+	computed: {
+		landingLink() {
+			return this.$config.LANDING_BASE_URL;
+			// if (this.$i18n.locale == "ru") {
+			// } else {
+			// 	return `${this.$config.LANDING_BASE_URL}/${this.$i18n.locale}`;
+			// }
+		}
+	},
+
 	mounted() {
 		this.contacts = `${this.$config.LANDING_BASE_URL}/contacts`;
 		this.telegramSupport = this.$config.TELEGRAM_SUPPORT_URL;

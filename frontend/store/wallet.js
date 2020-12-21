@@ -27,5 +27,23 @@ export const actions = {
 				});
 				return false;
 			});
+	},
+
+	async changeWallet({}, wallet) {
+		return await this.$axios
+			.post("/account/ethwallet/", {
+				new_ethereum_wallet: wallet
+			})
+			.then(() => {
+				return true;
+			})
+			.catch(err => {
+				Toast.open({
+					message: err.response.data[0].message,
+					type: "is-danger",
+					duration: 6000
+				});
+				return false;
+			});
 	}
 };

@@ -213,9 +213,9 @@ export default {
 	Установить: "Install",
 	dividensTitle: "Withdraw <br>or reinvest <br>the received dividends",
 	withdrawalText:
-		'You can <a class="is-link">вывести всю сумму</a>withdraw the entire amount or part of the accrued dividends, and reinvest the rest.',
+		'You can <a class="is-link">withdraw the entire amount</a> or part of the accrued dividends, and reinvest the rest.',
 	reinvestText:
-		'You can <a class="is-link">reinvest the entire amount</a>  or part of the accrued dividends, and withdraw the rest.',
+		'You can <a class="is-link">reinvest the entire amount</a> or part of the accrued dividends, and withdraw the rest.',
 	"Доступно USDT:": "USDT available:",
 	"Ближайшие дивиденды поступят": "The next dividend will be received",
 	"15 января, 2021": "January 15, 2021",
@@ -232,5 +232,12 @@ export default {
 	"Вклад, USDT": "Deposit, USDT",
 	"Бонус, USDT": "Bonus,USDT",
 	"Всего начислено:": "Total accrued:",
-	"Отменить, не согласен": "Cancel, do not agree"
+	"Отменить, не согласен": "Cancel, do not agree",
+	"Пополнить вклад": "Replenish deposit",
+	"Получайте фиксированную доходность до 101% вместе с SCHUTZ.":
+		"Get up to 101% fixed annual interest with SCHUTZ.",
+	"Укажите новый адрес кошелька": "Enter a new wallet address",
+	changeWalletText:
+		"If you entered a different wallet by mistake during registration, you can replace it with another one once through SCHUTZ customer support. Our staff will contact you and solve the problem.",
+	"Запрос отправлен": "Request has been sent"
 };
