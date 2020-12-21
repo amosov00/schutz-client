@@ -233,5 +233,7 @@ export default {
 	"Бонус, USDT": "Bonus,USDT",
 	"Всего начислено:": "Total accrued:",
 	"Отменить, не согласен": "Cancel, do not agree",
-	"Пополнить вклад": "Replenish deposit"
+	"Пополнить вклад": "Replenish deposit",
+	"Получайте фиксированную доходность до 101% вместе с SCHUTZ.":
+		"Get up to 101% fixed annual interest with SCHUTZ."
 };
