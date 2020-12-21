@@ -82,9 +82,9 @@ export default {
     }
   },
   async created() {
-    this.user = await this.$store.dispatch('fetchUser', this.$route.params.id)
+    this.user = await this.$store.dispatch('users/fetchUser', this.$route.params.id)
     if (this.user.ethereum_wallet) {
-      this.$store.dispatch('deposit/getDeposit', this.user.ethereum_wallet)
+      await this.$store.dispatch('deposit/getDeposit', this.user.ethereum_wallet)
     }
   },
   methods: {
