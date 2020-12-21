@@ -213,9 +213,9 @@ export default {
 	Установить: "Install",
 	dividensTitle: "Withdraw <br>or reinvest <br>the received dividends",
 	withdrawalText:
-		'You can <a class="is-link">вывести всю сумму</a>withdraw the entire amount or part of the accrued dividends, and reinvest the rest.',
+		'You can <a class="is-link">withdraw the entire amount</a> or part of the accrued dividends, and reinvest the rest.',
 	reinvestText:
-		'You can <a class="is-link">reinvest the entire amount</a>  or part of the accrued dividends, and withdraw the rest.',
+		'You can <a class="is-link">reinvest the entire amount</a> or part of the accrued dividends, and withdraw the rest.',
 	"Доступно USDT:": "USDT available:",
 	"Ближайшие дивиденды поступят": "The next dividend will be received",
 	"15 января, 2021": "January 15, 2021",

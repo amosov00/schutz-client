@@ -61,12 +61,14 @@
 							</div>
 						</div>
 						<custom-button
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
 							@click.native="openModal('withdraw')"
 							class="mt-auto mb-2"
 						>
 							{{ $t('Вывести') }}
 						</custom-button>
 						<custom-button
+							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
 							@click.native="openModal('reinvest')"
 						>
 							{{ $t('Реинвестировать') }}

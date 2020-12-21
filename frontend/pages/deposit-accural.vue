@@ -103,7 +103,7 @@ import XLSX from 'xlsx'
 import formatDate from '~/mixins/formatDate'
 import formatCurrency from '~/mixins/formatCurrency'
 import MailingUsersModal from '../components/modals/MailingUsersModal'
-import PassRepayModal from '~/components/modals/PassRepayModal'
+import PassRepayModal from '~/components/modals/DepositAccuralModal'
 
 export default {
   name: 'reports',
