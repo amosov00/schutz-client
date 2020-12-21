@@ -136,8 +136,8 @@ export default {
       XLSX.writeFile(wb, `users.xlsx`);
     }
   },
-  async asyncData({ store }) {
-    return await store.dispatch("fetchUsersV1");
+  async created() {
+		await this.$store.dispatch("users/fetchUsersV1");
   }
 };
 </script>
