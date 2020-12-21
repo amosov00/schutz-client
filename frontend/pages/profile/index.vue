@@ -43,7 +43,9 @@
 						</div>
 						<div class="data-item" v-else>
 							<div class="icon metamask"></div>
-							<div class="value">{{ user.ethereum_wallet }}</div>
+							<div class="value" @click="isChangeWalletModalActive = true">
+								{{ user.ethereum_wallet }}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -125,6 +127,9 @@
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
 			<AddFundsModal />
 		</b-modal>
+		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
+			<ChangeWalletModal />
+		</b-modal>
 	</div>
 </template>
 
@@ -137,6 +142,7 @@ import AddNewWalletModal from "~/components/modals/AddNewWalletModal";
 import formatCurrency from "~/mixins/formatCurrency";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
+import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
 import { mainSliderController } from "@/utils/slider";
 
 export default {
@@ -150,7 +156,8 @@ export default {
 		ValidationProvider,
 		ValidationObserver,
 		AddNewWalletModal,
-		AddFundsModal
+		AddFundsModal,
+		ChangeWalletModal
 	},
 	transition: mainSliderController,
 	methods: {
@@ -248,7 +255,8 @@ export default {
 		newEthereumWallet: "",
 		isComponentModalActive: false,
 		isWalletModalActive: false,
-		isAddFundsModalActive: false
+		isAddFundsModalActive: false,
+		isChangeWalletModalActive: false
 	})
 };
 </script>

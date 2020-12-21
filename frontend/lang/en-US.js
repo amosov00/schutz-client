@@ -235,5 +235,9 @@ export default {
 	"Отменить, не согласен": "Cancel, do not agree",
 	"Пополнить вклад": "Replenish deposit",
 	"Получайте фиксированную доходность до 101% вместе с SCHUTZ.":
-		"Get up to 101% fixed annual interest with SCHUTZ."
+		"Get up to 101% fixed annual interest with SCHUTZ.",
+	"Укажите новый адрес кошелька": "Enter a new wallet address",
+	changeWalletText:
+		"If you entered a different wallet by mistake during registration, you can replace it with another one once through SCHUTZ customer support. Our staff will contact you and solve the problem.",
+	"Запрос отправлен": "Request has been sent"
 };
