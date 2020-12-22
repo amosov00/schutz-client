@@ -248,9 +248,6 @@ export default {
 		if (!this.$store.state.metamask.gasPrice) {
 			await this.$store.dispatch("metamask/getGasPrice");
 		}
-		if (this.$store.state.deposit.repayBalance === null) {
-			await this.$store.dispatch("deposit/getRepayBalance");
-		}
 	},
 	methods: {
 		showMore() {
@@ -264,9 +261,6 @@ export default {
 		},
 		allowUSDT() {
 			this.$store.dispatch("userContractIntegration/allowUSDT");
-		},
-		getRepay() {
-			this.$store.dispatch("deposit/getRepay");
 		},
 		animateNumbers(newVal) {
 			gsap.to(this.$data, 0.5, {
@@ -286,7 +280,7 @@ export default {
 	computed: {
 		...mapGetters(["user", "txTotals"]),
 		...mapGetters("metamask", ["gasPrice", "isConnected"]),
-		...mapGetters("deposit", ["repayBalance", "allowance", "totalDeposit"]),
+		...mapGetters("deposit", ["depositBalance", "allowance", "totalDeposit"]),
 		tableData() {
 			return this.$store.getters.transactions.transactions !== null
 				? this.$store.getters.transactions.transactions

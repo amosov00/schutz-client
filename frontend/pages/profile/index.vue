@@ -27,7 +27,7 @@
 							<div class="icon password"></div>
 							<a
 								class="value has-text-link"
-								@click="isComponentModalActive = true"
+								@click="openModal('password')"
 							>
 								{{ $t("Сменить пароль") }}
 							</a>
@@ -35,7 +35,7 @@
 						<div class="data-item" v-if="!user.ethereum_wallet">
 							<div class="icon metamask"></div>
 							<a
-								@click="isWalletModalActive = true"
+								@click="openModal('wallet')"
 								class="value has-text-link"
 							>
 								{{ $t("Добавить кошелек") }}
@@ -45,7 +45,7 @@
 							<div class="icon metamask"></div>
 							<div
 								class="value has-text-link"
-								@click="isChangeWalletModalActive = true"
+								@click="openModal('change-wallet')"
 							>
 								{{ user.ethereum_wallet }}
 							</div>
@@ -74,7 +74,7 @@
 					</div>
 					<div class="column is-half is-flex is-flex-direction-column">
 						<custom-button
-							@click.native="isAddFundsModalActive = true"
+							@click.native="openModal('funds')"
 							v-if="user.is_deposit_open && allowance !== 0"
 							:disabled="!user.ethereum_wallet"
 							class="mb-2"
@@ -106,10 +106,11 @@
 
 						<custom-button
 							class="mb-2"
-							v-if="totalDividends"
-							@click.native="withdraw"
+							v-if="depositBalance"
+							:disabled="!isConnected"
+							@click.native="openModal('close-deposit')"
 						>
-							{{ $t("Вывести") }} {{ formatCurrency(totalDividends) }}
+							{{ $t("Вывести") }} {{ formatCurrency(depositBalance) }}
 						</custom-button>
 						<div
 							class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered"
@@ -121,14 +122,17 @@
 				</div>
 			</template>
 		</custom-slider>
-		<b-modal :active.sync="isWalletModalActive" has-modal-card>
-			<AddNewWalletModal></AddNewWalletModal>
+		<b-modal :active.sync="isAddWalletModalActive" has-modal-card>
+			<add-new-wallet-modal/>
 		</b-modal>
-		<b-modal :active.sync="isComponentModalActive" has-modal-card>
-			<PasswordChange />
+		<b-modal :active.sync="isPasswordChangeModalActive" has-modal-card>
+			<password-change />
 		</b-modal>
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
-			<AddFundsModal />
+			<add-funds-modal />
+		</b-modal>
+		<b-modal :active.sync="isCloseDepositModalActive" has-modal-card>
+			<close-deposit-modal/>
 		</b-modal>
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
 			<ChangeWalletModal />
@@ -146,6 +150,7 @@ import formatCurrency from "~/mixins/formatCurrency";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
 import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
+import CloseDepositModal from "~/components/modals/CloseDepositModal";
 import { mainSliderController } from "@/utils/slider";
 
 export default {
@@ -160,15 +165,29 @@ export default {
 		ValidationObserver,
 		AddNewWalletModal,
 		AddFundsModal,
+		CloseDepositModal,
 		ChangeWalletModal
 	},
 	transition: mainSliderController,
 	methods: {
-		async withdraw() {
-			await this.$store.dispatch(
-				"userContractIntegration/withdraw",
-				this.totalDeposit
-			);
+		openModal(modal) {
+			switch (modal) {
+				case "close-deposit":
+					this.isCloseDepositModalActive = true;
+					break
+				case "wallet":
+					this.isAddWalletModalActive = true;
+					break
+				case "password":
+					this.isPasswordChangeModalActive = true;
+					break
+				case "funds":
+					this.isAddFundsModalActive = true;
+					break
+				case "change-wallet":
+					this.isChangeWalletModalActive = true;
+					break
+			}
 		},
 		focusInput(e) {
 			e.target.select();
@@ -206,8 +225,8 @@ export default {
 	},
 	computed: {
 		...mapGetters(["user", "contractAgreements"]),
-		...mapGetters("metamask", ["gasPrice"]),
-		...mapGetters("deposit", ["totalDividends", "allowance"]),
+		...mapGetters("metamask", ['isConnected', 'gasPrice']),
+		...mapGetters('deposit', ['totalDividends', 'allowance', 'depositBalance']),
 		lastContract() {
 			if (this.contractAgreements && this.contractAgreements.length) {
 				return this.contractAgreements[0];
@@ -228,7 +247,7 @@ export default {
 		totalDeposit() {
 			const total = this.$store.getters["deposit/totalDeposit"];
 			return total ? total : 0;
-		}
+		},
 	},
 	async created() {
 		if (!this.$store.state.metamask.gasPrice) {
@@ -252,9 +271,10 @@ export default {
 			ethereum_wallet_payout: { value: "", label: "" }
 		},
 		newEthereumWallet: "",
-		isComponentModalActive: false,
-		isWalletModalActive: false,
+		isPasswordChangeModalActive: false,
+		isAddWalletModalActive: false,
 		isAddFundsModalActive: false,
+		isCloseDepositModalActive: false,
 		isChangeWalletModalActive: false
 	})
 };
