@@ -3,7 +3,7 @@
 		<div class="add-funds-card">
 			<p class="is-size-5"> {{ $t('Укажите сумму вывода') }} </p>
 			<p class="is-size-7 mb-60" v-html="$t('withdrawalText')">
-				
+
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
@@ -76,7 +76,7 @@
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
 export default {
-	name: "withdraw-modal",
+	name: "CloseDepositModal",
 	data() {
 		return {
 			value: ""
@@ -95,10 +95,7 @@ export default {
 					message: "Запрос в Metamask отправлен (ВЫВОД)",
 					type: "is-success"
 				});
-				await this.$store.dispatch(
-					"userContractIntegration/withdraw",
-					this.value
-				);
+				await this.$store.dispatch("userContractIntegration/closeDeposit", parseInt(this.value));
 				this.$parent.close();
 			}
 		},
