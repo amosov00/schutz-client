@@ -1,87 +1,99 @@
-<template lang="pug">
-  section.hero
-    div.hero-body
-      h1.is-1.has-text-centered Recover
-      div.card
-        div.card-content
-          b-field(:label="$t('password')")
-            b-input(type="password" v-model="password")
-          b-field(:label="$t('confirmPassword')")
-            b-input(type="password" v-model="repeat_password")
-          b-button.w-100(type="is-info" @click="changePassword")  {{$t('send')}}
+<template>
+	<div>
+		<custom-slider
+			:activeDot="1"
+			:dots="1"
+			next-page="/signup"
+			prev-page="/signup"
+		>
+			<template slot="content">
+				<div class="columns is-fullheight">
+					<div class="column is-half is-flex flex-column">
+						<div class="is-size-5 mb-5">
+							{{ $t("Восстановление пароля") }}
+						</div>
+						<div class="pass-input">
+							<base-input
+								type="text"
+								size="6"
+								:label="$t('password')"
+								v-model="password"
+							/>
+						</div>
 
+						<div class="mt-40">
+							<base-input
+								type="text"
+								size="6"
+								:label="$t('confirmPassword')"
+								v-model="repeat_password"
+							/>
+						</div>
+					</div>
+					<div
+						class="column is-half is-flex is-flex-direction-column is-justify-content-space-between"
+					>
+						<div class="auth-image">
+							<img src="/login_success.svg" />
+						</div>
+						<custom-button @click.native="changePassword">{{
+							$t("send")
+						}}</custom-button>
+					</div>
+				</div>
+			</template>
+		</custom-slider>
+	</div>
 </template>
 
 <script>
 export default {
-  name: "recover-index",
-  layout: "auth",
-  data: () => ({
-    password: "",
-    repeat_password: "",
-    query: {
-      recover_code: ""
-    }
-  }),
-  methods: {
-    async changePassword() {
-      this.loading = true;
+	name: "recover-index",
+	layout: "auth",
+	data: () => ({
+		password: "",
+		repeat_password: "",
+		query: {
+			recover_code: ""
+		}
+	}),
+	methods: {
+		async changePassword() {
+			this.loading = true;
 
-      let data = {
-        password: this.password,
-        repeat_password: this.repeat_password,
-        recover_code: this.query.recover_code
-      };
+			let data = {
+				password: this.password,
+				repeat_password: this.repeat_password,
+				recover_code: this.query.recover_code
+			};
 
-      if (await this.$store.dispatch("finishRecover", data)) {
-        this.$buefy.toast.open({
-          message: this.$i18n.t("passwordChangeSuccess"),
-          type: "is-primary"
-        });
-        this.$nuxt.context.redirect("/");
-      } else {
-        this.$buefy.toast.open({
-          message: this.$i18n.t("passwordChangeError"),
-          type: "is-danger"
-        });
-      }
+			if (await this.$store.dispatch("finishRecover", data)) {
+				this.$buefy.toast.open({
+					message: this.$i18n.t("passwordChangeSuccess"),
+					type: "is-primary"
+				});
+				this.$nuxt.context.redirect("/");
+			} else {
+				this.$buefy.toast.open({
+					message: this.$i18n.t("passwordChangeError"),
+					type: "is-danger"
+				});
+			}
 
-      this.loading = false;
-    }
-  },
-  asyncData({ query }) {
-    return { query };
-  }
+			this.loading = false;
+		}
+	},
+	asyncData({ query }) {
+		return { query };
+	}
 };
 </script>
 
-<style lang="sass" scoped>
-.hero-body
-  margin: 0 auto
-
-  h1
-    margin-bottom: 30px
-
-.card
-  width: 340px
-  padding: 30px
-  border: 0.5px solid #d7d7d7
-  box-shadow: 0px 20px 50px rgba(0, 0, 0, 0.1)
-  border-radius: 6px
-
-  .card-content
-    padding: 0
-    display: flex
-    flex-direction: column
-
-
-.button
-  width: 150px
-  height: 50px
-
-a
-  margin-top: 10px
-
-  &:nth-child(even)
-    margin-top: 30px
+<style lang="scss" scoped>
+.pass-input {
+	margin-top: 120px;
+}
+.mt-40 {
+	margin-top: 40px;
+}
 </style>

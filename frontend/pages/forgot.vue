@@ -10,7 +10,7 @@
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex flex-column">
 						<div class="is-size-5 mb-5">
-							Восстановление пароля
+							{{ $t("Восстановление пароля") }}
 						</div>
 						<div class="email-input">
 							<base-input
@@ -27,7 +27,9 @@
 						<div class="auth-image">
 							<img src="/login_success.svg" />
 						</div>
-						<custom-button @click.native="recover">Отправить</custom-button>
+						<custom-button @click.native="recover">
+							{{ $t("send") }}
+						</custom-button>
 					</div>
 				</div>
 			</template>
