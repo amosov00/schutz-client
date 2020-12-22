@@ -239,5 +239,6 @@ export default {
 	"Укажите новый адрес кошелька": "Enter a new wallet address",
 	changeWalletText:
 		"If you entered a different wallet by mistake during registration, you can replace it with another one once through SCHUTZ customer support. Our staff will contact you and solve the problem.",
-	"Запрос отправлен": "Request has been sent"
+	"Запрос отправлен": "Request has been sent",
+	"Восстановление пароля": "Password recovery"
 };

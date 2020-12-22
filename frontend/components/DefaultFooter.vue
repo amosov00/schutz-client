@@ -12,7 +12,6 @@
 			<a :href="getLink('/strategies')">{{ $t("Стратегии") }}</a>
 			<a :href="getLink('/help')">{{ $t("Вопросы и ответы") }}</a>
 			<a :href="getLink('/contacts')">{{ $t("Контакты") }}</a>
-			<nuxt-link :to="localePath('/')"> {{ $t("Комьюнити") }}</nuxt-link>
 		</div>
 		<div class="footer__social-container">
 			<div>
