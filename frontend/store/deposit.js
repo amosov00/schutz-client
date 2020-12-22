@@ -6,7 +6,7 @@ export const state = () => ({
   allowance: 0,
   totalDeposit: 0,
   totalDividends: 0,
-  repayBalance: 0,
+	depositBalance: 0,
 });
 
 
@@ -14,13 +14,13 @@ export const getters = {
   allowance: s => s.allowance,
   totalDeposit: s => s.totalDeposit,
   totalDividends: s => s.totalDividends,
-  repayBalance: s => s.repayBalance,
+  depositBalance: s => s.depositBalance,
 };
 export const mutations = {
   setAllowance: (state, allowance) => (state.allowance = allowance),
   setTotalDeposit: (state, deposit) => (state.totalDeposit = deposit),
   setTotalDividends: (state, deposit) => (state.totalDividends = deposit),
-  setRepayBalance: (state, balance) => (state.repayBalance = balance),
+  setDepositBalance: (state, balance) => (state.depositBalance = balance),
 };
 
 export const actions = {
@@ -39,6 +39,9 @@ export const actions = {
     if (_.isEmpty(getters["allowance"])) {
       await dispatch("getAllowance", address);
     }
+		if (_.isEmpty(getters["depositBalance"])) {
+			await dispatch("getDepositBalance", address);
+		}
   },
 	async getAllowance({commit, dispatch}, address) {
 		return await this.$contracts().USDT.methods
@@ -82,13 +85,9 @@ export const actions = {
         return false;
       });
   },
-  async getRepayBalance({commit, dispatch, rootGetters}) {
-    let address = await dispatch("metamask/getMetamaskAddress", {}, {root: true});
-    if (!address) {
-      address = rootGetters["user"].ethereum_wallet
-    }
-    const repayBalance = await this.$contracts().Schutz.methods.repayBalance_(address).call();
-    commit("setRepayBalance", parseInt(repayBalance))
+  async getDepositBalance({commit, dispatch, rootGetters}, address) {
+    const repayBalance = await this.$contracts().Schutz.methods.depositBalance_(address).call();
+    commit("setDepositBalance", parseInt(repayBalance) / 1e6)
   },
   async depositToggle({}, value) {
     return await this.$axios
