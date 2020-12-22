@@ -14,7 +14,7 @@
 						</div>
 						<div class="is-size-4"> {{ $t('Доступно USDT:') }}</div>
 						<div class="is-size-2 mb-5">
-							{{ formatCurrency(totalDividends) }}
+							{{ formatCurrency(interestBalance) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
 							{{ $t('Ближайшие дивиденды поступят') }} <br/>
@@ -68,7 +68,7 @@
 							{{ $t('Вывести') }}
 						</custom-button>
 						<custom-button
-							:disabled="!totalDividends || !isConnected"
+							:disabled="!interestBalance || !isConnected"
 							@click.native="openModal('reinvest')"
 						>
 							{{ $t('Реинвестировать') }}
@@ -109,7 +109,7 @@ export default {
 	computed: {
 		...mapGetters(["user"]),
 		...mapGetters("metamask", ["isConnected", "gasPrice"]),
-		...mapGetters("deposit", ["totalDeposit", "totalDividends", "depositBalance"])
+		...mapGetters("userContractIntegration", ["tokenBalance", "interestBalance", "depositBalance"])
 	},
 	methods: {
 		openModal(modal) {

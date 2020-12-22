@@ -57,7 +57,7 @@ export default {
 	methods: {
 		async addWallet() {
 			if (this.wallet) {
-				const res = await this.$store.dispatch("wallet/addWallet", this.wallet);
+				const res = await this.$store.dispatch("addWallet", this.wallet);
 				if (res) {
 					this.$authFetchUser();
 					this.$parent.close();
