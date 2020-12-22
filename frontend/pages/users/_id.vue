@@ -11,8 +11,6 @@
         b-field(grouped)
           b-field(label="Telegram")
             b-input(type="text" placeholder="@nickname" v-model="user.telegram")
-          b-field(:label="$t('NTSCDbalance')")
-            b-input(type="text" placeholder="NTSCD" disabled :value="userDeposit")
         b-field(:label="$t('ethereumWallet')")
           b-input(type="text" placeholder="0x..." v-model="user.ethereum_wallet")
         b-field(:label="$t('ethereumWalletPayout')")
@@ -84,7 +82,7 @@ export default {
   async created() {
     this.user = await this.$store.dispatch('users/fetchUser', this.$route.params.id)
     if (this.user.ethereum_wallet) {
-      await this.$store.dispatch('deposit/getDeposit', this.user.ethereum_wallet)
+      await this.$store.dispatch('userContractIntegration/fetchTokenBalance', this.user.ethereum_wallet)
     }
   },
   methods: {
@@ -135,13 +133,6 @@ export default {
     },
     updatedUser() {
       return { ...this.user }
-    },
-    userDeposit() {
-      if (this.user.ethereum_wallet) {
-        return this.$store.getters['deposit/totalDeposit']
-      } else {
-        return 0
-      }
     },
     closeDate: {
       get: function() {

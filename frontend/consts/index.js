@@ -3,6 +3,7 @@ export const NTS_CONTRACTS = {
   NTS80: "NTS80",
   NTS81: "NTS81",
   NTS165: "NTS165",
-	SCHUTZ: "Schutz"
+	SCHUTZ: "Schutz",
+	SCHUTZV1: "SchutzV1"
 }
 

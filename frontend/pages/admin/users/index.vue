@@ -25,7 +25,7 @@
 		.export__container.container.is-flex.is-flex-direction-row-reverse
 			.export__text(@click="saveAsExcel") Экспортировать таблицу
 		.total__container.container
-			.total__text Всего начислено: 915.00 USDT
+			.total__text Всего начислено:
 </template>
 
 <script>
@@ -48,7 +48,6 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			usersPagination: 'usersPagination',
 			users: 'users/users',
 		}),
 

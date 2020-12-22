@@ -3,7 +3,7 @@
 		<div class="header">
 			<div class="left">
 				<a class="logo" :href="localePath('/')">
-					<img src="../static/logo.svg" alt="Schutz" />
+					<img src="../static/logo.svg" alt="Schutz"/>
 					<span> {{ $t("logoText") }} </span>
 				</a>
 				<div class="links">
@@ -34,7 +34,7 @@
 				<a :href="closeLink" class="profile">
 					<span> {{ $t("closeProfile") }} </span>
 				</a>
-				<lang-switcher />
+				<lang-switcher/>
 			</div>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 <script>
 import LangSwitcher from "./LangSwitcher";
 import CustomDropdown from "@/components/ui/CustomDropdown";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
 	components: {
@@ -106,11 +106,10 @@ export default {
 	async created() {
 		if (this.$userIsLoggedIn) {
 			this.$store
-				.dispatch("deposit/fetchBalanceData")
-				.then(_ => {})
-				.catch(e => {
-					console.warn("Failed to fetch deposits data");
-					console.warn(e);
+				.dispatch("userContractIntegration/fetchBalances")
+				.then(_ => {
+				})
+				.catch(_ => {
 				});
 		}
 	}
@@ -151,6 +150,7 @@ export default {
 				}
 			}
 		}
+
 		.dropdown__label {
 			font-weight: 300;
 			font-size: 14px;
@@ -177,11 +177,13 @@ export default {
 		background-size: calc(100% + 70px) auto;
 		background-position: left -60px top;
 	}
+
 	.logo {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		width: 158px;
+
 		span {
 			font-weight: 300;
 			font-size: 14px;
@@ -189,6 +191,7 @@ export default {
 			color: #ffffff;
 		}
 	}
+
 	.left,
 	.right {
 		height: 137px;
@@ -196,11 +199,14 @@ export default {
 		flex-direction: column;
 		justify-content: space-between;
 		align-items: flex-start;
+
 		.links {
 			display: flex;
+
 			.link-item {
 				position: relative;
 				margin-right: 20px;
+
 				.hidden {
 					font-weight: 500;
 					font-size: 14px;
@@ -208,6 +214,7 @@ export default {
 					opacity: 0;
 				}
 			}
+
 			.link {
 				font-weight: 300;
 				font-size: 14px;
@@ -224,14 +231,17 @@ export default {
 					line-height: 19px;
 					color: #fad896;
 				}
+
 				&:hover:not(.active) {
 					color: #fff;
 				}
 			}
 		}
 	}
+
 	.right {
 		align-items: flex-end;
+
 		.profile {
 			display: flex;
 			flex-direction: column;
@@ -242,6 +252,7 @@ export default {
 			line-height: 19px;
 			text-align: center;
 			color: #ffffff;
+
 			&::before {
 				content: "";
 				width: 24px;

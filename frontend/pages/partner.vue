@@ -56,7 +56,7 @@
 						</div>
 
 						<input
-							v-if="totalDeposit"
+							v-if="tokenBalance"
 							class="is-size-5 input"
 							type="text"
 							readonly
@@ -97,7 +97,7 @@
 					<div class="column is-12-mobile is-6-desktop">
 						<custom-button
 							@click.native="copy"
-							v-if="totalDeposit"
+							v-if="tokenBalance"
 							class="is-fullwidth"
 						>
 							{{ $t("Копировать ссылку") }}
@@ -137,10 +137,7 @@ export default {
 	},
 	computed: {
 		...mapGetters(["referralLink"]),
-		totalDeposit() {
-			const total = this.$store.getters["deposit/totalDeposit"];
-			return total ? total : 0;
-		}
+		...mapGetters("userContractIntegration", ["tokenBalance"]),
 	},
 	data: () => ({
 		isDepositOpen: true,
