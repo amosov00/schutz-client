@@ -14,7 +14,7 @@
 						</div>
 						<div class="is-size-4"> {{ $t('Доступно USDT:') }}</div>
 						<div class="is-size-2 mb-5">
-							{{ formatCurrency(totalDividends) }}
+							{{ formatCurrency(interestBalance) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
 							{{ $t('Ближайшие дивиденды поступят') }} <br/>
@@ -61,14 +61,14 @@
 							</div>
 						</div>
 						<custom-button
-							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
-							@click.native="openModal('withdraw')"
+							:disabled="!depositBalance || !isConnected"
+							@click.native="openModal('close-deposit')"
 							class="mt-auto mb-2"
 						>
 							{{ $t('Вывести') }}
 						</custom-button>
 						<custom-button
-							:disabled="!totalDividends || !user.ethereum_wallet || !isConnected"
+							:disabled="!interestBalance || !isConnected"
 							@click.native="openModal('reinvest')"
 						>
 							{{ $t('Реинвестировать') }}
@@ -77,10 +77,10 @@
 				</div>
 			</template>
 		</custom-slider>
-		<b-modal :active.sync="withdrawModalActive" has-modal-card>
-			<withdraw-modal/>
+		<b-modal :active.sync="isCloseDepositModalActive" has-modal-card>
+			<close-deposit-modal/>
 		</b-modal>
-		<b-modal :active.sync="reinvestModalActive" has-modal-card>
+		<b-modal :active.sync="isReinvestModalActive" has-modal-card>
 			<reinvest-modal/>
 		</b-modal>
 	</div>
@@ -89,12 +89,12 @@
 <script>
 import formatCurrency from "~/mixins/formatCurrency";
 import {mapGetters} from "vuex";
-import WithdrawModal from "./modals/WithdrawModal";
+import CloseDepositModal from "./modals/CloseDepositModal";
 import ReinvestModal from "./modals/ReinvestModal";
 
 export default {
 	name: "DividendProducts",
-	components: {ReinvestModal, WithdrawModal},
+	components: {ReinvestModal, CloseDepositModal},
 	mixins: [formatCurrency],
 
 	async created() {
@@ -103,20 +103,23 @@ export default {
 		}
 	},
 	data: () => ({
-		withdrawModalActive: false,
-		reinvestModalActive: false
+		isCloseDepositModalActive: false,
+		isReinvestModalActive: false
 	}),
 	computed: {
 		...mapGetters(["user"]),
 		...mapGetters("metamask", ["isConnected", "gasPrice"]),
-		...mapGetters("deposit", ["totalDeposit", "totalDividends"])
+		...mapGetters("userContractIntegration", ["tokenBalance", "interestBalance", "depositBalance"])
 	},
 	methods: {
 		openModal(modal) {
-			if (modal === "withdraw") {
-				this.withdrawModalActive = true
-			} else if (modal === "reinvest") {
-				this.reinvestModalActive = true
+			switch (modal) {
+				case "close-deposit":
+					this.isCloseDepositModalActive = true;
+					break
+				case "reinvest":
+					this.isReinvestModalActive = true;
+					break
 			}
 		}
 	}

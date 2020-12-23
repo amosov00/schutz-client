@@ -50,7 +50,7 @@
 						<div>
 							<div class="is-size-4">{{ $t("Вклад USDT") }}:</div>
 							<div class="is-size-2 mb-5">
-								{{ formatCurrency(totalDeposit) }}
+								{{ formatCurrency(tokenBalance) }}
 							</div>
 							<div class="is-size-7 ethereum">{{ $t("Ethereum адрес") }}:</div>
 							<div class="ethereum-address mb-5">
@@ -103,7 +103,7 @@
 							{{ $t("Одобрить USDT") }}
 						</custom-button>
 						<custom-button
-							v-else-if="totalDeposit > 0"
+							v-else-if="tokenBalance > 0"
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
 							:disabled="!user.ethereum_wallet || !isConnected"
@@ -248,9 +248,6 @@ export default {
 		if (!this.$store.state.metamask.gasPrice) {
 			await this.$store.dispatch("metamask/getGasPrice");
 		}
-		if (this.$store.state.deposit.repayBalance === null) {
-			await this.$store.dispatch("deposit/getRepayBalance");
-		}
 	},
 	methods: {
 		showMore() {
@@ -264,9 +261,6 @@ export default {
 		},
 		allowUSDT() {
 			this.$store.dispatch("userContractIntegration/allowUSDT");
-		},
-		getRepay() {
-			this.$store.dispatch("deposit/getRepay");
 		},
 		animateNumbers(newVal) {
 			gsap.to(this.$data, 0.5, {
@@ -286,7 +280,7 @@ export default {
 	computed: {
 		...mapGetters(["user", "txTotals"]),
 		...mapGetters("metamask", ["gasPrice", "isConnected"]),
-		...mapGetters("deposit", ["repayBalance", "allowance", "totalDeposit"]),
+		...mapGetters("userContractIntegration", ["depositBalance", "allowance", "tokenBalance"]),
 		tableData() {
 			return this.$store.getters.transactions.transactions !== null
 				? this.$store.getters.transactions.transactions

@@ -203,9 +203,7 @@ export const actions = {
 	},
 	async updateUser({}, user) {
 		return await this.$axios
-			.put(`/admin/users/${user._id}/`, {
-				...user
-			})
+			.put(`/admin/users/${user._id}/`, user)
 			.then(res => {
 				return res;
 			})
@@ -266,5 +264,5 @@ export const actions = {
 			.catch(() => {
 				return false;
 			});
-	}
+	},
 };

@@ -4,12 +4,16 @@ import Web3 from "web3";
 function getWeb3(infuraURL) {
 	let web3 = null
 
-	// TODO use ENV and chainId
 	if (window?.ethereum && window.ethereum.chainId === "0x1") {
-		try {
-			web3 = new Web3(window.ethereum)
-		} catch (e) {
-			console.error(e)
+		if (
+			(process.env.ENV === "production" && window.ethereum.chainId === "0x1") ||
+			(process.env.ENV !== "production" && window.ethereum.chainId === "0x4")
+		) {
+			try {
+				web3 = new Web3(window.ethereum)
+			} catch (e) {
+				console.error(e)
+			}
 		}
 	}
 

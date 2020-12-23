@@ -69,7 +69,7 @@ export default {
 		"~/plugins/auth.js",
 		"~/plugins/axios.js",
 		"~/plugins/vee-validate.js",
-		"~/plugins/contract.js",
+		"~/plugins/web3-contracts.js",
 		"~/plugins/text-highlight.js",
 		"~/plugins/vue-clipboard.js",
 		"~/plugins/global-ui",
