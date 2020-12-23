@@ -61,10 +61,9 @@ export const actions = {
 				return false
 			})
 	},
-	/* ? */
+	/* Вывод InterestBalance */
 	async withdraw({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
-		console.log(value * 1e6)
 		return window.ethereum
 			.request({
 				method: "eth_sendTransaction",
@@ -87,7 +86,7 @@ export const actions = {
 				return false
 			})
 	},
-	/* Вывод средств с закрытия депозита */
+	/* Вывод средств с закрытия депозита DepositBalance */
 	async closeDeposit({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
 		return window.ethereum
@@ -112,7 +111,7 @@ export const actions = {
 				return false
 			})
 	},
-	/* Реинвест средств */
+	/* Реинвест средств InterestBalance */
 	async reinvest({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
 		return window.ethereum

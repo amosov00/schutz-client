@@ -58,7 +58,7 @@
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
-					@click.native="withdraw"
+					@click.native="action"
 				>
 					{{ $t('Вывести') }}
 				</custom-button>
@@ -76,7 +76,13 @@
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
 export default {
-	name: "CloseDepositModal",
+	name: "WithdrawAndCloseDepositModal",
+	props: {
+		actionType: {
+			type: String,
+			required: true,
+		}
+	},
 	data() {
 		return {
 			value: ""
@@ -88,20 +94,24 @@ export default {
 		TermsAndConditionsModal
 	},
 	methods: {
-		async withdraw() {
+		async action() {
 			const isValid = await this.$refs.observer.validate();
 			if (isValid && this.isTermsAcceped) {
 				this.$buefy.toast.open({
 					message: "Запрос в Metamask отправлен (ВЫВОД)",
 					type: "is-success"
 				});
-				await this.$store.dispatch("userContractIntegration/closeDeposit", parseInt(this.value));
+				if (this.actionType === "closeDeposit") {
+					await this.$store.dispatch("userContractIntegration/closeDeposit", parseInt(this.value));
+				} else if (this.actionType === "withdraw") {
+					await this.$store.dispatch("userContractIntegration/withdraw", parseInt(this.value));
+				}
 				this.$parent.close();
 			}
 		},
 		logKey(e) {
 			if (e.code === "Enter") {
-				this.withdraw();
+				this.action();
 			}
 		}
 	},
