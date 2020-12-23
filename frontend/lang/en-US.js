@@ -202,7 +202,7 @@ export default {
 	"Сумма, USDT": "Amount, USDT",
 	"показать еще": "show more",
 	"Всего:": "Total:",
-	"Установите MetaMask": "",
+	"Установите MetaMask": "Install MetaMask",
 	installText:
 		"To fully operate in the SCHUTZ system, you will need to install the MetaMask wallet extension. All financial transactions will use it.",
 	noteText:
