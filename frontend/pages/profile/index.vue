@@ -131,8 +131,8 @@
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
 			<add-funds-modal />
 		</b-modal>
-		<b-modal :active.sync="isCloseDepositModalActive" has-modal-card>
-			<close-deposit-modal/>
+		<b-modal :active.sync="isWithdrawCloseDepositModalActive" has-modal-card>
+			<withdraw-and-close-deposit-modal action-type="closeDeposit"/>
 		</b-modal>
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
 			<ChangeWalletModal />
@@ -150,7 +150,7 @@ import formatCurrency from "~/mixins/formatCurrency";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
 import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
-import CloseDepositModal from "~/components/modals/CloseDepositModal";
+import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
 import { mainSliderController } from "@/utils/slider";
 
 export default {
@@ -165,7 +165,7 @@ export default {
 		ValidationObserver,
 		AddNewWalletModal,
 		AddFundsModal,
-		CloseDepositModal,
+		WithdrawAndCloseDepositModal,
 		ChangeWalletModal
 	},
 	transition: mainSliderController,
@@ -173,7 +173,7 @@ export default {
 		openModal(modal) {
 			switch (modal) {
 				case "close-deposit":
-					this.isCloseDepositModalActive = true;
+					this.isWithdrawCloseDepositModalActive = true;
 					break
 				case "wallet":
 					this.isAddWalletModalActive = true;
@@ -270,7 +270,7 @@ export default {
 		isPasswordChangeModalActive: false,
 		isAddWalletModalActive: false,
 		isAddFundsModalActive: false,
-		isCloseDepositModalActive: false,
+		isWithdrawCloseDepositModalActive: false,
 		isChangeWalletModalActive: false
 	})
 };
