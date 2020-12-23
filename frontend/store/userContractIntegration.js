@@ -2,23 +2,36 @@ import web3 from "~/utils/web3";
 import {ToastProgrammatic as Toast} from 'buefy'
 import _ from "lodash";
 
+
+/*
+	allowance - количество разрешенные токенов для изменений в USDT
+	tokenBalance - количество токенов на контракт = депозит пользователя
+	interestBalance - токены - дивиденды пользователя
+	depositBalance - токены закрытия депозита
+ */
 export const state = () => ({
 	allowance: 0,
-	totalDeposit: 0,
-	totalDividends: 0,
+	tokenBalance: 0,
+	interestBalance: 0,
 	depositBalance: 0,
 });
 
 export const getters = {
 	allowance: s => s.allowance,
-	totalDeposit: s => s.totalDeposit,
-	totalDividends: s => s.totalDividends,
+	tokenBalance: s => s.tokenBalance,
+	interestBalance: s => s.interestBalance,
 	depositBalance: s => s.depositBalance,
 };
 
-export const mutations = {};
+export const mutations = {
+	setAllowance: (state, value) => (state.allowance = value),
+	setTokenBalance: (state, value) => (state.tokenBalance = value),
+	setInterestBalance: (state, value) => (state.interestBalance = value),
+	setDepositBalance: (state, value) => (state.depositBalance = value),
+};
 
 export const actions = {
+	/* Открытие депозита */
 	async deposit({commit, dispatch, rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
 		const user = rootGetters["user"]
@@ -48,9 +61,9 @@ export const actions = {
 				return false
 			})
 	},
+	/* Вывод InterestBalance */
 	async withdraw({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
-		console.log(value * 1e6)
 		return window.ethereum
 			.request({
 				method: "eth_sendTransaction",
@@ -73,6 +86,7 @@ export const actions = {
 				return false
 			})
 	},
+	/* Вывод средств с закрытия депозита DepositBalance */
 	async closeDeposit({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
 		return window.ethereum
@@ -97,6 +111,7 @@ export const actions = {
 				return false
 			})
 	},
+	/* Реинвест средств InterestBalance */
 	async reinvest({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
 		return window.ethereum
@@ -121,6 +136,7 @@ export const actions = {
 				return false
 			})
 	},
+	/* allowence */
 	async allowUSDT({rootGetters, commit, dispatch}) {
 		const gasPrice = rootGetters['metamask/gasPrice']
 
@@ -142,5 +158,76 @@ export const actions = {
 			commit("deposit/setAllowance", 1000000, {root: true})
 		}).catch(_ => {
 		})
+	},
+
+	/* main function to fetch all required balances */
+	async fetchBalances({dispatch, getters, rootGetters}) {
+		let address = await dispatch("metamask/getMetamaskAddress", {}, {root: true});
+
+		if (!address) {
+			address = rootGetters["user"].ethereum_wallet
+		}
+		if (!getters["tokenBalance"]) {
+			await dispatch("fetchTokenBalance", address);
+		}
+		if (!getters["interestBalance"]) {
+			await dispatch("fetchInterestBalance", address);
+		}
+		if (!getters["depositBalance"]) {
+			await dispatch("fetchDepositBalance", address);
+		}
+		if (!getters["allowance"]) {
+			await dispatch("fetchAllowance", address);
+		}
+	},
+	async fetchAllowance({commit, dispatch}, address) {
+		return await this.$contracts().USDT.methods
+			.allowance(address, this.$contracts().Schutz._address)
+			.call()
+			.then(allowance => {
+				commit("setAllowance", Math.round(allowance / 1e6));
+				return true
+			})
+			.catch(_ => {
+				return false;
+			});
+	},
+	async fetchTokenBalance({commit}, address) {
+		return await this.$contracts()
+			.Schutz.methods.balanceOf(address)
+			.call()
+			.then(balance => {
+				console.log("bal:", balance / 1e6)
+				commit("setTokenBalance", balance / 1e6);
+				return true;
+			})
+			.catch(_ => {
+				return false;
+			});
+	},
+	async fetchInterestBalance({commit}, address) {
+		return await this.$contracts()
+			.Schutz.methods.interestBalance_(address)
+			.call()
+			.then(balance => {
+				commit("setInterestBalance", balance / 1e6);
+				return true;
+			})
+			.catch(_ => {
+				return false;
+			});
+	},
+	async fetchDepositBalance({commit, dispatch, rootGetters}, address) {
+		return await this.$contracts()
+			.Schutz.methods.depositBalance_(address)
+			.call()
+			.then(balance => {
+				commit("setDepositBalance", balance / 1e6)
+				return true
+			}).catch(_ => {
+
+				return false
+			})
+
 	},
 }

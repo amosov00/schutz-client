@@ -56,7 +56,7 @@
 					<div class="column is-half is-flex flex-column">
 						<div>
 							<div class="is-size-5">{{ $t("Вклад USDT") }}:</div>
-							<div class="is-size-2">{{ formatCurrency(totalDeposit) }}</div>
+							<div class="is-size-2">{{ formatCurrency(tokenBalance) }}</div>
 							<div class="is-size-7" v-if="lastContract">
 								{{ $t("Дата закрытия") }}
 							</div>
@@ -75,7 +75,7 @@
 					<div class="column is-half is-flex is-flex-direction-column">
 						<custom-button
 							@click.native="openModal('funds')"
-							v-if="user.is_deposit_open && allowance !== 0"
+							v-if="user.is_deposit_open && allowance > 0"
 							:disabled="!user.ethereum_wallet"
 							class="mb-2"
 						>
@@ -87,7 +87,7 @@
 							class="mb-2"
 							@click.native="$router.push('/investment')"
 						>
-							{{ totalDeposit ? $t("Пополнить вклад") : $t("Открыть вклад") }}
+							{{ tokenBalance ? $t("Пополнить вклад") : $t("Открыть вклад") }}
 						</custom-button>
 						<custom-button
 							v-if="lastContract"
@@ -131,8 +131,8 @@
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
 			<add-funds-modal />
 		</b-modal>
-		<b-modal :active.sync="isCloseDepositModalActive" has-modal-card>
-			<close-deposit-modal/>
+		<b-modal :active.sync="isWithdrawCloseDepositModalActive" has-modal-card>
+			<withdraw-and-close-deposit-modal action-type="closeDeposit"/>
 		</b-modal>
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
 			<ChangeWalletModal />
@@ -150,7 +150,7 @@ import formatCurrency from "~/mixins/formatCurrency";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
 import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
-import CloseDepositModal from "~/components/modals/CloseDepositModal";
+import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
 import { mainSliderController } from "@/utils/slider";
 
 export default {
@@ -165,7 +165,7 @@ export default {
 		ValidationObserver,
 		AddNewWalletModal,
 		AddFundsModal,
-		CloseDepositModal,
+		WithdrawAndCloseDepositModal,
 		ChangeWalletModal
 	},
 	transition: mainSliderController,
@@ -173,7 +173,7 @@ export default {
 		openModal(modal) {
 			switch (modal) {
 				case "close-deposit":
-					this.isCloseDepositModalActive = true;
+					this.isWithdrawCloseDepositModalActive = true;
 					break
 				case "wallet":
 					this.isAddWalletModalActive = true;
@@ -226,7 +226,7 @@ export default {
 	computed: {
 		...mapGetters(["user", "contractAgreements"]),
 		...mapGetters("metamask", ['isConnected', 'gasPrice']),
-		...mapGetters('deposit', ['totalDividends', 'allowance', 'depositBalance']),
+		...mapGetters('userContractIntegration', ['allowance', 'tokenBalance', 'interestBalance', 'depositBalance']),
 		lastContract() {
 			if (this.contractAgreements && this.contractAgreements.length) {
 				return this.contractAgreements[0];
@@ -243,10 +243,6 @@ export default {
 		},
 		copiedWallet() {
 			return { ...this.user };
-		},
-		totalDeposit() {
-			const total = this.$store.getters["deposit/totalDeposit"];
-			return total ? total : 0;
 		},
 	},
 	async created() {
@@ -274,7 +270,7 @@ export default {
 		isPasswordChangeModalActive: false,
 		isAddWalletModalActive: false,
 		isAddFundsModalActive: false,
-		isCloseDepositModalActive: false,
+		isWithdrawCloseDepositModalActive: false,
 		isChangeWalletModalActive: false
 	})
 };

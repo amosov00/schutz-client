@@ -4,13 +4,13 @@
       div.is-flex.nav-item
         .column.is-narrow
           div.has-text-weight-bold {{ $t('deposit') }}
-          div {{ `${formatCurrency(totalDeposit)} USDT` }}
+          div {{ `${formatCurrency(tokenBalance)} USDT` }}
         .column
           PayoutButton(:allowPayment="false" :customTooltipLabel="userActiveDeposits")
       div.is-flex.nav-item
         .column.is-narrow
           div.has-text-weight-bold {{ $t('dividends') }}
-          div {{ `${formatCurrency(totalDividends)} USDT` }}
+          div {{ `${formatCurrency(interestBalance)} USDT` }}
         .column
           PayoutButton(:allowPayment="true" @click.native="withdraw")
 
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex"
 import InlineSvg from "vue-inline-svg";
 import LangSwitcher from "~/components/NavBar/LangSwitcher";
 import PayoutButton from "~/components/NavBar/PayoutButton";
@@ -44,12 +45,7 @@ export default {
 
   }),
   computed: {
-    totalDeposit() {
-      return this.$store.getters["deposit/totalDeposit"];
-    },
-    totalDividends() {
-      return this.$store.getters["deposit/totalDividends"];
-    },
+  	...mapGetters("userContractIntegration", ["tokenBalance", "interestBalance"]),
     userActiveDeposits() {
       if (!this.$store.getters.user || !this.$store.getters.user.active_deposits) {
         return ""
@@ -61,12 +57,9 @@ export default {
     }
   },
   methods: {
-    withdraw() {
-      this.$store.dispatch("dividends/withdraw");
-    }
   },
   async created() {
-    this.$store.dispatch("deposit/fetchBalanceData").then(() => {
+    this.$store.dispatch("userContractIntegration/fetchBalances").then(() => {
     }).catch((e) => {
       console.warn("Failed to fetch deposits data")
       console.warn(e)

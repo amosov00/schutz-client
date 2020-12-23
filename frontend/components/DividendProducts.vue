@@ -14,7 +14,7 @@
 						</div>
 						<div class="is-size-4"> {{ $t('Доступно USDT:') }}</div>
 						<div class="is-size-2 mb-5">
-							{{ formatCurrency(totalDividends) }}
+							{{ formatCurrency(interestBalance) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
 							{{ $t('Ближайшие дивиденды поступят') }} <br/>
@@ -61,14 +61,14 @@
 							</div>
 						</div>
 						<custom-button
-							:disabled="!depositBalance || !isConnected"
+							:disabled="!interestBalance || !isConnected"
 							@click.native="openModal('close-deposit')"
 							class="mt-auto mb-2"
 						>
 							{{ $t('Вывести') }}
 						</custom-button>
 						<custom-button
-							:disabled="!totalDividends || !isConnected"
+							:disabled="!interestBalance || !isConnected"
 							@click.native="openModal('reinvest')"
 						>
 							{{ $t('Реинвестировать') }}
@@ -78,7 +78,7 @@
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="isCloseDepositModalActive" has-modal-card>
-			<close-deposit-modal/>
+			<withdraw-and-close-deposit-modal action-type="withdraw"/>
 		</b-modal>
 		<b-modal :active.sync="isReinvestModalActive" has-modal-card>
 			<reinvest-modal/>
@@ -89,12 +89,12 @@
 <script>
 import formatCurrency from "~/mixins/formatCurrency";
 import {mapGetters} from "vuex";
-import CloseDepositModal from "./modals/CloseDepositModal";
+import WithdrawAndCloseDepositModal from "./modals/WithdrawAndCloseDepositModal";
 import ReinvestModal from "./modals/ReinvestModal";
 
 export default {
 	name: "DividendProducts",
-	components: {ReinvestModal, CloseDepositModal},
+	components: {ReinvestModal, WithdrawAndCloseDepositModal},
 	mixins: [formatCurrency],
 
 	async created() {
@@ -109,7 +109,7 @@ export default {
 	computed: {
 		...mapGetters(["user"]),
 		...mapGetters("metamask", ["isConnected", "gasPrice"]),
-		...mapGetters("deposit", ["totalDeposit", "totalDividends", "depositBalance"])
+		...mapGetters("userContractIntegration", ["interestBalance"])
 	},
 	methods: {
 		openModal(modal) {

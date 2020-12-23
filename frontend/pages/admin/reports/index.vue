@@ -59,6 +59,8 @@ import CustomButton from "~/components/ui/CustomButton";
 import { ReportsTable } from "~/components/tables";
 import { mapActions } from "vuex";
 
+import {NTS_CONTRACTS} from "~/consts";
+
 export default {
 	components: {
 		CustomSlider,
@@ -87,20 +89,28 @@ export default {
 
 			contractOptions: [
 				{
+					text: "Schutz",
+					value: NTS_CONTRACTS.SCHUTZ
+				},
+				{
+					text: "Schutz v1",
+					value: NTS_CONTRACTS.SCHUTZV1
+				},
+				{
 					text: "NTSCD",
-					value: "NTSCD"
+					value: NTS_CONTRACTS.NTSCD
 				},
 				{
 					text: "NTS80",
-					value: "NTS80"
+					value: NTS_CONTRACTS.NTS80
 				},
 				{
 					text: "NTS165",
-					value: "NTS165"
+					value: NTS_CONTRACTS.NTS165
 				},
 				{
 					text: "NTS81",
-					value: "NTS81"
+					value: NTS_CONTRACTS.NTS81
 				},
 				{
 					text: "All",
