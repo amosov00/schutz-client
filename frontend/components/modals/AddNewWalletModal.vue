@@ -1,8 +1,12 @@
 <template>
 	<div class="add-wallet-card">
-		<p class="is-size-5"> {{ $t('Укажите адрес кошелька') }} </p>
+		<p class="is-size-5">{{ $t("Укажите адрес кошелька") }}</p>
 		<p class="is-size-7 mb-60">
-			{{ $t('Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды.') }}
+			{{
+				$t(
+					"Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды."
+				)
+			}}
 		</p>
 		<div class="is-flex is-align-items-flex-start mb-60">
 			<base-input
@@ -12,21 +16,22 @@
 				v-model="wallet"
 			/>
 			<div class="mm-copy ml-2 mb-2" @click="pasteFromMM">
-				<a class="has-text-link"> {{ $t('копировать из MM') }} </a>
+				<a class="has-text-link"> {{ $t("копировать из MM") }} </a>
 			</div>
 		</div>
 
 		<div class="support">
 			<p class="is-size-7 mb-2">
-				{{ $t('Также, вы всегда можете обратиться за поддержкой:') }}
+				{{ $t("Также, вы всегда можете обратиться за поддержкой:") }}
 			</p>
 			<div class="links">
 				<a
 					:href="telegramSupport"
 					target="_blank"
 					class="is-size-7 has-text-link has-text-weight-light telegram"
-					> {{ $t('Чат telegram') }} </a
 				>
+					{{ $t("Чат telegram") }}
+				</a>
 			</div>
 		</div>
 		<div
@@ -36,9 +41,11 @@
 				@click="$parent.close()"
 				class="cancel has-text-link is-size-7 is-cursor-pointer"
 			>
-				{{ $t('Отменить, я передумал') }}
+				{{ $t("Отменить, я передумал") }}
 			</a>
-			<custom-button @click.native="addWallet"> {{ $t('Сохранить') }} </custom-button>
+			<custom-button @click.native="addWallet">
+				{{ $t("Сохранить") }}
+			</custom-button>
 		</div>
 	</div>
 </template>
@@ -57,7 +64,7 @@ export default {
 	methods: {
 		async addWallet() {
 			if (this.wallet) {
-				const res = await this.$store.dispatch("addWallet", this.wallet);
+				const res = await this.$store.dispatch("wallet/addWallet", this.wallet);
 				if (res) {
 					this.$authFetchUser();
 					this.$parent.close();

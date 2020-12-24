@@ -202,7 +202,7 @@ export default {
 	"Сумма, USDT": "Amount, USDT",
 	"показать еще": "show more",
 	"Всего:": "Total:",
-	"Установите MetaMask": "",
+	"Установите MetaMask": "Install MetaMask",
 	installText:
 		"To fully operate in the SCHUTZ system, you will need to install the MetaMask wallet extension. All financial transactions will use it.",
 	noteText:
@@ -223,7 +223,7 @@ export default {
 	"Укажите сумму вывода": "Enter the withdrawal amount",
 	"Укажите сумму реинвестирования": "Specify the amount of reinvestment",
 	Событие: "Event",
-	"Всего выведено:": "Total withdrawn:",
+	"Всего выведено:": "Total output:",
 	"Получите 9%, 3% или 2%": "Get 9%, 3% or 2%",
 	"с каждого депозита внесенного по вашей ссылке.":
 		"of every Deposit made via your link.",
@@ -240,5 +240,9 @@ export default {
 	changeWalletText:
 		"If you entered a different wallet by mistake during registration, you can replace it with another one once through SCHUTZ customer support. Our staff will contact you and solve the problem.",
 	"Запрос отправлен": "Request has been sent",
-	"Восстановление пароля": "Password recovery"
+	"Восстановление пароля": "Password recovery",
+	"Dividend Accrual": "Dividend Accrual",
+	"Dividend Withdraw": "Dividend Withdraw",
+	Deposit: "Deposit",
+	"Всего начислено дивидендов:": "Total dividends accrued:"
 };

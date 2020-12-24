@@ -25,19 +25,13 @@
 						</div>
 						<div class="data-item">
 							<div class="icon password"></div>
-							<a
-								class="value has-text-link"
-								@click="openModal('password')"
-							>
+							<a class="value has-text-link" @click="openModal('password')">
 								{{ $t("Сменить пароль") }}
 							</a>
 						</div>
 						<div class="data-item" v-if="!user.ethereum_wallet">
 							<div class="icon metamask"></div>
-							<a
-								@click="openModal('wallet')"
-								class="value has-text-link"
-							>
+							<a @click="openModal('wallet')" class="value has-text-link">
 								{{ $t("Добавить кошелек") }}
 							</a>
 						</div>
@@ -57,11 +51,9 @@
 						<div>
 							<div class="is-size-5">{{ $t("Вклад USDT") }}:</div>
 							<div class="is-size-2">{{ formatCurrency(tokenBalance) }}</div>
-							<div class="is-size-7" v-if="lastContract">
-								{{ $t("Дата закрытия") }}
-							</div>
-							<div class="is-size-7" v-if="lastContract">
-								{{ formatDate(lastContract.close_date) }}
+							<div class="closing-date" v-if="tokenBalance">
+								{{ $t("Дата закрытия") }} <br />
+								{{ closeDate }}
 							</div>
 						</div>
 						<a
@@ -123,7 +115,7 @@
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="isAddWalletModalActive" has-modal-card>
-			<add-new-wallet-modal/>
+			<add-new-wallet-modal />
 		</b-modal>
 		<b-modal :active.sync="isPasswordChangeModalActive" has-modal-card>
 			<password-change />
@@ -132,7 +124,7 @@
 			<add-funds-modal />
 		</b-modal>
 		<b-modal :active.sync="isWithdrawCloseDepositModalActive" has-modal-card>
-			<withdraw-and-close-deposit-modal action-type="closeDeposit"/>
+			<withdraw-and-close-deposit-modal action-type="closeDeposit" />
 		</b-modal>
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
 			<ChangeWalletModal />
@@ -152,6 +144,7 @@ import AddFundsModal from "~/components/modals/AddFundsModal";
 import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
 import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
 import { mainSliderController } from "@/utils/slider";
+import moment from "moment";
 
 export default {
 	name: "index",
@@ -174,19 +167,19 @@ export default {
 			switch (modal) {
 				case "close-deposit":
 					this.isWithdrawCloseDepositModalActive = true;
-					break
+					break;
 				case "wallet":
 					this.isAddWalletModalActive = true;
-					break
+					break;
 				case "password":
 					this.isPasswordChangeModalActive = true;
-					break
+					break;
 				case "funds":
 					this.isAddFundsModalActive = true;
-					break
+					break;
 				case "change-wallet":
 					this.isChangeWalletModalActive = true;
-					break
+					break;
 			}
 		},
 		focusInput(e) {
@@ -225,8 +218,13 @@ export default {
 	},
 	computed: {
 		...mapGetters(["user", "contractAgreements"]),
-		...mapGetters("metamask", ['isConnected', 'gasPrice']),
-		...mapGetters('userContractIntegration', ['allowance', 'tokenBalance', 'interestBalance', 'depositBalance']),
+		...mapGetters("metamask", ["isConnected", "gasPrice"]),
+		...mapGetters("userContractIntegration", [
+			"allowance",
+			"tokenBalance",
+			"interestBalance",
+			"depositBalance"
+		]),
 		lastContract() {
 			if (this.contractAgreements && this.contractAgreements.length) {
 				return this.contractAgreements[0];
@@ -244,6 +242,25 @@ export default {
 		copiedWallet() {
 			return { ...this.user };
 		},
+		closeDate() {
+			let dates = this.user.dates;
+			if (!dates.length) {
+				return false;
+			}
+
+			let current_time = moment().unix(Number);
+			let nearest = Math.abs(current_time - dates[0].close_date);
+			let index = 0;
+
+			for (let i in dates) {
+				if (Math.abs(current_time - dates[i].close_date) < nearest) {
+					index = i;
+				}
+			}
+			return moment(dates[index].close_date * 1000)
+				.locale(this.$i18n.locale)
+				.format("DD MMM YYYY");
+		}
 	},
 	async created() {
 		if (!this.$store.state.metamask.gasPrice) {
@@ -281,6 +298,13 @@ export default {
 
 .exit-btn {
 	margin-top: auto;
+}
+.closing-date {
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 19px;
+	color: #666666;
+	margin-top: 10px;
 }
 .data-item {
 	display: flex;

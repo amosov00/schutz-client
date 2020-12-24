@@ -131,7 +131,6 @@
 			<b-table
 				:data="filteredData"
 				v-if="filteredData"
-				default-sort="args.timestamp"
 				pagination-position="bottom"
 				class="custom-table mb-4"
 			>
@@ -280,7 +279,11 @@ export default {
 	computed: {
 		...mapGetters(["user", "txTotals"]),
 		...mapGetters("metamask", ["gasPrice", "isConnected"]),
-		...mapGetters("userContractIntegration", ["depositBalance", "allowance", "tokenBalance"]),
+		...mapGetters("userContractIntegration", [
+			"depositBalance",
+			"allowance",
+			"tokenBalance"
+		]),
 		tableData() {
 			return this.$store.getters.transactions.transactions !== null
 				? this.$store.getters.transactions.transactions
@@ -288,6 +291,9 @@ export default {
 		},
 		filteredData() {
 			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
+			d.sort((a, b) => {
+				return b.args.timestamp - a.args.timestamp;
+			});
 			return d.slice(0, this.limit);
 		},
 		filteredTotals() {

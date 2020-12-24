@@ -7,7 +7,6 @@
 		</div>
 		<b-table
 			:data="filteredData"
-			default-sort="args.timestamp"
 			pagination-position="bottom"
 			class="custom-table mb-4"
 		>
@@ -21,7 +20,7 @@
 					{{ timestampToDateTime(props.row.args.timestamp) }}
 				</b-table-column>
 				<b-table-column field="event" :label="$t('Событие')" width="20%">
-					{{ props.row.event }}
+					{{ $t(props.row.event) }}
 					<span class="tag is-link" v-if="props.row.isReinvested">
 						Reinvested
 					</span>
@@ -81,7 +80,9 @@
 
 		<div class="is-size-5 has-background-primary total-withdraw mb-6">
 			{{ $t("Всего выведено:") }}
-			{{ `${formatCurrency(withdrawTotal, "usdt")}` }} USDT
+			{{ `${formatCurrency(withdrawTotal, "usdt")}` }} USDT <br />
+			{{ $t("Всего начислено дивидендов:") }}
+			{{ `${formatCurrency(accrualTotal, "usdt")}` }} USDT
 		</div>
 	</div>
 </template>
@@ -102,7 +103,9 @@ export default {
 		},
 		filteredData() {
 			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
-
+			d.sort((a, b) => {
+				return b.args.timestamp - a.args.timestamp;
+			});
 			return d.slice(0, this.limit);
 		},
 		withdrawTotal() {
@@ -121,8 +124,9 @@ export default {
 			return result;
 		},
 		accrualTotal() {
+			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
 			let result = 0;
-			this.filteredData.forEach(el => {
+			d.forEach(el => {
 				switch (el.event) {
 					case "Dividend Accrual":
 						result += el.args.USDT;
