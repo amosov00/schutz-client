@@ -27,11 +27,11 @@
 									).mb-5
 									base-datepicker(
 										label="Дата старта:"
-										v-model="queryParams.toDate"
+										v-model="queryParams.fromDate"
 									).mb-5
 									base-datepicker(
 										label="Дата финала:"
-										v-model="queryParams.fromDate"
+										v-model="queryParams.toDate"
 									).mb-5
 									base-input(
 										label="От USDT:"
