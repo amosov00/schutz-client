@@ -7,7 +7,6 @@
 		</div>
 		<b-table
 			:data="filteredData"
-			default-sort="args.timestamp"
 			pagination-position="bottom"
 			class="custom-table mb-4"
 		>
@@ -102,7 +101,9 @@ export default {
 		},
 		filteredData() {
 			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
-
+			d.sort((a, b) => {
+				return b.args.timestamp - a.args.timestamp;
+			});
 			return d.slice(0, this.limit);
 		},
 		withdrawTotal() {

@@ -86,7 +86,10 @@ export default {
 	mixins: [formatCurrency],
 	computed: {
 		partners() {
-			let d = this.$store.getters.partners;
+			let d = [...this.$store.getters.partners];
+			d.sort((a, b) => {
+				return new Date(b.created_at) - new Date(a.created_at);
+			});
 			if (this.limit > d.length) {
 				this.hideButton = true;
 			}
