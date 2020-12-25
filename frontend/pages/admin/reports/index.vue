@@ -70,7 +70,7 @@ export default {
 	},
 
 	layout: "profile",
-	middleware: ["managerRequired", "contracts", "adminRequired"],
+	middleware: ["managerOrAdminRequired", "contracts"],
 
 	data() {
 		return {

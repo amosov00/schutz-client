@@ -45,7 +45,7 @@ import XLSX from "xlsx";
 export default {
   name: "users",
   layout: "admin",
-  middleware: ["managerRequired", "contracts"],
+  middleware: ["managerOrAdminRequired", "contracts"],
   mixins: [formatDate],
   computed: {
     ...mapGetters("users", ["users"]),
