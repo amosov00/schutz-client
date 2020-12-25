@@ -1,3 +1,4 @@
+import moment from 'moment'
 import { formatCurrencyReversed } from '@/mixins/formatCurrency'
 
 export const state = () => ({
@@ -106,6 +107,66 @@ export const actions = {
         })
     }
   },
+	async fetchTransactionsByQueryV1({ commit }, queryParams) {
+		const fromUSDT = queryParams.fromUSDT ? formatCurrencyReversed(queryParams.fromUSDT, 'usdt') : null
+		const toUSDT = queryParams.toUSDT ? formatCurrencyReversed(queryParams.toUSDT, 'usdt') : null
+		const contract = queryParams.contract === 'all' ? '' : queryParams.contract
+		const fromDate = queryParams.fromDate
+			? moment
+				.utc(queryParams.fromDate)
+				.add(1, 'days')
+				.startOf('day')
+				.subtract(3, 'hours')
+				.unix()
+			: 0
+		const toDate = queryParams.toDate
+			? moment
+				.utc(queryParams.toDate)
+				.endOf('day')
+				.add(1, 'days')
+				.subtract(3, 'hours')
+				.unix()
+			: 0
+
+		if (queryParams.transaction === 'deposits') {
+			return this.$axios
+				.get('/admin/active-deposits/', {
+					params: {
+						q: queryParams.query,
+						usdt_from: fromUSDT,
+						usdt_to: toUSDT,
+					}
+				})
+				.then(res => {
+					commit('setActiveDeposits', res.data)
+					return true
+				})
+				.catch(err => {
+					return false
+				})
+		} else {
+			return this.$axios
+				.get('/admin/transactions/', {
+						params: {
+							q: queryParams.query,
+							contract: contract,
+							transaction_type: queryParams.transaction,
+							timestamp_from: fromDate,
+							timestamp_to: toDate,
+							usdt_from: fromUSDT,
+							usdt_to: toUSDT,
+						}
+					}
+				)
+				.then(res => {
+					commit('setReportData', res.data)
+					return true
+				})
+				.catch(err => {
+					return false
+				})
+		}
+	},
   async fetchActiveDepositByID({ commit }, id) {
     await this.$axios.get(`/admin/active-deposits/${id}/`).then(resp => {
       commit('setActiveDepositsByID', resp.data)
