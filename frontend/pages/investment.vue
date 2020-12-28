@@ -144,9 +144,9 @@
 						{{ timestampToDateTime(props.row.args.timestamp) }}
 					</b-table-column>
 					<b-table-column field="event" :label="$t('Событие')" width="20%">
-						<span class="text-nowrap">{{ props.row.event }}</span>
+						<span class="text-nowrap">{{ $t(props.row.event) }}</span>
 						<span class="tag is-link" v-if="props.row.isReinvested">
-							Reinvested
+							{{ $t("Реинвестиция") }}
 						</span>
 					</b-table-column>
 					<b-table-column
@@ -203,8 +203,9 @@
 				</button>
 			</div>
 			<div class="is-size-5 has-background-primary total-withdraw mb-6">
-				{{ $t("Всего:") }}
-				{{ `${formatCurrency(filteredTotals, "usdt")}` }} USDT
+				<div v-for="(total, k) in totals" :key="k">
+					{{ $t(k) }}: {{ `${formatCurrency(total, "usdt")}` }} USDT
+				</div>
 			</div>
 		</div>
 		<b-modal :active.sync="isWalletModalActive" has-modal-card>
@@ -296,28 +297,36 @@ export default {
 			});
 			return d.slice(0, this.limit);
 		},
-		filteredTotals() {
+
+		totals() {
 			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
-			let result = 0;
-			let minus = 0;
+			let t = {
+				investments: 0,
+				deposit_accural: 0,
+				deposit_withdraw: 0
+			};
+
 			d.forEach(el => {
 				switch (el.event) {
-					case "Dividend Withdraw":
-						result -= el.args.USDT;
-						minus += el.args.USDT;
+					case "Deposit":
+						t.investments += el.args.USDT;
+						break;
+					case "Deposit Accural":
+						t.deposit_accural += el.args.USDT;
 						break;
 					case "Deposit Withdraw":
-						result -= el.args.USDT;
-						minus += el.args.USDT;
+						t.deposit_withdraw += el.args.USDT;
 						break;
 				}
-				result += el.args.USDT;
 			});
+
 			if (this.limit > this.filteredData.length) {
 				this.hide_button = true;
 			}
-			return result - minus;
+
+			return t;
 		},
+
 		getWithdrawDate() {
 			const offset = moment().utcOffset();
 			return moment()
