@@ -7,7 +7,10 @@
       v-if="label"
       :for="label"
       class="base-label"
-    >{{ label }}</label> <input
+    >
+			{{ label }}
+		</label>
+		<input
     :id="label"
     class="input"
     :class="[`is-size-${size}`]"

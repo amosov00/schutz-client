@@ -157,6 +157,7 @@ export default {
 				await this.fetchUsers({ page: 1, limit: 10, });
 
 				this.$emit('close');
+				this.$modal.close();
 			} catch (e) {
 
 			}
