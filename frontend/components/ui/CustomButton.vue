@@ -1,6 +1,6 @@
 <template>
 	<button
-		class="button custom-button is-primary is-size-5 has-text-weight-bold"
+		class="button custom-button is-info is-size-5 has-text-weight-bold"
 	>
 		<slot></slot>
 	</button>

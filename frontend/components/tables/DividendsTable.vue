@@ -78,7 +78,7 @@
 			</button>
 		</div>
 
-		<div class="is-size-5 has-background-primary total-withdraw mb-6">
+		<div class="is-size-5 has-background-info total-withdraw mb-6">
 			{{ $t("Всего выведено:") }}
 			{{ `${formatCurrency(withdrawTotal, "usdt")}` }} USDT <br />
 			{{ $t("Всего начислено дивидендов:") }}
