@@ -244,5 +244,10 @@ export default {
 	"Dividend Accrual": "Dividend Accrual",
 	"Dividend Withdraw": "Dividend Withdraw",
 	Deposit: "Deposit",
-	"Всего начислено дивидендов:": "Total dividends accrued:"
+	"Всего начислено дивидендов:": "Total dividends accrued:",
+	Реинвестиция: "Reinvest",
+	"Deposit Accural": "Deposit Accural",
+	"Deposit Withdraw": "Deposit Withdraw",
+	deposit_accural: "Deposit accural",
+	deposit_withdraw: "Deposit withdraw"
 };

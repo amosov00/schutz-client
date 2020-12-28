@@ -27,8 +27,8 @@ export default {
     return {
       loading: false,
       contractFrom: "",
-      contractTo: NTS_CONTRACTS.NTSCD,
-      availableContracts: [NTS_CONTRACTS.NTSCD, this.contract]
+      contractTo: NTS_CONTRACTS.SCHUTZ,
+      availableContracts: [NTS_CONTRACTS.SCHUTZ, this.contract]
     }
   },
   computed: {
