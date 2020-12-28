@@ -197,7 +197,6 @@ export const actions = {
 			.Schutz.methods.balanceOf(address)
 			.call()
 			.then(balance => {
-				console.log("bal:", balance / 1e6)
 				commit("setTokenBalance", balance / 1e6);
 				return true;
 			})

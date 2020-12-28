@@ -118,6 +118,10 @@ export default {
 		]
 	],
 
+	buildModule: [
+		'@nuxtjs/moment',
+	],
+
 	publicRuntimeConfig: {
 		LANDING_BASE_URL: process.env.LANDING_BASE_URL || "",
 		TELEGRAM_SUPPORT_URL: "https://t.me/Neutrino_NTS_RU"
@@ -139,7 +143,7 @@ export default {
 
 	build: {
 		transpile: ["vee-validate/dist/rules"],
-		extend(config, ctx) {
+		extend(config) {
 			config.module.rules.push({
 				test: /\.xml$/,
 				loader: "xml-loader"

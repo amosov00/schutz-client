@@ -1,8 +1,21 @@
-<template>
+<template lang="pug">
+	b-modal(
+		:active.sync="open"
+		has-modal-card
+	)
+		Proxy(
+			:component="modal.factory()"
+			:props="modal.props"
+			ref="dialog"
+		)
 </template>
 
 <script>
+import Proxy from "~/components/Proxy";
+
 export default {
+	components: {Proxy},
+
 	props: {
 		modal: {
 			type: Object,
@@ -17,12 +30,7 @@ export default {
 	},
 
 	mounted() {
-		this.$buefy.modal.open({
-			parent: this,
-			component: this.modal.factory(),
-			hasModalCard: true,
-			props: this.modal.props,
-		})
+		this.open = true;
 	}
 }
 </script>
