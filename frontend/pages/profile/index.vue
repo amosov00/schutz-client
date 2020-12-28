@@ -245,15 +245,21 @@ export default {
 		closeDate() {
 			let dates = this.user.dates;
 			if (!dates.length) {
-				return false;
+				return;
 			}
 
 			let current_time = moment().unix(Number);
-			let nearest = Math.abs(current_time - dates[0].close_date);
 			let index = 0;
 
+			dates = dates.filter(item => item.close_date > current_time);
+			if (!dates.length) {
+				return;
+			}
+
+			let nearest = dates[0].close_date - current_time;
+
 			for (let i in dates) {
-				if (Math.abs(current_time - dates[i].close_date) < nearest) {
+				if (dates[i].close_date - current_time < nearest) {
 					index = i;
 				}
 			}
