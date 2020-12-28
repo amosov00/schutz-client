@@ -40,7 +40,7 @@ export default {
 			handler(value) {
 				this.$emit('input',
 					value
-						? this.$moment(value).format('x')
+						? this.$moment(value).format('X')
 						: null
 				)
 			}

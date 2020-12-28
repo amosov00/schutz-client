@@ -43,7 +43,7 @@ import ActiveDepositsTable from "~/components/tables/ActiveDepositsTable";
 export default {
   name: "reports",
   layout: "admin",
-  middleware: ["managerRequired", "contracts"],
+  middleware: ["managerOrAdminRequired", "contracts"],
   components: {ReportsTable, ActiveDepositsTable},
   data() {
     return {
@@ -121,7 +121,7 @@ export default {
       this.colsType = this.queryParams.transaction;
       this.contractName = this.queryParams.contract;
       await this.$store
-        .dispatch("reports/fetchTransactionsByQuery", this.queryParams)
+        .dispatch("reports/fetchTransactionsByQueryV1", this.queryParams)
         .finally(() => (this.loading = false));
     }
   },
