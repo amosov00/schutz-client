@@ -8,7 +8,7 @@ $info: #fad896;
 $background1: #0495fb;
 $background2: #fff;
 $radius: 6px;
-$primary: #fad896;
+$primary: #174b76;
 $danger: #d60d0d;
 $grey: #666666;
 $light: #fff;
@@ -203,7 +203,7 @@ body {
 		outline: none;
 	}
 	&:hover {
-		box-shadow: 0px 0px 17px -10px rgb(66, 118, 178);
+		box-shadow: 0 0 17px -10px rgb(66, 118, 178);
 	}
 }
 
@@ -228,10 +228,8 @@ body {
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	padding: 50px;
 	color: #666666;
-	overflow: hidden;
-	padding-right: 23px;
+	padding: 50px 23px 50px 50px;
 
 	&__scroll {
 		padding-right: 23px;

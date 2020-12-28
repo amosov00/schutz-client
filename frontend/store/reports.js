@@ -1,11 +1,22 @@
 import moment from 'moment'
 import { formatCurrencyReversed } from '@/mixins/formatCurrency'
 
+const MUTATION = {
+	SET_AGREEMENTS: 'SET_AGREEMENTS',
+}
+
 export const state = () => ({
   reportData: [],
   activeDeposits: [],
   activeDepositsByID: [],
-  activeDepositTransactions: []
+  activeDepositTransactions: [],
+
+	agreements: [],
+	total: 0,
+	totalUsers: 0,
+	totalProlong: 0,
+	totalProcessing: 0,
+	totalPayout: 0,
 })
 export const mutations = {
   setReportData: (state, payload) => {
@@ -61,6 +72,15 @@ export const mutations = {
   setActiveDeposits: (state, payload) => state.activeDeposits = payload,
   setActiveDepositsByID: (state, payload) => state.activeDepositsByID = payload,
   setActiveDepositsByIDContracts: (state, payload) => state.activeDepositsByID.contracts = payload,
+
+	[MUTATION.SET_AGREEMENTS](state, { agreements, total, total_prolong, total_processing, total_payout }) {
+  	state.agreements = agreements;
+
+  	state.total = total;
+  	state.totalProcessing = total_processing;
+  	state.totalProlong = total_prolong;
+  	state.totalPayout = total_payout;
+	},
 }
 export const actions = {
   async fetchTransactionsByQuery({ commit }, queryParams) {
@@ -188,9 +208,14 @@ export const actions = {
     commit('setActiveDepositsByIDContracts', activeDeposit.contracts)
   },
   async updateAgreement({ commit }, agreement) {
-    return await this.$axios.put(`/admin/mailing/agreements/${agreement._id}/`, agreement)
-      .then(() => { return true})
-      .catch(() => {return false})
+		try {
+			await this.$axios.put(`/admin/mailing/agreements/${agreement._id}/`, agreement)
+
+			return true;
+		} catch (e) {
+			return false;
+		}
+
   },
   async fetchAgreementPayment({}, timestamp) {
     return await this.$axios.get(`/admin/mailing/agreements/get_payload/`, {
@@ -213,21 +238,24 @@ export const actions = {
       .catch(() => {return false})
   },
   async mailingSend({ commit }, body) {
-    return await this.$axios.post(`/admin/mailing/send/`, body)
-      .then(() => {return true})
-      .catch(() => {return false})
+		try {
+			await this.$axios.post(`/admin/mailing/send/`, body)
+
+			return Promise.resolve();
+		} catch (e) {
+			await Promise.reject(e);
+		}
+
   },
-  async fetchAgreements({ commit }, targetDate) {
-    return await this.$axios.get(`/admin/mailing/agreements/`, {
-        params: {
-          'target_close_date_timestamp': targetDate
-        }
-      }
-    ).then(({ data }) => {
-      return data
-    }).catch(error => {
-      console.log(error)
-    })
+  async fetchAgreements({ commit }, targetDate = 0) {
+  	const { data } = await this.$axios.get('/admin/mailing/agreements/', {
+			params: {
+				target_close_date_timestamp: targetDate,
+			},
+		})
+
+		commit(MUTATION.SET_AGREEMENTS, data)
+		return data;
   }
 }
 export const getters = {
@@ -236,6 +264,13 @@ export const getters = {
   activeDeposits: s => s.activeDeposits,
   activeDepositsByID: s => s.activeDepositsByID,
   activeDepositTransactions: s => s.activeDepositTransactions,
+
+	total: state => ({
+		total: state.total,
+		totalProcessing: state.totalProcessing,
+		totalProlong: state.totalProlong,
+		totalPayout: state.totalPayout,
+	}),
 
 	itemsPagination: (state) => (itemType) => (page, limit) => {
   	const items = {
@@ -259,4 +294,15 @@ export const getters = {
 		return elements;
 	},
 
+	agreements: (state) => state.agreements,
+
+	agreementsWithFilter: (state) => (searchQuery) => {
+  	return searchQuery ?
+			state.agreements.filter(({ ethereum_wallet, email, _id }) =>
+				(ethereum_wallet && ethereum_wallet.indexOf(searchQuery) >= 0) ||
+				(email && email.indexOf(searchQuery) >= 0) ||
+				(_id && _id.indexOf(searchQuery) >= 0)
+			)
+			: state.agreements
+	}
 }
