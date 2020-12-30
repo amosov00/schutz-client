@@ -1,9 +1,6 @@
 <template lang="pug">
 	div
-		CustomSlider(
-			:active-dot="1"
-			:dots="4"
-		)
+		CustomSlider(hide-dots)
 			template(slot="content")
 				.is-fullheight
 					.content.search_block.is-fullheight.is-fullwidth

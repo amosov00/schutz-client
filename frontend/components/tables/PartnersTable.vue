@@ -65,7 +65,7 @@
 				v-if="!hideButton"
 				type="button"
 				@click="showMore()"
-				class="show-more"
+				class="default-button"
 			>
 				{{ $t("показать еще") }}
 			</button>

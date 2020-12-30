@@ -18,7 +18,7 @@
           <img src="~/static/slider-right.svg" />
         </nuxt-link>
       </div>
-      <div class="dots">
+      <div class="dots" v-if="!hideDots">
         <div
           class="dot"
           :class="{active: num === activeDot}"
@@ -52,7 +52,12 @@ export default {
     prevPage: {
       type: String,
       default: () => ''
-    }
+    },
+
+		hideDots: {
+    	type: Boolean,
+			default: () => false,
+		}
   },
 }
 </script>

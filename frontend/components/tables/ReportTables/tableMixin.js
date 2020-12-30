@@ -10,6 +10,16 @@ export default {
 		loading: {
 			type: Boolean,
 			default: () => false,
+		},
+
+		pagination: {
+			type: Object,
+			required: true,
+		},
+
+		count: {
+			type: Number,
+			required: true,
 		}
 	},
 
@@ -25,5 +35,9 @@ export default {
 				? `${data.contract} (${data.prolongedContract})`
 				: data.contract;
 		},
+
+		showMoreButton() {
+			return this.count > this.pagination.limit * this.pagination.page;
+		}
 	}
 }

@@ -1,9 +1,6 @@
 <template lang="pug">
 	div
-		CustomSlider(
-			:activeDot="1"
-			:dots="4"
-		)
+		CustomSlider(hide-dots)
 			template(slot="content")
 				.is-fullheight.is-flex.is-align-items-center.is-justify-content-center
 					.content.search_block.is-fullheight.is-fullwidth
@@ -21,11 +18,10 @@
 		UsersTable(
 			:users="users"
 			@more="onMore"
+			:show-more="showMoreButton"
 		)
 		.export__container.container.is-flex.is-flex-direction-row-reverse
-			.export__text(@click="saveAsExcel") Экспортировать таблицу
-		.total__container.container
-			.total__text Всего начислено:
+			button.default-button(@click="saveAsExcel") Экспортировать таблицу
 </template>
 
 <script>
@@ -49,6 +45,7 @@ export default {
 	computed: {
 		...mapGetters({
 			users: 'users/users',
+			totalUsers: 'users/total',
 		}),
 
 		exportedFileDate() {
@@ -66,6 +63,10 @@ export default {
 					"Referral 3": el.referral_3,
 				}
 			})
+		},
+
+		showMoreButton() {
+			return this.totalUsers >= this.limit * this.page;
 		}
 	},
 	data() {

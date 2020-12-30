@@ -12,8 +12,8 @@
 					type='is-black'
 					position='is-bottom'
 				)
-					a.text-clamp(
-						:href="'/users/' + row.user_id"
+					span.text-clamp(
+						@click="openUserModal(row.user_id)"
 					)  {{ row.user_id }}
 			b-table-column.has-text-primary.overflow-reset(
 				field='ethereum_wallet'
@@ -79,6 +79,12 @@
 					@click='openStatusUpdateModal(row)'
 				)
 					| Статус
+		template(slot="footer")
+			div.mt-3
+				div.mb-2.center
+					button.default-button(@click="$emit('more')" v-if="showMoreButton") {{ $t("показать еще") }}
+				.is-flex.is-justify-content-flex-end.mb-5.mr-3
+					button.default-button(@click="$emit('export')") Экспорт данных
 </template>
 
 <script>
@@ -87,6 +93,8 @@ import formatCurrency from "~/mixins/formatCurrency";
 import etherscan from "~/mixins/etherscan";
 import { AdminUpdateModal, AdminUpdateStatusModal } from "~/components/modals";
 import { mapActions } from "vuex";
+import UserProfile from "~/components/modals/UserProfile";
+import { getResult } from "~/consts";
 
 export default {
 	props: {
@@ -97,6 +105,16 @@ export default {
 
 		loading: {
 			type: Boolean,
+			required: true,
+		},
+
+		pagination: {
+			type: Object,
+			required: true,
+		},
+
+		count: {
+			type: Number,
 			required: true,
 		}
 	},
@@ -109,6 +127,12 @@ export default {
 
 	mixins: [formatDate, formatCurrency, etherscan],
 
+	computed: {
+		showMoreButton() {
+			return this.count > this.pagination.limit * this.pagination.page
+		}
+	},
+
 	methods: {
 		...mapActions({
 			updateAgreement: 'reports/updateAgreement',
@@ -117,22 +141,7 @@ export default {
 			depositAccural: 'adminContractIntegration/accrualDeposit',
 		}),
 
-		getResult(res) {
-			// UNMARKED =  1CLOSE = 2 PROLONG = 3
-			let result = ''
-			switch (res) {
-				case 1:
-					result = 'Не ответил'
-					break
-				case 2:
-					result = 'Закрыть'
-					break
-				case 3:
-					result = 'Продлить'
-					break
-			}
-			return result
-		},
+		getResult,
 
 		async openAmountUpdateModal(agreement) {
 			try {
@@ -152,6 +161,15 @@ export default {
 			} catch (e) {
 				this.showErrorNotification();
 			}
+		},
+
+		openUserModal(userId) {
+			this.$modal.open({
+				factory: () => UserProfile,
+				props: {
+					userId,
+				}
+			})
 		},
 
 		async openStatusUpdateModal(agreement) {

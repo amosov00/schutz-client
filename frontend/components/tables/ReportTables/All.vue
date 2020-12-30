@@ -51,19 +51,19 @@
 				width="50"
 				sortable
 				header-class="right-align"
-				cell-class="text-right"
+				:style="{ textAlign: 'right' }"
 			) {{ formatCurrency(row.args.USDT, 'usdt') }}
 		template(slot="footer")
 			div
 				div.mb-6.center
-					button.show-more(@click="$emit('more')") показать еще
-				p Deposits accural: {{ formatCurrency(totals.deposit_accural, 'usdt') }} USDT
-				p Deposits withdraw: {{ formatCurrency(totals.deposit_withdraw, 'usdt') }} USDT
-				p Dividends accural: {{ formatCurrency(totals.dividend_accural, 'usdt')  }} USDT
-				p Dividends withdraw: {{ formatCurrency(totals.dividend_withdraw, 'usdt') }} USDT
-				p Deposits: {{ formatCurrency(totals.deposits, 'usdt') }}  USDT
-				p Reinvestment: {{ formatCurrency(totals.reinvestment, 'usdt') }} USDT
-				.divider
+					button.default-button(@click="$emit('more')" v-if="showMoreButton") {{ $t("показать еще") }}
+				.is-size-5.has-background-info.total-withdraw.mb-3.is-flex.is-flex-direction-column.is-align-items-flex-start
+					p Deposits accural: {{ formatCurrency(totals.deposit_accural, 'usdt') }} USDT
+					p Deposits withdraw: {{ formatCurrency(totals.deposit_withdraw, 'usdt') }} USDT
+					p Dividends accural: {{ formatCurrency(totals.dividend_accural, 'usdt')  }} USDT
+					p Dividends withdraw: {{ formatCurrency(totals.dividend_withdraw, 'usdt') }} USDT
+					p Deposits: {{ formatCurrency(totals.deposits, 'usdt') }}  USDT
+					p Reinvestment: {{ formatCurrency(totals.reinvestment, 'usdt') }} USDT
 </template>
 
 <script>
