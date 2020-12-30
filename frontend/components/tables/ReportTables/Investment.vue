@@ -15,14 +15,15 @@
 					a(:href="getTxLink(row.transactionHash)" target="_blank").text-clamp {{ row.transactionHash }}
 			b-table-column(field="contract" label="Contract" width="20" header-class="right-align" cell-class="text-right") {{ showContract(row) }}
 			b-table-column(field="rate" label="Rate" width="50" header-class="right-align" cell-class="text-right") {{ formatCurrency(row.args.RATE, 'rate') }}
-			b-table-column(field="amountETH" label="Amount, USDT" width="50" sortable header-class="right-align" cell-class="text-right") {{ formatCurrency(row.args.USDT, 'usdt')}}
+			b-table-column(field="amountETH" label="Amount, USDT" width="50" sortable header-class="right-align" :style="{ textAlign: 'right' }") {{ formatCurrency(row.args.USDT, 'usdt')}}
 		template(slot="footer")
 			div
 				div.mb-6.center
-					button.show-more(@click="$emit('more')") показать еще
-				p.is-size-4 Total: {{formatCurrency(totals.investments, 'usdt') }} USDT
-				p Reinvests: {{ formatCurrency(totals.reinvestment, 'usdt') }} USDT
-				p Deposits: {{formatCurrency(totals.deposits, 'usdt') }} USDT
+					button.default-button(@click="$emit('more')" v-if="showMoreButton") {{ $t("показать еще") }}
+				.is-size-5.has-background-info.total-withdraw.mb-3.is-flex.is-flex-direction-column.is-align-items-flex-start
+					p.is-size-4 Total: {{formatCurrency(totals.investments, 'usdt') }} USDT
+					p Reinvests: {{ formatCurrency(totals.reinvestment, 'usdt') }} USDT
+					p Deposits: {{formatCurrency(totals.deposits, 'usdt') }} USDT
 </template>
 
 <script>

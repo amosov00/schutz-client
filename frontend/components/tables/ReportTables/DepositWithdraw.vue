@@ -47,12 +47,11 @@
 				label="Amount, USDT"
 				width="50"
 				header-class="right-align"
-				cell-class="text-right"
+				:style="{ textAlign: 'right' }"
 			).text-right {{ formatCurrency(row.args.USDT, 'usdt')}}
 		template(slot="footer")
-			div
+			div.is-size-5.has-background-info.total-withdraw.mb-3.is-flex.is-flex-direction-column.is-align-items-flex-start
 				p Deposits withdraw: {{`${formatCurrency(totals.deposit_withdraw, 'usdt')} USDT`}}
-				.divider
 </template>
 
 <script>

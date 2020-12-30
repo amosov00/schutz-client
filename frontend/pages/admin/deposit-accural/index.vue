@@ -1,9 +1,6 @@
 <template lang="pug">
 	div
-		CustomSlider(
-			:active-dot="1"
-			:dots="4"
-		)
+		CustomSlider(hide-dots)
 			template(slot="content")
 				.is-fullheight
 					.content.is-fullheight.is-fullwidth
@@ -36,7 +33,11 @@
 			AdminDepositAccuralTable(
 				:loading="loading"
 				:data="tableData"
+				:pagination="pagination"
+				:count="allAgreements.length"
 				@updateAgreements="onDateChange($moment().startOf('month').toDate())"
+				@more="getMore"
+				@export="onExport"
 			)
 </template>
 
@@ -49,6 +50,7 @@ import AdminDepositAccuralTable from "~/components/tables/AdminDepositAccuralTab
 import { AdminDepositSendMail } from "~/components/modals";
 import uniqBy from 'lodash/uniqBy';
 import PassRepayModal from "~/components/modals/DepositAccuralModal";
+import {exportHelper} from "~/utils/exportHelper";
 
 export default {
 	layout: 'profile',
@@ -73,6 +75,10 @@ export default {
 			prolong: 0,
 			processing: 0,
 			searchQuery: '',
+			pagination: {
+				page: 1,
+				limit: 20,
+			}
 		}
 	},
 
@@ -104,11 +110,15 @@ export default {
 		},
 
 		tableData() {
-			return this.agreementsWithFilter(this.searchQuery)
+			return this.agreementsWithFilter({
+				searchQuery: this.searchQuery,
+				page: this.pagination.page,
+				limit: this.pagination.limit,
+			})
 		},
 
 		allAgreements() {
-			return this.agreementsWithFilter('');
+			return this.agreementsWithFilter({ searchQuery: '', limit: -1 });
 		},
 
 		users() {
@@ -130,6 +140,10 @@ export default {
 			await this.fetchAgreements(timestamp)
 
 			this.loading = false;
+		},
+
+		getMore() {
+			this.pagination.page += 1;
 		},
 
 		getTimestamp(time) {
@@ -186,6 +200,18 @@ export default {
 				props: {
 					fromTimestamp: this.getTimestamp(this.$moment().startOf('month').toDate())
 				}
+			})
+		},
+
+		onExport() {
+			return exportHelper({
+				data: this.agreementsWithFilter({
+					searchQuery: this.searchQuery,
+					page: this.pagination.page,
+					limit: -1,
+				}),
+				type: 'agreements',
+				totals: this.allTotals.total,
 			})
 		},
 	},

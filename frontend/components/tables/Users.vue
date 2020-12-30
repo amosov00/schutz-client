@@ -27,7 +27,7 @@
 						a(:href="'https://etherscan.io/address/' + props.row.ethereum_wallet" target="_blank").text-clamp
 							text-highlight(:queries="searchQuery") {{ props.row.ethereum_wallet }}
 		.center.mb-6
-			button.show-more(@click="$emit('more')") показать еще
+			button.default-button(@click="$emit('more')" v-if="showMore") {{ $t("показать еще") }}
 </template>
 
 <script>
@@ -42,6 +42,10 @@ export default {
 		searchQuery: {
 			type: String,
 			default: '',
+		},
+		showMore: {
+			type: Boolean,
+			required: true,
 		}
 	},
 

@@ -8,7 +8,7 @@
 		b-datepicker(
 			:locale="currentLocaleIso"
 			v-model="selectValue"
-			:type="type"
+			:type="type ? type : null"
 		)
 		.bottom-line
 </template>

@@ -7,11 +7,16 @@
 			:data="table.data"
 			@more="onMore"
 			:loading="loading"
+			:count="allItems[tableType].length"
+			:pagination="{ page, limit }"
 		)
+		.is-flex.is-justify-content-flex-end.mb-5.mr-3
+			button.default-button(@click="exportData") Экспорт данных
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import { exportHelper } from "~/utils/exportHelper";
 
 export default {
 	props: {
@@ -29,12 +34,14 @@ export default {
 	data() {
 		return {
 			page: 1,
+			limit: 20,
 		}
 	},
 
 	computed: {
 		...mapGetters({
 			itemsPagination: 'reports/itemsPagination',
+			totals: 'reports/totals',
 		}),
 
 		tableComponent() {
@@ -60,31 +67,48 @@ export default {
 			return this.itemsPagination('transactions')
 		},
 
+		allItems() {
+			return {
+				all: this.transactions(this.page, -1) || [],
+				investments: this.transactions(this.page, -1) || [],
+				dividend_withdraw: this.transactions(this.page, -1) || [],
+				dividend_accural: this.transactions(this.page, -1) || [],
+				deposit_accural: this.transactions(this.page, -1) || [],
+				deposit_withdraw: this.transactions(this.page, -1) || [],
+				deposits: this.activeDeposit(this.page, -1) || [],
+			}
+
+		},
+
 		activeDeposit() {
 			return this.itemsPagination('activeDeposits')
 		},
 
 		tableData() {
 			return {
-				all: this.transactions(this.page, 10) || [],
-				investments: this.transactions(this.page, 10) || [],
-				dividend_withdraw: this.transactions(this.page, 10) || [],
-				dividend_accural: this.transactions(this.page, 10) || [],
-				deposit_accural: this.transactions(this.page, 10) || [],
-				deposit_withdraw: this.transactions(this.page, 10) || [],
-				deposits: this.activeDeposit(this.page, 10) || [],
+				all: this.transactions(this.page, this.limit) || [],
+				investments: this.transactions(this.page, this.limit) || [],
+				dividend_withdraw: this.transactions(this.page, this.limit) || [],
+				dividend_accural: this.transactions(this.page, this.limit) || [],
+				deposit_accural: this.transactions(this.page, this.limit) || [],
+				deposit_withdraw: this.transactions(this.page, this.limit) || [],
+				deposits: this.activeDeposit(this.page, this.limit, { element: 'amount_usdt', direction: -1 }) || [],
 			}
 		},
-	},
-
-	mounted() {
-		console.log(this.tableData[this.tableType])
 	},
 
 	methods: {
 		onMore() {
 			this.page = this.page += 1;
-		}
+		},
+
+		exportData() {
+			return exportHelper({
+				data: this.tableType === 'deposits' ? this.activeDeposit(1, -1) : this.transactions(1, -1),
+				type: this.tableType,
+				totals: this.totals,
+			})
+		},
 	},
 }
 </script>

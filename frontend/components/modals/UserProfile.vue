@@ -19,7 +19,12 @@
 							CustomSwitcher(v-model="form.is_active") E-mail активирован
 						.referral__block
 							.referral_link {{ referralLink }}
-							.referral_copy copy
+							.referral_copy.ml-2(
+								v-clipboard:copy="referralLink"
+								v-clipboard:success="onCopy"
+								v-clipboard:error="onError"
+							)
+								b-icon(pack="fas" icon="copy")
 						.user_profile__input_block
 							.user_profile__input_label Referral 1:
 							CustomInput(v-model="form.referral_1").user_profile__input
@@ -30,7 +35,7 @@
 							.user_profile__input_label Referral 3:
 							CustomInput(v-model="form.referral_3").user_profile__input
 					.action__block
-						.action__text(@click="$emit('close')") Отменить
+						.action__text(@click="closeModal") Отменить
 				.second_column
 					.second__column_form
 						.user_profile__input_block
@@ -146,6 +151,20 @@ export default {
 			fetchUsers: 'users/fetchUsers',
 		}),
 
+		onCopy(e) {
+			this.$buefy.toast.open({
+				message: `Copied: ${e.text}`,
+				type: "is-success"
+			});
+		},
+
+		onError(e) {
+			this.$buefy.toast.open({
+				message: "Copying failed!",
+				type: "is-danger"
+			});
+		},
+
 		async update() {
 			try {
 				if (this.form.password === '' || this.form.repeat_password === '') {
@@ -156,12 +175,15 @@ export default {
 				await this.updateUser(this.form);
 				await this.fetchUsers({ page: 1, limit: 10, });
 
-				this.$emit('close');
-				this.$modal.close();
+				this.closeModal();
 			} catch (e) {
 
 			}
-		}
+		},
+
+		closeModal() {
+			this.$modal.close();
+		},
 	}
 }
 </script>
@@ -232,6 +254,11 @@ export default {
 			max-width: 100%;
 			align-items: center;
 			margin-bottom: 27px;
+
+			.referral_copy {
+				user-select: none;
+				cursor: pointer;
+			}
 
 			.referral_link {
 				max-width: 100%;

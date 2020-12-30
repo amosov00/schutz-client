@@ -272,22 +272,36 @@ export const getters = {
 		totalPayout: state.totalPayout,
 	}),
 
-	itemsPagination: (state) => (itemType) => (page, limit) => {
+	itemsPagination: (state) => (itemType) => (page, limit, sort = null) => {
   	const items = {
-  		transactions: state.reportData.transactions,
-			activeDeposits: state.activeDeposits.active_deposits,
+  		transactions: state.reportData && state.reportData.transactions.length
+				?[...state.reportData.transactions]
+				: null,
+			activeDeposits: state.activeDeposits.active_deposits && state.activeDeposits.active_deposits.length
+				? [...state.activeDeposits.active_deposits]
+				: null,
 		}
 
 		if(!items[itemType]) return [];
 
-		const startWith = 0;
+		if (sort) {
+			const { element, direction } = sort;
+			items[itemType] = items[itemType].sort((a, b) =>
+				a[element] > b[element]
+					? direction
+					: ((a[element] < b[element]) ? direction * -1 : 0)
+			)
+		}
+
+		if(limit === -1) return items[itemType];
+
 		const endOn = items[itemType].length < page * limit
 			? items[itemType].length
 			: page * limit;
 
 		const elements = [];
 
-		for (let i = startWith; i < endOn; i++) {
+		for (let i = 0; i < endOn; i++) {
 			elements.push(items[itemType][i])
 		}
 
@@ -296,13 +310,27 @@ export const getters = {
 
 	agreements: (state) => state.agreements,
 
-	agreementsWithFilter: (state) => (searchQuery) => {
-  	return searchQuery ?
+	agreementsWithFilter: (state) => ({ searchQuery, limit = 20, page = 1 }) => {
+  	const elements = searchQuery ?
 			state.agreements.filter(({ ethereum_wallet, email, _id }) =>
 				(ethereum_wallet && ethereum_wallet.indexOf(searchQuery) >= 0) ||
 				(email && email.indexOf(searchQuery) >= 0) ||
 				(_id && _id.indexOf(searchQuery) >= 0)
 			)
 			: state.agreements
+
+		if(limit === -1) return elements;
+
+		const endOn = elements.length < page * limit
+			? elements.length
+			: page * limit;
+
+  	const elementsToShow = [];
+
+  	for(let i = 0; i < endOn; i++) {
+  		elementsToShow.push(elements[i])
+		}
+
+  	return elementsToShow;
 	}
 }

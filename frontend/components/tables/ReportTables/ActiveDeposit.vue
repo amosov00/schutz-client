@@ -10,11 +10,12 @@
 				field="user_id"
 				label="User ID"
 				width="150"
-			).overflow-reset {{ row.user_id }}
+			).overflow-reset
+				a.text-clamp(@click="openUserModal(row.user_id)") {{ row.user_id }}
 			b-table-column(
 				field="address"
 				label='ETH Address'
-				width="150"
+				width="250"
 			).overflow-reset
 				b-tooltip(
 					:label="row.ethereum_wallet"
@@ -25,12 +26,13 @@
 			b-table-column(
 				field='amount_usdt'
 				label='Amount, USDT'
-				width='30'
+				width='50'
+				centered
 				sortable
 			) {{ formatCurrency(row.amount_usdt, 'usdt')}}
 			b-table-column(
 				field='button'
-				width='30'
+				width='100'
 				header-class='right-align'
 				cell-class='text-right'
 			)
@@ -39,9 +41,12 @@
 		template(slot='footer')
 			div
 				div.mb-6.center
-					button.show-more(@click="$emit('more')") показать еще
-				p.title.is-size-4
-					| Total: {{ formatCurrency(data.total, 'usdt' )}}USDT
+					button.default-button(@click="$emit('more')" v-if="showMoreButton") {{ $t("показать еще") }}
+				.is-size-5.has-background-info.total-withdraw.mb-3.is-flex.is-flex-direction-column.is-align-items-flex-start
+					p.title.is-size-4
+						| Total: {{ formatCurrency(activeDeposits.total, 'usdt' )}}USDT
+				button.default-button(@click="saveAsExcelAll") Экспортировать все данные
+
 </template>
 
 <script>
@@ -49,9 +54,42 @@ import formatDate from "~/mixins/formatDate";
 import formatCurrency from "~/mixins/formatCurrency";
 import etherscan from "~/mixins/etherscan";
 import tableMixin from "~/components/tables/ReportTables/tableMixin";
+import { saveAs } from 'file-saver';
+import {mapGetters} from "vuex";
+import UserProfile from "~/components/modals/UserProfile";
 
 export default {
 	mixins: [formatDate, formatCurrency, etherscan, tableMixin],
+
+	computed: {
+		...mapGetters({
+			activeDeposits: 'reports/activeDeposits'
+		}),
+	},
+
+	methods: {
+		async saveAsExcelAll() {
+			this.$axios.get("/admin/active-deposits/extended/",{
+				params: {
+					as_excel: true,
+				},
+				responseType: "blob"
+			}).then(resp => {
+				saveAs(resp.data, `active_deposits_all.xlsx`)
+			}).catch(e => {
+				console.log(e)
+			})
+		},
+
+		openUserModal(userId) {
+			this.$modal.open({
+				factory: () => UserProfile,
+				props: {
+					userId,
+				}
+			})
+		},
+	},
 }
 </script>
 
