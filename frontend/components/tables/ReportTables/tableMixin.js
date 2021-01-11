@@ -27,6 +27,10 @@ export default {
 		...mapGetters({
 			totals: 'reports/totals',
 		}),
+
+		showMoreButton() {
+			return this.count > this.pagination.limit * this.pagination.page;
+		}
 	},
 
 	methods: {

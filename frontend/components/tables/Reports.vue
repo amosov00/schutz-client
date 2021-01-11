@@ -11,7 +11,7 @@
 			:pagination="{ page, limit }"
 		)
 		.is-flex.is-justify-content-flex-end.mb-5.mr-3
-			button.default-button(@click="exportData") Экспорт данных
+			button.default-button(@click="exportData" v-if="showExport") Экспорт данных
 </template>
 
 <script>
@@ -28,6 +28,11 @@ export default {
 		loading: {
 			type: Boolean,
 			required: true,
+		},
+
+		showExport: {
+			type: Boolean,
+			default: true,
 		}
 	},
 
@@ -42,6 +47,7 @@ export default {
 		...mapGetters({
 			itemsPagination: 'reports/itemsPagination',
 			totals: 'reports/totals',
+			activeDepositsDetails: 'reports/activeDepositsByID',
 		}),
 
 		tableComponent() {
@@ -53,7 +59,12 @@ export default {
 				deposit_accural: () => import('@/components/tables/ReportTables/DepositAccural.vue'),
 				deposits: () => import('@/components/tables/ReportTables/ActiveDeposit.vue'),
 				deposit_withdraw: () => import('@/components/tables/ReportTables/DepositWithdraw.vue'),
+				active_deposit_details: () => import('~/components/tables/ReportTables/ActiveDepositDetails.vue')
 			}
+		},
+
+		activeDepositContracts() {
+			return this.itemsPagination('activeDepositContracts');
 		},
 
 		table() {
@@ -76,6 +87,7 @@ export default {
 				deposit_accural: this.transactions(this.page, -1) || [],
 				deposit_withdraw: this.transactions(this.page, -1) || [],
 				deposits: this.activeDeposit(this.page, -1) || [],
+				active_deposit_details: this.activeDepositContracts(this.page, -1) || [],
 			}
 
 		},
@@ -93,6 +105,7 @@ export default {
 				deposit_accural: this.transactions(this.page, this.limit) || [],
 				deposit_withdraw: this.transactions(this.page, this.limit) || [],
 				deposits: this.activeDeposit(this.page, this.limit, { element: 'amount_usdt', direction: -1 }) || [],
+				active_deposit_details: this.activeDepositContracts(this.page, this.limit) || [],
 			}
 		},
 	},

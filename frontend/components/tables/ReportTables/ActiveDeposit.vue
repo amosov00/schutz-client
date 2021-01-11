@@ -36,7 +36,7 @@
 				header-class='right-align'
 				cell-class='text-right'
 			)
-				nuxt-link(:to='`/reports/${row._id}`')
+				nuxt-link(:to='`/admin/reports/${row._id}`')
 					b-button(type='is-info') Просмотр
 		template(slot='footer')
 			div
