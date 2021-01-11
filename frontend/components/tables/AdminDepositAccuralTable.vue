@@ -3,7 +3,7 @@
 		:data="data"
 		:loading="loading"
 		default-sort="args.timestamp"
-		:row-class="() => 'admin_deposit_accural__table_row'"
+		:row-class="() => 'table-row-fade'"
 	).custom-table.mb-4
 		template(slot-scope='{ row }')
 			b-table-column.overflow-reset(field='user_id' width='100' label='Id')
@@ -232,11 +232,4 @@ export default {
 </script>
 
 <style lang="scss">
-.admin_deposit_accural__table_row {
-	background-image: linear-gradient(270deg, #2580CB -2.86%, rgba(37, 128, 203, 0) 100%);
-	border-radius: 0 10px 10px 0;
-	background-size: 70% 100%;
-	background-position: 100% 100%;
-	background-repeat: no-repeat;
-}
 </style>

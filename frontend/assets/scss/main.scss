@@ -273,3 +273,18 @@ body {
 		width: 203px;
 	}
 }
+
+.profile_block__title {
+	font-weight: normal;
+	font-size: 24px;
+	line-height: 120%;
+	margin-bottom: 20px;
+}
+
+.table-row-fade {
+	background-image: linear-gradient(270deg, #2580CB -2.86%, rgba(37, 128, 203, 0) 100%);
+	border-radius: 0 10px 10px 0;
+	background-size: 70% 100%;
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+}

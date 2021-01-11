@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { formatCurrencyReversed } from '@/mixins/formatCurrency'
+import {itemPagination} from "~/utils/pagination";
 
 const MUTATION = {
 	SET_AGREEMENTS: 'SET_AGREEMENTS',
@@ -273,8 +274,13 @@ export const getters = {
 	}),
 
 	itemsPagination: (state) => (itemType) => (page, limit, sort = null) => {
-  	const items = {
-  		transactions: state.reportData && state.reportData.transactions.length
+		const items = {
+			activeDepositContracts: state.activeDepositsByID
+			&& state.activeDepositsByID.contracts
+			&& state.activeDepositsByID.contracts.length
+				? [...state.activeDepositsByID.contracts]
+				: null,
+			transactions: state.reportData && state.reportData.transactions && state.reportData.transactions.length
 				?[...state.reportData.transactions]
 				: null,
 			activeDeposits: state.activeDeposits.active_deposits && state.activeDeposits.active_deposits.length
@@ -284,28 +290,7 @@ export const getters = {
 
 		if(!items[itemType]) return [];
 
-		if (sort) {
-			const { element, direction } = sort;
-			items[itemType] = items[itemType].sort((a, b) =>
-				a[element] > b[element]
-					? direction
-					: ((a[element] < b[element]) ? direction * -1 : 0)
-			)
-		}
-
-		if(limit === -1) return items[itemType];
-
-		const endOn = items[itemType].length < page * limit
-			? items[itemType].length
-			: page * limit;
-
-		const elements = [];
-
-		for (let i = 0; i < endOn; i++) {
-			elements.push(items[itemType][i])
-		}
-
-		return elements;
+		return itemPagination(items[itemType])(page, limit, sort);
 	},
 
 	agreements: (state) => state.agreements,
