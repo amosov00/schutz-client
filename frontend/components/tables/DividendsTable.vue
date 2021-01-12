@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="level">
-			<div class="level-left is-size-5 has-text-primary mb-4">
+			<div class="level-left page-title">
 				{{ $t("История транзакций") }}
 			</div>
 		</div>
@@ -9,17 +9,25 @@
 			:data="filteredData"
 			pagination-position="bottom"
 			class="custom-table mb-4"
+			:default-sort="['args.timestamp', 'asc']"
 		>
 			<template slot-scope="props">
 				<b-table-column
 					field="args.timestamp"
 					:label="$t('Дата и время')"
-					sortable="sortable"
 					width="20%"
+					sortable
+					:custom-sort="sortByDate"
 				>
 					{{ timestampToDateTime(props.row.args.timestamp) }}
 				</b-table-column>
-				<b-table-column field="event" :label="$t('Событие')" width="20%">
+				<b-table-column
+					sortable
+					:custom-sort="sortByEvent"
+					field="event"
+					:label="$t('Событие')"
+					width="25%"
+				>
 					{{ $t(props.row.event) }}
 					<span class="tag is-link" v-if="props.row.isReinvested">
 						Reinvested
@@ -48,9 +56,11 @@
 				<b-table-column
 					field="contract"
 					:label="$t('Контракт')"
-					width="20%"
+					width="15%"
 					header-class="right-align"
 					cell-class="text-right"
+					sortable
+					:custom-sort="sortByContract"
 				>
 					{{ props.row.contract }}
 				</b-table-column>
@@ -61,6 +71,8 @@
 					header-class="right-align"
 					cell-class="text-right"
 					align="right"
+					sortable
+					:custom-sort="sortByAmount"
 				>
 					{{ formatCurrency(props.row.args.USDT, "usdt") }}
 				</b-table-column>
@@ -104,7 +116,37 @@ export default {
 		filteredData() {
 			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
 			d.sort((a, b) => {
-				return b.args.timestamp - a.args.timestamp;
+				if (this.sort_date) {
+					if (this.sort_date == "asc") {
+						return b.args.timestamp - a.args.timestamp;
+					} else {
+						return a.args.timestamp - b.args.timestamp;
+					}
+				}
+
+				if (this.sort_amount) {
+					if (this.sort_amount == "asc") {
+						return b.args.USDT - a.args.USDT;
+					} else {
+						return a.args.USDT - b.args.USDT;
+					}
+				}
+
+				if (this.sort_contract) {
+					if (this.sort_contract == "asc") {
+						return b.contract.localeCompare(a.contract);
+					} else {
+						return a.contract.localeCompare(b.contract);
+					}
+				}
+
+				if (this.sort_event) {
+					if (this.sort_event == "asc") {
+						return b.event.localeCompare(a.event);
+					} else {
+						return a.event.localeCompare(b.event);
+					}
+				}
 			});
 			return d.slice(0, this.limit);
 		},
@@ -152,6 +194,30 @@ export default {
 			if (this.limit > this.filteredData.length) {
 				this.hide_button = true;
 			}
+		},
+		sortByDate(a, b, isAsc) {
+			this.sort_date = isAsc ? "asc" : "desc";
+			this.sort_event = false;
+			this.sort_contract = false;
+			this.sort_amount = false;
+		},
+		sortByAmount(a, b, isAsc) {
+			this.sort_date = false;
+			this.sort_event = false;
+			this.sort_contract = false;
+			this.sort_amount = isAsc ? "asc" : "desc";
+		},
+		sortByContract(a, b, isAsc) {
+			this.sort_date = false;
+			this.sort_event = false;
+			this.sort_contract = isAsc ? "asc" : "desc";
+			this.sort_amount = false;
+		},
+		sortByEvent(a, b, isAsc) {
+			this.sort_date = false;
+			this.sort_event = isAsc ? "asc" : "desc";
+			this.sort_contract = false;
+			this.sort_amount = false;
 		}
 	},
 
@@ -160,7 +226,11 @@ export default {
 		hide_button: false,
 		isEmpty: false,
 		currentProduct: "All",
-		products: ["All", "NTSCD", "NTS80", "NTS81", "NTS165"]
+		products: ["All", "NTSCD", "NTS80", "NTS81", "NTS165"],
+		sort_date: "asc",
+		sort_event: false,
+		sort_contract: false,
+		sort_amount: false
 	})
 };
 </script>
@@ -175,5 +245,10 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.th-wrap {
+	.is-invisible {
+		display: none;
+	}
 }
 </style>

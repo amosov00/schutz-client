@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="level">
-			<div class="level-left is-size-5 has-text-primary mb-4">
+			<div class="level-left page-title">
 				{{ $t("История транзакций") }}
 			</div>
 		</div>
@@ -119,7 +119,7 @@ export default {
 
 		getPercent(level) {
 			if (level == 1) {
-				return 9;
+				return 5;
 			} else if (level == 2) {
 				return 3;
 			} else {
