@@ -1,4 +1,11 @@
-export const itemPagination = (items) => (page, limit, sort = null) => {
+export const itemPagination = (items) =>
+	({
+		 page,
+		 limit,
+		 sort = null,
+		 query = null,
+		 getTotal = false
+	}) => {
 	if (sort) {
 		const { element, direction } = sort;
 		items = items.sort((a, b) =>
@@ -6,6 +13,18 @@ export const itemPagination = (items) => (page, limit, sort = null) => {
 				? direction
 				: ((a[element] < b[element]) ? direction * -1 : 0)
 		)
+	}
+
+	if(query) {
+		const { fields, text } = query;
+
+		items = items.filter((item) => {
+			for(const field of fields) {
+				if (item[field] !== null && item[field].toLowerCase().startsWith(text)) {
+					return item;
+				}
+			}
+		})
 	}
 
 	if(limit === -1) return items;
@@ -20,5 +39,7 @@ export const itemPagination = (items) => (page, limit, sort = null) => {
 		elements.push(items[i])
 	}
 
-	return elements;
+	return getTotal
+		? { elements, total: items.length }
+		: elements;
 }

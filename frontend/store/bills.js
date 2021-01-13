@@ -282,4 +282,18 @@ export const actions = {
         return false
       });
   },
+	async getBillExtendedData({}, id) {
+  	try {
+  		const { data } = await this.$axios.get(`/admin/invoices/${id}/extended/`, {
+				params: {
+					as_excel: true
+				},
+				responseType: "blob"
+			})
+
+			return data;
+		} catch (e) {
+			console.error(e);
+		}
+	}
 };

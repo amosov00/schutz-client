@@ -77,7 +77,7 @@ export default {
 		},
 
 		transactionsWithPagination() {
-			return itemPagination(this.transactions)(this.pagination.page, this.pagination.limit);
+			return itemPagination(this.transactions)(this.pagination);
 		}
 	},
 
