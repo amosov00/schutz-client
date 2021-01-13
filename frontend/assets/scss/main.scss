@@ -299,3 +299,19 @@ body {
 	color: #fad896;
 	margin-bottom: 20px;
 }
+
+.admin_search__bar {
+	&.custom-input {
+		.input {
+			color: #FFFFFF;
+
+			&::placeholder {
+				color: #FFFFFF;
+			}
+		}
+
+		.bottom-line {
+			background-color: #FFFFFF;
+		}
+	}
+}

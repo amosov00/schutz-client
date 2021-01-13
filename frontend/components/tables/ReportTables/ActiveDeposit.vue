@@ -2,8 +2,6 @@
 	b-table(
 		:data="data"
 		:loading="loading"
-		default-sort="amount_usdt"
-		default-sort-direction="desc"
 	).custom-table.mb-4
 		template(slot-scope="{ row }")
 			b-table-column(

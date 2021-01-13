@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style lang="sass" scope>
+<style lang="sass" scoped>
 .delete-btn
   visibility: hidden
   border: 1px solid #E66696!important

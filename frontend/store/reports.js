@@ -290,7 +290,7 @@ export const getters = {
 
 		if(!items[itemType]) return [];
 
-		return itemPagination(items[itemType])(page, limit, sort);
+		return itemPagination(items[itemType])({ page, limit, sort });
 	},
 
 	agreements: (state) => state.agreements,

@@ -2,7 +2,6 @@
 	b-table(
 		:data="data"
 		:loading="loading"
-		default-sort="args.timestamp"
 	).custom-table.mb-4
 		template(slot-scope="{ row }")
 			b-table-column(

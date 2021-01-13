@@ -29,7 +29,7 @@
 					base-input(
 						v-model="searchQuery"
 						placeholder="Найти адрес или хэш"
-					).deposit_accural__search_bar
+					).admin_search__bar
 			AdminDepositAccuralTable(
 				:loading="loading"
 				:data="tableData"
@@ -254,22 +254,6 @@ export default {
 		justify-content: flex-end;
 		height: 100%;
 		flex-direction: column;
-	}
-}
-
-.deposit_accural__search_bar {
-	&.custom-input {
-		.input {
-			color: #FFFFFF;
-
-			&::placeholder {
-				color: #FFFFFF;
-			}
-		}
-
-		.bottom-line {
-			background-color: #FFFFFF;
-		}
 	}
 }
 </style>

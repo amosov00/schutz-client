@@ -5,7 +5,11 @@
 		b-skeleton(v-if="loading" animated)
 		section(v-else)
 			p Total subinvoices to pay: {{ totalAddresses }}
-			b-tabs(position="is-centered" class="block")
+			b-tabs(
+				position="is-centered"
+				class="block"
+				type="is-boxed"
+			)
 				b-tab-item(v-for="(invoiceData, index) in invoicePaymentData" :label="`${index * 100} - ${(index + 1) * 100}`" :key="index")
 					div.subtitle.is-5 Subtotal USDT: {{ formatCurrency(invoiceTotals[index], "usdt") }}
 					p.d-flex(v-if="Boolean(paymentHashFromIndex(index))")
@@ -102,21 +106,24 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 .invoice-modal
 	background: #ffffff
 	padding: 40px 73px
 	margin: auto
 
-.my-3
-	margin: 1rem 0
+	.tabs
+		a
+			color: black
+	.my-3
+		margin: 1rem 0
 
-.mr-auto
-	margin-right: auto
+	.mr-auto
+		margin-right: auto
 
-.d-flex
-	display: flex
+	.d-flex
+		display: flex
 
-p, .subtitle, span
-	color: black
+	p, .subtitle
+		color: black
 </style>

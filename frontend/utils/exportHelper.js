@@ -97,6 +97,15 @@ const typeAdapter = {
 
 		})),
 
+	bills: (data) =>
+		data.map((dataItem) => ({
+			ID: dataItem._id,
+			Address: dataItem.address,
+			"TxHash": dataItem.payment_transaction_hash,
+			"Invested USDT": formatCurrency(dataItem.deposit_usdt, "usdt"),
+			"Total USDT": formatCurrency(dataItem.total_usdt, "usdt"),
+		})),
+
 	all: (data) =>
 		data.map((dataItem) => ({
 			Date: timestampToDate(dataItem.args.timestamp),

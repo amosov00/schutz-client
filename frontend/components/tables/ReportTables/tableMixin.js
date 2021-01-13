@@ -39,9 +39,5 @@ export default {
 				? `${data.contract} (${data.prolongedContract})`
 				: data.contract;
 		},
-
-		showMoreButton() {
-			return this.count > this.pagination.limit * this.pagination.page;
-		}
 	}
 }

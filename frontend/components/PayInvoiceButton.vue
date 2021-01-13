@@ -1,5 +1,6 @@
 <template lang="pug">
-	b-button(type="is-info" @click.once="payInvoice") {{$t('payInvoice')}}
+	b-button(v-if="defaultButton" @click.once="payInvoice").default-button {{$t('payInvoice')}}
+	b-button(v-else type="is-info" @click.once="payInvoice") {{$t('payInvoice')}}
 </template>
 
 <script>
@@ -10,6 +11,11 @@ export default {
 		invoiceData: {
 			type: Object,
 			required: true
+		},
+
+		defaultButton: {
+			type: Boolean,
+			default: () => false,
 		}
 	},
 	methods: {
