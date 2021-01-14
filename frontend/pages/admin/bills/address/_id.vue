@@ -129,6 +129,23 @@ export default {
 					this.updateTotalAction({total_usdt: value * 1e6, id: data.id})
 			});
 		},
+
+		updateTotalAction(data) {
+			this.$store
+				.dispatch("bills/updateTotal", data)
+				.then(() =>
+					this.$buefy.toast.open({
+						message: "Total updated!",
+						type: "is-success"
+					})
+				)
+				.catch(() => {
+					this.$buefy.toast.open({
+						message: "Something went wrong!",
+						type: "is-danger"
+					});
+				});
+		}
 	},
 
 	async asyncData({ store, params }) {
