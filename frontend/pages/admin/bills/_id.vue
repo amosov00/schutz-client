@@ -30,12 +30,10 @@
 								div.column
 									b-button(type="is-info" @click="saveAsExcelAll") {{$t('exportAll')}} .xls
 		.container
-			.level
-				.level-left.has-text-white.mb-4.ml-2
-					base-input(
-						v-model="searchQuery"
-						placeholder="Search address"
-					).admin_search__bar
+			base-input(
+				v-model="searchQuery"
+				placeholder="Search address"
+			).admin_search__bar.my-5.mx-2
 			b-table(
 				:data="items.elements"
 			).custom-table.mb-3

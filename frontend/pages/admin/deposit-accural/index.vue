@@ -25,7 +25,7 @@
 									span(style="color: #846756") Оплатить
 		.container
 			.level
-				.level-left.is-size-5.has-text-white.mb-4
+				.is-size-5.has-text-white.mb-4
 					base-input(
 						v-model="searchQuery"
 						placeholder="Найти адрес или хэш"
@@ -38,7 +38,7 @@
 				@updateAgreements="onDateChange($moment().startOf('month').toDate())"
 				@more="getMore"
 				@export="onExport"
-			)
+			).mb-4
 </template>
 
 <script>
