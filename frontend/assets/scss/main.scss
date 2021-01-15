@@ -8,7 +8,7 @@ $info: #fad896;
 $background1: #0495fb;
 $background2: #fff;
 $radius: 6px;
-$primary: #fad896;
+$primary: #174b76;
 $danger: #d60d0d;
 $grey: #666666;
 $light: #fff;
@@ -184,7 +184,7 @@ body {
 	}
 }
 
-.show-more {
+.default-button {
 	height: 40px;
 	background: rgba(177, 236, 255, 0.05);
 	border: none;
@@ -203,7 +203,7 @@ body {
 		outline: none;
 	}
 	&:hover {
-		box-shadow: 0px 0px 17px -10px rgb(66, 118, 178);
+		box-shadow: 0 0 17px -10px rgb(66, 118, 178);
 	}
 }
 
@@ -228,10 +228,8 @@ body {
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-	padding: 50px;
 	color: #666666;
-	overflow: hidden;
-	padding-right: 23px;
+	padding: 50px 23px 50px 50px;
 
 	&__scroll {
 		padding-right: 23px;
@@ -273,5 +271,48 @@ body {
 	justify-content: center;
 	img {
 		width: 203px;
+	}
+}
+
+.profile_block__title {
+	font-weight: normal;
+	font-size: 24px;
+	line-height: 120%;
+	margin-bottom: 20px;
+}
+
+.table-row-fade {
+	background-image: linear-gradient(
+		270deg,
+		#2580cb -2.86%,
+		rgba(37, 128, 203, 0) 100%
+	);
+	border-radius: 0 10px 10px 0;
+	background-size: 70% 100%;
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+}
+.page-title {
+	font-weight: normal;
+	font-size: 24px;
+	line-height: 120%;
+	color: #fad896;
+	margin-bottom: 20px;
+}
+
+.admin_search__bar {
+	min-width: 100%;
+	&.custom-input {
+		.input {
+			color: #FFFFFF;
+
+			&::placeholder {
+				color: #FFFFFF;
+			}
+		}
+
+		.bottom-line {
+			background-color: #FFFFFF;
+		}
 	}
 }

@@ -2,7 +2,6 @@
 	b-table(
 		:data="data"
 		:loading="loading"
-		default-sort="args.timestamp"
 	).custom-table.mb-4
 		template(slot-scope="{ row }")
 			b-table-column(
@@ -59,14 +58,15 @@
 				width="50"
 				sortable
 				header-class="right-align"
-				cell-class="text-right"
+				:style="{ textAlign: 'right' }"
+
 			).text-right {{ formatCurrency(row.args.USDT, 'usdt')}}
 		template(slot="footer")
 			div
 				div.mb-6.center
-					button.show-more(@click="$emit('more')") показать еще
-				p Dividends withdraw: {{`${formatCurrency(totals.dividend_withdraw, 'usdt')} USDT`}}
-				.divider
+					button.default-button(@click="$emit('more')" v-if="showMoreButton") {{ $t("показать еще") }}
+				.is-size-5.has-background-info.total-withdraw.mb-3.is-flex.is-flex-direction-column.is-align-items-flex-start
+					p Dividends withdraw: {{`${formatCurrency(totals.dividend_withdraw, 'usdt')} USDT`}}
 </template>
 
 <script>

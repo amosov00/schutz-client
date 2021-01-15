@@ -10,14 +10,14 @@
 				<div class="columns">
 					<div class="column">
 						<div class="is-size-5 mb-4">
-							{{ $t("Получите 9%, 3% или 2%") }} <br />
+							{{ $t("Получите 5%, 3% или 2%") }} <br />
 							{{ $t("с каждого депозита внесенного по вашей ссылке.") }}
 						</div>
 						<div v-if="$i18n.locale == 'ru'">
 							<p class="is-size-7 has-text-grey mb-4">
 								Поделитесь вашей партнерской ссылкой в своих соцсетях и с
 								каждого, кто пройдет по ней и зарегистрируется, пополнив
-								депозит, вы получите бонус 9%. Трехуровневая система строится
+								депозит, вы получите бонус 5%. Трехуровневая система строится
 								таким образом, что если ваш приглашенный ранее партнер решит
 								также, как и вы, принять участие в реферальной программе и
 								пригласит человека по своей ссылке, вы получите бонус в размере
@@ -37,7 +37,7 @@
 						<div v-else>
 							<p class="is-size-7 has-text-grey mb-4">
 								Share your affiliate link in your social networks and you will
-								get a 9% bonus from everyone who follows it and registers,
+								get a 5% bonus from everyone who follows it and registers,
 								adding to the deposit. The three-level system is built in such a
 								way that if your previously invited partner decides to
 								participate in the referral program as well as you and invites a
@@ -137,7 +137,7 @@ export default {
 	},
 	computed: {
 		...mapGetters(["referralLink"]),
-		...mapGetters("userContractIntegration", ["tokenBalance"]),
+		...mapGetters("userContractIntegration", ["tokenBalance"])
 	},
 	data: () => ({
 		isDepositOpen: true,

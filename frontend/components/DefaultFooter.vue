@@ -60,7 +60,7 @@
 			</div>
 		</div>
 		<div class="footer__bottom">
-			<div class="footer__copyright">© 2017—2020, <span>SCHUTZ</span></div>
+			<div class="footer__copyright">© 2017—2021, <span>SCHUTZ</span></div>
 			<a
 				v-if="false"
 				href="/files/presentation_nts.pdf"

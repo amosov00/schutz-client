@@ -224,7 +224,7 @@ export default {
 	"Укажите сумму реинвестирования": "Specify the amount of reinvestment",
 	Событие: "Event",
 	"Всего выведено:": "Total output:",
-	"Получите 9%, 3% или 2%": "Get 9%, 3% or 2%",
+	"Получите 5%, 3% или 2%": "Get 5%, 3% or 2%",
 	"с каждого депозита внесенного по вашей ссылке.":
 		"of every Deposit made via your link.",
 	"Копировать ссылку": "Copy link",

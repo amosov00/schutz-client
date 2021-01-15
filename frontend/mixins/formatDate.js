@@ -1,15 +1,26 @@
 import moment from "moment";
 
+export const timestampToDate = (timstamp) => {
+	return moment
+		.unix(timstamp)
+		.utc()
+		.add(3, "hours")
+		.format("DD/MM/YYYY");
+}
+
+export const formatDate = (time) => {
+	const offset = moment().utcOffset()
+	return moment(time)
+		.add(offset, 'minutes')
+		.format('DD/MM/YYYY')
+}
+
+
 export default {
   methods: {
-    timestampToDate(timstamp) {
-      // Конвертация timestamp в обычный формат даты
-      return moment
-        .unix(timstamp)
-        .utc()
-        .add(3, "hours")
-        .format("DD/MM/YYYY");
-    },
+		timestampToDate,
+		formatDate,
+
     timestampToDateTime(timstamp) {
       // Конвертация timestamp в обычный формат даты
       return moment
@@ -43,11 +54,5 @@ export default {
         .utc()
         .format("DD MMMM YYYY");
     },
-    formatDate(time) {
-      const offset = moment().utcOffset()
-      return moment(time)
-        .add(offset, 'minutes')
-        .format('DD/MM/YYYY')
-    }
   }
 };

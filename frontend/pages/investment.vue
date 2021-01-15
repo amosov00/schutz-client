@@ -124,26 +124,34 @@
 		</custom-slider>
 		<div class="container">
 			<div class="level">
-				<div class="level-left is-size-5 has-text-primary mb-4">
+				<div class="level-left page-title">
 					{{ $t("История транзакций") }}
 				</div>
 			</div>
 			<b-table
 				:data="filteredData"
-				v-if="filteredData"
+				v-if="filteredData.length"
 				pagination-position="bottom"
 				class="custom-table mb-4"
+				:default-sort="['args.timestamp', 'asc']"
 			>
 				<template slot-scope="props">
 					<b-table-column
 						field="args.timestamp"
 						:label="$t('Дата и время')"
-						sortable="sortable"
+						sortable
+						:custom-sort="sortByDate"
 						width="20%"
 					>
 						{{ timestampToDateTime(props.row.args.timestamp) }}
 					</b-table-column>
-					<b-table-column field="event" :label="$t('Событие')" width="20%">
+					<b-table-column
+						sortable
+						field="event"
+						:label="$t('Событие')"
+						width="20%"
+						:custom-sort="sortByEvent"
+					>
 						<span class="text-nowrap">{{ $t(props.row.event) }}</span>
 						<span class="tag is-link" v-if="props.row.isReinvested">
 							{{ $t("Реинвестиция") }}
@@ -176,16 +184,20 @@
 						header-class="right-align"
 						cell-class="text-right"
 						width="20%"
+						sortable
+						:custom-sort="sortByContract"
 					>
 						{{ props.row.contract }}
 					</b-table-column>
 					<b-table-column
-						field="amountUSDT"
+						field="args.USDT"
 						:label="$t('Сумма, USDT')"
 						cell-class="text-right"
 						header-class="has-text-right"
 						width="10%"
 						align="right"
+						sortable
+						:custom-sort="sortByAmount"
 					>
 						{{ formatCurrency(props.row.args.USDT, "usdt") }}
 					</b-table-column>
@@ -197,12 +209,12 @@
 					v-if="!hide_button"
 					type="button"
 					@click="showMore()"
-					class="show-more"
+					class="default-button"
 				>
 					{{ $t("показать еще") }}
 				</button>
 			</div>
-			<div class="is-size-5 has-background-primary total-withdraw mb-6">
+			<div class="is-size-5 has-background-info total-withdraw mb-6">
 				<div v-for="(total, k) in totals" :key="k">
 					{{ $t(k) }}: {{ `${formatCurrency(total, "usdt")}` }} USDT
 				</div>
@@ -267,6 +279,31 @@ export default {
 				profit: newVal * 1.8,
 				reinvest: newVal * 2.018
 			});
+		},
+
+		sortByDate(a, b, isAsc) {
+			this.sort_date = isAsc ? "asc" : "desc";
+			this.sort_event = false;
+			this.sort_contract = false;
+			this.sort_amount = false;
+		},
+		sortByAmount(a, b, isAsc) {
+			this.sort_date = false;
+			this.sort_event = false;
+			this.sort_contract = false;
+			this.sort_amount = isAsc ? "asc" : "desc";
+		},
+		sortByContract(a, b, isAsc) {
+			this.sort_date = false;
+			this.sort_event = false;
+			this.sort_contract = isAsc ? "asc" : "desc";
+			this.sort_amount = false;
+		},
+		sortByEvent(a, b, isAsc) {
+			this.sort_date = false;
+			this.sort_event = isAsc ? "asc" : "desc";
+			this.sort_contract = false;
+			this.sort_amount = false;
 		}
 	},
 	watch: {
@@ -293,8 +330,39 @@ export default {
 		filteredData() {
 			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
 			d.sort((a, b) => {
-				return b.args.timestamp - a.args.timestamp;
+				if (this.sort_date) {
+					if (this.sort_date == "asc") {
+						return b.args.timestamp - a.args.timestamp;
+					} else {
+						return a.args.timestamp - b.args.timestamp;
+					}
+				}
+
+				if (this.sort_amount) {
+					if (this.sort_amount == "asc") {
+						return b.args.USDT - a.args.USDT;
+					} else {
+						return a.args.USDT - b.args.USDT;
+					}
+				}
+
+				if (this.sort_contract) {
+					if (this.sort_contract == "asc") {
+						return b.contract.localeCompare(a.contract);
+					} else {
+						return a.contract.localeCompare(b.contract);
+					}
+				}
+
+				if (this.sort_event) {
+					if (this.sort_event == "asc") {
+						return b.event.localeCompare(a.event);
+					} else {
+						return a.event.localeCompare(b.event);
+					}
+				}
 			});
+
 			return d.slice(0, this.limit);
 		},
 
@@ -352,14 +420,27 @@ export default {
 		products: ["All", "NTS80", "NTS81", "NTS165"],
 		isWalletModalActive: false,
 		isMetaMaskInstallModalActive: false,
-		isAddFundsModalActive: false
+		isAddFundsModalActive: false,
+		sort_date: "asc",
+		sort_event: false,
+		sort_contract: false,
+		sort_amount: false
 	}),
 	async asyncData({ store }) {
 		return await store.dispatch("fetchTransactions", "investments");
 	}
 };
 </script>
-
+<style lang="scss">
+.has-text-right {
+	.th-wrap {
+		text-align: right;
+		.is-invisible {
+			display: none;
+		}
+	}
+}
+</style>
 <style lang="scss" scoped>
 @import "~@/assets/scss/transitions/slide-fade.scss";
 

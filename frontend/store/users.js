@@ -7,11 +7,13 @@ const MUTATION = {
 export const state = () => ({
 	users: [],
 	userDetails: {},
+	total: 0,
 })
 
 export const getters = {
 	detailsById: state => id => state.userDetails[id],
 	users: state => state.users,
+	total: state => state.total,
 };
 
 export const actions = {
@@ -37,7 +39,10 @@ export const actions = {
 	},
 
 	async fetchUsers({commit}, {page, limit, query = ''}) {
-		const {data: {result: users}} = await this.$axios.get(`/admin/users/`, {
+		const { data: {
+			result: users,
+			total,
+		}} = await this.$axios.get(`/admin/users/`, {
 			params: {
 				page,
 				page_size: limit,
@@ -46,14 +51,14 @@ export const actions = {
 		});
 
 		if (page === 1) {
-			commit(MUTATION.SET_USERS, users);
+			commit(MUTATION.SET_USERS, { users, total });
 		} else {
 			commit(MUTATION.ADD_USERS, users);
 		}
 	},
 	async fetchUsersV1({commit}) {
 		const {data} = await this.$axios.get("/admin/users/v1/");
-		commit(MUTATION.SET_USERS, data);
+		commit(MUTATION.SET_USERS, { users: data });
 	},
 	async fetchUser({commit}, _id) {
 		return await this.$axios.get(`/admin/users/${_id}/`)
@@ -78,7 +83,8 @@ export const mutations = {
 		state.users = [...state.users, ...users];
 	},
 
-	[MUTATION.SET_USERS](state, users) {
+	[MUTATION.SET_USERS](state, { users, total = 0 }) {
 		state.users = users;
+		state.total = total;
 	},
 };

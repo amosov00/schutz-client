@@ -1,11 +1,23 @@
 import moment from 'moment'
 import { formatCurrencyReversed } from '@/mixins/formatCurrency'
+import {itemPagination} from "~/utils/pagination";
+
+const MUTATION = {
+	SET_AGREEMENTS: 'SET_AGREEMENTS',
+}
 
 export const state = () => ({
   reportData: [],
   activeDeposits: [],
   activeDepositsByID: [],
-  activeDepositTransactions: []
+  activeDepositTransactions: [],
+
+	agreements: [],
+	total: 0,
+	totalUsers: 0,
+	totalProlong: 0,
+	totalProcessing: 0,
+	totalPayout: 0,
 })
 export const mutations = {
   setReportData: (state, payload) => {
@@ -61,6 +73,15 @@ export const mutations = {
   setActiveDeposits: (state, payload) => state.activeDeposits = payload,
   setActiveDepositsByID: (state, payload) => state.activeDepositsByID = payload,
   setActiveDepositsByIDContracts: (state, payload) => state.activeDepositsByID.contracts = payload,
+
+	[MUTATION.SET_AGREEMENTS](state, { agreements, total, total_prolong, total_processing, total_payout }) {
+  	state.agreements = agreements;
+
+  	state.total = total;
+  	state.totalProcessing = total_processing;
+  	state.totalProlong = total_prolong;
+  	state.totalPayout = total_payout;
+	},
 }
 export const actions = {
   async fetchTransactionsByQuery({ commit }, queryParams) {
@@ -188,9 +209,14 @@ export const actions = {
     commit('setActiveDepositsByIDContracts', activeDeposit.contracts)
   },
   async updateAgreement({ commit }, agreement) {
-    return await this.$axios.put(`/admin/mailing/agreements/${agreement._id}/`, agreement)
-      .then(() => { return true})
-      .catch(() => {return false})
+		try {
+			await this.$axios.put(`/admin/mailing/agreements/${agreement._id}/`, agreement)
+
+			return true;
+		} catch (e) {
+			return false;
+		}
+
   },
   async fetchAgreementPayment({}, timestamp) {
     return await this.$axios.get(`/admin/mailing/agreements/get_payload/`, {
@@ -213,21 +239,24 @@ export const actions = {
       .catch(() => {return false})
   },
   async mailingSend({ commit }, body) {
-    return await this.$axios.post(`/admin/mailing/send/`, body)
-      .then(() => {return true})
-      .catch(() => {return false})
+		try {
+			await this.$axios.post(`/admin/mailing/send/`, body)
+
+			return Promise.resolve();
+		} catch (e) {
+			await Promise.reject(e);
+		}
+
   },
-  async fetchAgreements({ commit }, targetDate) {
-    return await this.$axios.get(`/admin/mailing/agreements/`, {
-        params: {
-          'target_close_date_timestamp': targetDate
-        }
-      }
-    ).then(({ data }) => {
-      return data
-    }).catch(error => {
-      console.log(error)
-    })
+  async fetchAgreements({ commit }, targetDate = 0) {
+  	const { data } = await this.$axios.get('/admin/mailing/agreements/', {
+			params: {
+				target_close_date_timestamp: targetDate,
+			},
+		})
+
+		commit(MUTATION.SET_AGREEMENTS, data)
+		return data;
   }
 }
 export const getters = {
@@ -237,26 +266,56 @@ export const getters = {
   activeDepositsByID: s => s.activeDepositsByID,
   activeDepositTransactions: s => s.activeDepositTransactions,
 
-	itemsPagination: (state) => (itemType) => (page, limit) => {
-  	const items = {
-  		transactions: state.reportData.transactions,
-			activeDeposits: state.activeDeposits.active_deposits,
+	total: state => ({
+		total: state.total,
+		totalProcessing: state.totalProcessing,
+		totalProlong: state.totalProlong,
+		totalPayout: state.totalPayout,
+	}),
+
+	itemsPagination: (state) => (itemType) => (page, limit, sort = null) => {
+		const items = {
+			activeDepositContracts: state.activeDepositsByID
+			&& state.activeDepositsByID.contracts
+			&& state.activeDepositsByID.contracts.length
+				? [...state.activeDepositsByID.contracts]
+				: null,
+			transactions: state.reportData && state.reportData.transactions && state.reportData.transactions.length
+				?[...state.reportData.transactions]
+				: null,
+			activeDeposits: state.activeDeposits.active_deposits && state.activeDeposits.active_deposits.length
+				? [...state.activeDeposits.active_deposits]
+				: null,
 		}
 
 		if(!items[itemType]) return [];
 
-		const startWith = 0;
-		const endOn = items[itemType].length < page * limit
-			? items[itemType].length
-			: page * limit;
-
-		const elements = [];
-
-		for (let i = startWith; i < endOn; i++) {
-			elements.push(items[itemType][i])
-		}
-
-		return elements;
+		return itemPagination(items[itemType])({ page, limit, sort });
 	},
 
+	agreements: (state) => state.agreements,
+
+	agreementsWithFilter: (state) => ({ searchQuery, limit = 20, page = 1 }) => {
+  	const elements = searchQuery ?
+			state.agreements.filter(({ ethereum_wallet, email, _id }) =>
+				(ethereum_wallet && ethereum_wallet.indexOf(searchQuery) >= 0) ||
+				(email && email.indexOf(searchQuery) >= 0) ||
+				(_id && _id.indexOf(searchQuery) >= 0)
+			)
+			: state.agreements
+
+		if(limit === -1) return elements;
+
+		const endOn = elements.length < page * limit
+			? elements.length
+			: page * limit;
+
+  	const elementsToShow = [];
+
+  	for(let i = 0; i < endOn; i++) {
+  		elementsToShow.push(elements[i])
+		}
+
+  	return elementsToShow;
+	}
 }

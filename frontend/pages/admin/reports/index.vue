@@ -1,14 +1,11 @@
 <template lang="pug">
 	div
-		CustomSlider(
-			:active-dot="1"
-			:dots="4"
-		)
+		CustomSlider(hide-dots)
 			template(slot="content")
 				.is-fullheight
 					.content.search_block.is-fullheight.is-fullwidth
 						.reports__container
-							.reports__title_block Отчеты
+							.profile_block__title Отчеты
 							.reports__body
 								.reports__body_form_block
 									base-input(
@@ -53,9 +50,7 @@
 </template>
 
 <script>
-import CustomSlider from "~/components/ui/CustomSlider";
-import CustomInput from "~/components/ui/CustomInput";
-import CustomButton from "~/components/ui/CustomButton";
+import { CustomSlider, CustomInput, CustomButton } from "~/components"
 import { ReportsTable } from "~/components/tables";
 import { mapActions } from "vuex";
 
@@ -185,12 +180,8 @@ export default {
 
 <style lang="scss" scoped>
 .reports__container {
-	.reports__title_block {
-		font-weight: normal;
-		font-size: 24px;
-		line-height: 120%;
-		margin-bottom: 20px;
-	}
+
+
 
 	.reports__body {
 		display: grid;

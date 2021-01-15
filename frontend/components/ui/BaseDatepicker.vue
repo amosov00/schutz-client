@@ -2,14 +2,13 @@
 	.base__datepicker
 		.base-label.is-flex
 			.base-label__icon
-				b-icon(
-					icon="calendar"
-				)
+				b-icon(icon="calendar")
 			|{{ label }}
 
 		b-datepicker(
 			:locale="currentLocaleIso"
 			v-model="selectValue"
+			:type="type ? type : null"
 		)
 		.bottom-line
 </template>
@@ -24,6 +23,11 @@ export default {
 
 		value: {
 			type: [Number, String, Date],
+			default: () => '',
+		},
+
+		type: {
+			type: String,
 			default: () => '',
 		}
 	},
