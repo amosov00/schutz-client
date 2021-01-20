@@ -4,10 +4,9 @@
 			template(slot="content")
 				.is-fullheight
 					.content.search_block.is-fullheight.is-fullwidth
-						.bills__container.is-flex.is-fullheight.is-align-items-center.is-justify-content-center
+						.bills__container.is-fullheight
 							.profile_block__title {{ $t('bills') }}
-		.container.mb-3.is-flex.is-justify-content-flex-end
-			button.default-button(@click="openCreateModal") Создать счёт
+							AdminCreateBill
 		BillTable(
 			:data="billsWithPagination"
 			:count="bills.length"
@@ -21,7 +20,7 @@ import { CustomSlider } from "~/components";
 import { BillTable } from "~/components/tables";
 import {mapGetters} from "vuex";
 import {itemPagination} from "~/utils/pagination";
-import { AdminCreateBill } from "~/components/modals";
+import { AdminCreateBill } from "~/components";
 
 export default {
 	layout: "profile",
@@ -30,6 +29,7 @@ export default {
 	components: {
 		CustomSlider,
 		BillTable,
+		AdminCreateBill,
 	},
 
 	data() {
@@ -48,14 +48,6 @@ export default {
 
 		billsWithPagination() {
 			return itemPagination(this.bills)(this.pagination);
-		}
-	},
-
-	methods: {
-		openCreateModal() {
-			this.$modal.open({
-				factory: () => AdminCreateBill,
-			})
 		}
 	},
 

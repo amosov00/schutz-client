@@ -131,7 +131,7 @@ export default {
 					value: "deposit_withdraw"
 				},
 				{
-					text: "Deposit Accural",
+					text: "Deposit Accrual",
 					value: "deposit_accural"
 				},
 				{

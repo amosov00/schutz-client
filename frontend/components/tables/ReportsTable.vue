@@ -210,7 +210,7 @@ export default {
       return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
     },
     showCloseDateModal(data) {
-      let modal = this.$buefy.modal.open({
+      const modal = this.$buefy.modal.open({
           parent: this,
           component: UpdateCloseDateModal,
           trapFocus: true,
@@ -219,6 +219,7 @@ export default {
             contract: data
           }
         });
+
       modal.$on('close', async () => (await this.reloadActiveDeposits()))
     },
     async reloadActiveDeposits() {

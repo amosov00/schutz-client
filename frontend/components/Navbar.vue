@@ -70,7 +70,7 @@ export default {
 		},
 		activePage() {
 			let path = this.$route.path.replace(`/${this.$i18n.locale}`, "");
-			if (path == "") path = "/";
+			if (path === "") path = "/";
 			return path;
 		},
 
@@ -97,8 +97,13 @@ export default {
 				},
 				{
 					text: "Начисление вкладов",
-					action: () => this.$router.push("/admin/deposit-accural"),
-					active: this.$route.path === "/admin/deposit-accural"
+					action: () => this.$router.push("/admin/deposit-accrual"),
+					active: this.$route.path === "/admin/deposit-accrual"
+				},
+				{
+					text: "Вопросы - ответы",
+					action: () => this.$router.push("/faq"),
+					active: this.$router.path === "/faq",
 				}
 			];
 		}

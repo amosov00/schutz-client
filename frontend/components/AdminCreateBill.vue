@@ -1,8 +1,7 @@
 <template lang="pug">
-	.modal-card.p-0.admin_create_bill__container
-		header.modal-card-head
-			.modal-card-title {{$t('bills')}}
-		div.box.mb-0
+	.admin_create_bill__container.is-fullheight
+		div.mb-0
+			div.subtitle(style="color: black") Создать счёт
 			div.columns
 				div.column
 					b-field(:label="$t('from')")
@@ -11,7 +10,7 @@
 							type="month"
 							editable
 							v-model="timeInterval.fromDate"
-							trap-focus
+							inline
 						)
 				div.column
 					b-field(:label="$t('to')")
@@ -20,11 +19,10 @@
 							type="month"
 							editable
 							v-model="timeInterval.toDate"
-							trap-focus
+							inline
 						)
-		footer.modal-card-foot.is-flex.is-justify-content-flex-end
-			b-button(type="is-info" @click="close" ) {{$t('cancel')}}
-			b-button(type="is-info" @click="create" :loading="loading") {{$t('create')}}
+		.is-flex.is-justify-content-flex-end.mt-5
+			b-button(type="is-primary" @click="create" :loading="loading") {{$t('create')}}
 </template>
 
 <script>
@@ -63,22 +61,14 @@ export default {
 				}
 
 				this.loading = false;
-				this.close();
 			}
 		},
-
-		close() {
-			this.$modal.close();
-		}
 	}
 }
 </script>
 
 <style lang="scss">
 .admin_create_bill__container {
-	.box {
-		height: 300px;
-		border-radius: 0;
-	}
+	min-height: 100%;
 }
 </style>
