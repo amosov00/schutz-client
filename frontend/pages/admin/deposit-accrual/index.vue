@@ -24,12 +24,11 @@
 								CustomButton(style="width: 100%" @click.native="triggerPayInvoiceModal").mt-2
 									span(style="color: #846756") Оплатить
 		.container
-			.level
-				.is-size-5.has-text-white.mb-4
-					base-input(
-						v-model="searchQuery"
-						placeholder="Найти адрес или хэш"
-					).admin_search__bar
+			.is-size-5.has-text-white.mb-4
+				base-input(
+					v-model="searchQuery"
+					placeholder="Введите адрес или Email"
+				).admin_search__bar
 			AdminDepositAccuralTable(
 				:loading="loading"
 				:data="tableData"

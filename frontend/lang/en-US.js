@@ -7,7 +7,7 @@ export default {
 		contract: "Contract",
 		errorMessage: "Something went wrong"
 	},
-	depositAccural: "Deposit Accural",
+	depositAccural: "Deposit Accrual",
 	profile: "Profile",
 	investments: "Investments",
 	dividends: "Dividends",
@@ -246,7 +246,7 @@ export default {
 	Deposit: "Deposit",
 	"Всего начислено дивидендов:": "Total dividends accrued:",
 	Реинвестиция: "Reinvest",
-	"Deposit Accural": "Deposit Accural",
+	"Deposit Accural": "Deposit Accrual",
 	"Deposit Withdraw": "Deposit Withdraw",
 	deposit_accural: "Deposit accural",
 	deposit_withdraw: "Deposit withdraw"

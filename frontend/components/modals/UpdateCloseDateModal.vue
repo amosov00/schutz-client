@@ -1,26 +1,21 @@
-<template>
-  <div class="modal-card" style="height: 600px">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Close Date for {{ contract.contract }}</p>
-    </header>
-    <section class="modal-card-body">
-      <b-field label="Date">
-        <b-datepicker v-model="formatedDate"></b-datepicker>
-      </b-field>
-    </section>
-    <footer class="modal-card-foot">
-      <button class="button" type="button" @click="$parent.close()">
-        Close
-      </button>
-      <button @click="update" class="button is-primary">Update</button>
-    </footer>
-  </div>
+<template lang="pug">
+	.modal-card(style='height: 700px; margin: auto').p-0
+		header.modal-card-head
+			p.modal-card-title Close Date for {{ contract.contract }}
+		section.modal-card-body
+			b-field(label='Date')
+				b-datepicker(v-model='formatedDate')
+		footer.modal-card-foot
+			button.button(type='button' @click='$parent.close()')
+				| Close
+			button.button.is-primary(@click='update') Update
 </template>
 
 <script>
 import formatDate from "~/mixins/formatDate";
 import moment from "moment";
 import _ from "lodash";
+import {mapActions} from "vuex";
 
 export default {
   props: ["contract", "activeDeposit"],
@@ -31,6 +26,10 @@ export default {
     };
   },
   methods: {
+  	...mapActions({
+			updateCloseDate: 'reports/updateCloseDate',
+		}),
+
     async update() {
       let activeDepositCopy = Object.assign({}, this.activeDeposit)
       let contractCopy = Object.assign({}, this.contract)
@@ -38,9 +37,10 @@ export default {
       closeDate.setHours(12)
       contractCopy.close_date = closeDate.getTime() / 1000;
       activeDepositCopy.contracts = _.uniqBy([contractCopy, ...activeDepositCopy.contracts], "contract")
-      await this.$store.dispatch("reports/updateCloseDate", activeDepositCopy).then(() => {
-        this.$parent.close();
-      })
+
+			await this.updateCloseDate(activeDepositCopy);
+
+      this.$parent.close();
     }
   }
 };

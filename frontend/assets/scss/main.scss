@@ -101,6 +101,7 @@ h1.is-1 {
 
 .faq-quill .ql-editor {
 	min-height: 120px;
+	color: #363636;
 }
 
 // Then import other variables
@@ -315,4 +316,11 @@ body {
 			background-color: #FFFFFF;
 		}
 	}
+}
+
+.green {
+	color: green;
+}
+.red {
+	color: red;
 }

@@ -32,7 +32,7 @@
 							div.columns
 								div.column(v-if="invoiceData.payment_transaction_hash")
 									span.is-flex.is-align-items-center TxHash:
-										a(:href="getTxLink(invoiceData.payment_transaction_hash)" target="_blank" rel="noopener").ml-1 0x26c6968bf7e3237953b60b530fcc77d356c5c6704eaf3763f74d9046790cf46c
+										a(:href="getTxLink(invoiceData.payment_transaction_hash)" target="_blank" rel="noopener").ml-1 {{ invoiceData.payment_transaction_hash }}
 										b-icon(
 											v-clipboard:copy="invoiceData.payment_transaction_hash"
 											v-clipboard:success="onCopy"
