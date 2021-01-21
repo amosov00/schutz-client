@@ -1,6 +1,4 @@
 import web3 from "~/utils/web3";
-import {ToastProgrammatic as Toast} from 'buefy'
-import _ from "lodash";
 
 
 /*
@@ -34,7 +32,7 @@ export const actions = {
 	/* Открытие депозита */
 	async deposit({commit, dispatch, rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
-		const user = rootGetters["user"]
+		const referralAddresses = await dispatch("fetchReferralAddresses", {}, {root: true})
 		return window.ethereum
 			.request({
 				method: "eth_sendTransaction",
@@ -47,9 +45,9 @@ export const actions = {
 						gas: web3.utils.toHex("250000"),
 						data: this.$contracts().Schutz.methods.deposit(
 							value * 1e6,
-							user.referral_1 || "0x0000000000000000000000000000000000000000",
-							user.referral_2 || "0x0000000000000000000000000000000000000000",
-							user.referral_3 || "0x0000000000000000000000000000000000000000",
+							referralAddresses.referral_1 || "0x0000000000000000000000000000000000000000",
+							referralAddresses.referral_2 || "0x0000000000000000000000000000000000000000",
+							referralAddresses.referral_3 || "0x0000000000000000000000000000000000000000",
 						).encodeABI()
 					}]
 			})
