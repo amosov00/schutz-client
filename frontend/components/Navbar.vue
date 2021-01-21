@@ -104,6 +104,11 @@ export default {
 					text: "Вопросы - ответы",
 					action: () => this.$router.push("/faq"),
 					active: this.$router.path === "/faq",
+				},
+				{
+					text: "Деактивация транзакций",
+					action: () => this.$router.push("/admin/transactions/deactivate"),
+					active: this.$router.path === "/admin/transactions/deactivate",
 				}
 			];
 		}
