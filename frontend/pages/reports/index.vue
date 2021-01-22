@@ -85,31 +85,31 @@ export default {
       transactionOptions: [
         {
           label: "Investments",
-          value: "investments"
+          value: "investments",
         },
         {
           label: "Dividend Withdraw",
-          value: "dividend_withdraw"
+          value: "dividend_withdraw",
         },
         {
           label: "Dividend Accural",
-          value: "dividend_accural"
+          value: "dividend_accural",
         },
         {
           label: "Deposit Withdraw",
-          value: "deposit_withdraw"
+          value: "deposit_withdraw",
         },
         {
-          label: "Deposit Accural",
-          value: "deposit_accural"
+          label: "Deposit Accrual",
+          value: "deposit_accural",
         },
         {
           label: "Active Deposits",
-          value: "deposits"
+          value: "deposits",
         },
         {
           label: "All",
-          value: "all"
+          value: "all",
         }
       ]
     };

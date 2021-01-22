@@ -189,9 +189,16 @@ export const actions = {
 	},
 	async fetchReferralLink({ commit }) {
 		const { data } = await this.$axios.get(
-			"/account/referral_link/?for_save=true"
+			"/account/referral/link/?for_save=true"
 		);
 		commit("setReferralLink", data);
+	},
+	async fetchReferralAddresses({}) {
+		return this.$axios.get("/account/referral/addresses/").then(resp => {
+			return resp.data
+		}).catch(err => {
+			return null
+		});
 	},
 	async fetchTransactions({ commit }, type) {
 		const { data } = await this.$axios.get(`/transactions/?q=${type}`);

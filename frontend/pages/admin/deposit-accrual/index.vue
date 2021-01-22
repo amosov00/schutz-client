@@ -24,12 +24,11 @@
 								CustomButton(style="width: 100%" @click.native="triggerPayInvoiceModal").mt-2
 									span(style="color: #846756") Оплатить
 		.container
-			.level
-				.is-size-5.has-text-white.mb-4
-					base-input(
-						v-model="searchQuery"
-						placeholder="Найти адрес или хэш"
-					).admin_search__bar
+			.is-size-5.has-text-white.mb-4
+				base-input(
+					v-model="searchQuery"
+					placeholder="Введите адрес или Email"
+				).admin_search__bar
 			AdminDepositAccuralTable(
 				:loading="loading"
 				:data="tableData"
@@ -126,6 +125,14 @@ export default {
 		},
 	},
 
+	watch: {
+		fromDate: {
+			handler(time) {
+				this.onDateChange(time);
+			}
+		}
+	},
+
 	methods: {
 		...mapActions({
 			fetchAgreements: 'reports/fetchAgreements',
@@ -147,6 +154,10 @@ export default {
 		},
 
 		getTimestamp(time) {
+			if(typeof time !== 'object') {
+				time = new Date(time * 1000)
+			}
+
 			const offset = this.$moment().utcOffset()
 			return this.$moment(time)
 				.add(offset, 'minutes')
@@ -214,10 +225,6 @@ export default {
 				totals: this.allTotals.total,
 			})
 		},
-	},
-
-	async mounted() {
-		await this.onDateChange(this.fromDate)
 	},
 }
 </script>

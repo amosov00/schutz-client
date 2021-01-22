@@ -11,9 +11,7 @@
 					<div class="column mb-4 is-flex flex-column">
 						<div class="data-item">
 							<div class="icon name"></div>
-							<div class="value">
-								{{ `${user.first_name} ${user.last_name}` }}
-							</div>
+							<div class="value">{{ `${user.first_name} ${user.last_name}` }} </div>
 						</div>
 						<div class="data-item">
 							<div class="icon email"></div>

@@ -8,7 +8,7 @@
 			b-table-column(field="contract" label="Contract" width="30") {{ showContract(row) }}
 			b-table-column(field="open_date" label="Open date" width="30") {{ timestampToDate(row.open_date) }}
 			b-table-column(field="close_date" label="Close date" width="30")
-				a(@click.prevent="openUpdateCloseDateModal(row)") {{ timestampToDate(row.close_date) }}
+				a(@click.prevent="showCloseDateModal(row)") {{ timestampToDate(row.close_date) }}
 			b-table-column(field="is_active" label="Active" width="30").has-text-primary.overflow-reset
 				span(v-if="row.is_active").green Active
 				span(v-else).red Not active
@@ -37,7 +37,7 @@ import formatCurrency from "~/mixins/formatCurrency";
 import etherscan from "~/mixins/etherscan";
 import tableMixin from "~/components/tables/ReportTables/tableMixin";
 import {mapActions, mapGetters} from "vuex";
-import {UpdateCloseDateOfActiveDeposit} from "~/components/modals";
+import UpdateCloseDateModal from "~/components/modals/UpdateCloseDateModal";
 
 export default {
 	mixins: [formatDate, formatCurrency, etherscan, tableMixin],
@@ -66,36 +66,23 @@ export default {
 			return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
 		},
 
-		async openUpdateCloseDateModal(contractInfo) {
-			try {
-				console.log(contractInfo)
-				const contract = Object.assign({}, contractInfo);
-				let contracts = [...this.data];
-				contract.close_date = await this.$modal.open({
-					factory: () => UpdateCloseDateOfActiveDeposit,
+		showCloseDateModal(data) {
+			const modal = this.$buefy.modal.open({
+				parent: this,
+				component: UpdateCloseDateModal,
+				trapFocus: true,
+				props: {
+					activeDeposit: this.activeDepositDetails,
+					contract: data
+				}
+			});
 
-					props: {
-						title: 'Close Date for ' + this.showContract(contractInfo),
-						closeDate: contractInfo.close_date,
-					},
-
-					options: {
-						prompt: true,
-					}
-				});
-				contracts = [...contracts.filter(({ contract: _ }) => _ !== contract.contract), contract];
-
-				await this.updateCloseModal(Object.assign({}, this.activeDepositDetails, { contracts }))
-
-				await this.fetchActiveDepositByID(this.activeDepositDetails._id);
-			} catch (e) {
-				console.error(e)
-			}
+			modal.$on('close', async () => (await this.fetchActiveDepositByID(this.activeDepositDetails._id)))
 		}
 	}
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
