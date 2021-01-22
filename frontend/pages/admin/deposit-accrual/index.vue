@@ -125,6 +125,14 @@ export default {
 		},
 	},
 
+	watch: {
+		fromDate: {
+			handler(time) {
+				this.onDateChange(time);
+			}
+		}
+	},
+
 	methods: {
 		...mapActions({
 			fetchAgreements: 'reports/fetchAgreements',
@@ -146,6 +154,10 @@ export default {
 		},
 
 		getTimestamp(time) {
+			if(typeof time !== 'object') {
+				time = new Date(time * 1000)
+			}
+
 			const offset = this.$moment().utcOffset()
 			return this.$moment(time)
 				.add(offset, 'minutes')
@@ -213,10 +225,6 @@ export default {
 				totals: this.allTotals.total,
 			})
 		},
-	},
-
-	async mounted() {
-		await this.onDateChange(this.fromDate)
 	},
 }
 </script>
