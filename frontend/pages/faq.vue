@@ -1,17 +1,17 @@
 <template lang="pug">
-  .container
+  .container.faq__container
     h1.title.is-2(style="color: #ffffff") {{$t('FAQPage.pageTitle')}}
-    .mb-5(v-if="isManagerOrHigher")
-      base-input.admin_search__bar(type="text" v-model="newQuestion.title" :placeholder="$t('FAQPage.title')").mb-5
-      base-input.admin_search__bar(type="number" v-model="newQuestion.order" :placeholder="$t('FAQPage.order')").mb-5
+    .box.mb-5(v-if="isManagerOrHigher")
+      base-input.admin_search__bar.light(type="text" v-model="newQuestion.title" :placeholder="$t('FAQPage.title')").mb-5
+      base-input.admin_search__bar.light(number-arrows type="number" v-model="newQuestion.order" :placeholder="$t('FAQPage.order')").mb-5
       quill-editor(
         :options="quillOptions"
         v-model="newQuestion.body"
         :placeholder="$t('FAQPage.typeAnswer')"
       ).faq-quill.mb-6
-      button.button.default-button.mr-2(@click="add") {{$t('add')}}
+      button.is-primary.button.default-button.mr-2(@click="add") {{$t('add')}}
     .faq-list(v-if="isManagerOrHigher").mb-5
-      b-collapse.card(animation="slide" v-for="(collapse, index) of list"
+      b-collapse.mb-3.card(animation="slide" v-for="(collapse, index) of list"
         :key="index" :open="getState(index, 'isOpen')"
         @open="doSetState(index, 'isOpen', true)"
         @close="doSetState(index, 'isOpen', false)")
