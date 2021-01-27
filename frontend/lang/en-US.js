@@ -188,11 +188,9 @@ export default {
 	"Вклад будет доступен к выводу":
 		"The deposit will be available for withdrawal",
 	после: "after",
-	"Кошелек готов к работе.": "The wallet is ready to work.",
-	"Добавьте кошелек": "Add wallet",
-	"Выберите этот кошелек в вашем MetaMask.":
-		"Select this wallet in your MetaMask.",
-	"Авторизовать кошлек": "Authorize wallet",
+	walletOnline: "The wallet is ready to work.",
+	walletWaiting: "Select this wallet in your MetaMask.",
+	walletOffline: "Wallet has to be authorized",
 	"Одобрить USDT": "Approve USDT",
 	"История транзакций": "Transaction history",
 	"Ethereum адрес": "Ethereum address",

@@ -15,7 +15,7 @@ export const mutations = {
   setInfuraLinks: (state, payload) => state.infura = payload,
 };
 export const actions = {
-  async fetchContractsV2({commit}) {
+  async fetchContractsMeta({commit}) {
     await this.$axios.get("/meta/v2/contract/").then(resp => {
       commit("setContractsMeta", resp.data.contracts)
       commit("setInfuraLinks", {
@@ -26,9 +26,9 @@ export const actions = {
     })
     return true
   },
-	async getContractsMeta({getters, dispatch}) {
-  	if (getters.contractsMeta.length === 0) {
-  		await dispatch("fetchContractsV2")
+	async prefetchContractMeta({getters, dispatch}) {
+  	if (getters.contractsMeta.length === 0 || !getters.infura.ws) {
+  		await dispatch("fetchContractsMeta")
 		}
   	return getters.contractsMeta
 	}

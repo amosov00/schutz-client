@@ -33,7 +33,7 @@ export class Web3Controller {
 
 		if (!web3) {
 			const infuraUrl = store.getters["contract/infura"]
-			web3 = new Web3(infuraUrl)
+			web3 = new Web3(new Web3.providers.WebsocketProvider(infuraUrl.ws))
 		}
 		return web3
 
@@ -44,8 +44,7 @@ export class Web3Controller {
 		const {store} = this._app
 		const {web3} = this._app._web3
 
-		const contractsMeta = await store.dispatch("contract/getContractsMeta")
-		contractsMeta.map(i => {
+		store.getters["contract/contractsMeta"].map(i => {
 			if (i.abi && i.address) {
 				contracts[i.title] = new web3.eth.Contract(i.abi, i.address)
 			}
@@ -55,6 +54,9 @@ export class Web3Controller {
 	}
 
 	async init() {
+		const {store} = this._app
+		await store.dispatch("contract/prefetchContractMeta")
+
 		this._app._web3.metamask = await this.initMetamask()
 		this._app._web3.web3 = await this.initWeb3()
 		this._app._web3.contracts = await this.initWeb3Contracts()

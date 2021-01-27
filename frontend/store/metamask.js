@@ -31,7 +31,7 @@ export const actions = {
 				accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
 			}
 			const {ethereum_wallet} = rootGetters.user
-			const activeAccount = accounts.length !== 0 ? accounts[0] : null
+			const activeAccount = accounts.length !== 0 ? accounts[0] : ""
 
 			await commit("setIsConnected", true)
 			await commit("setEthAddress", activeAccount)

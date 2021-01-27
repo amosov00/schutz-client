@@ -1,5 +1,6 @@
 import detectEthereumProvider from "@metamask/detect-provider";
 
+
 export class MetamaskWrapper {
 	constructor() {
 		this.provider = null
@@ -11,14 +12,15 @@ export class MetamaskWrapper {
 	}
 
 	_onConnect(connectInfo) {
-		// console.log("_onConnect", connectInfo)
+		console.log("_onConnect", connectInfo)
 	}
 
 	_onDisconnect(error) {
-		// console.log("_onDisconnect", error)
+		console.log("_onDisconnect", error)
 	}
 
 	_onAccountsChanged(accounts) {
+		console.log("_onConnect", accounts)
 		MetamaskInstance.app.store.dispatch("metamask/initMetamask", {
 			force: true,
 			accounts: accounts
