@@ -19,7 +19,7 @@ import ReportsTable from "~/components/tables/ReportsTable";
 export default {
   name: "reports",
   layout: "profile",
-  middleware: ["authRequired", "adminRequired", "contracts"],
+  middleware: ["authRequired", "adminRequired"],
   components: { ReportsTable },
   computed: {
     activeDepositTransactions() {

@@ -90,7 +90,7 @@ export default {
 
 	mixins: [formatDate, formatCurrency, etherscan],
 
-	middleware: ["authRequired", "adminRequired", "contracts"],
+	middleware: ["authRequired", "adminRequired"],
 
 	computed: {
 		...mapGetters({

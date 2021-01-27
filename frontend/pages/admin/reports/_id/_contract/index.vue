@@ -35,7 +35,7 @@ import etherscan from "~/mixins/etherscan";
 import {itemPagination} from "~/utils/pagination";
 
 export default {
-	middleware: ["authRequired", "adminRequired", "contracts"],
+	middleware: ["authRequired", "adminRequired"],
 
 	components: {
 		CustomSlider,

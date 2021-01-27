@@ -41,7 +41,7 @@ import formatCurrency from "~/mixins/formatCurrency";
 export default {
   name: "transactions-all",
   layout: "profile",
-  middleware: ["authRequired", "adminRequired", "contracts"],
+  middleware: ["authRequired", "adminRequired"],
   mixins: [formatDate, formatCurrency],
   methods: {
     async searchAddress() {

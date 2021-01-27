@@ -4,7 +4,7 @@
 export default {
   name: "bills_address",
   layout: "admin",
-  middleware: ["authRequired", "adminRequired", "contracts"],
+  middleware: ["authRequired", "adminRequired"],
   asyncData({redirect}) {
     redirect('/bills/')
   },

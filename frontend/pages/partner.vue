@@ -125,7 +125,7 @@ import { mainSliderController } from "@/utils/slider";
 export default {
 	name: "partner",
 	layout: "profile",
-	middleware: ["authRequired", "contracts"],
+	middleware: ["authRequired"],
 	transition: mainSliderController,
 	components: {
 		PartnersTable

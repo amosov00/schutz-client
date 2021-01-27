@@ -59,6 +59,8 @@ export default {
   methods: {
   },
   async created() {
+  	console.log("navbar", await this.$web3())
+
     this.$store.dispatch("userContractIntegration/fetchBalances").then(() => {
     }).catch((e) => {
       console.warn("Failed to fetch deposits data")

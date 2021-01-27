@@ -147,7 +147,7 @@ import moment from "moment";
 export default {
 	name: "index",
 	layout: "profile",
-	middleware: ["authRequired", "contracts"],
+	middleware: ["authRequired"],
 	mixins: [formatCurrency, formatDate],
 	components: {
 		InlineSvg,

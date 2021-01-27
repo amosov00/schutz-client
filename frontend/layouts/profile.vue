@@ -12,7 +12,7 @@
 import Navbar from '../components/Navbar'
 import DefaultFooter from '../components/DefaultFooter'
 import ModalStack from "@/components/ModalStack";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
 	components: {
@@ -20,7 +20,7 @@ export default {
 		Navbar,
 		ModalStack,
 	},
-	middleware: ['fetchUser', 'metamask'],
+	middleware: ['fetchUser', 'web3'],
 
 	computed: {
 		...mapGetters({
@@ -37,8 +37,7 @@ export default {
 		]
 	}),
 
-	methods: {
-	}
+	methods: {}
 }
 </script>
 <style lang="scss" scoped>

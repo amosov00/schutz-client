@@ -60,7 +60,7 @@ export default {
   layout: "admin",
   mixins: [formatCurrency, formatDate],
   components: {PayInvoiceButton},
-  middleware: ["authRequired", "adminRequired", "contracts"],
+  middleware: ["authRequired", "adminRequired"],
   data() {
     return {
       searchQuery: "",

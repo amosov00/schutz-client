@@ -43,7 +43,7 @@ import ActiveDepositsTable from "~/components/tables/ActiveDepositsTable";
 export default {
   name: "reports",
   layout: "admin",
-  middleware: ["managerOrAdminRequired", "contracts"],
+  middleware: ["managerOrAdminRequired"],
   components: {ReportsTable, ActiveDepositsTable},
   data() {
     return {

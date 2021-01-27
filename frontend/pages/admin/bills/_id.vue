@@ -69,7 +69,7 @@ import {itemPagination} from "~/utils/pagination";
 export default {
 	layout: 'profile',
 
-	middleware: ["authRequired", "adminRequired", "contracts"],
+	middleware: ["authRequired", "adminRequired"],
 
 	mixins: [formatCurrency, formatDate, etherscan],
 

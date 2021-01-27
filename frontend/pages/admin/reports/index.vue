@@ -65,7 +65,7 @@ export default {
 	},
 
 	layout: "profile",
-	middleware: ["managerOrAdminRequired", "contracts"],
+	middleware: ["managerOrAdminRequired"],
 
 	data() {
 		return {

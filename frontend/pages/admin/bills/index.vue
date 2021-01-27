@@ -24,7 +24,7 @@ import { AdminCreateBill } from "~/components";
 
 export default {
 	layout: "profile",
-	middleware: ["managerOrAdminRequired", "contracts"],
+	middleware: ["managerOrAdminRequired"],
 
 	components: {
 		CustomSlider,

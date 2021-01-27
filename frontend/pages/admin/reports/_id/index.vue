@@ -27,7 +27,7 @@ import UserProfile from "~/components/modals/UserProfile";
 import { ReportsTable } from "~/components/tables";
 
 export default {
-	middleware: ['authRequired', 'adminRequired', 'contracts'],
+	middleware: ['authRequired', 'adminRequired'],
 
 	layout: 'profile',
 

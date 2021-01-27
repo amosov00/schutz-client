@@ -15,7 +15,7 @@ import ReportsTable from "~/components/tables/ReportsTable";
 export default {
   name: "reports",
   layout: "admin",
-  middleware: ["authRequired", "adminRequired", "contracts"],
+  middleware: ["authRequired", "adminRequired"],
   components: {ReportsTable},
   computed: {
     activeDepositsByID() {

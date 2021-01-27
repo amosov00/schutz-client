@@ -247,7 +247,7 @@ import { mainSliderController } from "@/utils/slider";
 export default {
 	name: "investment",
 	layout: "profile",
-	middleware: ["authRequired", "contracts"],
+	middleware: ["authRequired"],
 	mixins: [formatDate, formatCurrency, formatText],
 	transition: mainSliderController,
 	components: {

@@ -108,7 +108,7 @@ import PassRepayModal from '~/components/modals/DepositAccuralModal'
 export default {
   name: 'reports',
   layout: 'admin',
-  middleware: ['managerOrAdminRequired', 'contracts'],
+  middleware: ['managerOrAdminRequired'],
   components: { MailingUsersModal, DepositAccuralTable },
   mixins: [formatDate, formatCurrency],
   data() {
