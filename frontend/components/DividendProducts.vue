@@ -27,9 +27,7 @@
 								{{ $t('Ethereum адрес') }}:
 							</div>
 							<div class="mb-5 ethereum-address">
-								<span v-if="user.ethereum_wallet">{{
-										user.ethereum_wallet
-									}}</span>
+								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
@@ -40,35 +38,32 @@
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
 								<div
-									:class="[isConnected ? 'status-online' : 'status-offline']"
+									:class="`status-${mode}`"
 									class="is-size-4 status mr-5"
 								>
-									{{ isConnected ? "Online" : "Offline" }}
+									{{ mode }}
 								</div>
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div v-if="isConnected" class="is-size-7 has-text-grey">
-								{{ $t('Кошелек готов к работе.') }}
+							<div v-if="mode === metamaskState.ONLINE" class="is-size-7 has-text-grey">
+								{{ $t('walletOnline') }}
 							</div>
-							<div
-								v-else-if="!user.ethereum_wallet"
-								class="is-size-7 status-offline"
-							>
-								{{ $t('Добавьте кошелек') }}
+							<div v-else-if="mode === metamaskState.WAITING" class="is-size-7 has-text-grey">
+								{{ $t('walletWaiting') }}
 							</div>
-							<div v-else class="is-size-7 status-offline">
-								{{ $t('Выберите этот кошелек в вашем MetaMask.') }}
+							<div v-else-if="mode === metamaskState.OFFLINE" class="is-size-7 status-offline">
+								{{ $t('walletOffline') }}
 							</div>
 						</div>
 						<custom-button
-							:disabled="!interestBalance || !isConnected"
+							:disabled="!interestBalance || !metamaskActionsAreAllowed"
 							@click.native="openModal('close-deposit')"
 							class="mt-auto mb-2"
 						>
 							{{ $t('Вывести') }}
 						</custom-button>
 						<custom-button
-							:disabled="!interestBalance || !isConnected"
+							:disabled="!interestBalance || !metamaskActionsAreAllowed"
 							@click.native="openModal('reinvest')"
 						>
 							{{ $t('Реинвестировать') }}
@@ -91,6 +86,7 @@ import formatCurrency from "~/mixins/formatCurrency";
 import {mapGetters} from "vuex";
 import WithdrawAndCloseDepositModal from "./modals/WithdrawAndCloseDepositModal";
 import ReinvestModal from "./modals/ReinvestModal";
+import {METAMASK_STATE} from "~/consts";
 
 export default {
 	name: "DividendProducts",
@@ -104,12 +100,16 @@ export default {
 	},
 	data: () => ({
 		isCloseDepositModalActive: false,
-		isReinvestModalActive: false
+		isReinvestModalActive: false,
+		metamaskState: METAMASK_STATE,
 	}),
 	computed: {
 		...mapGetters(["user"]),
-		...mapGetters("metamask", ["isConnected", "gasPrice"]),
-		...mapGetters("userContractIntegration", ["interestBalance"])
+		...mapGetters("metamask", ["isConnected", "gasPrice", "mode"]),
+		...mapGetters("userContractIntegration", ["interestBalance"]),
+		metamaskActionsAreAllowed() {
+			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
+		},
 	},
 	methods: {
 		openModal(modal) {
@@ -173,6 +173,14 @@ export default {
 
 		&:before {
 			background-color: #d60d0d;
+		}
+	}
+
+	&-waiting {
+		color: #d6640d;
+
+		&:before {
+			background-color: #d6640d;
 		}
 	}
 

@@ -7,6 +7,12 @@ export const NTS_CONTRACTS = {
 	SCHUTZV1: "SchutzV1"
 }
 
+export const METAMASK_STATE = {
+	OFFLINE: "offline",
+	WAITING: "waiting",
+	ONLINE: "online"
+}
+
 export const getResult = (res) => {
 	// UNMARKED =  1CLOSE = 2 PROLONG = 3 NOT_SENT = 4 PROLONG_ADMIN = 5 PAID = 6
 	let result = ''

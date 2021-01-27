@@ -75,7 +75,7 @@ import ProlongDepositModal from '~/components/modals/ProlongDepositModal'
 export default {
 	layout: 'admin',
 	mixins: [formatDate],
-	middleware: ['authRequired', 'adminRequired', 'contracts'],
+	middleware: ['authRequired', 'adminRequired'],
 	components: {ValidationObserver, ValidationProvider},
 	data() {
 		return {

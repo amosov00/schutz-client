@@ -23,7 +23,7 @@ export default {
 	components: {
 		LeftMenu, NavbarPersonalArea
 	},
-	middleware: ['fetchUser', 'metamask'],
+	middleware: ['fetchUser', 'web3'],
 }
 </script>
 <style lang="scss" scoped>

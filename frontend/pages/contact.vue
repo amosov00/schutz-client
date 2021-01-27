@@ -40,7 +40,7 @@ import { mapGetters } from "vuex";
 export default {
 	name: "contact",
 	layout: "profile",
-	middleware: ["authRequired", "contracts"],
+	middleware: ["authRequired"],
 	components: { InlineSvg },
 	computed: {
 		...mapGetters(["user"])

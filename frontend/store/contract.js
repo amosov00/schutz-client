@@ -1,23 +1,23 @@
 export const state = () => ({
-  contracts: [],
+  contractsMeta: [],
   infura: {
     http: null,
     ws: null,
   },
 });
 export const getters = {
-  contract: s => contact => s.contracts.filter(i => i.title === contact),
-  contracts: s => s.contracts,
+	contractMeta: s => contact => s.contractsMeta.filter(i => i.title === contact),
+	contractsMeta: s => s.contractsMeta,
   infura: s => s.infura,
 };
 export const mutations = {
-  setContracts: (state, payload) => state.contracts = payload,
+  setContractsMeta: (state, payload) => state.contractsMeta = payload,
   setInfuraLinks: (state, payload) => state.infura = payload,
 };
 export const actions = {
-  async fetchContractsV2({commit}) {
+  async fetchContractsMeta({commit}) {
     await this.$axios.get("/meta/v2/contract/").then(resp => {
-      commit("setContracts", resp.data.contracts)
+      commit("setContractsMeta", resp.data.contracts)
       commit("setInfuraLinks", {
         "http": resp.data.infura_http,
         "ws": resp.data.infura_ws,
@@ -26,4 +26,10 @@ export const actions = {
     })
     return true
   },
+	async prefetchContractMeta({getters, dispatch}) {
+  	if (getters.contractsMeta.length === 0 || !getters.infura.ws) {
+  		await dispatch("fetchContractsMeta")
+		}
+  	return getters.contractsMeta
+	}
 };

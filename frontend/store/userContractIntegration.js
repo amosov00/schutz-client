@@ -1,4 +1,4 @@
-import web3 from "~/utils/web3";
+import Web3 from "web3";
 
 
 /*
@@ -33,17 +33,20 @@ export const actions = {
 	async deposit({commit, dispatch, rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
 		const referralAddresses = await dispatch("fetchReferralAddresses", {}, {root: true})
-		return window.ethereum
+		const ethAddress = rootGetters['metamask/ethAddress']
+		const {contracts, metamask} = await this.$web3()
+
+		return metamask.provider
 			.request({
 				method: "eth_sendTransaction",
 				params: [
 					{
-						from: window.ethereum.selectedAddress,
-						to: this.$contracts().Schutz._address,
+						from: ethAddress,
+						to: contracts.Schutz._address,
 						value: "0x00",
-						gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
-						gas: web3.utils.toHex("250000"),
-						data: this.$contracts().Schutz.methods.deposit(
+						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, "gwei")),
+						gas: Web3.utils.toHex("250000"),
+						data: contracts.Schutz.methods.deposit(
 							value * 1e6,
 							referralAddresses.referral_1 || "0x0000000000000000000000000000000000000000",
 							referralAddresses.referral_2 || "0x0000000000000000000000000000000000000000",
@@ -62,17 +65,20 @@ export const actions = {
 	/* Вывод InterestBalance */
 	async withdraw({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
-		return window.ethereum
+		const ethAddress = rootGetters['metamask/ethAddress']
+		const {contracts, metamask} = await this.$web3()
+
+		return metamask.provider
 			.request({
 				method: "eth_sendTransaction",
 				params: [
 					{
-						from: window.ethereum.selectedAddress,
-						to: this.$contracts().Schutz._address,
+						from: ethAddress,
+						to: contracts.Schutz._address,
 						value: "0x00",
-						gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
-						gas: web3.utils.toHex("250000"),
-						data: this.$contracts().Schutz.methods.withdraw(
+						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, "gwei")),
+						gas: Web3.utils.toHex("250000"),
+						data: contracts.Schutz.methods.withdraw(
 							value * 1e6
 						).encodeABI()
 					}]
@@ -87,19 +93,20 @@ export const actions = {
 	/* Вывод средств с закрытия депозита DepositBalance */
 	async closeDeposit({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
-		return window.ethereum
+		const ethAddress = rootGetters['metamask/ethAddress']
+		const {contracts, metamask} = await this.$web3()
+
+		return metamask.provider
 			.request({
 				method: "eth_sendTransaction",
 				params: [
 					{
-						from: window.ethereum.selectedAddress,
-						to: this.$contracts().Schutz._address,
+						from: ethAddress,
+						to: contracts.Schutz._address,
 						value: "0x00",
-						gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
-						gas: web3.utils.toHex("250000"),
-						data: this.$contracts().Schutz.methods.closeDeposit(
-							value * 1e6
-						).encodeABI()
+						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, "gwei")),
+						gas: Web3.utils.toHex("250000"),
+						data: contracts.Schutz.methods.closeDeposit(value * 1e6).encodeABI()
 					}]
 			})
 			.then(async tx => {
@@ -112,19 +119,20 @@ export const actions = {
 	/* Реинвест средств InterestBalance */
 	async reinvest({rootGetters}, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
-		return window.ethereum
+		const ethAddress = rootGetters['metamask/ethAddress']
+		const {contracts, metamask} = await this.$web3()
+
+		return metamask.provider
 			.request({
 				method: "eth_sendTransaction",
 				params: [
 					{
-						from: window.ethereum.selectedAddress,
-						to: this.$contracts().Schutz._address,
+						from: ethAddress,
+						to: contracts.Schutz._address,
 						value: "0x00",
-						gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
-						gas: web3.utils.toHex("250000"),
-						data: this.$contracts().Schutz.methods.reinvest(
-							value * 1e6
-						).encodeABI()
+						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, "gwei")),
+						gas: Web3.utils.toHex("250000"),
+						data: contracts.Schutz.methods.reinvest(value * 1e6).encodeABI()
 					}]
 			})
 			.then(async tx => {
@@ -137,34 +145,34 @@ export const actions = {
 	/* allowence */
 	async allowUSDT({rootGetters, commit, dispatch}) {
 		const gasPrice = rootGetters['metamask/gasPrice']
+		const ethAddress = rootGetters['metamask/ethAddress']
+		const {contracts, metamask} = await this.$web3()
 
-		return window.ethereum.request({
-			method: "eth_sendTransaction",
-			params: [
-				{
-					from: window.ethereum.selectedAddress,
-					to: this.$contracts().USDT._address,
-					value: "0x00",
-					gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
-					gas: web3.utils.toHex("250000"),
-					data: this.$contracts().USDT.methods.approve(
-						this.$contracts().Schutz._address, 1000000e6
-					).encodeABI()
-				}]
-		}).then(tx => {
-			dispatch("depositToggle", true, {root: true});
-			commit("deposit/setAllowance", 1000000, {root: true})
-		}).catch(_ => {
-		})
+		return metamask.provider
+			.request({
+				method: "eth_sendTransaction",
+				params: [
+					{
+						from: ethAddress,
+						to: contracts.USDT._address,
+						value: "0x00",
+						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, "gwei")),
+						gas: Web3.utils.toHex("250000"),
+						data: contracts.USDT.methods.approve(contracts.Schutz._address, 1000000e6).encodeABI()
+					}]
+			})
+			.then(async tx => {
+				await dispatch("depositToggle", true, {root: true});
+				commit("deposit/setAllowance", 1000000, {root: true})
+			})
+			.catch(_ => {
+			})
 	},
 
 	/* main function to fetch all required balances */
 	async fetchBalances({dispatch, getters, rootGetters}) {
-		let address = await dispatch("metamask/getMetamaskAddress", {}, {root: true});
+		const address = rootGetters["user"].ethereum_wallet
 
-		if (!address) {
-			address = rootGetters["user"].ethereum_wallet
-		}
 		if (!getters["tokenBalance"]) {
 			await dispatch("fetchTokenBalance", address);
 		}
@@ -179,8 +187,9 @@ export const actions = {
 		}
 	},
 	async fetchAllowance({commit, dispatch}, address) {
-		return await this.$contracts().USDT.methods
-			.allowance(address, this.$contracts().Schutz._address)
+		const {contracts} = await this.$web3()
+
+		return contracts.USDT.methods.allowance(address, contracts.Schutz._address)
 			.call()
 			.then(allowance => {
 				commit("setAllowance", Math.round(allowance / 1e6));
@@ -191,8 +200,9 @@ export const actions = {
 			});
 	},
 	async fetchTokenBalance({commit}, address) {
-		return await this.$contracts()
-			.Schutz.methods.balanceOf(address)
+		const {contracts} = await this.$web3()
+
+		return contracts.Schutz.methods.balanceOf(address)
 			.call()
 			.then(balance => {
 				commit("setTokenBalance", balance / 1e6);
@@ -203,8 +213,9 @@ export const actions = {
 			});
 	},
 	async fetchInterestBalance({commit}, address) {
-		return await this.$contracts()
-			.Schutz.methods.interestBalance_(address)
+		const {contracts} = await this.$web3()
+
+		return contracts.Schutz.methods.interestBalance_(address)
 			.call()
 			.then(balance => {
 				commit("setInterestBalance", balance / 1e6);
@@ -215,8 +226,9 @@ export const actions = {
 			});
 	},
 	async fetchDepositBalance({commit, dispatch, rootGetters}, address) {
-		return await this.$contracts()
-			.Schutz.methods.depositBalance_(address)
+		const {contracts} = await this.$web3()
+
+		return contracts.Schutz.methods.depositBalance_(address)
 			.call()
 			.then(balance => {
 				commit("setDepositBalance", balance / 1e6)

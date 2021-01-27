@@ -113,16 +113,6 @@ export default {
 			];
 		}
 	},
-	async created() {
-		if (this.$userIsLoggedIn) {
-			this.$store
-				.dispatch("userContractIntegration/fetchBalances")
-				.then(_ => {
-				})
-				.catch(_ => {
-				});
-		}
-	}
 };
 </script>
 

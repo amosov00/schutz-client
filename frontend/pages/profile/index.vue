@@ -97,7 +97,7 @@
 						<custom-button
 							class="mb-2"
 							v-if="depositBalance"
-							:disabled="!isConnected"
+							:disabled="!metamaskActionsAreAllowed"
 							@click.native="openModal('close-deposit')"
 						>
 							{{ $t("Вывести") }} {{ formatCurrency(depositBalance) }}
@@ -143,11 +143,12 @@ import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
 import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
 import { mainSliderController } from "@/utils/slider";
 import moment from "moment";
+import {METAMASK_STATE} from "~/consts";
 
 export default {
 	name: "index",
 	layout: "profile",
-	middleware: ["authRequired", "contracts"],
+	middleware: ["authRequired"],
 	mixins: [formatCurrency, formatDate],
 	components: {
 		InlineSvg,
@@ -216,13 +217,16 @@ export default {
 	},
 	computed: {
 		...mapGetters(["user", "contractAgreements"]),
-		...mapGetters("metamask", ["isConnected", "gasPrice"]),
+		...mapGetters("metamask", ["isConnected", "gasPrice", "mode"]),
 		...mapGetters("userContractIntegration", [
 			"allowance",
 			"tokenBalance",
 			"interestBalance",
 			"depositBalance"
 		]),
+		metamaskActionsAreAllowed() {
+			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
+		},
 		lastContract() {
 			if (this.contractAgreements && this.contractAgreements.length) {
 				return this.contractAgreements[0];
