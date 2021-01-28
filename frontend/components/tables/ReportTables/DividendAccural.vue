@@ -63,7 +63,7 @@
 				div.mb-6.center
 					button.default-button(@click="$emit('more')" v-if="showMoreButton") {{ $t("показать еще") }}
 				.is-size-5.has-background-info.total-withdraw.mb-3.is-flex.is-flex-direction-column.is-align-items-flex-start
-					p Dividends accural: {{`${formatCurrency(totals.dividend_accural, 'usdt')} USDT`}}
+					p Dividends accrual: {{`${formatCurrency(totals.dividend_accural, 'usdt')} USDT`}}
 </template>
 
 <script>

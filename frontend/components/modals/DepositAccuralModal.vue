@@ -1,6 +1,6 @@
 <template lang="pug">
 	div.repay-modal
-		div.title.is-5.main-title Confirm deposit accural
+		div.title.is-5.main-title Confirm deposit accrual
 		b-skeleton(v-if="loading" animated)
 		section(v-else)
 			p Total USDT to pay: {{ formatCurrency(totalUSDT, 'usdt') }}

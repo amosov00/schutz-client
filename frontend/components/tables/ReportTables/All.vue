@@ -50,7 +50,7 @@
 				label="Amount, USDT"
 				width="50"
 				sortable
-				header-class="right-align"
+				header-class="amount_column_header"
 				:style="{ textAlign: 'right' }"
 			) {{ formatCurrency(row.args.USDT, 'usdt') }}
 		template(slot="footer")
@@ -78,6 +78,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+.amount_column_header {
+	padding-right: 0 !important;
 
+	.th-wrap {
+		padding-right: 0 !important;
+		width: fit-content !important;
+	}
+}
 </style>
