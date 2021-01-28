@@ -1,15 +1,26 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5"> {{ $t('Укажите сумму вывода') }} </p>
-			<p class="is-size-7 mb-60" v-html="$t('withdrawalText')">
-
+			<p class="is-size-5">{{ $t("Укажите сумму вывода") }}</p>
+			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
+				Вы можете
+				<a class="is-link" @click="value = depositBalance">вывести всю сумму</a>
+				или часть начисленных дивидендов, остальное реинвестировать.
+				{{ depositBalance }}
+			</p>
+			<p class="is-size-7 mb-60" v-else>
+				You can
+				<a class="is-link" @click="value = depositBalance"
+					>withdraw the entire amount</a
+				>
+				or part of the accrued dividends, and reinvest the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					rules="required|min_value:1"
+					:rules="`required|min_value:1|max_value:${depositBalance}`"
 					slim
 					v-slot="{ errors, valid }"
+					name="amount"
 				>
 					<base-input
 						type="number"
@@ -35,13 +46,13 @@
 						"
 					/>
 					<span class="is-size-7">
-						<span @click="$parent.close()">  {{$t('Я принимаю')}}  </span>
+						<span @click="$parent.close()"> {{ $t("Я принимаю") }} </span>
 						<a
 							href="#"
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							{{ $t('условия и положения') }}
+							{{ $t("условия и положения") }}
 						</a>
 					</span>
 				</div>
@@ -54,13 +65,13 @@
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					{{ $t('Отменить, я передумал') }}
+					{{ $t("Отменить, я передумал") }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="action"
 				>
-					{{ $t('Вывести') }}
+					{{ $t("Вывести") }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
@@ -75,12 +86,13 @@
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
+import { mapGetters } from "vuex";
 export default {
 	name: "WithdrawAndCloseDepositModal",
 	props: {
 		actionType: {
 			type: String,
-			required: true,
+			required: true
 		}
 	},
 	data() {
@@ -102,9 +114,15 @@ export default {
 					type: "is-success"
 				});
 				if (this.actionType === "closeDeposit") {
-					await this.$store.dispatch("userContractIntegration/closeDeposit", parseInt(this.value));
+					await this.$store.dispatch(
+						"userContractIntegration/closeDeposit",
+						parseInt(this.value)
+					);
 				} else if (this.actionType === "withdraw") {
-					await this.$store.dispatch("userContractIntegration/withdraw", parseInt(this.value));
+					await this.$store.dispatch(
+						"userContractIntegration/withdraw",
+						parseInt(this.value)
+					);
 				}
 				this.$parent.close();
 			}
@@ -116,6 +134,7 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters({ depositBalance: "userContractIntegration/depositBalance" }),
 		isTermsAcceped: {
 			get() {
 				return this.$store.getters.isTermsAcceped;

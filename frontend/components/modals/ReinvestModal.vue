@@ -1,13 +1,25 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5"> {{ $t('Укажите сумму реинвестирования') }} </p>
-			<p class="is-size-7 mb-60" v-html="$t('reinvestText')">
-
+			<p class="is-size-5">{{ $t("Укажите сумму реинвестирования") }}</p>
+			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
+				Вы можете
+				<a class="is-link" @click="value = interestBalance"
+					>реинвестировать всю сумму</a
+				>
+				или часть начисленных дивидендов, остальные вывести.
+			</p>
+			<p class="is-size-7 mb-60" v-else>
+				You can
+				<a class="is-link" @click="value = interestBalance"
+					>reinvest the entire amount</a
+				>
+				or part of the accrued dividends, and withdraw the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					rules="required|min_value:50"
+					name="amount"
+					:rules="`required|min_value:50|max_value:${interestBalance}`"
 					slim
 					v-slot="{ errors, valid }"
 				>
@@ -35,13 +47,13 @@
 						"
 					/>
 					<span class="is-size-7">
-						{{ $t('Я принимаю') }}
+						{{ $t("Я принимаю") }}
 						<a
 							href="#"
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							{{ $t('условия и положения') }}
+							{{ $t("условия и положения") }}
 						</a>
 					</span>
 				</div>
@@ -54,13 +66,13 @@
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					{{ $t('Отменить, я передумал') }}
+					{{ $t("Отменить, я передумал") }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="reinvest"
 				>
-					{{ $t('Реинвестировать') }}
+					{{ $t("Реинвестировать") }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
@@ -77,6 +89,7 @@ import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
 export default {
 	name: "reinvest-modal",
+	props: ["interestBalance"],
 	data() {
 		return {
 			value: ""
