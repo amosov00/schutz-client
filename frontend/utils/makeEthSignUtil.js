@@ -2,9 +2,9 @@ import Web3 from "web3";
 import {recoverTypedSignatureLegacy} from "eth-sig-util";
 
 
-export async function makeEthSignature(docType, store, metamaskProvider) {
+export async function makeEthSignature(store, metamaskProvider) {
 	const ethAddress = store.getters["metamask/ethAddress"]
-	const msgPayload = await store.dispatch("meta/fetchLegalDoc", docType)
+	const msgPayload = await store.dispatch("meta/fetchTermsAndConditions")
 
 	const result = await metamaskProvider.request({
 		method: "eth_signTypedData",

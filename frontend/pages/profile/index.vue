@@ -275,8 +275,6 @@ export default {
 			await this.$store.dispatch("metamask/getGasPrice");
 		}
 		await this.$store.dispatch("fetchContractAgreements");
-		let {metamask} = await this.$web3()
-		await makeEthSignature(LEGAL_DOC_TYPE.TERMS, this.$store, metamask.provider);
 	},
 	mounted() {
 		for (let prop in this.profile) {

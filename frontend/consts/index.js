@@ -13,12 +13,6 @@ export const METAMASK_STATE = {
 	ONLINE: "online"
 }
 
-export const LEGAL_DOC_TYPE = {
-	TERMS: "terms-and-conditions",
-	LIMITATIONS: "limitation-of-liability",
-	PRIVACY: "privacy-policy"
-}
-
 export const getResult = (res) => {
 	// UNMARKED =  1CLOSE = 2 PROLONG = 3 NOT_SENT = 4 PROLONG_ADMIN = 5 PAID = 6
 	let result = ''
