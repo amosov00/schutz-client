@@ -11,7 +11,9 @@
 					<div class="column mb-4 is-flex flex-column">
 						<div class="data-item">
 							<div class="icon name"></div>
-							<div class="value">{{ `${user.first_name} ${user.last_name}` }} </div>
+							<div class="value">
+								{{ `${user.first_name} ${user.last_name}` }}
+							</div>
 						</div>
 						<div class="data-item">
 							<div class="icon email"></div>
@@ -82,14 +84,14 @@
 						<custom-button
 							v-if="lastContract"
 							class="mb-2"
-							@click.native="prolongAgreement(lastContract._id)"
+							@click.native="isProlongateModalActive = true"
 						>
 							{{ $t("Продлить") }}
 						</custom-button>
 						<custom-button
 							v-if="lastContract"
 							class="mb-2"
-							@click.native="closeAgreement(lastContract._id)"
+							@click.native="isCancelModalActive = true"
 						>
 							{{ $t("Закрыть") }}
 						</custom-button>
@@ -127,6 +129,12 @@
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
 			<ChangeWalletModal />
 		</b-modal>
+		<b-modal :active.sync="isProlongateModalActive" has-modal-card>
+			<ProlongateConfirm :lastContract="lastContract" />
+		</b-modal>
+		<b-modal :active.sync="isCancelModalActive" has-modal-card>
+			<WithdrawConfirm :lastContract="lastContract" />
+		</b-modal>
 	</div>
 </template>
 
@@ -136,6 +144,8 @@ import PasswordChange from "~/components/PasswordChange";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { mapGetters } from "vuex";
 import AddNewWalletModal from "~/components/modals/AddNewWalletModal";
+import ProlongateConfirm from "~/components/modals/ProlongateConfirm";
+import WithdrawConfirm from "~/components/modals/WithdrawConfirm";
 import formatCurrency from "~/mixins/formatCurrency";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
@@ -143,7 +153,7 @@ import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
 import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
 import { mainSliderController } from "@/utils/slider";
 import moment from "moment";
-import {METAMASK_STATE} from "~/consts";
+import { METAMASK_STATE } from "~/consts";
 
 export default {
 	name: "index",
@@ -158,7 +168,9 @@ export default {
 		AddNewWalletModal,
 		AddFundsModal,
 		WithdrawAndCloseDepositModal,
-		ChangeWalletModal
+		ChangeWalletModal,
+		ProlongateConfirm,
+		WithdrawConfirm
 	},
 	transition: mainSliderController,
 	methods: {
@@ -192,17 +204,6 @@ export default {
 				);
 			}
 		},
-		async prolongAgreement(id) {
-			const res = await this.$store.dispatch("prolongAgreement", id);
-			if (!res) {
-				this.$buefy.toast.open({
-					message: this.$t("investment.errorMessage"),
-					type: "is-danger",
-					queue: false
-				});
-			}
-			await this.$store.dispatch("fetchContractAgreements");
-		},
 		async closeAgreement(id) {
 			const res = await this.$store.dispatch("closeAgreement", id);
 			if (!res) {
@@ -225,7 +226,7 @@ export default {
 			"depositBalance"
 		]),
 		metamaskActionsAreAllowed() {
-			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
+			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE;
 		},
 		lastContract() {
 			if (this.contractAgreements && this.contractAgreements.length) {
@@ -296,7 +297,9 @@ export default {
 		isAddWalletModalActive: false,
 		isAddFundsModalActive: false,
 		isWithdrawCloseDepositModalActive: false,
-		isChangeWalletModalActive: false
+		isChangeWalletModalActive: false,
+		isProlongateModalActive: false,
+		isCancelModalActive: false
 	})
 };
 </script>

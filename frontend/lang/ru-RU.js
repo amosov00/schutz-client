@@ -244,5 +244,7 @@ export default {
 	"Deposit Accural": "Начисление депозита",
 	deposit_accural: "Начисление депозита",
 	deposit_withdraw: "Выведено",
-	"Deposit Withdraw": "Выведено"
+	"Deposit Withdraw": "Выведено",
+	Да: "Да",
+	Нет: "Нет"
 };
