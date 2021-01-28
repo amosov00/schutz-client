@@ -13,9 +13,9 @@
 				b-table-column(field="totalInvestedUSDT" label="Invested, USDT"  width="30") {{ formatCurrency(props.row.deposit_usdt, 'usdt') }}
 				b-table-column(field="delete" label=""  width="150").has-text-right
 					div.is-flex
-						b-button.default-button( @click="triggerPayInvoiceModal(props.row)" :loading="loading") {{$t('pay')}}
-						b-button.default-button(@click="deleteInvoice(props.row._id)").ml-1.delete-btn
-							b-icon(type="is-info" icon="close").mt-1
+						b-button.default-button.is-info( @click="triggerPayInvoiceModal(props.row)" :loading="loading") {{$t('pay')}}
+						b-button.default-button.ml-1.delete-btn.is-info(@click="deleteInvoice(props.row._id)")
+							b-icon( icon="close").mt-1
 			template(slot="footer")
 				div.mb-6.center
 					button.default-button(@click="$emit('more')" v-if="showMoreButton") {{ $t("показать еще") }}

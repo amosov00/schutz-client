@@ -3,7 +3,6 @@
 		:data="data"
 		:loading="loading"
 		default-sort="args.timestamp"
-		:row-class="() => 'table-row-fade'"
 	).custom-table.mb-4
 		template(slot-scope='{ row }')
 			b-table-column.overflow-reset(field='user_id' width='100' label='Id')
@@ -68,14 +67,14 @@
 				width='100'
 			)
 				b-button(
-					type='is-primary is-small'
+					type='is-info is-small'
 					:disabled='row.isPaid !== true && row.result !== 2'
 					@click='pay(row)'
 				)
 					| {{$t('pay')}}
 			b-table-column.has-text-right(width='70')
 				b-button(
-					type='is-primary is-small'
+					type='is-info is-small'
 					@click='openStatusUpdateModal(row)'
 				)
 					| Статус

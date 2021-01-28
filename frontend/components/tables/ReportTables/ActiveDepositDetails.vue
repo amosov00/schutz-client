@@ -2,7 +2,6 @@
 	b-table(
 		:data="data"
 		:loading="loading"
-		:row-class="() => 'table-row-fade'"
 	).custom-table.mb-4
 		template(slot-scope="{ row }")
 			b-table-column(field="contract" label="Contract" width="30") {{ showContract(row) }}
@@ -21,7 +20,7 @@
 			) {{ formatCurrency(row.amount_usdt, 'usdt')}}
 			b-table-column(field="button" width="70" cell-class="text-right").overflow-reset
 				nuxt-link(:to="`/admin/reports/${$route.params.id}/${row.contract}`")
-					b-button(type="is-primary is-small") История вкладов
+					b-button(type="is-info is-small") История вкладов
 		template(slot="footer")
 			div
 				div.mb-6.center
