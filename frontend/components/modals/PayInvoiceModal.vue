@@ -15,7 +15,7 @@
 					p.d-flex(v-if="Boolean(paymentHashFromIndex(index))")
 						a.mr-auto(:href="'https://etherscan.io/tx/' + paymentHashFromIndex(index)[1]" target="_blank").text-clamp TX hash: {{paymentHashFromIndex(index)[1].slice(0, 50)}}...
 						a.has-text-danger(@click="removePayment(paymentHashFromIndex(index)[0], invoiceData)") Удалить
-					b-button.my-3(type="is-primary" @click="payInvoice(index, invoiceData)" :disabled="Boolean(paymentHashFromIndex(index)) || invoiceData.hasProblem" expanded)
+					b-button.my-3(type="is-info" @click="payInvoice(index, invoiceData)" :disabled="Boolean(paymentHashFromIndex(index)) || invoiceData.hasProblem" expanded)
 						| Pay to {{invoiceData.values.length}} addresses
 					b-table(:data="toTableData(invoiceData)" :columns="tableColumns" striped :paginated='true' per-page="20")
 

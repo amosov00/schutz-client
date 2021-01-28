@@ -9,7 +9,7 @@
         v-model="newQuestion.body"
         :placeholder="$t('FAQPage.typeAnswer')"
       ).faq-quill.mb-6
-      button.is-primary.button.default-button.mr-2(@click="add") {{$t('add')}}
+      button.is-success.button.default-button.mr-2(@click="add") {{$t('add')}}
     .faq-list(v-if="isManagerOrHigher").mb-5
       b-collapse.mb-3.card(animation="slide" v-for="(collapse, index) of list"
         :key="index" :open="getState(index, 'isOpen')"
@@ -20,7 +20,7 @@
             b-icon(:icon="props.open ? 'menu-down' : 'menu-right'" type="is-black")
           p.card-header-title
             | {{ collapse.title }} <!-- {{ collapse.order }} {{ collapse.state.isOpen }} {{ isEdit }}-->
-            button(@click.stop="remove(collapse._id)" style="color: red").button.is-small {{ $t('delete') }}
+            b-button(@click.stop="remove(collapse._id)" type="is-danger").button.is-small {{ $t('delete') }}
         .card-content
           .content
             .mb-4(v-if="!getState(index, 'isEdit')")

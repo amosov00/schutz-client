@@ -29,7 +29,7 @@
 									span(v-if="props.row.is_active").green Active
 									span(v-else).red Not active
 								b-table-column(label="Prolong")
-									b-button(@click="showProlongDepositModal(props.row.contract)" type="is-primary") Prolong
+									b-button(@click="showProlongDepositModal(props.row.contract)" type="is-info") Prolong
 					b-field(grouped)
 						b-field(:label="$t('firstName')")
 							b-input(type="text" placeholder="first" v-model="form.first_name")
@@ -62,7 +62,7 @@
 						b-button(
 							v-if="$userIsSuperuser()"
 							size="is-medium"
-							type="is-primary"
+							type="is-info"
 							@click="update"
 							:disabled="invalid") {{$t('update')}}
 </template>
