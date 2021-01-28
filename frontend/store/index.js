@@ -205,7 +205,7 @@ export const actions = {
 		commit("setTransactions", data);
 	},
 	async fetchContractAgreements({ commit }, type) {
-		const { data } = await this.$axios.get("/account/contracts_agreement");
+		const { data } = await this.$axios.get("/account/contracts_agreement/");
 		commit("setContractAgreements", data);
 	},
 	async updateUser({}, user) {
@@ -272,4 +272,43 @@ export const actions = {
 				return false;
 			});
 	},
+	async addWallet({}, wallet) {
+		return await this.$axios
+			.post("/account/add_ethereum_wallet/", {
+				ethereum_wallet: wallet
+			})
+			.then(() => {
+				Toast.open({
+					message: "Адрес кошелька сохранен",
+					type: "is-success"
+				});
+				return true;
+			})
+			.catch(err => {
+				Toast.open({
+					message: err.response.data[0].message,
+					type: "is-danger",
+					duration: 6000
+				});
+				return false;
+			});
+	},
+
+	async changeWallet({}, wallet) {
+		return await this.$axios
+			.post("/account/ethwallet/", {
+				new_ethereum_wallet: wallet
+			})
+			.then(() => {
+				return true;
+			})
+			.catch(err => {
+				Toast.open({
+					message: err.response.data[0].message,
+					type: "is-danger",
+					duration: 6000
+				});
+				return false;
+			});
+	}
 };

@@ -141,9 +141,9 @@ import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
 import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
 import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
-import { mainSliderController } from "@/utils/slider";
+import { mainSliderController, makeEthSignature} from "@/utils";
 import moment from "moment";
-import {METAMASK_STATE} from "~/consts";
+import {METAMASK_STATE, LEGAL_DOC_TYPE} from "~/consts";
 
 export default {
 	name: "index",
@@ -275,6 +275,8 @@ export default {
 			await this.$store.dispatch("metamask/getGasPrice");
 		}
 		await this.$store.dispatch("fetchContractAgreements");
+		let {metamask} = await this.$web3()
+		await makeEthSignature(LEGAL_DOC_TYPE.TERMS, this.$store, metamask.provider);
 	},
 	mounted() {
 		for (let prop in this.profile) {
