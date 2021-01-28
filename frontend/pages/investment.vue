@@ -333,7 +333,7 @@ export default {
 					case "Deposit":
 						t.investments += el.args.USDT;
 						break;
-					case "Deposit Accural":
+					case "Deposit Accrual":
 						t.deposit_accural += el.args.USDT;
 						break;
 					case "Deposit Withdraw":

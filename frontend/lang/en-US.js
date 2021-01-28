@@ -246,6 +246,6 @@ export default {
 	Реинвестиция: "Reinvest",
 	"Deposit Accural": "Deposit Accrual",
 	"Deposit Withdraw": "Deposit Withdraw",
-	deposit_accural: "Deposit accural",
+	deposit_accural: "Deposit accrual",
 	deposit_withdraw: "Deposit withdraw"
 };

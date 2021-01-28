@@ -16,14 +16,14 @@
 										b-icon(pack="fas" icon="copy" type="is-primary")
 								p.contract_details__line Contract - {{ contract }}
 								p.contract_details__line Status -
-									span.ml-1(v-if="isActive") Active
-									span.ml-1(v-else) Not active
+									span.ml-1.green(v-if="isActive") Active
+									span.ml-1.red(v-else) Not active
 		ActiveDepositTransactions(
 			:data="transactionsWithPagination"
 			:count="transactions.length"
 			:pagination="pagination"
 			:total="activeDepositTransactions.total_usdt"
-			@more="page = page + 1"
+			@more="pagination.page = pagination.page + 1"
 		)
 </template>
 
