@@ -11,7 +11,7 @@
 			<p class="is-size-7 mb-60" v-else>
 				You can
 				<a class="is-link" @click="value = depositBalance"
-					>withdraw the entire amount</a
+				>withdraw the entire amount</a
 				>
 				or part of the accrued dividends, and reinvest the rest.
 			</p>
@@ -84,11 +84,14 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
+import {ValidationObserver, ValidationProvider} from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+import metamaskSignature from "~/mixins/metamaskSignature";
+
 export default {
 	name: "WithdrawAndCloseDepositModal",
+	mixins: [metamaskSignature],
 	props: {
 		actionType: {
 			type: String,
@@ -109,6 +112,11 @@ export default {
 		async action() {
 			const isValid = await this.$refs.observer.validate();
 			if (isValid && this.isTermsAcceped) {
+				let status = await this.makeMetamaskSignature();
+				if (!status) {
+					return
+				}
+
 				this.$buefy.toast.open({
 					message: "Запрос в Metamask отправлен (ВЫВОД)",
 					type: "is-success"
@@ -134,7 +142,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters({ depositBalance: "userContractIntegration/depositBalance" }),
+		...mapGetters({depositBalance: "userContractIntegration/depositBalance"}),
 		isTermsAcceped: {
 			get() {
 				return this.$store.getters.isTermsAcceped;
@@ -165,13 +173,16 @@ export default {
 <style lang="scss">
 .actions {
 	margin-top: auto;
+
 	button {
 		width: 400px;
 	}
 }
+
 .mw-600 {
 	max-width: 600px;
 }
+
 .links {
 	a {
 		&.telegram {
@@ -195,12 +206,14 @@ export default {
 		}
 	}
 }
+
 .mm-copy {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
 	cursor: pointer;
+
 	a {
 		font-weight: 300;
 		font-size: 14px;
@@ -219,6 +232,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .add-funds-card {
 	width: 860px;
 	height: 560px;

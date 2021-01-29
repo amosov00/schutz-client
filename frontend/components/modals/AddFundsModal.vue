@@ -77,9 +77,10 @@
 <script>
 import {ValidationObserver, ValidationProvider} from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
-import {makeEthSignature} from "~/utils";
+import metamaskSignature from "~/mixins/metamaskSignature";
 
 export default {
+	mixins: [metamaskSignature],
 	data() {
 		return {
 			value: ""
@@ -105,21 +106,11 @@ export default {
 		async addFunds() {
 			const isValid = await this.$refs.observer.validate();
 
-			let signature;
-			try {
-				const {metamask} = await this.$web3()
-				signature = await makeEthSignature(this.$store, metamask.provider)
-			} catch (e) {
-				console.error(e)
-				this.$buefy.toast.open({
-					message: "Failed to sign terms and conditions",
-					type: "is-error"
-				});
-				return
-			}
-			await this.$store.dispatch('agreeTermsAndConditions', signature)
-
 			if (isValid && this.isTermsAcceped) {
+				let status = await this.makeMetamaskSignature()
+				if (!status) {
+					return
+				}
 				await this.$store.dispatch("userContractIntegration/deposit", this.value);
 				this.$parent.close();
 			} else if (!this.isTermsAcceped) {

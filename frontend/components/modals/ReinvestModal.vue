@@ -5,14 +5,14 @@
 			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
 				Вы можете
 				<a class="is-link" @click="value = interestBalance"
-					>реинвестировать всю сумму</a
+				>реинвестировать всю сумму</a
 				>
 				или часть начисленных дивидендов, остальные вывести.
 			</p>
 			<p class="is-size-7 mb-60" v-else>
 				You can
 				<a class="is-link" @click="value = interestBalance"
-					>reinvest the entire amount</a
+				>reinvest the entire amount</a
 				>
 				or part of the accrued dividends, and withdraw the rest.
 			</p>
@@ -85,11 +85,13 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
+import {ValidationObserver, ValidationProvider} from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
+import metamaskSignature from "~/mixins/metamaskSignature";
+
 export default {
 	name: "reinvest-modal",
-	props: ["interestBalance"],
+	props: [metamaskSignature],
 	data() {
 		return {
 			value: ""
@@ -104,6 +106,11 @@ export default {
 		async reinvest() {
 			const isValid = await this.$refs.observer.validate();
 			if (isValid && this.isTermsAcceped) {
+				let status = await this.makeMetamaskSignature();
+				if (!status) {
+					return
+				}
+
 				this.$buefy.toast.open({
 					message: "Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)",
 					type: "is-success"
@@ -152,13 +159,16 @@ export default {
 <style lang="scss">
 .actions {
 	margin-top: auto;
+
 	button {
 		width: 400px;
 	}
 }
+
 .mw-600 {
 	max-width: 600px;
 }
+
 .links {
 	a {
 		&.telegram {
@@ -182,12 +192,14 @@ export default {
 		}
 	}
 }
+
 .mm-copy {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
 	cursor: pointer;
+
 	a {
 		font-weight: 300;
 		font-size: 14px;
@@ -206,6 +218,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .add-funds-card {
 	width: 860px;
 	height: 560px;
