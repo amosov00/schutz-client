@@ -777,15 +777,15 @@
 import {mapGetters} from "vuex";
 
 export default {
+	computed: {
+		...mapGetters(["user"])
+	},
 	methods: {
 		accept() {
 			this.$emit("accepted", true);
 			this.$store.commit("toggleTermsModal", false);
 		}
 	},
-	computed: {
-		...mapGetters(["user"])
-	}
 };
 </script>
 

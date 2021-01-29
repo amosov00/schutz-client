@@ -21,5 +21,5 @@ export async function makeEthSignature(store, metamaskProvider) {
 		throw new Error("invalid signature")
 	}
 
-	return {signature: result.result}
+	return result
 }
