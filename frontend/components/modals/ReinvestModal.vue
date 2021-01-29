@@ -4,16 +4,16 @@
 			<p class="is-size-5">{{ $t("Укажите сумму реинвестирования") }}</p>
 			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
 				Вы можете
-				<a class="is-link" @click="value = interestBalance"
-				>реинвестировать всю сумму</a
-				>
+				<a class="is-link" @click="value = interestBalance">
+					реинвестировать всю сумму
+				</a>
 				или часть начисленных дивидендов, остальные вывести.
 			</p>
 			<p class="is-size-7 mb-60" v-else>
 				You can
-				<a class="is-link" @click="value = interestBalance"
-				>reinvest the entire amount</a
-				>
+				<a class="is-link" @click="value = interestBalance">
+					reinvest the entire amount
+				</a>
 				or part of the accrued dividends, and withdraw the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
@@ -85,9 +85,10 @@
 </template>
 
 <script>
-import {ValidationObserver, ValidationProvider} from "vee-validate";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
 import metamaskSignature from "~/mixins/metamaskSignature";
+import { mapGetters } from "vuex";
 
 export default {
 	name: "reinvest-modal",
@@ -108,7 +109,7 @@ export default {
 			if (isValid && this.isTermsAcceped) {
 				let status = await this.makeMetamaskSignature();
 				if (!status) {
-					return
+					return;
 				}
 
 				this.$buefy.toast.open({
@@ -129,6 +130,7 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters("userContractIntegration", ["interestBalance"]),
 		isTermsAcceped: {
 			get() {
 				return this.$store.getters.isTermsAcceped;

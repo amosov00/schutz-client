@@ -10,9 +10,9 @@
 			</p>
 			<p class="is-size-7 mb-60" v-else>
 				You can
-				<a class="is-link" @click="value = depositBalance"
-				>withdraw the entire amount</a
-				>
+				<a class="is-link" @click="value = depositBalance">
+					withdraw the entire amount
+				</a>
 				or part of the accrued dividends, and reinvest the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
@@ -84,9 +84,9 @@
 </template>
 
 <script>
-import {ValidationObserver, ValidationProvider} from "vee-validate";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import metamaskSignature from "~/mixins/metamaskSignature";
 
 export default {
@@ -114,7 +114,7 @@ export default {
 			if (isValid && this.isTermsAcceped) {
 				let status = await this.makeMetamaskSignature();
 				if (!status) {
-					return
+					return;
 				}
 
 				this.$buefy.toast.open({
@@ -142,7 +142,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters({depositBalance: "userContractIntegration/depositBalance"}),
+		...mapGetters({ depositBalance: "userContractIntegration/depositBalance" }),
 		isTermsAcceped: {
 			get() {
 				return this.$store.getters.isTermsAcceped;
