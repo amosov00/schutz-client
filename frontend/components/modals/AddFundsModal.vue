@@ -75,8 +75,10 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
+import {ValidationObserver, ValidationProvider} from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
+import {makeEthSignature} from "~/utils";
+
 export default {
 	data() {
 		return {
@@ -103,11 +105,22 @@ export default {
 		async addFunds() {
 			const isValid = await this.$refs.observer.validate();
 
+			let signature;
+			try {
+				const {metamask} = await this.$web3()
+				signature = await makeEthSignature(this.$store, metamask.provider)
+			} catch (e) {
+				console.error(e)
+				this.$buefy.toast.open({
+					message: "Failed to sign terms and conditions",
+					type: "is-error"
+				});
+				return
+			}
+			await this.$store.dispatch('agreeTermsAndConditions', signature)
+
 			if (isValid && this.isTermsAcceped) {
-				await this.$store.dispatch(
-					"userContractIntegration/deposit",
-					this.value
-				);
+				await this.$store.dispatch("userContractIntegration/deposit", this.value);
 				this.$parent.close();
 			} else if (!this.isTermsAcceped) {
 				this.$buefy.toast.open({
@@ -150,13 +163,16 @@ export default {
 <style lang="scss">
 .actions {
 	margin-top: auto;
+
 	button {
 		width: 400px;
 	}
 }
+
 .mw-600 {
 	max-width: 600px;
 }
+
 .links {
 	a {
 		&.telegram {
@@ -180,12 +196,14 @@ export default {
 		}
 	}
 }
+
 .mm-copy {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
 	cursor: pointer;
+
 	a {
 		font-weight: 300;
 		font-size: 14px;
@@ -204,6 +222,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .add-funds-card {
 	width: 860px;
 	height: 560px;

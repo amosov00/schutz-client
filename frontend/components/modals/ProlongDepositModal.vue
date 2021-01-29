@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     async prolongDeposit() {
-      await this.$store.dispatch("deposit/prolongContract", {
+      await this.$store.dispatch("admin/prolongContract", {
         userId: this.user._id,
         data: {
           contract_from: this.contractFrom,

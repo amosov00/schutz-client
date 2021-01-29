@@ -1,3 +1,4 @@
+
 import { ToastProgrammatic as Toast } from 'buefy';
 
 export const state = () => ({

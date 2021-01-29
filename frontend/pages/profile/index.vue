@@ -151,7 +151,7 @@ import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
 import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
 import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
-import { mainSliderController } from "@/utils/slider";
+import { mainSliderController} from "@/utils";
 import moment from "moment";
 import { METAMASK_STATE } from "~/consts";
 

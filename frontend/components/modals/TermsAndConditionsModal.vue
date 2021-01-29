@@ -1,16 +1,15 @@
 <template>
 	<div class="s-modal">
 		<div class="s-modal__scroll">
-			<div class="s-modal____content terms" v-if="$i18n.locale == 'ru'">
+			<div class="s-modal____content terms" v-if="$i18n.locale === 'ru'">
 				<div class="terms__title">Условия и положения</div>
 				<div class="terms__date">«8» декабря 2020 г.</div>
 				<div class="terms__body">
 					<p>
 						SCHUTZ именуемый в дальнейшем «Управляющий», с одной стороны, и
-						пользователь математического кода «
-						{{ user.ethereum_wallet }} », именуемый в дальнейшем «Инвестор», с
-						другой стороны, совместно именуемые в дальнейшем «Стороны»,
-						заключили настоящее Соглашение о нижеследующем:
+						пользователь математического кода «{{ user.ethereum_wallet }}»,
+						именуемый в дальнейшем «Инвестор», с другой стороны, совместно именуемые в
+						дальнейшем «Стороны», заключили настоящее Соглашение о нижеследующем:
 					</p>
 
 					<div class="page__list">
@@ -132,7 +131,7 @@
 							месяца, после которого планируется вывод/пролонгация. В противном
 							случае администрация проекта перенесет вывод/пролонгацию тела
 							депозита Инвестора на 1 месяц позднее предусмотренного тарифным
-							планом. <br />
+							планом. <br/>
 							Пример: вывод тела депозита по тарифному плану назначен на 20-22
 							февраля 2021 г., Инвестору необходимо подать заявку на
 							вывод/пролонгацию до конца января 2021. Если Инвестор просрочил
@@ -194,85 +193,85 @@
 								href="/files/Ogranicheniye_otvetstvennosti.pdf"
 								target="_blank"
 								rel="noopener noreferrer"
-								>обстоятельств непреодолимой силы (форс-мажор), повлиявших на
+							>обстоятельств непреодолимой силы (форс-мажор), повлиявших на
 								возможность исполнения настоящего Соглашения.</a
 							>. При этом, Сторона, ссылающаяся на обстоятельства непреодолимой
 							силы в качестве основания для расторжения настоящего Соглашения,
 							должна представить другой Стороне полученные из компетентных
 							органов доказательства наступления обстоятельств непреодолимой
 							силы и степень их влияния на невозможность исполнения настоящего
-							Соглашения, например, <br />
+							Соглашения, например, <br/>
 							- издание нормативных актов, положения которых обуславливают
-							невозможность надлежащего исполнения обязательств; <br />
+							невозможность надлежащего исполнения обязательств; <br/>
 							- возникновение стихийных бедствий, в том числе наводнений,
-							землетрясений, пожаров и др.; <br />
+							землетрясений, пожаров и др.; <br/>
 							- влияние социально-политических факторов, в том числе забастовок,
 							митингов, шествий, действий органов власти, военных действий или
-							конфликтов, террористических актов; <br />
+							конфликтов, террористических актов; <br/>
 							- прекращение (приостановление) деятельности организаторов торгов;
-							<br />
+							<br/>
 							- невыплата онлайн-биржами
 							<a
 								href="https://poloniex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://poloniex.com</a
+							>https://poloniex.com</a
 							>
 							<a
 								href="https://www.binance.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://www.binance.com</a
+							>https://www.binance.com</a
 							>
 							<a
 								href="https://bitmex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://bitmex.com</a
+							>https://bitmex.com</a
 							>
 							<a
 								href="https://bitfinex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://bitfinex.com</a
+							>https://bitfinex.com</a
 							>
 							<a
 								href="https://bittrex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://bittrex.com</a
+							>https://bittrex.com</a
 							>
 							<a
 								href="https://hitbtc.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://hitbtc.com</a
+							>https://hitbtc.com</a
 							>
 							<a
 								href="https://www.okex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://www.okex.com</a
+							>https://www.okex.com</a
 							>
 							<a
 								href="https://www.hbg.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://www.hbg.com</a
+							>https://www.hbg.com</a
 							>
 							<a
 								href="https://lykke.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://lykke.com</a
+							>https://lykke.com</a
 							>
 							причитающихся платежей, осуществление несвоевременных выплат или
 							иные действия, не поддающиеся контролю со стороны Управляющего.
-							<br />
+							<br/>
 							- Атака мошенниками на аккаунты управляющего и хищение ими
 							средств. (Полный список пунктов содержит документ
 							<a href="/files/Ogranicheniye_otvetstvennosti.pdf" target="_blank"
-								>«Ограничение отвественности»</a
+							>«Ограничение отвественности»</a
 							>
 							)
 						</div>
@@ -331,7 +330,7 @@
 								href="https://poloniex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://poloniex.com</a
+							>https://poloniex.com</a
 							>
 							на момент поступления средств на кошелек Управляющего.
 						</div>
@@ -380,7 +379,7 @@
 				<div class="terms__body">
 					<p>
 						SCHUTZ, hereinafter referred to as the "Manager", on the one hand,
-						and the user of the mathematical code "....", hereinafter referred
+						and the user of the mathematical code "{{ user.ethereum_wallet }}", hereinafter referred
 						to as the "Investor", on the other hand, collectively hereinafter
 						referred to as the "Parties", have entered into this Agreement as
 						follows:
@@ -507,7 +506,7 @@
 							withdrawal / prolongation is planned. Otherwise, the project
 							administration will postpone the withdrawal / prolongation of the
 							Investor's deposit body 1 month later than provided for by the
-							tariff plan. <br />
+							tariff plan. <br/>
 							Example: the withdrawal of the body of the deposit according to
 							the tariff plan is scheduled for February 20-22, 2021, the
 							Investor must submit an application for withdrawal / prolongation
@@ -572,88 +571,88 @@
 								href="/files/Limitation_of_liability.pdf"
 								target="_blank"
 								rel="noopener noreferrer"
-								>"Limitation of Liability"</a
+							>"Limitation of Liability"</a
 							>
 							). At the same time, the Party referring to force majeure
 							circumstances as a basis for terminating this Agreement must
 							provide the other Party with evidence obtained from the competent
 							authorities of the occurrence of force majeure circumstances and
 							the degree of their influence on the impossibility of executing
-							this Agreement, for example, <br />
+							this Agreement, for example, <br/>
 
 							- the issuance of normative acts, the provisions of which
 							stipulate the impossibility of the proper fulfillment of
-							obligations; <br />
+							obligations; <br/>
 							- occurrence of natural disasters, including floods, earthquakes,
-							fires, etc.; <br />
+							fires, etc.; <br/>
 							- the influence of socio-political factors, including strikes,
 							rallies, marches, actions of the authorities, military actions or
-							conflicts, terrorist acts; <br />
+							conflicts, terrorist acts; <br/>
 							- termination (suspension) of the activities of auction
-							organizers; <br />
-							- non-payment by online exchanges <br />
+							organizers; <br/>
+							- non-payment by online exchanges <br/>
 
 							<a
 								href="https://poloniex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://poloniex.com</a
+							>https://poloniex.com</a
 							>
 							<a
 								href="https://www.binance.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://www.binance.com</a
+							>https://www.binance.com</a
 							>
 							<a
 								href="https://bitmex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://bitmex.com</a
+							>https://bitmex.com</a
 							>
 							<a
 								href="https://bitfinex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://bitfinex.com</a
+							>https://bitfinex.com</a
 							>
 							<a
 								href="https://bittrex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://bittrex.com</a
+							>https://bittrex.com</a
 							>
 							<a
 								href="https://hitbtc.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://hitbtc.com</a
+							>https://hitbtc.com</a
 							>
 							<a
 								href="https://www.okex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://www.okex.com</a
+							>https://www.okex.com</a
 							>
 							<a
 								href="https://www.hbg.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://www.hbg.com</a
+							>https://www.hbg.com</a
 							>
 							<a
 								href="https://lykke.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://lykke.com</a
+							>https://lykke.com</a
 							>
 							of due payments, making late payments or other actions beyond the
 							control of the Manager.
-							<br />
+							<br/>
 							- Attack by fraudsters on manager accounts and theft of funds.
 							(The complete list of items contains the document
 							<a href="/files/Limitation_of_liability.pdf" target="_blank"
-								>"Disclaimer"</a
+							>"Disclaimer"</a
 							>
 							)
 						</div>
@@ -713,7 +712,7 @@
 								href="https://poloniex.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								>https://poloniex.com</a
+							>https://poloniex.com</a
 							>
 							at the time the funds are received on the Manager's wallet.
 						</div>
@@ -765,7 +764,7 @@
 				{{ $t("Отменить, не согласен") }}
 			</div>
 			<button
-				@click="accept()"
+				@click="accept"
 				class="button terms__accept custom-button is-primary is-size-5 has-text-weight-bold"
 			>
 				{{ $t("Принять") }}
@@ -775,17 +774,18 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
+	computed: {
+		...mapGetters(["user"])
+	},
 	methods: {
 		accept() {
 			this.$emit("accepted", true);
 			this.$store.commit("toggleTermsModal", false);
 		}
 	},
-	computed: {
-		...mapGetters(["user"])
-	}
 };
 </script>
 
@@ -795,6 +795,7 @@ export default {
 	font-size: 14px;
 	line-height: 19px;
 	color: #666666;
+
 	&__acception {
 		display: flex;
 		align-items: center;
@@ -802,6 +803,7 @@ export default {
 		padding-right: 27px;
 		padding-top: 10px;
 	}
+
 	&__cancel {
 		font-weight: 300;
 		font-size: 14px;
@@ -810,20 +812,24 @@ export default {
 		border-bottom: 1px dashed;
 		cursor: pointer;
 	}
+
 	&__accept {
 		width: 100%;
 		max-width: 400px;
 	}
+
 	&__title {
 		font-weight: normal;
 		font-size: 24px;
 		line-height: 120%;
 		color: #000000;
 	}
+
 	&__date {
 		margin-top: 1px;
 		margin-bottom: 15px;
 	}
+
 	p {
 		margin-bottom: 20px !important;
 	}

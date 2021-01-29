@@ -23,5 +23,12 @@ export const actions = {
 				Toast.open({message: 'Error', type: 'is-danger'})
 				return []
 			})
-	}
+	},
+	async prolongContract({}, {userId, data}) {
+		return await this.$axios.post(`/admin/users/${userId}/deposits/prolong/`, data).then(resp => {
+			return true
+		}).catch(err => {
+			Toast.open({message: err, type: 'is-danger'})
+		})
+	},
 };
