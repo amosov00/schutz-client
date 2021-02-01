@@ -80,7 +80,7 @@
 			<withdraw-and-close-deposit-modal action-type="withdraw" />
 		</b-modal>
 		<b-modal :active.sync="isReinvestModalActive" has-modal-card>
-			<reinvest-modal :interestBalance="interestBalance" />
+			<reinvest-modal />
 		</b-modal>
 	</div>
 </template>
