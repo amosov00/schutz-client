@@ -18,7 +18,7 @@ export class Web3Controller {
 		const {store} = this._app
 		const {metamask} = this._app._web3
 
-		if (metamask.provider) {
+		if (metamask?.provider && metamask.provider.isConnected()) {
 			if (
 				(process.env.ENV === "production" && metamask.provider.chainId === "0x1") ||
 				(process.env.ENV !== "production" && metamask.provider.chainId === "0x4")
@@ -57,8 +57,13 @@ export class Web3Controller {
 		const {store} = this._app
 		await store.dispatch("contract/prefetchContractMeta")
 
-		this._app._web3.metamask = await this.initMetamask()
-		this._app._web3.web3 = await this.initWeb3()
-		this._app._web3.contracts = await this.initWeb3Contracts()
+		this.initMetamask().then(metamask => {
+			this._app._web3.metamask = metamask
+		})
+		this.initWeb3().then(async web3 => {
+			this._app._web3.web3 = web3
+			this._app._web3.contracts = await this.initWeb3Contracts()
+		})
+
 	}
 }
