@@ -22,6 +22,8 @@
 					header-class="right"
 					cell-class="text-right"
 				) {{ formatCurrency(props.row.args.USDT, 'usdt')}}
+				b-table-column(field="isDeactivated" label="is Deactivated" width="50")
+					span(class="tag is-warning" v-if="props.row.isDeactivated") Deactivated
 			template(slot="footer")
 				div
 					div.mb-6.center
