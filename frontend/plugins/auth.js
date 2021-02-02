@@ -4,7 +4,7 @@ export default ({ app, redirect }, inject) => {
 		if (host.includes("localhost")) {
 			return "localhost";
 		} else if (host.includes("elastoo.com")) {
-			return "elastoo.com";
+			return "schutz.elastoo.com";
 		} else {
 			return "schutz.capital";
 		}
