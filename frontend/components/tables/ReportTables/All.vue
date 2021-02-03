@@ -61,7 +61,7 @@
 				.is-size-5.has-background-info.total-withdraw.mb-3.is-flex.is-flex-direction-column.is-align-items-flex-start
 					p Deposit accrual: {{ formatCurrency(totals.deposit_accural, 'usdt') }} USDT
 					p Deposits withdraw: {{ formatCurrency(totals.deposit_withdraw, 'usdt') }} USDT
-					p Dividends accural: {{ formatCurrency(totals.dividend_accural, 'usdt')  }} USDT
+					p Dividends accrual: {{ formatCurrency(totals.dividend_accural, 'usdt')  }} USDT
 					p Dividends withdraw: {{ formatCurrency(totals.dividend_withdraw, 'usdt') }} USDT
 					p Deposits: {{ formatCurrency(totals.deposits, 'usdt') }}  USDT
 					p Reinvestment: {{ formatCurrency(totals.reinvestment, 'usdt') }} USDT
@@ -84,6 +84,7 @@ export default {
 	padding-right: 0 !important;
 
 	.th-wrap {
+		margin-left: auto;
 		padding-right: 0 !important;
 		width: fit-content !important;
 	}
