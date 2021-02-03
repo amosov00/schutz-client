@@ -16,6 +16,7 @@
 				width="50"
 			).is-flex.is-flex-direction-column.is-align-content-center {{ row.event }}
 				span.tag.is-link(v-if="row.isReinvested") Reinvested
+				span.tag.is-warning(v-if="row.isDeactivated") Deactivated
 			b-table-column(
 				field="address"
 				label="Address"
