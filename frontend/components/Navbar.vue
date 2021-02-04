@@ -12,10 +12,7 @@
 						<nuxt-link
 							:to="localePath(link.link)"
 							class="link"
-							:class="{
-								active:
-									link.link === activePage || `${link.link}/` === activePage
-							}"
+							:class="{active: link.link === activePage || `${link.link}/` === activePage}"
 						>
 							{{ $t(link.name) }}
 						</nuxt-link>
@@ -43,7 +40,6 @@
 <script>
 import LangSwitcher from "./LangSwitcher";
 import CustomDropdown from "@/components/ui/CustomDropdown";
-import {mapGetters} from "vuex";
 
 export default {
 	components: {
@@ -57,12 +53,8 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters({
-			user: "user"
-		}),
-
 		closeLink() {
-			if (this.$i18n.locale == "ru") {
+			if (this.$i18n.locale === "ru") {
 				return this.$config.LANDING_BASE_URL;
 			} else {
 				return `${this.$config.LANDING_BASE_URL}/${this.$i18n.locale}`;

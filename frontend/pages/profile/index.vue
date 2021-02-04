@@ -11,15 +11,13 @@
 					<div class="column mb-4 is-flex flex-column">
 						<div class="data-item">
 							<div class="icon name"></div>
-							<div class="value">
-								{{ `${user.first_name} ${user.last_name}` }}
-							</div>
+							<div class="value">{{ userFullName }}</div>
 						</div>
 						<div class="data-item">
 							<div class="icon email"></div>
 							<div class="value">{{ user.email }}</div>
 						</div>
-						<div class="data-item" v-if="user.telegram">
+						<div v-if="user.telegram" class="data-item">
 							<div class="icon telegram"></div>
 							<div class="value">{{ user.telegram }}</div>
 						</div>
@@ -29,13 +27,13 @@
 								{{ $t("Сменить пароль") }}
 							</a>
 						</div>
-						<div class="data-item" v-if="!user.ethereum_wallet">
+						<div v-if="!user.ethereum_wallet" class="data-item">
 							<div class="icon metamask"></div>
-							<a @click="openModal('wallet')" class="value has-text-link">
+							<a class="value has-text-link" @click="openModal('wallet')">
 								{{ $t("Добавить кошелек") }}
 							</a>
 						</div>
-						<div class="data-item" v-else>
+						<div v-else class="data-item">
 							<div class="icon metamask"></div>
 							<div
 								class="value has-text-link"
@@ -51,8 +49,8 @@
 						<div>
 							<div class="is-size-5">{{ $t("Вклад USDT") }}:</div>
 							<div class="is-size-2">{{ formatCurrency(tokenBalance) }}</div>
-							<div class="closing-date" v-if="tokenBalance">
-								{{ $t("Дата закрытия") }} <br />
+							<div v-if="tokenBalance" class="closing-date">
+								{{ $t("Дата закрытия") }} <br/>
 								{{ closeDate }}
 							</div>
 						</div>
@@ -66,10 +64,10 @@
 					</div>
 					<div class="column is-half is-flex is-flex-direction-column">
 						<custom-button
-							@click.native="openModal('funds')"
 							v-if="user.is_deposit_open && allowance > 0"
 							:disabled="!user.ethereum_wallet"
 							class="mb-2"
+							@click.native="openModal('funds')"
 						>
 							{{ $t("Пополнить депозит") }}
 						</custom-button>
@@ -97,16 +95,16 @@
 						</custom-button>
 
 						<custom-button
-							class="mb-2"
 							v-if="depositBalance"
 							:disabled="!metamaskActionsAreAllowed"
+							class="mb-2"
 							@click.native="openModal('close-deposit')"
 						>
 							{{ $t("Вывести") }} {{ formatCurrency(depositBalance) }}
 						</custom-button>
 						<div
-							class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered"
 							v-if="!user.ethereum_wallet"
+							class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered"
 						>
 							{{ $t("Для открытия вклада необходимо добавить кошелек!") }}
 						</div>
@@ -115,25 +113,25 @@
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="isAddWalletModalActive" has-modal-card>
-			<add-new-wallet-modal />
+			<add-new-wallet-modal/>
 		</b-modal>
 		<b-modal :active.sync="isPasswordChangeModalActive" has-modal-card>
-			<password-change />
+			<password-change/>
 		</b-modal>
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
-			<add-funds-modal />
+			<add-funds-modal/>
 		</b-modal>
 		<b-modal :active.sync="isWithdrawCloseDepositModalActive" has-modal-card>
-			<withdraw-and-close-deposit-modal action-type="closeDeposit" />
+			<withdraw-and-close-deposit-modal action-type="closeDeposit"/>
 		</b-modal>
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
-			<ChangeWalletModal />
+			<ChangeWalletModal/>
 		</b-modal>
 		<b-modal :active.sync="isProlongateModalActive" has-modal-card>
-			<ProlongateConfirm :lastContract="lastContract" />
+			<ProlongateConfirm :lastContract="lastContract"/>
 		</b-modal>
 		<b-modal :active.sync="isCancelModalActive" has-modal-card>
-			<WithdrawConfirm :lastContract="lastContract" />
+			<WithdrawConfirm :lastContract="lastContract"/>
 		</b-modal>
 	</div>
 </template>
@@ -141,8 +139,8 @@
 <script>
 import InlineSvg from "vue-inline-svg";
 import PasswordChange from "~/components/PasswordChange";
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { mapGetters } from "vuex";
+import {ValidationObserver, ValidationProvider} from "vee-validate";
+import {mapGetters} from "vuex";
 import AddNewWalletModal from "~/components/modals/AddNewWalletModal";
 import ProlongateConfirm from "~/components/modals/ProlongateConfirm";
 import WithdrawConfirm from "~/components/modals/WithdrawConfirm";
@@ -151,9 +149,9 @@ import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "~/components/modals/AddFundsModal";
 import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
 import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
-import { mainSliderController} from "@/utils";
+import {mainSliderController} from "@/utils";
 import moment from "moment";
-import { METAMASK_STATE } from "~/consts";
+import {METAMASK_STATE} from "~/consts";
 
 export default {
 	name: "index",
@@ -225,6 +223,9 @@ export default {
 			"interestBalance",
 			"depositBalance"
 		]),
+		userFullName() {
+			return this.user ? `${this.user.first_name} ${this.user.last_name}` : null
+		},
 		metamaskActionsAreAllowed() {
 			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE;
 		},
@@ -235,15 +236,15 @@ export default {
 			return null;
 		},
 		userWallet: {
-			get: function() {
+			get: function () {
 				return this.user.ethereum_wallet;
 			},
-			set: function(newValue) {
+			set: function (newValue) {
 				this.newEthereumWallet = newValue;
 			}
 		},
 		copiedWallet() {
-			return { ...this.user };
+			return {...this.user};
 		},
 		closeDate() {
 			let dates = this.user.dates;
@@ -286,11 +287,11 @@ export default {
 		isProfileUpdating: false,
 		regex_telegram: /^[a-zA-Z0-9_\@]*$/,
 		profile: {
-			first_name: { value: "", label: "First name" },
-			last_name: { value: "", label: "Last name" },
-			email: { value: "", label: "Email" },
-			telegram: { value: "", label: "Telegram" },
-			ethereum_wallet_payout: { value: "", label: "" }
+			first_name: {value: "", label: "First name"},
+			last_name: {value: "", label: "Last name"},
+			email: {value: "", label: "Email"},
+			telegram: {value: "", label: "Telegram"},
+			ethereum_wallet_payout: {value: "", label: ""}
 		},
 		newEthereumWallet: "",
 		isPasswordChangeModalActive: false,
@@ -310,6 +311,7 @@ export default {
 .exit-btn {
 	margin-top: auto;
 }
+
 .closing-date {
 	font-weight: 300;
 	font-size: 14px;
@@ -317,12 +319,14 @@ export default {
 	color: #666666;
 	margin-top: 10px;
 }
+
 .data-item {
 	display: flex;
 	align-items: center;
 	padding-left: 32px;
 	position: relative;
 	margin-bottom: 8px;
+
 	.icon {
 		position: absolute;
 		left: 0;
@@ -353,10 +357,12 @@ export default {
 		&.password {
 			background-image: url("data:image/svg+xml,%3Csvg width='12' height='15' viewBox='0 0 12 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 0C3.79 0 2 1.80504 2 4.03361V6.05042H0V14.1176H12V6.05042H10V4.03361C10 1.80504 8.21 0 6 0ZM6 2.01681C7.19 2.01681 8 2.83361 8 4.03361V6.05042H4V4.03361C4 2.83361 4.81 2.01681 6 2.01681Z' fill='%23666666'/%3E%3C/svg%3E%0A");
 		}
+
 		&.metamask {
 			background-image: url("data:image/svg+xml,%3Csvg width='16' height='15' viewBox='0 0 16 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M14.3028 1L8.84003 5.06388L9.85022 2.66624L14.3028 1Z' fill='%23E2761B' stroke='%23E2761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1.69165 1L7.11047 5.10237L6.14969 2.66624L1.69165 1Z' fill='%23E4761B' stroke='%23E4761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M12.3372 10.4199L10.8823 12.6526L13.9952 13.5104L14.8901 10.4694L12.3372 10.4199Z' fill='%23E4761B' stroke='%23E4761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1.11517 10.4694L2.00458 13.5104L5.11753 12.6526L3.66262 10.4199L1.11517 10.4694Z' fill='%23E4761B' stroke='%23E4761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4.94191 6.64767L4.07446 7.96197L7.16544 8.09945L7.05564 4.77246L4.94191 6.64767Z' fill='%23E4761B' stroke='%23E4761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11.0523 6.64711L8.91115 4.7334L8.83978 8.09888L11.9253 7.96141L11.0523 6.64711Z' fill='%23E4761B' stroke='%23E4761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5.11749 12.6524L6.97318 11.745L5.37004 10.4912L5.11749 12.6524Z' fill='%23E4761B' stroke='%23E4761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9.02112 11.745L10.8823 12.6524L10.6243 10.4912L9.02112 11.745Z' fill='%23E4761B' stroke='%23E4761B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10.8823 12.6525L9.02112 11.7451L9.16935 12.9604L9.15288 13.4719L10.8823 12.6525Z' fill='%23D7C1B3' stroke='%23D7C1B3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5.11755 12.6525L6.84697 13.4719L6.83599 12.9604L6.97324 11.7451L5.11755 12.6525Z' fill='%23D7C1B3' stroke='%23D7C1B3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M6.87465 9.6883L5.32642 9.23187L6.41896 8.73145L6.87465 9.6883Z' fill='%23233447' stroke='%23233447' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9.12006 9.6883L9.57574 8.73145L10.6738 9.23187L9.12006 9.6883Z' fill='%23233447' stroke='%23233447' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5.11768 12.6526L5.38121 10.4199L3.66278 10.4694L5.11768 12.6526Z' fill='%23CD6116' stroke='%23CD6116' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10.6189 10.4199L10.8824 12.6526L12.3373 10.4694L10.6189 10.4199Z' fill='%23CD6116' stroke='%23CD6116' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M11.9255 7.96191L8.84003 8.09939L9.12552 9.68865L9.5812 8.7318L10.6792 9.23222L11.9255 7.96191Z' fill='%23CD6116' stroke='%23CD6116' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5.32629 9.23222L6.42433 8.7318L6.87452 9.68865L7.1655 8.09939L4.07452 7.96191L5.32629 9.23222Z' fill='%23CD6116' stroke='%23CD6116' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4.07446 7.96191L5.37015 10.4915L5.32623 9.23222L4.07446 7.96191Z' fill='%23E4751F' stroke='%23E4751F' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10.6792 9.23222L10.6243 10.4915L11.9255 7.96191L10.6792 9.23222Z' fill='%23E4751F' stroke='%23E4751F' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.16543 8.09961L6.87445 9.68887L7.2368 11.5641L7.31916 9.09496L7.16543 8.09961Z' fill='%23E4751F' stroke='%23E4751F' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.83995 8.09961L8.69171 9.08946L8.75759 11.5641L9.12543 9.68887L8.83995 8.09961Z' fill='%23E4751F' stroke='%23E4751F' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9.12541 9.68885L8.75757 11.5641L9.0211 11.7455L10.6242 10.4917L10.6791 9.23242L9.12541 9.68885Z' fill='%23F6851B' stroke='%23F6851B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5.32642 9.23242L5.37034 10.4917L6.97347 11.7455L7.237 11.5641L6.87465 9.68885L5.32642 9.23242Z' fill='%23F6851B' stroke='%23F6851B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9.15285 13.4717L9.16932 12.9603L9.03207 12.8393H6.96226L6.83599 12.9603L6.84697 13.4717L5.11755 12.6523L5.72148 13.1473L6.94579 13.9996H9.04854L10.2783 13.1473L10.8823 12.6523L9.15285 13.4717Z' fill='%23C0AD9E' stroke='%23C0AD9E' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M9.02128 11.7459L8.75775 11.5645H7.23697L6.97344 11.7459L6.83618 12.9612L6.96246 12.8403H9.03226L9.16952 12.9612L9.02128 11.7459Z' fill='%23161616' stroke='%23161616' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M14.5333 5.32784L14.9999 3.08418L14.3027 1L9.02112 4.9264L11.0525 6.64763L13.9239 7.489L14.5607 6.74662L14.2862 6.54865L14.7254 6.14721L14.385 5.88325L14.8243 5.5478L14.5333 5.32784Z' fill='%23763D16' stroke='%23763D16' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M1 3.08418L1.46667 5.32784L1.1702 5.5478L1.60941 5.88325L1.27451 6.14721L1.71373 6.54865L1.43922 6.74662L2.07059 7.489L4.94196 6.64763L6.97333 4.9264L1.69176 1L1 3.08418Z' fill='%23763D16' stroke='%23763D16' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M13.9238 7.48883L11.0524 6.64746L11.9254 7.96176L10.6242 10.4914L12.3371 10.4694H14.8901L13.9238 7.48883Z' fill='%23F6851B' stroke='%23F6851B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M4.94184 6.64746L2.07047 7.48883L1.11517 10.4694H3.66262L5.37008 10.4914L4.07439 7.96176L4.94184 6.64746Z' fill='%23F6851B' stroke='%23F6851B' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.83998 8.10016L9.02115 4.92715L9.85566 2.66699H6.14978L6.97331 4.92715L7.16547 8.10016L7.23135 9.10101L7.23684 11.5646H8.75762L8.7686 9.10101L8.83998 8.10016Z' fill='%23F6851B' stroke='%23F6851B' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 		}
 	}
+
 	.value {
 		font-style: normal;
 		font-weight: 300;
@@ -371,6 +377,7 @@ export default {
 
 	&:first-child {
 		margin-bottom: 14px;
+
 		.value {
 			font-size: 24px;
 			line-height: 120%;
