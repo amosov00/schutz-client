@@ -73,9 +73,11 @@
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
 							<div v-if="mode === metamaskState.ONLINE" class="is-size-7 has-text-grey">
-								{{ $t('walletOnline') }}
+								<span v-if="allowance === 0">{{ $t('walletOnlineApprove') }}</span>
+								<span v-else>{{ $t('walletOnline') }}</span>
+
 							</div>
-							<div v-else-if="mode === metamaskState.WAITING" class="is-size-7 has-text-grey">
+							<div v-else-if="mode === metamaskState.WAITING" class="is-size-7 status-offline">
 								{{ $t('walletWaiting') }}
 							</div>
 							<div v-else-if="mode === metamaskState.OFFLINE" class="is-size-7 status-offline">

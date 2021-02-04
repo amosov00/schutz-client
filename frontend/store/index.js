@@ -232,14 +232,11 @@ export const actions = {
 				return false;
 			});
 	},
+
 	async prolongAgreement({commit}, id) {
 		return await this.$axios
 			.get(`/account/mark_prolong_agreement/${id}`, {})
 			.then(() => {
-				Toast.open({
-					message: "Вклад успешно пролонгирован",
-					type: "is-success"
-				});
 				return true;
 			})
 			.catch(() => {
@@ -250,10 +247,6 @@ export const actions = {
 		return await this.$axios
 			.get(`/account/mark_close_agreement/${id}`, {})
 			.then(() => {
-				Toast.open({
-					message: "Вклад успешно закрыт",
-					type: "is-success"
-				});
 				return true;
 			})
 			.catch(() => {

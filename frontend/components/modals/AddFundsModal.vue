@@ -9,8 +9,9 @@
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					rules="required|min_value:50|max_value:100000"
+					rules="required|min_value:500|max_value:100000"
 					slim
+					name="deposit"
 					v-slot="{ errors, valid }"
 				>
 					<base-input
@@ -20,7 +21,7 @@
 						required
 						:is-danger="!!errors[0]"
 						:is-success="!!valid"
-						:error="errors[0]"
+						:error="$t(errors[0])"
 						size="4"
 						class="is-flex-grow-1"
 						setFocus

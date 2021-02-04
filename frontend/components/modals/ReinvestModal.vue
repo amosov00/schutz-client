@@ -18,7 +18,7 @@
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					name="amount"
+					name="reinvest"
 					:rules="`required|min_value:50|max_value:${interestBalance}`"
 					slim
 					v-slot="{ errors, valid }"
@@ -30,7 +30,7 @@
 						required
 						:is-danger="!!errors[0]"
 						:is-success="!!valid"
-						:error="errors[0]"
+						:error="$t(errors[0])"
 						size="4"
 						class="is-flex-grow-1"
 						setFocus
@@ -113,7 +113,7 @@ export default {
 				}
 
 				this.$buefy.toast.open({
-					message: "Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)",
+					message: this.$t("Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)"),
 					type: "is-success"
 				});
 				await this.$store.dispatch(

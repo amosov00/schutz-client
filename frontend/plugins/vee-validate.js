@@ -42,7 +42,7 @@ extend("confirmed", {
 });
 extend("min_value", {
 	...min_value,
-	message: "Value must be greater than or equal to 50 characters"
+	// message: "Value must be greater than or equal to 50 characters"
 });
 extend("max_value", {
 	...max_value

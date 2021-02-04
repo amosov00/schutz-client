@@ -58,6 +58,11 @@ export default {
 						queue: false
 					});
 				} else {
+					this.$buefy.toast.open({
+						message: this.$t("Вклад успешно пролонгирован"),
+						type: "is-success",
+						queue: false
+					});
 					this.status = true;
 				}
 				await this.$store.dispatch("fetchContractAgreements");

@@ -6,7 +6,7 @@
 			</h2>
 			<h2 class="confirm-text" v-else>
 				Вклад будет начислен и доступен к выводу после 20 (следующий месяц,
-				например, Февраля 2021).
+				например, {{ $moment().add(1, 'month').format('MMMM YYYY') }}).
 			</h2>
 		</section>
 		<section class="modal-card-body" v-else>
@@ -15,7 +15,7 @@
 			</h2>
 			<h2 class="confirm-text" v-else>
 				The deposit will be credited and available for withdrawal after 20 (next
-				month, for example, February 2021).
+				month, for example, {{ $moment().locale('en').add(1, 'month').format('MMMM YYYY') }}).
 			</h2>
 		</section>
 		<footer class="modal-card-foot">
@@ -57,6 +57,11 @@ export default {
 						queue: false
 					});
 				} else {
+					this.$buefy.toast.open({
+						message: this.$t("Вклад успешно закрыт"),
+						type: "is-success",
+						queue: false
+					});
 					this.status = true;
 				}
 				await this.$store.dispatch("fetchContractAgreements");
