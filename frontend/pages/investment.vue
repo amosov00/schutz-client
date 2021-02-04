@@ -54,7 +54,7 @@
 							</div>
 							<div class="is-size-7 ethereum">{{ $t("Ethereum адрес") }}:</div>
 							<div class="ethereum-address mb-5">
-								<span v-if="user.ethereum_wallet">{{user.ethereum_wallet}}</span>
+								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
@@ -85,14 +85,14 @@
 							</div>
 						</div>
 						<custom-button
-							v-if="!isMetaMaskInstalled"
+							v-if="!isMetamaskInstalled"
 							@click.native="isMetaMaskInstallModalActive = true"
 							class="mt-auto"
 						>
 							{{ $t("Авторизовать кошлек") }}
 						</custom-button>
 						<custom-button
-							v-else-if="allowance === 0"
+							v-else-if="isMetamaskInstalled && allowance === 0"
 							@click.native="allowUSDT"
 							class="mt-auto"
 							:disabled="!metamaskActionsAreAllowed"
@@ -100,7 +100,7 @@
 							{{ $t("Одобрить USDT") }}
 						</custom-button>
 						<custom-button
-							v-else-if="tokenBalance > 0"
+							v-else-if="isMetamaskInstalled && tokenBalance > 0"
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
 							:disabled="!metamaskActionsAreAllowed"
@@ -275,6 +275,9 @@ export default {
 			"allowance",
 			"tokenBalance"
 		]),
+		isMetamaskInstalled() {
+			return this.isConnected && this.user.ethereum_wallet
+		},
 		metamaskActionsAreAllowed() {
 			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
 		},
@@ -361,9 +364,6 @@ export default {
 				.add(19, "days")
 				.format("DD MMM YYYY");
 		},
-		isMetaMaskInstalled() {
-			return Boolean(window.ethereum);
-		}
 	},
 	data: () => ({
 		limit: 5,

@@ -173,6 +173,10 @@ export const actions = {
 	async fetchBalances({dispatch, getters, rootGetters}) {
 		const address = rootGetters["user"].ethereum_wallet
 
+		if (!address) {
+			return
+		}
+
 		if (!getters["tokenBalance"]) {
 			await dispatch("fetchTokenBalance", address);
 		}

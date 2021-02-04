@@ -139,7 +139,7 @@ export const reportTotalHelper = {
 			],
 			[
 				total.dividend_accural
-					? `Dividends accural: ${formatCurrency(
+					? `Dividends accrual: ${formatCurrency(
 					total.dividend_accural,
 					"usdt"
 					)} USDT`

@@ -37,7 +37,7 @@ export const actions = {
 			await commit("setEthAddress", activeAccount)
 			if (activeAccount.toLowerCase() === ethereum_wallet.toLowerCase()) {
 				await commit("setMode", METAMASK_STATE.ONLINE)
-			} else {
+			} else if (ethereum_wallet) {
 				await commit("setMode", METAMASK_STATE.WAITING)
 			}
 		}

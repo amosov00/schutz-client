@@ -22,7 +22,7 @@
 					div
 						p Deposits accural: {{`${formatCurrency(totals.deposit_accural, 'usdt')} USDT`}}
 						p Deposits withdraw: {{`${formatCurrency(totals.deposit_withdraw, 'usdt')} USDT`}}
-						p Dividends accural: {{`${formatCurrency(totals.dividend_accural, 'usdt')} USDT`}}
+						p Dividends accrual: {{`${formatCurrency(totals.dividend_accural, 'usdt')} USDT`}}
 						p Dividends withdraw: {{`${formatCurrency(totals.dividend_withdraw, 'usdt')} USDT`}}
 						p Deposits: {{`${formatCurrency(totals.deposits, 'usdt')} USDT`}}
 						p Reinvestment: {{`${formatCurrency(totals.reinvestment, 'usdt')} USDT`}}
@@ -126,7 +126,7 @@
 					.divider
 				template(slot="bottom-left")
 					div
-						p Dividends accural: {{`${formatCurrency(totals.dividend_accural, 'usdt')} USDT`}}
+						p Dividends accrual: {{`${formatCurrency(totals.dividend_accural, 'usdt')} USDT`}}
 						.divider
 						p {{$t('export')}}
 							a(@click="saveAsExcel") .xls
@@ -276,87 +276,86 @@ export default {
       }
     },
     exportedFileData() {
-      const data = this.tableData.map(el => {
-        if (this.colsType === "investments") {
-          return {
-            Date: this.timestampToDate(el.args.timestamp),
-            Event: el.event,
-            Address: el.args.customerAddress,
-            TxHash: el.transactionHash,
-            Contract: el.contract,
-            "Amount ETH":
-              this.formatCurrency(el.args.ETH, "eth") ||
-              this.formatCurrency(el.args.incomingValue, "eth") ||
-              this.formatCurrency(el.args.incomingEthereum, "eth"),
-            Rate: this.formatCurrency(el.args.RATE, "rate"),
-            "Amount USDT": this.formatCurrency(el.args.USDT, "usdt"),
-            Reinvested: el.isReinvested ? "reinvested" : ""
-          };
-        } else if (this.colsType === "dividend_withdraw") {
-          return {
-            Date: this.timestampToDate(el.args.timestamp),
-            Address: el.args.customerAddress,
-            TxHash: el.transactionHash,
-            Contract: el.contract,
-            "Amount ETH":
-              this.formatCurrency(el.args.ETH, "eth") ||
-              this.formatCurrency(el.args.incomingValue, "eth") ||
-              this.formatCurrency(el.args.incomingEthereum, "eth"),
-            Rate: this.formatCurrency(el.args.RATE, "rate"),
-            "Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-          };
-        } else if (this.colsType === "deposit_accural") {
-          return {
-            Date: this.timestampToDate(el.args.timestamp),
-            Address: el.args.customerAddress,
-            TxHash: el.transactionHash,
-            Contract: el.contract,
-            "Amount ETH":
-              this.formatCurrency(el.args.ETH, "eth") ||
-              this.formatCurrency(el.args.incomingValue, "eth") ||
-              this.formatCurrency(el.args.incomingEthereum, "eth"),
-            Rate: this.formatCurrency(el.args.RATE, "rate"),
-            "Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-          };
-        } else if (this.colsType === "dividend_accural") {
-          return {
-            Date: this.timestampToDate(el.args.timestamp),
-            Address: el.args.customerAddress,
-            TxHash: el.transactionHash,
-            Contract: el.contract,
-            "Amount ETH":
-              this.formatCurrency(el.args.ETH, "eth") ||
-              this.formatCurrency(el.args.incomingValue, "eth") ||
-              this.formatCurrency(el.args.incomingEthereum, "eth"),
-            Rate: this.formatCurrency(el.args.RATE, "rate"),
-            "Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-          };
-        } else if (this.colsType === "deposit_withdraw") {
-          return {
-            Date: this.timestampToDate(el.args.timestamp),
-            Address: el.args.customerAddress,
-            TxHash: el.transactionHash,
-            Contract: el.contract,
-            "Amount ETH":
-              this.formatCurrency(el.args.ETH, "eth") ||
-              this.formatCurrency(el.args.incomingValue, "eth") ||
-              this.formatCurrency(el.args.incomingEthereum, "eth"),
-            Rate: this.formatCurrency(el.args.RATE, "rate"),
-            "Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-          };
-        } else if (this.colsType === "all") {
-          return {
-            Date: this.timestampToDate(el.args.timestamp),
-            Event: el.event,
-            Address: el.args.customerAddress,
-            TxHash: el.transactionHash,
-            Contract: el.contract,
-            "Amount USDT": this.formatCurrency(el.args.USDT, "usdt"),
-            Reinvested: el.isReinvested ? "reinvested" : ""
-          };
-        }
-      });
-      return data;
+			return this.tableData.map(el => {
+				if (this.colsType === "investments") {
+					return {
+						Date: this.timestampToDate(el.args.timestamp),
+						Event: el.event,
+						Address: el.args.customerAddress,
+						TxHash: el.transactionHash,
+						Contract: el.contract,
+						"Amount ETH":
+							this.formatCurrency(el.args.ETH, "eth") ||
+							this.formatCurrency(el.args.incomingValue, "eth") ||
+							this.formatCurrency(el.args.incomingEthereum, "eth"),
+						Rate: this.formatCurrency(el.args.RATE, "rate"),
+						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt"),
+						Reinvested: el.isReinvested ? "reinvested" : ""
+					};
+				} else if (this.colsType === "dividend_withdraw") {
+					return {
+						Date: this.timestampToDate(el.args.timestamp),
+						Address: el.args.customerAddress,
+						TxHash: el.transactionHash,
+						Contract: el.contract,
+						"Amount ETH":
+							this.formatCurrency(el.args.ETH, "eth") ||
+							this.formatCurrency(el.args.incomingValue, "eth") ||
+							this.formatCurrency(el.args.incomingEthereum, "eth"),
+						Rate: this.formatCurrency(el.args.RATE, "rate"),
+						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
+					};
+				} else if (this.colsType === "deposit_accural") {
+					return {
+						Date: this.timestampToDate(el.args.timestamp),
+						Address: el.args.customerAddress,
+						TxHash: el.transactionHash,
+						Contract: el.contract,
+						"Amount ETH":
+							this.formatCurrency(el.args.ETH, "eth") ||
+							this.formatCurrency(el.args.incomingValue, "eth") ||
+							this.formatCurrency(el.args.incomingEthereum, "eth"),
+						Rate: this.formatCurrency(el.args.RATE, "rate"),
+						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
+					};
+				} else if (this.colsType === "dividend_accural") {
+					return {
+						Date: this.timestampToDate(el.args.timestamp),
+						Address: el.args.customerAddress,
+						TxHash: el.transactionHash,
+						Contract: el.contract,
+						"Amount ETH":
+							this.formatCurrency(el.args.ETH, "eth") ||
+							this.formatCurrency(el.args.incomingValue, "eth") ||
+							this.formatCurrency(el.args.incomingEthereum, "eth"),
+						Rate: this.formatCurrency(el.args.RATE, "rate"),
+						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
+					};
+				} else if (this.colsType === "deposit_withdraw") {
+					return {
+						Date: this.timestampToDate(el.args.timestamp),
+						Address: el.args.customerAddress,
+						TxHash: el.transactionHash,
+						Contract: el.contract,
+						"Amount ETH":
+							this.formatCurrency(el.args.ETH, "eth") ||
+							this.formatCurrency(el.args.incomingValue, "eth") ||
+							this.formatCurrency(el.args.incomingEthereum, "eth"),
+						Rate: this.formatCurrency(el.args.RATE, "rate"),
+						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
+					};
+				} else if (this.colsType === "all") {
+					return {
+						Date: this.timestampToDate(el.args.timestamp),
+						Event: el.event,
+						Address: el.args.customerAddress,
+						TxHash: el.transactionHash,
+						Contract: el.contract,
+						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt"),
+						Reinvested: el.isReinvested ? "reinvested" : ""
+					};
+				}
+			});
     },
     exportedTotalsData() {
       if (this.colsType === "all") {
@@ -379,7 +378,7 @@ export default {
           ],
           [
             this.totals.dividend_accural
-              ? `Dividends accural: ${this.formatCurrency(
+              ? `Dividends accrual: ${this.formatCurrency(
                   this.totals.dividend_accural,
                   "usdt"
                 )} USDT`
