@@ -6,7 +6,7 @@
 
 <script>
 export default {
-	middleware: ['fetchUser', 'metamask'],
+	middleware: ['fetchUser', 'web3'],
 }
 </script>
 

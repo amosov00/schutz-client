@@ -1,13 +1,25 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5"> {{ $t('Укажите сумму реинвестирования') }} </p>
-			<p class="is-size-7 mb-60" v-html="$t('reinvestText')">
-
+			<p class="is-size-5">{{ $t("Укажите сумму реинвестирования") }}</p>
+			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
+				Вы можете
+				<a class="is-link" @click="value = interestBalance">
+					реинвестировать всю сумму
+				</a>
+				или часть начисленных дивидендов, остальные вывести.
+			</p>
+			<p class="is-size-7 mb-60" v-else>
+				You can
+				<a class="is-link" @click="value = interestBalance">
+					reinvest the entire amount
+				</a>
+				or part of the accrued dividends, and withdraw the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					rules="required|min_value:50"
+					name="reinvest"
+					:rules="`required|min_value:50|max_value:${interestBalance}`"
 					slim
 					v-slot="{ errors, valid }"
 				>
@@ -18,7 +30,7 @@
 						required
 						:is-danger="!!errors[0]"
 						:is-success="!!valid"
-						:error="errors[0]"
+						:error="$t(errors[0])"
 						size="4"
 						class="is-flex-grow-1"
 						setFocus
@@ -35,13 +47,13 @@
 						"
 					/>
 					<span class="is-size-7">
-						{{ $t('Я принимаю') }}
+						{{ $t("Я принимаю") }}
 						<a
 							href="#"
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							{{ $t('условия и положения') }}
+							{{ $t("условия и положения") }}
 						</a>
 					</span>
 				</div>
@@ -54,13 +66,13 @@
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					{{ $t('Отменить, я передумал') }}
+					{{ $t("Отменить, я передумал") }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="reinvest"
 				>
-					{{ $t('Реинвестировать') }}
+					{{ $t("Реинвестировать") }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
@@ -75,8 +87,12 @@
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
+import metamaskSignature from "~/mixins/metamaskSignature";
+import { mapGetters } from "vuex";
+
 export default {
 	name: "reinvest-modal",
+	props: [metamaskSignature],
 	data() {
 		return {
 			value: ""
@@ -91,8 +107,13 @@ export default {
 		async reinvest() {
 			const isValid = await this.$refs.observer.validate();
 			if (isValid && this.isTermsAcceped) {
+				let status = await this.makeMetamaskSignature();
+				if (!status) {
+					return;
+				}
+
 				this.$buefy.toast.open({
-					message: "Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)",
+					message: this.$t("Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)"),
 					type: "is-success"
 				});
 				await this.$store.dispatch(
@@ -109,6 +130,7 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters("userContractIntegration", ["interestBalance"]),
 		isTermsAcceped: {
 			get() {
 				return this.$store.getters.isTermsAcceped;
@@ -139,13 +161,16 @@ export default {
 <style lang="scss">
 .actions {
 	margin-top: auto;
+
 	button {
 		width: 400px;
 	}
 }
+
 .mw-600 {
 	max-width: 600px;
 }
+
 .links {
 	a {
 		&.telegram {
@@ -169,12 +194,14 @@ export default {
 		}
 	}
 }
+
 .mm-copy {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
 	cursor: pointer;
+
 	a {
 		font-weight: 300;
 		font-size: 14px;
@@ -193,6 +220,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .add-funds-card {
 	width: 860px;
 	height: 560px;

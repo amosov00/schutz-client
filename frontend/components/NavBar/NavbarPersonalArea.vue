@@ -58,13 +58,6 @@ export default {
   },
   methods: {
   },
-  async created() {
-    this.$store.dispatch("userContractIntegration/fetchBalances").then(() => {
-    }).catch((e) => {
-      console.warn("Failed to fetch deposits data")
-      console.warn(e)
-    })
-  },
 };
 </script>
 

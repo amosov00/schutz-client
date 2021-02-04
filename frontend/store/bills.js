@@ -1,4 +1,3 @@
-import web3 from "~/utils/web3";
 import moment from "moment";
 import _ from "lodash";
 
@@ -171,53 +170,6 @@ export const actions = {
 				return null
 			})
 	},
-	// TODO deprecated, delete after 01/01/2020
-  async _payInvoice({dispatch, rootGetters}, invoiceData) {
-    const gasPrice = rootGetters["metamask/gasPrice"];
-    let contract = this.$contracts().NTSCD;
-    const fromDate = invoiceData.timestamp_from
-      ? moment
-        .unix(invoiceData.timestamp_from)
-        .utc()
-        .format("MM.YYYY")
-      : 0;
-    const toDate = invoiceData.timestamp_to
-      ? moment
-        .unix(invoiceData.timestamp_to)
-        .utc()
-        .format("MM.YYYY")
-      : 0;
-    return await window.ethereum
-      .request({
-        method: "eth_sendTransaction",
-        params: [
-          {
-            from: ethereum.selectedAddress,
-            to: contract._address,
-            value: "0x00",
-            gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
-            gas: web3.utils.toHex("250000"),
-            data: contract.methods.passInterest(
-              invoiceData.total_usdt,
-              invoiceData.address,
-              100,
-              675,
-              `${fromDate}-${toDate}-${invoiceData._id}`
-            ).encodeABI()
-          }
-        ]
-      })
-      .then(txHash => {
-        Toast.open({type: "is-success", message: txHash, duration: 5000})
-        dispatch("updateInvoiceAddessTxHash", {
-          id: invoiceData._id,
-          txHash: txHash
-        });
-      })
-      .catch(err => {
-        Toast.open({type: "is-danger", message: "Error", duration: 1000})
-      })
-  },
   async deleteInvoice({state, commit}, id) {
     return await this.$axios.delete(`/admin/invoices/${id}/`).then(() => {
       commit("deleteInvoiceFromStore", id);
@@ -243,44 +195,6 @@ export const actions = {
     }).catch(() => {
       Toast.open({type: "is-danger", message: "Error", duration: 1000})
     })
-  },
-	// TODO remove after 01/01/2021
-  async _payGlobalInvoice({dispatch, rootGetters}, {invoice, index, invoiceData}) {
-    const gasPrice = rootGetters["metamask/gasPrice"];
-    let contract = this.$contracts().OperatorNTS
-    return await window.ethereum
-      .request({
-        method: 'eth_sendTransaction',
-        params: [{
-          from: ethereum.selectedAddress,
-          to: contract._address,
-          value: "0x00",
-          gasPrice: web3.utils.toHex(web3.utils.toWei(`${gasPrice}`, "gwei")),
-          gas: web3.utils.toHex("7500000"),
-          data: contract.methods.passInterestNTSCD(
-            invoiceData.values,
-            invoiceData.customerAddresses,
-            invoiceData.comments,
-            invoiceData.rate,
-            invoiceData.valueRate,
-            invoiceData.startIndex
-          ).encodeABI()
-        }],
-      })
-      .then(async (txHash) => {
-        Toast.open({type: "is-success", message: txHash, duration: 5000})
-        await dispatch("addPaymentTx", {
-          invoice: invoice,
-          index: index,
-          txHash: txHash,
-          customerAddresses: invoiceData.customerAddresses
-        })
-        return true
-      })
-      .catch((error) => {
-        Toast.open({type: "is-danger", message: "error", duration: 3000})
-        return false
-      });
   },
 	async getBillExtendedData({}, id) {
   	try {

@@ -22,7 +22,7 @@
 							inline
 						)
 		.is-flex.is-justify-content-flex-end.mt-5
-			b-button(type="is-primary" @click="create" :loading="loading") {{$t('create')}}
+			b-button(type="is-info" @click="create" :loading="loading") {{$t('create')}}
 </template>
 
 <script>

@@ -9,92 +9,92 @@
 			<template slot="content">
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex is-flex-direction-column">
-						<div class="is-size-5 mb-5" v-html="$t('dividensTitle')">
-
-						</div>
-						<div class="is-size-4"> {{ $t('Доступно USDT:') }}</div>
+						<div class="is-size-5 mb-5" v-html="$t('dividensTitle')"></div>
+						<div class="is-size-4">{{ $t("Доступно USDT:") }}</div>
 						<div class="is-size-2 mb-5">
 							{{ formatCurrency(interestBalance) }}
 						</div>
 						<div class="is-size-7 mb-5 has-text-grey mt-auto">
-							{{ $t('Ближайшие дивиденды поступят') }} <br/>
-							{{ $t('15 января, 2021') }}
+							{{ $t("Ближайшие дивиденды поступят") }} <br />
+							{{ $t("15 января, 2021") }}
 						</div>
 					</div>
 					<div class="column is-half is-flex is-flex-direction-column ">
 						<div>
-							<div class="is-size-7 ethereum">
-								{{ $t('Ethereum адрес') }}:
-							</div>
+							<div class="is-size-7 ethereum">{{ $t("Ethereum адрес") }}:</div>
 							<div class="mb-5 ethereum-address">
 								<span v-if="user.ethereum_wallet">{{
-										user.ethereum_wallet
-									}}</span>
+									user.ethereum_wallet
+								}}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
 									class="value has-text-link has-text-weight-light"
 								>
-									{{ $t('Добавить кошелек') }}
+									{{ $t("Добавить кошелек") }}
 								</a>
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
-								<div
-									:class="[isConnected ? 'status-online' : 'status-offline']"
-									class="is-size-4 status mr-5"
-								>
-									{{ isConnected ? "Online" : "Offline" }}
+								<div :class="`status-${mode}`" class="is-size-4 status mr-5">
+									{{ mode }}
 								</div>
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div v-if="isConnected" class="is-size-7 has-text-grey">
-								{{ $t('Кошелек готов к работе.') }}
+							<div
+								v-if="mode === metamaskState.ONLINE"
+								class="is-size-7 has-text-grey"
+							>
+								{{ $t("walletOnline") }}
 							</div>
 							<div
-								v-else-if="!user.ethereum_wallet"
+								v-else-if="mode === metamaskState.WAITING"
+								class="is-size-7 has-text-grey"
+							>
+								{{ $t("walletWaiting") }}
+							</div>
+							<div
+								v-else-if="mode === metamaskState.OFFLINE"
 								class="is-size-7 status-offline"
 							>
-								{{ $t('Добавьте кошелек') }}
-							</div>
-							<div v-else class="is-size-7 status-offline">
-								{{ $t('Выберите этот кошелек в вашем MetaMask.') }}
+								{{ $t("walletOffline") }}
 							</div>
 						</div>
 						<custom-button
-							:disabled="!interestBalance || !isConnected"
+							:disabled="!interestBalance || !metamaskActionsAreAllowed"
 							@click.native="openModal('close-deposit')"
 							class="mt-auto mb-2"
 						>
-							{{ $t('Вывести') }}
+							{{ $t("Вывести") }}
 						</custom-button>
 						<custom-button
-							:disabled="!interestBalance || !isConnected"
+							:disabled="!interestBalance || !metamaskActionsAreAllowed"
 							@click.native="openModal('reinvest')"
 						>
-							{{ $t('Реинвестировать') }}
+							{{ $t("Реинвестировать") }}
 						</custom-button>
 					</div>
 				</div>
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="isCloseDepositModalActive" has-modal-card>
-			<withdraw-and-close-deposit-modal action-type="withdraw"/>
+			<withdraw-and-close-deposit-modal action-type="withdraw" />
 		</b-modal>
 		<b-modal :active.sync="isReinvestModalActive" has-modal-card>
-			<reinvest-modal/>
+			<reinvest-modal />
 		</b-modal>
 	</div>
 </template>
 
 <script>
 import formatCurrency from "~/mixins/formatCurrency";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import WithdrawAndCloseDepositModal from "./modals/WithdrawAndCloseDepositModal";
 import ReinvestModal from "./modals/ReinvestModal";
+import { METAMASK_STATE } from "~/consts";
 
 export default {
 	name: "DividendProducts",
-	components: {ReinvestModal, WithdrawAndCloseDepositModal},
+	components: { ReinvestModal, WithdrawAndCloseDepositModal },
 	mixins: [formatCurrency],
 
 	async created() {
@@ -104,22 +104,26 @@ export default {
 	},
 	data: () => ({
 		isCloseDepositModalActive: false,
-		isReinvestModalActive: false
+		isReinvestModalActive: false,
+		metamaskState: METAMASK_STATE
 	}),
 	computed: {
 		...mapGetters(["user"]),
-		...mapGetters("metamask", ["isConnected", "gasPrice"]),
-		...mapGetters("userContractIntegration", ["interestBalance"])
+		...mapGetters("metamask", ["isConnected", "gasPrice", "mode"]),
+		...mapGetters("userContractIntegration", ["interestBalance"]),
+		metamaskActionsAreAllowed() {
+			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE;
+		}
 	},
 	methods: {
 		openModal(modal) {
 			switch (modal) {
 				case "close-deposit":
 					this.isCloseDepositModalActive = true;
-					break
+					break;
 				case "reinvest":
 					this.isReinvestModalActive = true;
-					break
+					break;
 			}
 		}
 	}
@@ -173,6 +177,14 @@ export default {
 
 		&:before {
 			background-color: #d60d0d;
+		}
+	}
+
+	&-waiting {
+		color: #d6640d;
+
+		&:before {
+			background-color: #d6640d;
 		}
 	}
 

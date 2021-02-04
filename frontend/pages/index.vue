@@ -88,12 +88,12 @@ export default {
 		handleBlur() {
 			if (this.email && this.password) {
 				if (this.password.length >= 8) {
-					if (this.status_image != "/login_success.svg") {
+					if (this.status_image !== "/login_success.svg") {
 						this.animate_class = "flipInX";
 					}
 					this.status_image = "/login_success.svg";
 				} else {
-					if (this.status_image != "/login.svg") {
+					if (this.status_image !== "/login.svg") {
 						this.animate_class = "flipInX";
 					}
 					this.status_image = "/login.svg";

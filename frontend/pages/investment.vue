@@ -40,7 +40,7 @@
 							</div>
 							<div>
 								<div class="is-size-7 mb-4 has-text-grey">
-									{{ $t("Вклад будет доступен к выводу") }} <br />
+									{{ $t("Вклад будет доступен к выводу") }} <br/>
 									{{ $t("после") }} {{ getWithdrawDate }}
 								</div>
 							</div>
@@ -54,9 +54,7 @@
 							</div>
 							<div class="is-size-7 ethereum">{{ $t("Ethereum адрес") }}:</div>
 							<div class="ethereum-address mb-5">
-								<span v-if="user.ethereum_wallet">{{
-									user.ethereum_wallet
-								}}</span>
+								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
 								<a
 									v-else
 									@click="isWalletModalActive = true"
@@ -67,46 +65,45 @@
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
 								<div
-									:class="[isConnected ? 'status-online' : 'status-offline']"
+									:class="`status-${mode}`"
 									class="is-size-4 status mr-5"
 								>
-									{{ isConnected ? "Online" : "Offline" }}
+									{{ mode }}
 								</div>
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div v-if="isConnected" class="is-size-7 has-text-grey">
-								{{ $t("Кошелек готов к работе.") }}
+							<div v-if="mode === metamaskState.ONLINE" class="is-size-7 has-text-grey">
+								<span v-if="allowance === 0">{{ $t('walletOnlineApprove') }}</span>
+								<span v-else>{{ $t('walletOnline') }}</span>
+
 							</div>
-							<div
-								v-else-if="!user.ethereum_wallet"
-								class="is-size-7 status-offline"
-							>
-								{{ $t("Добавьте кошелек") }}
+							<div v-else-if="mode === metamaskState.WAITING" class="is-size-7 status-offline">
+								{{ $t('walletWaiting') }}
 							</div>
-							<div v-else class="is-size-7 status-offline">
-								{{ $t("Выберите этот кошелек в вашем MetaMask.") }}
+							<div v-else-if="mode === metamaskState.OFFLINE" class="is-size-7 status-offline">
+								{{ $t('walletOffline') }}
 							</div>
 						</div>
 						<custom-button
-							v-if="!isMetaMaskInstalled"
+							v-if="!isMetamaskInstalled"
 							@click.native="isMetaMaskInstallModalActive = true"
 							class="mt-auto"
 						>
 							{{ $t("Авторизовать кошлек") }}
 						</custom-button>
 						<custom-button
-							v-else-if="allowance === 0"
+							v-else-if="isMetamaskInstalled && allowance === 0"
 							@click.native="allowUSDT"
 							class="mt-auto"
-							:disabled="!user.ethereum_wallet || !isConnected"
+							:disabled="!metamaskActionsAreAllowed"
 						>
 							{{ $t("Одобрить USDT") }}
 						</custom-button>
 						<custom-button
-							v-else-if="tokenBalance > 0"
+							v-else-if="isMetamaskInstalled && tokenBalance > 0"
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
-							:disabled="!user.ethereum_wallet || !isConnected"
+							:disabled="!metamaskActionsAreAllowed"
 						>
 							{{ $t("Пополнить депозит") }}
 						</custom-button>
@@ -114,7 +111,7 @@
 							v-else
 							@click.native="isAddFundsModalActive = true"
 							class="mt-auto"
-							:disabled="!user.ethereum_wallet || !isConnected"
+							:disabled="!metamaskActionsAreAllowed"
 						>
 							{{ $t("Открыть вклад") }}
 						</custom-button>
@@ -224,16 +221,16 @@
 			<add-new-wallet-modal></add-new-wallet-modal>
 		</b-modal>
 		<b-modal :active.sync="isMetaMaskInstallModalActive" has-modal-card>
-			<install-meta-mask-modal />
+			<install-meta-mask-modal/>
 		</b-modal>
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
-			<AddFundsModal :preparedData="input" has-modal-card />
+			<AddFundsModal :preparedData="input" has-modal-card/>
 		</b-modal>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import formatDate from "~/mixins/formatDate";
 import AddFundsModal from "../components/modals/AddFundsModal";
 import formatCurrency from "~/mixins/formatCurrency";
@@ -242,12 +239,13 @@ import moment from "moment";
 import gsap from "gsap";
 import AddNewWalletModal from "../components/modals/AddNewWalletModal";
 import InstallMetaMaskModal from "../components/modals/installMetaMaskModal";
-import { mainSliderController } from "@/utils/slider";
+import {mainSliderController} from "@/utils/slider";
+import {METAMASK_STATE} from "~/consts";
 
 export default {
 	name: "investment",
 	layout: "profile",
-	middleware: ["authRequired", "contracts"],
+	middleware: ["authRequired"],
 	mixins: [formatDate, formatCurrency, formatText],
 	transition: mainSliderController,
 	components: {
@@ -261,7 +259,134 @@ export default {
 			await this.$store.dispatch("metamask/getGasPrice");
 		}
 	},
+	watch: {
+		input: {
+			handler(newVal) {
+				this.animateNumbers(newVal);
+			},
+			immediate: true
+		}
+	},
+	computed: {
+		...mapGetters(["user", "txTotals"]),
+		...mapGetters("metamask", ["gasPrice", "isConnected", "mode"]),
+		...mapGetters("userContractIntegration", [
+			"depositBalance",
+			"allowance",
+			"tokenBalance"
+		]),
+		isMetamaskInstalled() {
+			return this.isConnected && this.user.ethereum_wallet
+		},
+		metamaskActionsAreAllowed() {
+			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
+		},
+		tableData() {
+			return this.$store.getters.transactions.transactions !== null
+				? this.$store.getters.transactions.transactions
+				: [];
+		},
+		filteredData() {
+			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
+			d.sort((a, b) => {
+				if (this.sort_date) {
+					if (this.sort_date === "asc") {
+						return b.args.timestamp - a.args.timestamp;
+					} else {
+						return a.args.timestamp - b.args.timestamp;
+					}
+				}
+
+				if (this.sort_amount) {
+					if (this.sort_amount === "asc") {
+						return b.args.USDT - a.args.USDT;
+					} else {
+						return a.args.USDT - b.args.USDT;
+					}
+				}
+
+				if (this.sort_contract) {
+					if (this.sort_contract === "asc") {
+						return b.contract.localeCompare(a.contract);
+					} else {
+						return a.contract.localeCompare(b.contract);
+					}
+				}
+
+				if (this.sort_event) {
+					if (this.sort_event === "asc") {
+						return b.event.localeCompare(a.event);
+					} else {
+						return a.event.localeCompare(b.event);
+					}
+				}
+			});
+
+			return d.slice(0, this.limit);
+		},
+
+		totals() {
+			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
+			let t = {
+				investments: 0,
+				deposit_accural: 0,
+				deposit_withdraw: 0
+			};
+
+			d.forEach(el => {
+				switch (el.event) {
+					case "Deposit":
+						t.investments += el.args.USDT;
+						break;
+					case "Deposit Accrual":
+						t.deposit_accural += el.args.USDT;
+						break;
+					case "Deposit Withdraw":
+						t.deposit_withdraw += el.args.USDT;
+						break;
+				}
+			});
+
+			if (this.limit > this.filteredData.length) {
+				this.hide_button = true;
+			}
+
+			return t;
+		},
+
+		getWithdrawDate() {
+			const offset = moment().utcOffset();
+			return moment()
+				.startOf("month")
+				.locale(this.$i18n.locale)
+				.add(offset, "minutes")
+				.add(13, "month")
+				.add(19, "days")
+				.format("DD MMM YYYY");
+		},
+	},
+	data: () => ({
+		limit: 5,
+		hide_button: false,
+		profit: "",
+		reinvest: "",
+		input: "2500",
+		isEmpty: false,
+		currentProduct: "All",
+		products: ["All", "NTS80", "NTS81", "NTS165"],
+		isWalletModalActive: false,
+		isMetaMaskInstallModalActive: false,
+		isAddFundsModalActive: false,
+		sort_date: "asc",
+		sort_event: false,
+		sort_contract: false,
+		sort_amount: false,
+		metamaskState: METAMASK_STATE,
+	}),
 	methods: {
+		...mapActions({
+			allowUSDT: "userContractIntegration/allowUSDT",
+		}),
 		showMore() {
 			this.limit += 5;
 			if (this.limit > this.filteredData.length) {
@@ -270,9 +395,6 @@ export default {
 		},
 		setProduct(product) {
 			this.currentProduct = product;
-		},
-		allowUSDT() {
-			this.$store.dispatch("userContractIntegration/allowUSDT");
 		},
 		animateNumbers(newVal) {
 			gsap.to(this.$data, 0.5, {
@@ -306,128 +428,8 @@ export default {
 			this.sort_amount = false;
 		}
 	},
-	watch: {
-		input: {
-			handler(newVal) {
-				this.animateNumbers(newVal);
-			},
-			immediate: true
-		}
-	},
-	computed: {
-		...mapGetters(["user", "txTotals"]),
-		...mapGetters("metamask", ["gasPrice", "isConnected"]),
-		...mapGetters("userContractIntegration", [
-			"depositBalance",
-			"allowance",
-			"tokenBalance"
-		]),
-		tableData() {
-			return this.$store.getters.transactions.transactions !== null
-				? this.$store.getters.transactions.transactions
-				: [];
-		},
-		filteredData() {
-			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
-			d.sort((a, b) => {
-				if (this.sort_date) {
-					if (this.sort_date == "asc") {
-						return b.args.timestamp - a.args.timestamp;
-					} else {
-						return a.args.timestamp - b.args.timestamp;
-					}
-				}
-
-				if (this.sort_amount) {
-					if (this.sort_amount == "asc") {
-						return b.args.USDT - a.args.USDT;
-					} else {
-						return a.args.USDT - b.args.USDT;
-					}
-				}
-
-				if (this.sort_contract) {
-					if (this.sort_contract == "asc") {
-						return b.contract.localeCompare(a.contract);
-					} else {
-						return a.contract.localeCompare(b.contract);
-					}
-				}
-
-				if (this.sort_event) {
-					if (this.sort_event == "asc") {
-						return b.event.localeCompare(a.event);
-					} else {
-						return a.event.localeCompare(b.event);
-					}
-				}
-			});
-
-			return d.slice(0, this.limit);
-		},
-
-		totals() {
-			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
-			let t = {
-				investments: 0,
-				deposit_accural: 0,
-				deposit_withdraw: 0
-			};
-
-			d.forEach(el => {
-				switch (el.event) {
-					case "Deposit":
-						t.investments += el.args.USDT;
-						break;
-					case "Deposit Accural":
-						t.deposit_accural += el.args.USDT;
-						break;
-					case "Deposit Withdraw":
-						t.deposit_withdraw += el.args.USDT;
-						break;
-				}
-			});
-
-			if (this.limit > this.filteredData.length) {
-				this.hide_button = true;
-			}
-
-			return t;
-		},
-
-		getWithdrawDate() {
-			const offset = moment().utcOffset();
-			return moment()
-				.startOf("month")
-				.locale(this.$i18n.locale)
-				.add(offset, "minutes")
-				.add(13, "month")
-				.add(19, "days")
-				.format("DD MMM YYYY");
-		},
-		isMetaMaskInstalled() {
-			return Boolean(window.ethereum);
-		}
-	},
-	data: () => ({
-		limit: 5,
-		hide_button: false,
-		profit: "",
-		reinvest: "",
-		input: "2500",
-		isEmpty: false,
-		currentProduct: "All",
-		products: ["All", "NTS80", "NTS81", "NTS165"],
-		isWalletModalActive: false,
-		isMetaMaskInstallModalActive: false,
-		isAddFundsModalActive: false,
-		sort_date: "asc",
-		sort_event: false,
-		sort_contract: false,
-		sort_amount: false
-	}),
-	async asyncData({ store }) {
-		return await store.dispatch("fetchTransactions", "investments");
+	async asyncData({store}) {
+		await store.dispatch("fetchTransactions", "investments");
 	}
 };
 </script>
@@ -435,6 +437,7 @@ export default {
 .has-text-right {
 	.th-wrap {
 		text-align: right;
+
 		.is-invisible {
 			display: none;
 		}
@@ -502,6 +505,15 @@ export default {
 			background-color: #d60d0d;
 		}
 	}
+
+	&-waiting {
+		color: #d6640d;
+
+		&:before {
+			background-color: #d6640d;
+		}
+	}
+
 
 	&-online {
 		color: #00c236;

@@ -61,7 +61,7 @@ export default {
   layout: "admin",
   mixins: [formatDate, formatCurrency],
   components: {PayInvoiceButton},
-  middleware: ["authRequired", "adminRequired", "contracts"],
+  middleware: ["authRequired", "adminRequired"],
   methods: {
     updateTotalModal(data) {
       this.$buefy.dialog.prompt({

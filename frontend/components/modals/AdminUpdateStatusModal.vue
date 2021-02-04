@@ -9,8 +9,8 @@
 				v-model="form.result"
 			)
 		footer.modal-card-foot.is-flex.is-justify-content-flex-end
-			b-button(type="is-danger" outlined @click="closeModal") Cancel
-			b-button(type="is-primary" outlined @click="update") Submit
+			b-button(type="is-danger" @click="closeModal") Cancel
+			b-button(type="is-info" @click="update") Submit
 </template>
 
 <script>

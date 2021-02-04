@@ -1,6 +1,5 @@
-import moment from "moment";
 
-import { ToastProgrammatic as Toast } from 'buefy'
+import { ToastProgrammatic as Toast } from 'buefy';
 
 export const state = () => ({
   list: [],

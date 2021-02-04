@@ -316,6 +316,22 @@ body {
 			background-color: #FFFFFF;
 		}
 	}
+
+	&.light {
+		&.custom-input {
+			.input {
+				color: #363636;
+
+				&::placeholder {
+					color: #363636;
+				}
+			}
+
+			.bottom-line {
+				background-color: #363636;
+			}
+		}
+	}
 }
 
 .green {
@@ -323,4 +339,7 @@ body {
 }
 .red {
 	color: red;
+}
+
+.right-align {
 }

@@ -65,7 +65,7 @@ export default {
 	},
 
 	layout: "profile",
-	middleware: ["managerOrAdminRequired", "contracts"],
+	middleware: ["managerOrAdminRequired"],
 
 	data() {
 		return {
@@ -123,7 +123,7 @@ export default {
 					value: "dividend_withdraw"
 				},
 				{
-					text: "Dividend Accural",
+					text: "Dividend Accrual",
 					value: "dividend_accural"
 				},
 				{

@@ -1,14 +1,17 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5"> {{ $t('Укажите сумму вклада в USDT') }} </p>
+			<p class="is-size-5">{{ $t("Укажите сумму вклада в USDT") }}</p>
 			<p class="is-size-7 mb-60">
-				{{$t('Если сумма указана верно, прочитайте и согласитесь с условиями')}}
+				{{
+					$t("Если сумма указана верно, прочитайте и согласитесь с условиями")
+				}}
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					rules="required|min_value:50"
+					rules="required|min_value:500|max_value:100000"
 					slim
+					name="deposit"
 					v-slot="{ errors, valid }"
 				>
 					<base-input
@@ -18,7 +21,7 @@
 						required
 						:is-danger="!!errors[0]"
 						:is-success="!!valid"
-						:error="errors[0]"
+						:error="$t(errors[0])"
 						size="4"
 						class="is-flex-grow-1"
 						setFocus
@@ -35,13 +38,13 @@
 						"
 					/>
 					<span class="is-size-7">
-						<span @click="$parent.close()"> {{$t('Я принимаю')}} </span>
+						<span @click="$parent.close()"> {{ $t("Я принимаю") }} </span>
 						<a
 							href="#"
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							{{$t('условия и положения')}}
+							{{ $t("условия и положения") }}
 						</a>
 					</span>
 				</div>
@@ -54,13 +57,13 @@
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					{{ $t('Отменить, я передумал') }}
+					{{ $t("Отменить, я передумал") }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="addFunds"
 				>
-					{{ $t('Открыть вклад') }}
+					{{ $t("Открыть вклад") }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
@@ -73,9 +76,12 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
+import {ValidationObserver, ValidationProvider} from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
+import metamaskSignature from "~/mixins/metamaskSignature";
+
 export default {
+	mixins: [metamaskSignature],
 	data() {
 		return {
 			value: ""
@@ -102,10 +108,11 @@ export default {
 			const isValid = await this.$refs.observer.validate();
 
 			if (isValid && this.isTermsAcceped) {
-				await this.$store.dispatch(
-					"userContractIntegration/deposit",
-					this.value
-				);
+				let status = await this.makeMetamaskSignature()
+				if (!status) {
+					return
+				}
+				await this.$store.dispatch("userContractIntegration/deposit", this.value);
 				this.$parent.close();
 			} else if (!this.isTermsAcceped) {
 				this.$buefy.toast.open({
@@ -148,13 +155,16 @@ export default {
 <style lang="scss">
 .actions {
 	margin-top: auto;
+
 	button {
 		width: 400px;
 	}
 }
+
 .mw-600 {
 	max-width: 600px;
 }
+
 .links {
 	a {
 		&.telegram {
@@ -178,12 +188,14 @@ export default {
 		}
 	}
 }
+
 .mm-copy {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
 	cursor: pointer;
+
 	a {
 		font-weight: 300;
 		font-size: 14px;
@@ -202,6 +214,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .add-funds-card {
 	width: 860px;
 	height: 560px;

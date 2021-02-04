@@ -13,7 +13,7 @@ import { mainSliderController } from "@/utils/slider";
 export default {
   layout: 'profile',
   name: 'dividents',
-  middleware: ['authRequired', 'contracts'],
+  middleware: ['authRequired'],
   components: { DividendProducts, DividendsTable },
 	transition: mainSliderController,
 	async asyncData({ store }) {

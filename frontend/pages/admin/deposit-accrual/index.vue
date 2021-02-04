@@ -62,7 +62,7 @@ export default {
 
 	mixins: [formatDate, formatCurrency],
 
-	middleware: ['adminRequired', 'contracts'],
+	middleware: ['adminRequired'],
 
 	data() {
 		return {

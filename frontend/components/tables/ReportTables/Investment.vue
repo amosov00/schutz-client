@@ -6,7 +6,8 @@
 		template(slot-scope="{ row }")
 			b-table-column(field="args.timestamp" label="Date" sortable width="50") {{ timestampToDate(row.args.timestamp) }}
 			b-table-column(field="event" label="Event" width="50") {{ row.event }}
-				span(class="tag is-link" v-if="row.isReinvested") Reinvested
+				span.tag.is-link(v-if="row.isReinvested") Reinvested
+				span.tag.is-warning(v-if="row.isDeactivated") Deactivated
 			b-table-column(field="address" label="Address" width="150").has-text-primary.overflow-reset
 				b-tooltip(:label="row.args.customerAddress" type="is-black" position="is-bottom").w-100
 					a(:href="getAddressLink(row.args.customerAddress)" target="_blank").text-clamp {{ row.args.customerAddress }}

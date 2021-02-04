@@ -188,11 +188,10 @@ export default {
 	"Вклад будет доступен к выводу":
 		"The deposit will be available for withdrawal",
 	после: "after",
-	"Кошелек готов к работе.": "The wallet is ready to work.",
-	"Добавьте кошелек": "Add wallet",
-	"Выберите этот кошелек в вашем MetaMask.":
-		"Select this wallet in your MetaMask.",
-	"Авторизовать кошлек": "Authorize wallet",
+	walletOnline: "The wallet is ready to work. USDT approved.",
+	walletOnlineApprove: "The wallet is ready to work. Now approve USDT",
+	walletWaiting: "Select this wallet in your MetaMask.",
+	walletOffline: "Connect this wallet to your browser",
 	"Одобрить USDT": "Approve USDT",
 	"История транзакций": "Transaction history",
 	"Ethereum адрес": "Ethereum address",
@@ -246,8 +245,16 @@ export default {
 	Deposit: "Deposit",
 	"Всего начислено дивидендов:": "Total dividends accrued:",
 	Реинвестиция: "Reinvest",
-	"Deposit Accural": "Deposit Accrual",
+	"Deposit Accrual": "Deposit Accrual",
 	"Deposit Withdraw": "Deposit Withdraw",
-	deposit_accural: "Deposit accural",
-	deposit_withdraw: "Deposit withdraw"
+	deposit_accrual: "Deposit accrual",
+	deposit_withdraw: "Deposit withdraw",
+	Да: "Yes",
+	Нет: "No",
+	"Вклад успешно пролонгирован": "Contribution has been successfully extended",
+	"Вклад успешно закрыт": "Deposit closed successfully",
+	"Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)":"Request sent to Metamask (RE-INVESTMENT)",
+	"The reinvest field must be 50 or more":"Minimum reinvestment 50.00 USDT",
+	"The deposit field must be 500 or more":"Minimum deposit 500 USDT",
+	"The deposit field must be 100000 or less":"Maximum deposit 100,000 USDT"
 };

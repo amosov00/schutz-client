@@ -1,10 +1,10 @@
-export default ({ app, redirect }, inject) => {
+export default ({ app, route, redirect }, inject) => {
 	inject("domainForCookie", () => {
 		let host = window.location.host;
 		if (host.includes("localhost")) {
 			return "localhost";
 		} else if (host.includes("elastoo.com")) {
-			return "elastoo.com";
+			return "schutz.elastoo.com";
 		} else {
 			return "schutz.capital";
 		}
@@ -32,13 +32,15 @@ export default ({ app, redirect }, inject) => {
 			});
 	});
 	inject("authLogout", () => {
-		app.store.commit("deleteUser");
-		app.$axios.setToken(null);
+		if (route.path !== app.localePath("/")) {
+			redirect(app.localePath("/"));
+		}
 		app.$cookies.remove("token", {
 			path: "/",
 			domain: app.$domainForCookie()
 		});
-		redirect(app.localePath('/'));
+		app.$axios.setToken(null);
+		app.store.commit("deleteUser");
 	});
 	inject("authFetchUser", async () => {
 		let { data, status } = await app.$axios.get("/account/user/");
@@ -49,15 +51,15 @@ export default ({ app, redirect }, inject) => {
 		}
 	});
 	inject("userIsLoggedIn", () => {
-		return app.store.getters.user;
+		return app.store.state.user;
 	});
 	inject("userIsManager", () => {
 		return (
-			app.store.getters.user &&
-			(app.store.getters.user.is_manager || app.store.getters.user.is_superuser)
+			app.store.state.user &&
+			(app.store.state.user.is_manager || app.store.state.user.is_superuser)
 		);
 	});
 	inject("userIsSuperuser", () => {
-		return app.store.getters.user && app.store.getters.user.is_superuser;
+		return app.store.state.user && app.store.state.user.is_superuser;
 	});
 };

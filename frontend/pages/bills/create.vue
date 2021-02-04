@@ -23,7 +23,7 @@ import BillsTable from "~/components/tables/BillsTable";
 export default {
   name: "bills",
   layout: "admin",
-  middleware: ["authRequired", "adminRequired", "contracts"],
+  middleware: ["authRequired", "adminRequired"],
   components: { BillsTable },
   data() {
     return {

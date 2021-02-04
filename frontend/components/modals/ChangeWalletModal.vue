@@ -63,11 +63,7 @@ export default {
 	methods: {
 		async changeWallet() {
 			if (this.wallet && this.wallet !== "0x") {
-				console.log(this.wallet);
-				const res = await this.$store.dispatch(
-					"wallet/changeWallet",
-					this.wallet
-				);
+				const res = await this.$store.dispatch("changeWallet", this.wallet);
 				if (res) {
 					this.$buefy.toast.open({
 						message: this.$t("Запрос отправлен"),
@@ -84,10 +80,12 @@ export default {
 <style lang="scss">
 .actions {
 	margin-top: auto;
+
 	button {
 		width: 400px;
 	}
 }
+
 .links {
 	a {
 		&.telegram {
@@ -111,6 +109,7 @@ export default {
 		}
 	}
 }
+
 .mw-600 {
 	max-width: 600px;
 }

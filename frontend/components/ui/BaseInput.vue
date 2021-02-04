@@ -1,7 +1,7 @@
 <template>
   <div
     class="custom-input"
-    :class="{'has-icon': hasIcon, 'is-danger': isDanger, 'is-success': isSuccess}"
+    :class="{'has-icon': hasIcon, 'is-danger': isDanger, 'is-success': isSuccess, 'hide-number-adders': !numberArrows }"
   >
     <label
       v-if="label"
@@ -97,7 +97,11 @@ export default {
     setFocus: {
       type: Boolean,
       default: () => false
-    }
+    },
+		numberArrows: {
+    	type: Boolean,
+			default: () => false,
+		}
   },
   methods: {
     onInput(e) {
@@ -135,6 +139,19 @@ export default {
   display: flex;
   align-items: center;
   height: 20px;
+
+	&.hide-number-adders {
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		/* Firefox */
+		input[type=number] {
+			-moz-appearance: textfield;
+		}
+	}
 
   .error {
     position: absolute;
@@ -207,16 +224,5 @@ export default {
       background-color: #D60D0D;
     }
   }
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-	-moz-appearance: textfield;
 }
 </style>

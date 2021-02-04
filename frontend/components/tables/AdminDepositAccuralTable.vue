@@ -3,7 +3,6 @@
 		:data="data"
 		:loading="loading"
 		default-sort="args.timestamp"
-		:row-class="() => 'table-row-fade'"
 	).custom-table.mb-4
 		template(slot-scope='{ row }')
 			b-table-column.overflow-reset(field='user_id' width='100' label='Id')
@@ -29,6 +28,20 @@
 						:href="getAddressLink(row.ethereum_wallet)"
 						target='_blank'
 					)  {{ row.ethereum_wallet }}
+			b-table-column.has-text-primary.overflow-reset(
+				field='tx_hash'
+				label='Tx Hash'
+				width='150'
+			)
+				b-tooltip.w-100(
+					:label='row.tx_hash'
+					type='is-black'
+					position='is-bottom'
+				)
+					a.text-clamp(
+						:href="getTxLink(row.tx_hash)"
+						target='_blank'
+					)  {{ row.tx_hash }}
 			b-table-column(
 				field='email'
 				label='Email'
@@ -54,7 +67,7 @@
 				| {{formatDate(row.close_date)}}
 			b-table-column(
 				field='created_at'
-				label='mailing'
+				label='Mailing'
 			)
 				| {{formatDate(row.created_at)}}
 			b-table-column(
@@ -68,14 +81,14 @@
 				width='100'
 			)
 				b-button(
-					type='is-primary is-small'
+					type='is-info is-small'
 					:disabled='row.isPaid !== true && row.result !== 2'
 					@click='pay(row)'
 				)
 					| {{$t('pay')}}
 			b-table-column.has-text-right(width='70')
 				b-button(
-					type='is-primary is-small'
+					type='is-info is-small'
 					@click='openStatusUpdateModal(row)'
 				)
 					| Статус

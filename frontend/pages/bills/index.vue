@@ -31,7 +31,7 @@ export default {
   name: "bills",
   layout: "admin",
   mixins: [formatCurrency, formatDate],
-  middleware: ["adminRequired", "contracts"],
+  middleware: ["adminRequired"],
   data() {
     return {
       loading: false

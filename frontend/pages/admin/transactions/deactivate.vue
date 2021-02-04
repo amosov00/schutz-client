@@ -48,7 +48,7 @@ export default {
 	name: "deactivate",
 
 	layout: "profile",
-	middleware: ["adminRequired", "contracts"],
+	middleware: ["adminRequired"],
 
 	components: {
 		CustomSlider,

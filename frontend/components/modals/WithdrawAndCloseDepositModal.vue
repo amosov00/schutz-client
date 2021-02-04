@@ -1,15 +1,26 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5"> {{ $t('Укажите сумму вывода') }} </p>
-			<p class="is-size-7 mb-60" v-html="$t('withdrawalText')">
-
+			<p class="is-size-5">{{ $t("Укажите сумму вывода") }}</p>
+			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
+				Вы можете
+				<a class="is-link" @click="value = depositBalance">вывести всю сумму</a>
+				или часть начисленных дивидендов, остальное реинвестировать.
+				{{ depositBalance }}
+			</p>
+			<p class="is-size-7 mb-60" v-else>
+				You can
+				<a class="is-link" @click="value = depositBalance">
+					withdraw the entire amount
+				</a>
+				or part of the accrued dividends, and reinvest the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					rules="required|min_value:1"
+					:rules="`required|min_value:1|max_value:${depositBalance}`"
 					slim
 					v-slot="{ errors, valid }"
+					name="amount"
 				>
 					<base-input
 						type="number"
@@ -35,13 +46,13 @@
 						"
 					/>
 					<span class="is-size-7">
-						<span @click="$parent.close()">  {{$t('Я принимаю')}}  </span>
+						<span @click="$parent.close()"> {{ $t("Я принимаю") }} </span>
 						<a
 							href="#"
 							class="terms-link "
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							{{ $t('условия и положения') }}
+							{{ $t("условия и положения") }}
 						</a>
 					</span>
 				</div>
@@ -54,13 +65,13 @@
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					{{ $t('Отменить, я передумал') }}
+					{{ $t("Отменить, я передумал") }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="action"
 				>
-					{{ $t('Вывести') }}
+					{{ $t("Вывести") }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
@@ -75,12 +86,16 @@
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
+import { mapGetters } from "vuex";
+import metamaskSignature from "~/mixins/metamaskSignature";
+
 export default {
 	name: "WithdrawAndCloseDepositModal",
+	mixins: [metamaskSignature],
 	props: {
 		actionType: {
 			type: String,
-			required: true,
+			required: true
 		}
 	},
 	data() {
@@ -97,14 +112,25 @@ export default {
 		async action() {
 			const isValid = await this.$refs.observer.validate();
 			if (isValid && this.isTermsAcceped) {
+				let status = await this.makeMetamaskSignature();
+				if (!status) {
+					return;
+				}
+
 				this.$buefy.toast.open({
 					message: "Запрос в Metamask отправлен (ВЫВОД)",
 					type: "is-success"
 				});
 				if (this.actionType === "closeDeposit") {
-					await this.$store.dispatch("userContractIntegration/closeDeposit", parseInt(this.value));
+					await this.$store.dispatch(
+						"userContractIntegration/closeDeposit",
+						parseInt(this.value)
+					);
 				} else if (this.actionType === "withdraw") {
-					await this.$store.dispatch("userContractIntegration/withdraw", parseInt(this.value));
+					await this.$store.dispatch(
+						"userContractIntegration/withdraw",
+						parseInt(this.value)
+					);
 				}
 				this.$parent.close();
 			}
@@ -116,6 +142,7 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters({ depositBalance: "userContractIntegration/depositBalance" }),
 		isTermsAcceped: {
 			get() {
 				return this.$store.getters.isTermsAcceped;
@@ -146,13 +173,16 @@ export default {
 <style lang="scss">
 .actions {
 	margin-top: auto;
+
 	button {
 		width: 400px;
 	}
 }
+
 .mw-600 {
 	max-width: 600px;
 }
+
 .links {
 	a {
 		&.telegram {
@@ -176,12 +206,14 @@ export default {
 		}
 	}
 }
+
 .mm-copy {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	position: relative;
 	cursor: pointer;
+
 	a {
 		font-weight: 300;
 		font-size: 14px;
@@ -200,6 +232,7 @@ export default {
 		background-size: contain;
 	}
 }
+
 .add-funds-card {
 	width: 860px;
 	height: 560px;
