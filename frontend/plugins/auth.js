@@ -54,10 +54,7 @@ export default ({ app, route, redirect }, inject) => {
 		return app.store.state.user
 	})
 	inject('userIsManager', () => {
-		return (
-			app.store.state.user &&
-			(app.store.state.user.is_manager || app.store.state.user.is_superuser)
-		)
+		return app.store.state.user && (app.store.state.user.is_manager || app.store.state.user.is_superuser)
 	})
 	inject('userIsSuperuser', () => {
 		return app.store.state.user && app.store.state.user.is_superuser

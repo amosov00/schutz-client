@@ -237,9 +237,7 @@ export default {
 
 			const txHash = await this.depositAccural({
 				values: [data.amount],
-				customerAddresses: [
-					userData.ethereum_wallet_payout || userData.ethereum_wallet,
-				],
+				customerAddresses: [userData.ethereum_wallet_payout || userData.ethereum_wallet],
 				comment: `${data.contract} close`,
 			})
 

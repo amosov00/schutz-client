@@ -103,42 +103,16 @@ export default {
 			if (this.searchQuery.length >= 3) {
 				this.filteredUsers = _.filter(this.users, (el) => {
 					if (
-						(el._id !== null &&
-							el._id
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.email !== null &&
-							el.email
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.first_name !== null &&
-							el.first_name
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.last_name !== null &&
-							el.last_name
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.telegram !== null &&
-							el.telegram
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
+						(el._id !== null && el._id.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.email !== null && el.email.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.first_name !== null && el.first_name.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.last_name !== null && el.last_name.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.telegram !== null && el.telegram.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
 						(el.ethereum_wallet !== null &&
-							el.ethereum_wallet
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.referral_1 !== null &&
-							el.referral_1
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.referral_2 !== null &&
-							el.referral_2
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.referral_3 !== null &&
-							el.referral_3
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase()))
+							el.ethereum_wallet.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.referral_1 !== null && el.referral_1.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.referral_2 !== null && el.referral_2.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.referral_3 !== null && el.referral_3.toLowerCase().startsWith(this.searchQuery.toLowerCase()))
 					) {
 						return el
 					} else {

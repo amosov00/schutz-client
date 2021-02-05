@@ -53,20 +53,13 @@ export default {
 		tableComponent() {
 			return {
 				all: () => import('@/components/tables/ReportTables/All.vue'),
-				investments: () =>
-					import('@/components/tables/ReportTables/Investment.vue'),
-				dividend_withdraw: () =>
-					import('@/components/tables/ReportTables/DividendWithdraw.vue'),
-				dividend_accural: () =>
-					import('@/components/tables/ReportTables/DividendAccural.vue'),
-				deposit_accural: () =>
-					import('@/components/tables/ReportTables/DepositAccural.vue'),
-				deposits: () =>
-					import('@/components/tables/ReportTables/ActiveDeposit.vue'),
-				deposit_withdraw: () =>
-					import('@/components/tables/ReportTables/DepositWithdraw.vue'),
-				active_deposit_details: () =>
-					import('~/components/tables/ReportTables/ActiveDepositDetails.vue'),
+				investments: () => import('@/components/tables/ReportTables/Investment.vue'),
+				dividend_withdraw: () => import('@/components/tables/ReportTables/DividendWithdraw.vue'),
+				dividend_accural: () => import('@/components/tables/ReportTables/DividendAccural.vue'),
+				deposit_accural: () => import('@/components/tables/ReportTables/DepositAccural.vue'),
+				deposits: () => import('@/components/tables/ReportTables/ActiveDeposit.vue'),
+				deposit_withdraw: () => import('@/components/tables/ReportTables/DepositWithdraw.vue'),
+				active_deposit_details: () => import('~/components/tables/ReportTables/ActiveDepositDetails.vue'),
 			}
 		},
 
@@ -94,8 +87,7 @@ export default {
 				deposit_accural: this.transactions(this.page, -1) || [],
 				deposit_withdraw: this.transactions(this.page, -1) || [],
 				deposits: this.activeDeposit(this.page, -1) || [],
-				active_deposit_details:
-					this.activeDepositContracts(this.page, -1) || [],
+				active_deposit_details: this.activeDepositContracts(this.page, -1) || [],
 			}
 		},
 
@@ -116,8 +108,7 @@ export default {
 						element: 'amount_usdt',
 						direction: -1,
 					}) || [],
-				active_deposit_details:
-					this.activeDepositContracts(this.page, this.limit) || [],
+				active_deposit_details: this.activeDepositContracts(this.page, this.limit) || [],
 			}
 		},
 	},
@@ -129,10 +120,7 @@ export default {
 
 		exportData() {
 			return exportHelper({
-				data:
-					this.tableType === 'deposits'
-						? this.activeDeposit(1, -1)
-						: this.transactions(1, -1),
+				data: this.tableType === 'deposits' ? this.activeDeposit(1, -1) : this.transactions(1, -1),
 				type: this.tableType,
 				totals: this.totals,
 			})

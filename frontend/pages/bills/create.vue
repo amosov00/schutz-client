@@ -38,10 +38,7 @@ export default {
 		async create() {
 			if (this.timeInterval.fromDate && this.timeInterval.toDate) {
 				this.loading = true
-				const res = await this.$store.dispatch(
-					'bills/createInvoice',
-					this.timeInterval
-				)
+				const res = await this.$store.dispatch('bills/createInvoice', this.timeInterval)
 				if (res) {
 					this.loading = false
 					this.$router.go(-1)

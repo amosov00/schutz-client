@@ -62,9 +62,7 @@ export default {
 		}),
 
 		showContract(data) {
-			return data.prolongedContract
-				? `${data.contract} (${data.prolongedContract})`
-				: data.contract
+			return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
 		},
 
 		showCloseDateModal(data) {
@@ -78,11 +76,7 @@ export default {
 				},
 			})
 
-			modal.$on(
-				'close',
-				async () =>
-					await this.fetchActiveDepositByID(this.activeDepositDetails._id)
-			)
+			modal.$on('close', async () => await this.fetchActiveDepositByID(this.activeDepositDetails._id))
 		},
 	},
 }

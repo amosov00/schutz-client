@@ -42,39 +42,21 @@
 			</div>
 			<div class="columns">
 				<div class="column">
-					<button
-						class="button is-info is-fullwidth"
-						@click="isComponentModalActive = true"
-						:disabled="!totalUsers"
-					>
+					<button class="button is-info is-fullwidth" @click="isComponentModalActive = true" :disabled="!totalUsers">
 						Рассылка на почту
 					</button>
 				</div>
 				<div class="column">
-					<button
-						class="button is-info is-fullwidth"
-						@click="triggerPayInvoiceModal"
-					>
-						Оплатить
-					</button>
+					<button class="button is-info is-fullwidth" @click="triggerPayInvoiceModal">Оплатить</button>
 				</div>
 				<div class="column">
-					<button
-						class="button is-info is-fullwidth"
-						@click="saveAsExcel"
-						:disabled="!totalUsers"
-					>
+					<button class="button is-info is-fullwidth" @click="saveAsExcel" :disabled="!totalUsers">
 						Экспорт данных в .xls
 					</button>
 				</div>
 			</div>
 			<b-field label="Поиск">
-				<b-input
-					:placeholder="$t('typeAddressOrTxHash')"
-					type="text"
-					v-model="search"
-				>
-				</b-input>
+				<b-input :placeholder="$t('typeAddressOrTxHash')" type="text" v-model="search"> </b-input>
 			</b-field>
 		</div>
 		<div class="box">
@@ -152,17 +134,8 @@ export default {
 		async onDateChange(e) {
 			const timestamp = this.getTimestamp(e)
 			this.loading = true
-			const tableData = await this.$store.dispatch(
-				'reports/fetchAgreements',
-				timestamp
-			)
-			const {
-				agreements,
-				total,
-				total_payout,
-				total_processing,
-				total_prolong,
-			} = tableData
+			const tableData = await this.$store.dispatch('reports/fetchAgreements', timestamp)
+			const { agreements, total, total_payout, total_processing, total_prolong } = tableData
 			this.agreements = agreements ? agreements : []
 			this.total = total ? total : 0
 			this.totalPayout = total_payout ? total_payout : 0
@@ -234,9 +207,7 @@ export default {
 		},
 		uniqUsersWithEmail() {
 			return [...this.users].map((user) => {
-				const userData = this.filteredAgreements.find(
-					({ user_id }) => user_id === user
-				)
+				const userData = this.filteredAgreements.find(({ user_id }) => user_id === user)
 				return { id: user, email: userData.email }
 			})
 		},

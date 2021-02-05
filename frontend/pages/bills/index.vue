@@ -43,9 +43,7 @@ export default {
 				type: 'is-danger',
 				confirmText: this.$t('delete'),
 				cancelText: this.$t('cancel'),
-				message: `<div class="mb-2">${this.$t(
-					'deleteBill'
-				)}</div><strong>${id}</strong>`,
+				message: `<div class="mb-2">${this.$t('deleteBill')}</div><strong>${id}</strong>`,
 				onConfirm: async () => {
 					await this.$store.dispatch('bills/deleteInvoice', id)
 				},

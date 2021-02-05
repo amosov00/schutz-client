@@ -17,9 +17,7 @@ export const getters = {
 	user: (s) => s.user,
 	transactions: (s) => s.transactions,
 	transactionsAllWithFilter: (s) => (contract) => {
-		return contract
-			? s.transactions.all.filter((i) => i.contract === contract)
-			: s.transactions.all
+		return contract ? s.transactions.all.filter((i) => i.contract === contract) : s.transactions.all
 	},
 	txTotals: (s) => s.transactions.totals,
 	investmentsWithFilter: (s) => (contract) => {
@@ -74,8 +72,7 @@ export const mutations = {
 	setPartnersNotal: (state, payload) => (state.partners_total = payload),
 	setReferralLink: (state, payload) => (state.referralLink = payload),
 	setIsTermsAcceped: (state, payload) => (state.isTermsAcceped = payload),
-	setContractAgreements: (state, payload) =>
-		(state.contractAgreements = payload),
+	setContractAgreements: (state, payload) => (state.contractAgreements = payload),
 }
 
 export const actions = {
@@ -134,9 +131,7 @@ export const actions = {
 				return null
 			})
 			.catch((resp) => {
-				return _.isArray(resp.response.data)
-					? resp.response.data
-					: Array.from(resp.response.data)
+				return _.isArray(resp.response.data) ? resp.response.data : Array.from(resp.response.data)
 			})
 	},
 	async startRecover({}, data) {
@@ -188,9 +183,7 @@ export const actions = {
 		commit('setPartnersNotal', data.total)
 	},
 	async fetchReferralLink({ commit }) {
-		const { data } = await this.$axios.get(
-			'/account/referral/link/?for_save=true'
-		)
+		const { data } = await this.$axios.get('/account/referral/link/?for_save=true')
 		commit('setReferralLink', data)
 	},
 	async fetchReferralAddresses({}) {

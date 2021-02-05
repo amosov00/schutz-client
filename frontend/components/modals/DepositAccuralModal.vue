@@ -64,10 +64,7 @@ export default {
 	},
 	async created() {
 		this.loading = true
-		const data = await this.$store.dispatch(
-			'reports/fetchAgreementPayment',
-			this.fromTimestamp
-		)
+		const data = await this.$store.dispatch('reports/fetchAgreementPayment', this.fromTimestamp)
 		this.loading = false
 		if (!data) {
 			this.$buefy.toast.open({

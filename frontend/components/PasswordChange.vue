@@ -6,11 +6,7 @@
 					<p class="modal-card-title">{{ $t('changePassword') }}</p>
 				</header>
 				<section class="modal-card-body">
-					<ValidationProvider
-						rules="required"
-						v-slot="{ errors, valid }"
-						name="Current password"
-					>
+					<ValidationProvider rules="required" v-slot="{ errors, valid }" name="Current password">
 						<base-input
 							type="password"
 							class="mb-20"
@@ -21,12 +17,7 @@
 							has-icon
 						></base-input>
 					</ValidationProvider>
-					<ValidationProvider
-						rules="required|min:8"
-						v-slot="{ errors, valid }"
-						vid="confirmation"
-						name="New password"
-					>
+					<ValidationProvider rules="required|min:8" v-slot="{ errors, valid }" vid="confirmation" name="New password">
 						<base-input
 							type="password"
 							class="mb-20"
@@ -56,12 +47,7 @@
 					</ValidationProvider>
 				</section>
 				<footer class="modal-card-foot">
-					<b-button
-						type="is-primary"
-						native-type="submit"
-						:loading="isLoading"
-						>{{ $t('change') }}</b-button
-					>
+					<b-button type="is-primary" native-type="submit" :loading="isLoading">{{ $t('change') }}</b-button>
 				</footer>
 			</div>
 		</form>

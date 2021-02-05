@@ -1,19 +1,7 @@
-export const itemPagination = (items) => ({
-	page,
-	limit,
-	sort = null,
-	query = null,
-	getTotal = false,
-}) => {
+export const itemPagination = (items) => ({ page, limit, sort = null, query = null, getTotal = false }) => {
 	if (sort) {
 		const { element, direction } = sort
-		items = items.sort((a, b) =>
-			a[element] > b[element]
-				? direction
-				: a[element] < b[element]
-				? direction * -1
-				: 0
-		)
+		items = items.sort((a, b) => (a[element] > b[element] ? direction : a[element] < b[element] ? direction * -1 : 0))
 	}
 
 	if (query) {
@@ -21,10 +9,7 @@ export const itemPagination = (items) => ({
 
 		items = items.filter((item) => {
 			for (const field of fields) {
-				if (
-					item[field] !== null &&
-					item[field].toLowerCase().startsWith(text)
-				) {
+				if (item[field] !== null && item[field].toLowerCase().startsWith(text)) {
 					return item
 				}
 			}

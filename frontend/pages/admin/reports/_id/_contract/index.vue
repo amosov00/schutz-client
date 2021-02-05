@@ -91,10 +91,7 @@ export default {
 	},
 
 	async asyncData({ store, params }) {
-		return await store.dispatch(
-			'reports/fetchActiveDepositTransactions',
-			params
-		)
+		return await store.dispatch('reports/fetchActiveDepositTransactions', params)
 	},
 }
 </script>

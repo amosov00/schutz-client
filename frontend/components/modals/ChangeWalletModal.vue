@@ -5,19 +5,10 @@
 		</p>
 		<p class="is-size-5 mt-5 mb-4">{{ $t('Укажите новый адрес кошелька') }}</p>
 		<p class="is-size-7 mb-60">
-			{{
-				$t(
-					'Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды.'
-				)
-			}}
+			{{ $t('Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды.') }}
 		</p>
 		<div class="is-flex is-align-items-flex-start mb-60 mw-600">
-			<base-input
-				type="text"
-				size="4"
-				class="is-flex-grow-1 mt-3"
-				v-model="wallet"
-			/>
+			<base-input type="text" size="4" class="is-flex-grow-1 mt-3" v-model="wallet" />
 		</div>
 
 		<div class="support">
@@ -25,22 +16,13 @@
 				{{ $t('Также, вы всегда можете обратиться за поддержкой:') }}
 			</p>
 			<div class="links">
-				<a
-					:href="telegramSupport"
-					target="_blank"
-					class="is-size-7 has-text-link has-text-weight-light telegram"
-				>
+				<a :href="telegramSupport" target="_blank" class="is-size-7 has-text-link has-text-weight-light telegram">
 					{{ $t('Чат telegram') }}
 				</a>
 			</div>
 		</div>
-		<div
-			class="actions is-flex is-justify-content-space-between is-align-items-center"
-		>
-			<a
-				@click="$parent.close()"
-				class="cancel has-text-link is-size-7 is-cursor-pointer"
-			>
+		<div class="actions is-flex is-justify-content-space-between is-align-items-center">
+			<a @click="$parent.close()" class="cancel has-text-link is-size-7 is-cursor-pointer">
 				{{ $t('Отменить, я передумал') }}
 			</a>
 			<custom-button @click.native="changeWallet">

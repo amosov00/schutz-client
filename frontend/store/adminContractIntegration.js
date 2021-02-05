@@ -82,12 +82,7 @@ export const actions = {
 						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, 'gwei')),
 						gas: Web3.utils.toHex('7500000'),
 						data: contracts.Schutz.methods
-							.accrualDeposit(
-								0,
-								data.values,
-								data.customerAddresses,
-								data.comment
-							)
+							.accrualDeposit(0, data.values, data.customerAddresses, data.comment)
 							.encodeABI(),
 					},
 				],

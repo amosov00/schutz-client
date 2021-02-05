@@ -16,10 +16,7 @@ export async function makeEthSignature(store, metamaskProvider) {
 		sig: result,
 	})
 
-	if (
-		Web3.utils.toChecksumAddress(recovered) !==
-		Web3.utils.toChecksumAddress(ethAddress)
-	) {
+	if (Web3.utils.toChecksumAddress(recovered) !== Web3.utils.toChecksumAddress(ethAddress)) {
 		throw new Error('invalid signature')
 	}
 

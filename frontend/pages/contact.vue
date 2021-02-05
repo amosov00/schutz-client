@@ -62,10 +62,7 @@ export default {
 			data['telegram'] = this.user.telegram
 			data['ethereum_wallet'] = this.user.ethereum_wallet
 
-			if (
-				this.contactForm.text.length < 1 ||
-				this.contactForm.topic.length < 1
-			) {
+			if (this.contactForm.text.length < 1 || this.contactForm.topic.length < 1) {
 				this.$buefy.toast.open({
 					message: 'Error: check form',
 					type: 'is-danger',

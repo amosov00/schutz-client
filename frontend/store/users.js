@@ -75,9 +75,7 @@ export const mutations = {
 	[MUTATION.SET_USER_DETAILS](state, user) {
 		const selectedUser = state.userDetails[user._id]
 
-		selectedUser
-			? Object.assign(selectedUser, user)
-			: (state.userDetails[user._id] = user)
+		selectedUser ? Object.assign(selectedUser, user) : (state.userDetails[user._id] = user)
 	},
 
 	[MUTATION.ADD_USERS](state, users) {

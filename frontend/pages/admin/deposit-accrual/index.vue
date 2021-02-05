@@ -164,10 +164,7 @@ export default {
 			}
 
 			const offset = this.$moment().utcOffset()
-			return this.$moment(time)
-				.add(offset, 'minutes')
-				.add(19, 'days')
-				.format('X')
+			return this.$moment(time).add(offset, 'minutes').add(19, 'days').format('X')
 		},
 
 		async openUserEmailSendModal() {
@@ -191,9 +188,7 @@ export default {
 
 		async doSendMailing({ user_ids }) {
 			try {
-				const timestamp = this.getTimestamp(
-					this.$moment().startOf('month').toDate()
-				)
+				const timestamp = this.getTimestamp(this.$moment().startOf('month').toDate())
 
 				await this.sendMailing({
 					user_ids,
@@ -206,11 +201,7 @@ export default {
 					queue: false,
 				})
 			} catch ({ response: { data: errorMessages } }) {
-				if (
-					errorMessages.some(
-						({ message }) => message === 'Email already sent to that close date'
-					)
-				) {
+				if (errorMessages.some(({ message }) => message === 'Email already sent to that close date')) {
 					return this.$buefy.toast.open({
 						message: 'Email to this user is already sent!',
 						type: 'is-danger',
@@ -232,9 +223,7 @@ export default {
 				component: PassRepayModal,
 				trapFocus: true,
 				props: {
-					fromTimestamp: this.getTimestamp(
-						this.$moment().startOf('month').toDate()
-					),
+					fromTimestamp: this.getTimestamp(this.$moment().startOf('month').toDate()),
 				},
 			})
 		},

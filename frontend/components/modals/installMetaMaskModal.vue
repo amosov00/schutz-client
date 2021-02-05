@@ -6,9 +6,7 @@
 				<p class="is-size-7 mb-3">{{ $t('installText') }}</p>
 				<p class="is-size-7 mb-3">
 					{{ $t('noteText') }}
-					<a target="_blank" href="https://metamask.io/">
-						https://metamask.io/
-					</a>
+					<a target="_blank" href="https://metamask.io/"> https://metamask.io/ </a>
 				</p>
 				<p class="is-size-7 mb-3">{{ $t('Поддерживаемые браузеры:') }}</p>
 				<div class="browsers">
@@ -16,28 +14,17 @@
 					<div class="firefox"></div>
 				</div>
 			</div>
-			<div
-				class="column is-12-mobile is-6-desktop is-flex is-align-items-center is-justify-content-center"
-			>
+			<div class="column is-12-mobile is-6-desktop is-flex is-align-items-center is-justify-content-center">
 				<div class="metamask-logo"></div>
 			</div>
 		</div>
 		<div class="is-flex is-align-items-flex-start mb-60 mw-600"></div>
 
-		<div
-			class="actions is-flex is-justify-content-space-between is-align-items-center"
-		>
-			<a
-				@click="$parent.close()"
-				class="cancel has-text-link is-size-7 is-cursor-pointer"
-			>
+		<div class="actions is-flex is-justify-content-space-between is-align-items-center">
+			<a @click="$parent.close()" class="cancel has-text-link is-size-7 is-cursor-pointer">
 				{{ $t('Понятно, спасибо, установлю позже') }}
 			</a>
-			<a
-				href="https://metamask.io/download.html"
-				target="_blank"
-				@click="$parent.close()"
-			>
+			<a href="https://metamask.io/download.html" target="_blank" @click="$parent.close()">
 				<custom-button>
 					{{ $t('Установить') }}
 				</custom-button>

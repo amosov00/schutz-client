@@ -1,18 +1,10 @@
 <template>
 	<div>
-		<div
-			class="lang-switcher pb-2"
-			v-if="$i18n.locale == 'ru'"
-			@click="$i18n.setLocale('en')"
-		>
+		<div class="lang-switcher pb-2" v-if="$i18n.locale == 'ru'" @click="$i18n.setLocale('en')">
 			<span>RU</span>
 			<img class="flag" :src="require(`~/static/img/ru.png`)" alt="ru" />
 		</div>
-		<div
-			class="lang-switcher pb-2"
-			v-if="$i18n.locale == 'en'"
-			@click="$i18n.setLocale('ru')"
-		>
+		<div class="lang-switcher pb-2" v-if="$i18n.locale == 'en'" @click="$i18n.setLocale('ru')">
 			<span>EN</span>
 			<img class="flag" :src="require(`~/static/img/en.png`)" alt="eng" />
 		</div>

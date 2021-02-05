@@ -6,7 +6,17 @@ repos:
         exclude: '.bumpversion.cfg'
       - id: end-of-file-fixer
         exclude: '.bumpversion.cfg'
+
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: '8e0d199f4004a7f226ed7974fc3883d9c702bded'
     hooks:
       - id: prettier
+#  - repo: https://github.com/pre-commit/mirrors-eslint
+#    rev: 'v7.16.0'
+#    hooks:
+#      - id: eslint
+#        additional_dependencies:
+#          - eslint@7.16.0
+#          - eslint-config-airbnb-base@14.2.1
+#          - eslint-plugin-vue@7.3.0
+#          - eslint-plugin-import@2.22.1

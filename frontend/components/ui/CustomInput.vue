@@ -15,9 +15,7 @@
 				:pattern="onlyNumber ? '\d*' : ''"
 			/>
 		</label>
-		<span v-if="!defaultPlaceholder" class="placeholder">{{
-			placeholder
-		}}</span>
+		<span v-if="!defaultPlaceholder" class="placeholder">{{ placeholder }}</span>
 	</div>
 </template>
 

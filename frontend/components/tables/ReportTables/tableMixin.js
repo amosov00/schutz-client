@@ -35,9 +35,7 @@ export default {
 
 	methods: {
 		showContract(data) {
-			return data.prolongedContract
-				? `${data.contract} (${data.prolongedContract})`
-				: data.contract
+			return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
 		},
 	},
 }

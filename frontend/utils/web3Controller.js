@@ -19,10 +19,8 @@ export class Web3Controller {
 
 		if (metamask?.provider && metamask.provider.isConnected()) {
 			if (
-				(process.env.ENV === 'production' &&
-					metamask.provider.chainId === '0x1') ||
-				(process.env.ENV !== 'production' &&
-					metamask.provider.chainId === '0x4')
+				(process.env.ENV === 'production' && metamask.provider.chainId === '0x1') ||
+				(process.env.ENV !== 'production' && metamask.provider.chainId === '0x4')
 			) {
 				try {
 					web3 = new Web3(metamask.provider)

@@ -16,17 +16,10 @@ export default {
 
 		timestampToDateTime(timstamp) {
 			// Конвертация timestamp в обычный формат даты
-			return moment
-				.unix(timstamp)
-				.utc()
-				.add(3, 'hours')
-				.format('DD/MM/YYYY HH:mm:ss')
+			return moment.unix(timstamp).utc().add(3, 'hours').format('DD/MM/YYYY HH:mm:ss')
 		},
 		timestampFromUtc(timestamp) {
-			return moment(timestamp)
-				.utc()
-				.add(3, 'hours')
-				.format('DD MMMM YYYY HH:mm:ss')
+			return moment(timestamp).utc().add(3, 'hours').format('DD MMMM YYYY HH:mm:ss')
 		},
 		readableDate(timestamp) {
 			return moment.unix(timestamp).utc().add(3, 'hours').format('DD MMMM YYYY')

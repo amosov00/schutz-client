@@ -13,12 +13,7 @@
 				</nuxt-link>
 			</div>
 			<div class="dots" v-if="!hideDots">
-				<div
-					class="dot"
-					:class="{ active: num === activeDot }"
-					v-for="num in dots"
-					:key="num"
-				></div>
+				<div class="dot" :class="{ active: num === activeDot }" v-for="num in dots" :key="num"></div>
 			</div>
 			<div class="extra-text">
 				<slot name="extra-text"></slot>

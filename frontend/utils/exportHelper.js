@@ -119,48 +119,12 @@ const typeAdapter = {
 export const reportTotalHelper = {
 	all: (total) => {
 		return [
-			[
-				total.deposit_accural
-					? `Deposits accural: ${formatCurrency(
-							total.deposit_accural,
-							'usdt'
-					  )} USDT`
-					: null,
-			],
-			[
-				total.deposit_withdraw
-					? `Deposits withdraw: ${formatCurrency(
-							total.deposit_withdraw,
-							'usdt'
-					  )} USDT`
-					: null,
-			],
-			[
-				total.dividend_accural
-					? `Dividends accrual: ${formatCurrency(
-							total.dividend_accural,
-							'usdt'
-					  )} USDT`
-					: null,
-			],
-			[
-				total.dividend_withdraw
-					? `Dividends withdraw: ${formatCurrency(
-							total.dividend_withdraw,
-							'usdt'
-					  )} USDT`
-					: null,
-			],
-			[
-				total.deposits
-					? `Deposits: ${formatCurrency(total.deposits, 'usdt')} USDT`
-					: null,
-			],
-			[
-				total.reinvestment
-					? `Reinvestment: ${formatCurrency(total.reinvestment, 'usdt')} USDT`
-					: null,
-			],
+			[total.deposit_accural ? `Deposits accural: ${formatCurrency(total.deposit_accural, 'usdt')} USDT` : null],
+			[total.deposit_withdraw ? `Deposits withdraw: ${formatCurrency(total.deposit_withdraw, 'usdt')} USDT` : null],
+			[total.dividend_accural ? `Dividends accrual: ${formatCurrency(total.dividend_accural, 'usdt')} USDT` : null],
+			[total.dividend_withdraw ? `Dividends withdraw: ${formatCurrency(total.dividend_withdraw, 'usdt')} USDT` : null],
+			[total.deposits ? `Deposits: ${formatCurrency(total.deposits, 'usdt')} USDT` : null],
+			[total.reinvestment ? `Reinvestment: ${formatCurrency(total.reinvestment, 'usdt')} USDT` : null],
 		]
 	},
 
@@ -170,24 +134,15 @@ export const reportTotalHelper = {
 
 	default: (total) => {
 		return [
-			[
-				total.dividends
-					? `Deposits: ${formatCurrency(total.dividends, 'usdt')} USDT`
-					: null,
-			],
-			[
-				total.reinvestment
-					? `Total: ${formatCurrency(total.investments, 'usdt')} USDT`
-					: null,
-			],
+			[total.dividends ? `Deposits: ${formatCurrency(total.dividends, 'usdt')} USDT` : null],
+			[total.reinvestment ? `Total: ${formatCurrency(total.investments, 'usdt')} USDT` : null],
 		]
 	},
 }
 
 export const exportHelper = ({ data, type, totals = null }) => {
 	const dataToExport = typeAdapter[type](data)
-	const totalToExportHelper =
-		reportTotalHelper[type] || reportTotalHelper.default
+	const totalToExportHelper = reportTotalHelper[type] || reportTotalHelper.default
 	const dataTableWS = XLSX.utils.json_to_sheet(dataToExport)
 	const wb = XLSX.utils.book_new()
 	XLSX.utils.book_append_sheet(wb, dataTableWS, 'data') // sheetAName is name of Worksheet

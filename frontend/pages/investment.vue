@@ -1,11 +1,6 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="2"
-			:dots="4"
-			:next-page="localePath('/dividends')"
-			:prev-page="localePath('/profile')"
-		>
+		<custom-slider :activeDot="2" :dots="4" :next-page="localePath('/dividends')" :prev-page="localePath('/profile')">
 			<template slot="content">
 				<div class="columns">
 					<div class="column is-half">
@@ -15,14 +10,7 @@
 								<div class="is-size-7 mb-2 has-text-grey">
 									{{ $t('Укажите сумму вклада в USDT') }}
 								</div>
-								<base-input
-									v-model="input"
-									type="number"
-									size="4"
-									:max="999999"
-									:maxLength="8"
-									onlyNumber
-								/>
+								<base-input v-model="input" type="number" size="4" :max="999999" :maxLength="8" onlyNumber />
 							</div>
 							<div class="mb-5">
 								<div class="is-size-7">{{ $t('ваш доход составит:') }}</div>
@@ -54,14 +42,8 @@
 							</div>
 							<div class="is-size-7 ethereum">{{ $t('Ethereum адрес') }}:</div>
 							<div class="ethereum-address mb-5">
-								<span v-if="user.ethereum_wallet">{{
-									user.ethereum_wallet
-								}}</span>
-								<a
-									v-else
-									@click="isWalletModalActive = true"
-									class="value has-text-link has-text-weight-light"
-								>
+								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
+								<a v-else @click="isWalletModalActive = true" class="value has-text-link has-text-weight-light">
 									{{ $t('Добавить кошелек') }}
 								</a>
 							</div>
@@ -71,25 +53,14 @@
 								</div>
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div
-								v-if="mode === metamaskState.ONLINE"
-								class="is-size-7 has-text-grey"
-							>
-								<span v-if="allowance === 0">{{
-									$t('walletOnlineApprove')
-								}}</span>
+							<div v-if="mode === metamaskState.ONLINE" class="is-size-7 has-text-grey">
+								<span v-if="allowance === 0">{{ $t('walletOnlineApprove') }}</span>
 								<span v-else>{{ $t('walletOnline') }}</span>
 							</div>
-							<div
-								v-else-if="mode === metamaskState.WAITING"
-								class="is-size-7 status-offline"
-							>
+							<div v-else-if="mode === metamaskState.WAITING" class="is-size-7 status-offline">
 								{{ $t('walletWaiting') }}
 							</div>
-							<div
-								v-else-if="mode === metamaskState.OFFLINE"
-								class="is-size-7 status-offline"
-							>
+							<div v-else-if="mode === metamaskState.OFFLINE" class="is-size-7 status-offline">
 								{{ $t('walletOffline') }}
 							</div>
 						</div>
@@ -151,35 +122,15 @@
 					>
 						{{ timestampToDateTime(props.row.args.timestamp) }}
 					</b-table-column>
-					<b-table-column
-						sortable
-						field="event"
-						:label="$t('Событие')"
-						width="20%"
-						:custom-sort="sortByEvent"
-					>
+					<b-table-column sortable field="event" :label="$t('Событие')" width="20%" :custom-sort="sortByEvent">
 						<span class="text-nowrap">{{ $t(props.row.event) }}</span>
 						<span class="tag is-link" v-if="props.row.isReinvested">
 							{{ $t('Реинвестиция') }}
 						</span>
 					</b-table-column>
-					<b-table-column
-						class="has-text-primary overflow-reset"
-						field="txHash"
-						:label="$t('Хэш')"
-						width="20%"
-					>
-						<b-tooltip
-							class="w-100"
-							:label="props.row.transactionHash"
-							type="is-black"
-							position="is-bottom"
-						>
-							<a
-								:href="'https://etherscan.io/tx/' + props.row.transactionHash"
-								target="_blank"
-								class="is-flex"
-							>
+					<b-table-column class="has-text-primary overflow-reset" field="txHash" :label="$t('Хэш')" width="20%">
+						<b-tooltip class="w-100" :label="props.row.transactionHash" type="is-black" position="is-bottom">
+							<a :href="'https://etherscan.io/tx/' + props.row.transactionHash" target="_blank" class="is-flex">
 								{{ hashSlice(props.row.transactionHash) }}
 							</a>
 						</b-tooltip>
@@ -211,19 +162,12 @@
 			</b-table>
 
 			<div class="center mb-6">
-				<button
-					v-if="!hide_button"
-					type="button"
-					@click="showMore()"
-					class="default-button"
-				>
+				<button v-if="!hide_button" type="button" @click="showMore()" class="default-button">
 					{{ $t('показать еще') }}
 				</button>
 			</div>
 			<div class="is-size-5 has-background-info total-withdraw mb-6">
-				<div v-for="(total, k) in totals" :key="k">
-					{{ $t(k) }}: {{ `${formatCurrency(total, 'usdt')}` }} USDT
-				</div>
+				<div v-for="(total, k) in totals" :key="k">{{ $t(k) }}: {{ `${formatCurrency(total, 'usdt')}` }} USDT</div>
 			</div>
 		</div>
 		<b-modal :active.sync="isWalletModalActive" has-modal-card>
@@ -279,11 +223,7 @@ export default {
 	computed: {
 		...mapGetters(['user', 'txTotals']),
 		...mapGetters('metamask', ['gasPrice', 'isConnected', 'mode']),
-		...mapGetters('userContractIntegration', [
-			'depositBalance',
-			'allowance',
-			'tokenBalance',
-		]),
+		...mapGetters('userContractIntegration', ['depositBalance', 'allowance', 'tokenBalance']),
 		isMetamaskInstalled() {
 			return this.isConnected && this.user.ethereum_wallet
 		},
@@ -291,9 +231,7 @@ export default {
 			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
 		},
 		tableData() {
-			return this.$store.getters.transactions.transactions !== null
-				? this.$store.getters.transactions.transactions
-				: []
+			return this.$store.getters.transactions.transactions !== null ? this.$store.getters.transactions.transactions : []
 		},
 		filteredData() {
 			let d = this.$store.getters.investmentsWithFilter(this.currentProduct)

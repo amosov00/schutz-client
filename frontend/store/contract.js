@@ -6,8 +6,7 @@ export const state = () => ({
 	},
 })
 export const getters = {
-	contractMeta: (s) => (contact) =>
-		s.contractsMeta.filter((i) => i.title === contact),
+	contractMeta: (s) => (contact) => s.contractsMeta.filter((i) => i.title === contact),
 	contractsMeta: (s) => s.contractsMeta,
 	infura: (s) => s.infura,
 }

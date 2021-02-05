@@ -75,9 +75,7 @@ export default {
 			})
 		},
 		paymentHashFromIndex(index) {
-			return this.invoice.payment_transaction_hash.filter(
-				(i) => i[0] === index
-			)[0]
+			return this.invoice.payment_transaction_hash.filter((i) => i[0] === index)[0]
 		},
 		toTableData(data) {
 			let formattedData = []
@@ -94,10 +92,7 @@ export default {
 
 	async created() {
 		this.loading = true
-		let response = await this.$store.dispatch(
-			'bills/fetchInvoicePaymentData',
-			this.invoice._id
-		)
+		let response = await this.$store.dispatch('bills/fetchInvoicePaymentData', this.invoice._id)
 		if (!response) {
 			this.loading = false
 			return

@@ -43,22 +43,13 @@ export default {
 	mixins: [formatCurrency],
 	data: () => ({}),
 	computed: {
-		...mapGetters('userContractIntegration', [
-			'tokenBalance',
-			'interestBalance',
-		]),
+		...mapGetters('userContractIntegration', ['tokenBalance', 'interestBalance']),
 		userActiveDeposits() {
-			if (
-				!this.$store.getters.user ||
-				!this.$store.getters.user.active_deposits
-			) {
+			if (!this.$store.getters.user || !this.$store.getters.user.active_deposits) {
 				return ''
 			}
 			return this.$store.getters.user.active_deposits.reduce((acc, curr) => {
-				acc += `${curr.contract}: ${moment
-					.unix(curr.close_date)
-					.utc()
-					.format('DD/MM/YYYY')}\n`
+				acc += `${curr.contract}: ${moment.unix(curr.close_date).utc().format('DD/MM/YYYY')}\n`
 				return acc
 			}, '')
 		},

@@ -46,18 +46,14 @@ export default {
 	methods: {
 		async searchAddress() {
 			this.loading = true
-			await this.$store
-				.dispatch('searchAddress', this.addressQuery)
-				.finally(() => (this.loading = false))
+			await this.$store.dispatch('searchAddress', this.addressQuery).finally(() => (this.loading = false))
 		},
 	},
 
 	computed: {
 		...mapGetters(['user', 'findedAddress']),
 		tableData() {
-			return this.$store.getters.transactions !== null
-				? this.$store.getters.transactions
-				: []
+			return this.$store.getters.transactions !== null ? this.$store.getters.transactions : []
 		},
 		getStatusClass() {
 			if (this.status === 'online') {

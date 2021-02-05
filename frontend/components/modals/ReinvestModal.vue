@@ -4,16 +4,12 @@
 			<p class="is-size-5">{{ $t('Укажите сумму реинвестирования') }}</p>
 			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
 				Вы можете
-				<a class="is-link" @click="value = interestBalance">
-					реинвестировать всю сумму
-				</a>
+				<a class="is-link" @click="value = interestBalance"> реинвестировать всю сумму </a>
 				или часть начисленных дивидендов, остальные вывести.
 			</p>
 			<p class="is-size-7 mb-60" v-else>
 				You can
-				<a class="is-link" @click="value = interestBalance">
-					reinvest the entire amount
-				</a>
+				<a class="is-link" @click="value = interestBalance"> reinvest the entire amount </a>
 				or part of the accrued dividends, and withdraw the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
@@ -48,37 +44,23 @@
 					/>
 					<span class="is-size-7">
 						{{ $t('Я принимаю') }}
-						<a
-							href="#"
-							class="terms-link"
-							@click="$store.commit('toggleTermsModal', true)"
-						>
+						<a href="#" class="terms-link" @click="$store.commit('toggleTermsModal', true)">
 							{{ $t('условия и положения') }}
 						</a>
 					</span>
 				</div>
 			</div>
 
-			<div
-				class="actions is-flex is-justify-content-space-between is-align-items-center"
-			>
-				<a
-					@click="$parent.close()"
-					class="cancel has-text-link is-size-7 is-cursor-pointer"
-				>
+			<div class="actions is-flex is-justify-content-space-between is-align-items-center">
+				<a @click="$parent.close()" class="cancel has-text-link is-size-7 is-cursor-pointer">
 					{{ $t('Отменить, я передумал') }}
 				</a>
-				<custom-button
-					:disabled="invalid || !isTermsAcceped"
-					@click.native="reinvest"
-				>
+				<custom-button :disabled="invalid || !isTermsAcceped" @click.native="reinvest">
 					{{ $t('Реинвестировать') }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
-				<TermsAndConditionsModal
-					@accepted="isTermsAcceped = $event"
-				></TermsAndConditionsModal>
+				<TermsAndConditionsModal @accepted="isTermsAcceped = $event"></TermsAndConditionsModal>
 			</b-modal>
 		</div>
 	</ValidationObserver>
@@ -116,10 +98,7 @@ export default {
 					message: this.$t('Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)'),
 					type: 'is-success',
 				})
-				await this.$store.dispatch(
-					'userContractIntegration/reinvest',
-					this.value
-				)
+				await this.$store.dispatch('userContractIntegration/reinvest', this.value)
 				this.$parent.close()
 			}
 		},

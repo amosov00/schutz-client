@@ -10,12 +10,7 @@
 		default-sort-direction="desc"
 	>
 		<template slot-scope="props">
-			<b-table-column
-				class="overflow-reset"
-				field="user_id"
-				label="User ID"
-				width="150"
-			>
+			<b-table-column class="overflow-reset" field="user_id" label="User ID" width="150">
 				<nuxt-link :to="`/users/${props.row.user_id}`">
 					{{ props.row.user_id }}
 				</nuxt-link>
@@ -27,16 +22,8 @@
 				type="is-black"
 				position="is-bottom"
 			>
-				<b-tooltip
-					class=""
-					:label="props.row.ethereum_wallet"
-					type="is-black"
-					position="is-bottom"
-				>
-					<a
-						:href="'https://etherscan.io/address/' + props.row.ethereum_wallet"
-						target="_blank"
-					>
+				<b-tooltip class="" :label="props.row.ethereum_wallet" type="is-black" position="is-bottom">
+					<a :href="'https://etherscan.io/address/' + props.row.ethereum_wallet" target="_blank">
 						{{ props.row.ethereum_wallet }}
 					</a>
 				</b-tooltip>
@@ -51,12 +38,7 @@
 			>
 				{{ formatCurrency(props.row.amount_usdt, 'usdt') }}
 			</b-table-column>
-			<b-table-column
-				field="button"
-				width="50"
-				header-class="right-align"
-				cell-class="text-right"
-			>
+			<b-table-column field="button" width="50" header-class="right-align" cell-class="text-right">
 				<nuxt-link :to="`/reports/${props.row._id}`">
 					<b-button type="is-info"> Просмотр </b-button>
 				</nuxt-link>
@@ -67,9 +49,7 @@
 		</template>
 		<template slot="bottom-left">
 			<div>
-				<p class="title is-size-4">
-					Total: {{ `${formatCurrency(activeDeposits.total, 'usdt')} USDT` }}
-				</p>
+				<p class="title is-size-4">Total: {{ `${formatCurrency(activeDeposits.total, 'usdt')} USDT` }}</p>
 				<p>
 					{{ $t('export') }}
 					<a @click="saveAsExcel">.xls</a>
@@ -95,9 +75,7 @@ export default {
 	mixins: [formatCurrency],
 	computed: {
 		activeDeposits() {
-			return this.$store.getters['reports/activeDeposits'] !== null
-				? this.$store.getters['reports/activeDeposits']
-				: []
+			return this.$store.getters['reports/activeDeposits'] !== null ? this.$store.getters['reports/activeDeposits'] : []
 		},
 		exportedFileData() {
 			return this.activeDeposits.active_deposits.map((el) => {
@@ -109,10 +87,7 @@ export default {
 			})
 		},
 		exportedTotalsData() {
-			return `Total:${this.formatCurrency(
-				this.activeDeposits.total,
-				'usdt'
-			)} USDT`
+			return `Total:${this.formatCurrency(this.activeDeposits.total, 'usdt')} USDT`
 		},
 	},
 	methods: {

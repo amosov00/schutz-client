@@ -197,19 +197,11 @@ import moment from 'moment'
 
 export default {
 	components: { UpdateCloseDateModal },
-	props: [
-		'colsType',
-		'loading',
-		'contractName',
-		'queryParams',
-		'activeDepositTransactions',
-	],
+	props: ['colsType', 'loading', 'contractName', 'queryParams', 'activeDepositTransactions'],
 	mixins: [formatDate, formatCurrency],
 	methods: {
 		showContract(data) {
-			return data.prolongedContract
-				? `${data.contract} (${data.prolongedContract})`
-				: data.contract
+			return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
 		},
 		showCloseDateModal(data) {
 			const modal = this.$buefy.modal.open({
@@ -225,10 +217,7 @@ export default {
 			modal.$on('close', async () => await this.reloadActiveDeposits())
 		},
 		async reloadActiveDeposits() {
-			await this.$store.dispatch(
-				'reports/fetchActiveDepositByID',
-				this.activeDepositsByID._id
-			)
+			await this.$store.dispatch('reports/fetchActiveDepositByID', this.activeDepositsByID._id)
 		},
 		saveAsExcel() {
 			const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileData)
@@ -246,36 +235,26 @@ export default {
 			return this.$store.getters['reports/activeDepositsByID']
 		},
 		tableData() {
-			return this.$store.getters['reports/transactions'] !== null
-				? this.$store.getters['reports/transactions']
-				: []
+			return this.$store.getters['reports/transactions'] !== null ? this.$store.getters['reports/transactions'] : []
 		},
 		activeDeposits() {
-			return this.$store.getters['reports/activeDeposits'] !== null
-				? this.$store.getters['reports/activeDeposits']
-				: []
+			return this.$store.getters['reports/activeDeposits'] !== null ? this.$store.getters['reports/activeDeposits'] : []
 		},
 		totals() {
-			return this.$store.getters['reports/totals']
-				? this.$store.getters['reports/totals']
-				: ''
+			return this.$store.getters['reports/totals'] ? this.$store.getters['reports/totals'] : ''
 		},
 		exportedFileDate() {
 			if (!this.queryParams.fromDate && !this.queryParams.toDate) {
 				return 'all'
 			} else if (this.queryParams.fromDate && this.queryParams.toDate) {
-				return `${moment
-					.utc(this.queryParams.fromDate)
-					.utcOffset(240)
-					.format('DD-MM-YYYY')}_${moment
+				return `${moment.utc(this.queryParams.fromDate).utcOffset(240).format('DD-MM-YYYY')}_${moment
 					.utc(this.queryParams.toDate)
 					.utcOffset(240)
 					.format('DD-MM-YYYY')}`
 			} else if (this.queryParams.fromDate && !this.queryParams.toDate) {
-				return `${moment
-					.utc(this.queryParams.fromDate)
-					.utcOffset(240)
-					.format('DD-MM-YYYY')}_${moment().utc().format('DD-MM-YYYY')}`
+				return `${moment.utc(this.queryParams.fromDate).utcOffset(240).format('DD-MM-YYYY')}_${moment()
+					.utc()
+					.format('DD-MM-YYYY')}`
 			}
 		},
 		exportedFileData() {
@@ -365,71 +344,35 @@ export default {
 				return [
 					[
 						this.totals.deposit_accural
-							? `Deposits accural: ${this.formatCurrency(
-									this.totals.deposit_accural,
-									'usdt'
-							  )} USDT`
+							? `Deposits accural: ${this.formatCurrency(this.totals.deposit_accural, 'usdt')} USDT`
 							: null,
 					],
 					[
 						this.totals.deposit_withdraw
-							? `Deposits withdraw: ${this.formatCurrency(
-									this.totals.deposit_withdraw,
-									'usdt'
-							  )} USDT`
+							? `Deposits withdraw: ${this.formatCurrency(this.totals.deposit_withdraw, 'usdt')} USDT`
 							: null,
 					],
 					[
 						this.totals.dividend_accural
-							? `Dividends accrual: ${this.formatCurrency(
-									this.totals.dividend_accural,
-									'usdt'
-							  )} USDT`
+							? `Dividends accrual: ${this.formatCurrency(this.totals.dividend_accural, 'usdt')} USDT`
 							: null,
 					],
 					[
 						this.totals.dividend_withdraw
-							? `Dividends withdraw: ${this.formatCurrency(
-									this.totals.dividend_withdraw,
-									'usdt'
-							  )} USDT`
+							? `Dividends withdraw: ${this.formatCurrency(this.totals.dividend_withdraw, 'usdt')} USDT`
 							: null,
 					],
-					[
-						this.totals.deposits
-							? `Deposits: ${this.formatCurrency(
-									this.totals.deposits,
-									'usdt'
-							  )} USDT`
-							: null,
-					],
+					[this.totals.deposits ? `Deposits: ${this.formatCurrency(this.totals.deposits, 'usdt')} USDT` : null],
 					[
 						this.totals.reinvestment
-							? `Reinvestment: ${this.formatCurrency(
-									this.totals.reinvestment,
-									'usdt'
-							  )} USDT`
+							? `Reinvestment: ${this.formatCurrency(this.totals.reinvestment, 'usdt')} USDT`
 							: null,
 					],
 				]
 			} else {
 				return [
-					[
-						this.totals.dividends
-							? `Deposits: ${this.formatCurrency(
-									this.totals.dividends,
-									'usdt'
-							  )} USDT`
-							: null,
-					],
-					[
-						this.totals.reinvestment
-							? `Total: ${this.formatCurrency(
-									this.totals.investments,
-									'usdt'
-							  )} USDT`
-							: null,
-					],
+					[this.totals.dividends ? `Deposits: ${this.formatCurrency(this.totals.dividends, 'usdt')} USDT` : null],
+					[this.totals.reinvestment ? `Total: ${this.formatCurrency(this.totals.investments, 'usdt')} USDT` : null],
 				]
 			}
 		},

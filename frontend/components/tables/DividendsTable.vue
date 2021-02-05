@@ -21,34 +21,13 @@
 				>
 					{{ timestampToDateTime(props.row.args.timestamp) }}
 				</b-table-column>
-				<b-table-column
-					sortable
-					:custom-sort="sortByEvent"
-					field="event"
-					:label="$t('Событие')"
-					width="25%"
-				>
+				<b-table-column sortable :custom-sort="sortByEvent" field="event" :label="$t('Событие')" width="25%">
 					{{ $t(props.row.event) }}
-					<span class="tag is-link" v-if="props.row.isReinvested">
-						Reinvested
-					</span>
+					<span class="tag is-link" v-if="props.row.isReinvested"> Reinvested </span>
 				</b-table-column>
-				<b-table-column
-					class="has-text-primary overflow-reset"
-					field="txHash"
-					:label="$t('Хэш')"
-					width="20%"
-				>
-					<b-tooltip
-						class="w-100"
-						:label="props.row.transactionHash"
-						type="is-black"
-						position="is-bottom"
-					>
-						<a
-							:href="'https://etherscan.io/tx/' + props.row.transactionHash"
-							target="_blank"
-						>
+				<b-table-column class="has-text-primary overflow-reset" field="txHash" :label="$t('Хэш')" width="20%">
+					<b-tooltip class="w-100" :label="props.row.transactionHash" type="is-black" position="is-bottom">
+						<a :href="'https://etherscan.io/tx/' + props.row.transactionHash" target="_blank">
 							{{ hashSlice(props.row.transactionHash) }}
 						</a>
 					</b-tooltip>
@@ -80,12 +59,7 @@
 		</b-table>
 
 		<div class="center mb-6">
-			<button
-				v-if="!hide_button"
-				type="button"
-				@click="showMore()"
-				class="default-button"
-			>
+			<button v-if="!hide_button" type="button" @click="showMore()" class="default-button">
 				{{ $t('показать еще') }}
 			</button>
 		</div>

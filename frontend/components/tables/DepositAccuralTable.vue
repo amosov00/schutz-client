@@ -1,16 +1,10 @@
 <template>
 	<div>
 		<b-modal :active.sync="isComponentModalActive" has-modal-card>
-			<update-amount-modal
-				:agreement="activeAgreement"
-				@updateAmount="updateAgreement"
-			/>
+			<update-amount-modal :agreement="activeAgreement" @updateAmount="updateAgreement" />
 		</b-modal>
 		<b-modal :active.sync="isUpdateStatusModalActive" has-modal-card>
-			<update-status-modal
-				:agreement="activeAgreement"
-				@updateStatus="updateAgreement"
-			/>
+			<update-status-modal :agreement="activeAgreement" @updateStatus="updateAgreement" />
 		</b-modal>
 		<b-table
 			:data="tableData"
@@ -22,36 +16,15 @@
 		>
 			<template slot-scope="props">
 				<b-table-column field="user_id" width="100" label="Id">
-					<b-tooltip
-						class="w-100"
-						:label="props.row.user_id"
-						type="is-black"
-						position="is-bottom"
-					>
+					<b-tooltip class="w-100" :label="props.row.user_id" type="is-black" position="is-bottom">
 						<a class="text-clamp" :href="'/users/' + props.row.user_id">
 							{{ props.row.user_id }}
 						</a>
 					</b-tooltip>
 				</b-table-column>
-				<b-table-column
-					class="has-text-primary overflow-reset"
-					field="ethereum_wallet"
-					label="Address"
-					width="150"
-				>
-					<b-tooltip
-						class="w-100"
-						:label="props.row.ethereum_wallet"
-						type="is-black"
-						position="is-bottom"
-					>
-						<a
-							class="text-clamp"
-							:href="
-								'https://etherscan.io/address/' + props.row.ethereum_wallet
-							"
-							target="_blank"
-						>
+				<b-table-column class="has-text-primary overflow-reset" field="ethereum_wallet" label="Address" width="150">
+					<b-tooltip class="w-100" :label="props.row.ethereum_wallet" type="is-black" position="is-bottom">
+						<a class="text-clamp" :href="'https://etherscan.io/address/' + props.row.ethereum_wallet" target="_blank">
 							{{ props.row.ethereum_wallet }}
 						</a>
 					</b-tooltip>
@@ -63,10 +36,7 @@
 					{{ props.row.contract }}
 				</b-table-column>
 				<b-table-column field="amount" label="Amount">
-					<a
-						class="text-clamp has-text-link"
-						@click="updateAmountModalActivate(props.row)"
-					>
+					<a class="text-clamp has-text-link" @click="updateAmountModalActivate(props.row)">
 						{{ formatCurrency(props.row.amount, 'usdt') }}
 					</a>
 				</b-table-column>
@@ -79,12 +49,7 @@
 				<b-table-column field="result" label="Answers">
 					{{ getResult(props.row.result) }}
 				</b-table-column>
-				<b-table-column
-					field="delete"
-					label=""
-					width="100"
-					class="has-text-right"
-				>
+				<b-table-column field="delete" label="" width="100" class="has-text-right">
 					<b-button
 						type="is-info is-small"
 						:disabled="props.row.isPaid !== true && props.row.result !== 2"
@@ -94,12 +59,7 @@
 					</b-button>
 				</b-table-column>
 				<b-table-column width="70" class="has-text-right">
-					<b-button
-						type="is-info is-small"
-						@click="updateStatusModalActive(props.row)"
-					>
-						Статус
-					</b-button>
+					<b-button type="is-info is-small" @click="updateStatusModalActive(props.row)"> Статус </b-button>
 				</b-table-column>
 			</template>
 
@@ -175,9 +135,7 @@ export default {
 			await this.$store
 				.dispatch('adminContractIntegration/accrualDeposit', {
 					values: [data.amount],
-					customerAddresses: [
-						userData.ethereum_wallet_payout || userData.ethereum_wallet,
-					],
+					customerAddresses: [userData.ethereum_wallet_payout || userData.ethereum_wallet],
 					comment: `${data.contract} close`,
 				})
 				.then(async (txHash) => {

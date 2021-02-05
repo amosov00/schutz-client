@@ -5,25 +5,15 @@
 		</header>
 		<section class="modal-card-body">
 			<b-field label="Status" class="is-fullwidth">
-				<b-select
-					placeholder="Select a status"
-					class="select-width"
-					v-model="mutableStatus"
-				>
-					<option
-						v-for="option in results"
-						:value="option.value"
-						:key="option.value"
-					>
+				<b-select placeholder="Select a status" class="select-width" v-model="mutableStatus">
+					<option v-for="option in results" :value="option.value" :key="option.value">
 						{{ option.name }}
 					</option>
 				</b-select>
 			</b-field>
 		</section>
 		<footer class="modal-card-foot">
-			<button class="button" type="button" @click="$parent.close()">
-				Cancel
-			</button>
+			<button class="button" type="button" @click="$parent.close()">Cancel</button>
 			<button class="button is-primary" @click="updateStatus">Done</button>
 		</footer>
 	</div>

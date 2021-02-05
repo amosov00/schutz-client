@@ -1,10 +1,7 @@
 let screenWidthMixin = {
 	data() {
 		return {
-			screenWidth:
-				window.innerWidth ||
-				document.documentElement.clientWidth ||
-				document.body.clientWidth,
+			screenWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
 		}
 	},
 	computed: {
@@ -14,10 +11,7 @@ let screenWidthMixin = {
 	},
 	mounted() {
 		window.addEventListener('resize', () => {
-			this.screenWidth =
-				window.innerWidth ||
-				document.documentElement.clientWidth ||
-				document.body.clientWidth
+			this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
 		})
 	},
 }

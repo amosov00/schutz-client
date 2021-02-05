@@ -1,11 +1,6 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="1"
-			:dots="1"
-			next-page="/signup"
-			prev-page="/signup"
-		>
+		<custom-slider :activeDot="1" :dots="1" next-page="/signup" prev-page="/signup">
 			<template slot="content">
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex flex-column">
@@ -13,32 +8,18 @@
 							{{ $t('Восстановление пароля') }}
 						</div>
 						<div class="pass-input">
-							<base-input
-								type="text"
-								size="6"
-								:label="$t('password')"
-								v-model="password"
-							/>
+							<base-input type="text" size="6" :label="$t('password')" v-model="password" />
 						</div>
 
 						<div class="mt-40">
-							<base-input
-								type="text"
-								size="6"
-								:label="$t('confirmPassword')"
-								v-model="repeat_password"
-							/>
+							<base-input type="text" size="6" :label="$t('confirmPassword')" v-model="repeat_password" />
 						</div>
 					</div>
-					<div
-						class="column is-half is-flex is-flex-direction-column is-justify-content-space-between"
-					>
+					<div class="column is-half is-flex is-flex-direction-column is-justify-content-space-between">
 						<div class="auth-image">
 							<img src="/login_success.svg" />
 						</div>
-						<custom-button @click.native="changePassword">{{
-							$t('send')
-						}}</custom-button>
+						<custom-button @click.native="changePassword">{{ $t('send') }}</custom-button>
 					</div>
 				</div>
 			</template>

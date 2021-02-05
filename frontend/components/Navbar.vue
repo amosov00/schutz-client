@@ -13,8 +13,7 @@
 							:to="localePath(link.link)"
 							class="link"
 							:class="{
-								active:
-									link.link === activePage || `${link.link}/` === activePage,
+								active: link.link === activePage || `${link.link}/` === activePage,
 							}"
 						>
 							{{ $t(link.name) }}

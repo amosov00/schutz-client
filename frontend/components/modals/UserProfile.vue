@@ -177,9 +177,7 @@ export default {
 		},
 
 		showContract(data) {
-			return data.prolongedContract
-				? `${data.contract} (prolonged to ${data.prolongedContract})`
-				: data.contract
+			return data.prolongedContract ? `${data.contract} (prolonged to ${data.prolongedContract})` : data.contract
 		},
 
 		toReportsPage(userId) {
@@ -202,11 +200,9 @@ export default {
 		},
 
 		async reloadActiveDeposits() {
-			await this.$axios
-				.get(`/admin/active-deposits/${this.user._id}/`)
-				.then((resp) => {
-					this.user.active_deposits = resp.data.contracts
-				})
+			await this.$axios.get(`/admin/active-deposits/${this.user._id}/`).then((resp) => {
+				this.user.active_deposits = resp.data.contracts
+			})
 		},
 
 		async update() {

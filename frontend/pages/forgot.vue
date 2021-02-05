@@ -1,11 +1,6 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="1"
-			:dots="1"
-			next-page="/signup"
-			prev-page="/signup"
-		>
+		<custom-slider :activeDot="1" :dots="1" next-page="/signup" prev-page="/signup">
 			<template slot="content">
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex flex-column">
@@ -13,17 +8,10 @@
 							{{ $t('Восстановление пароля') }}
 						</div>
 						<div class="email-input">
-							<base-input
-								type="text"
-								size="6"
-								label="E-mail:"
-								v-model="email"
-							/>
+							<base-input type="text" size="6" label="E-mail:" v-model="email" />
 						</div>
 					</div>
-					<div
-						class="column is-half is-flex is-flex-direction-column is-justify-content-space-between"
-					>
+					<div class="column is-half is-flex is-flex-direction-column is-justify-content-space-between">
 						<div class="auth-image">
 							<img src="/login_success.svg" />
 						</div>

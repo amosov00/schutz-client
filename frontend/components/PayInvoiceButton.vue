@@ -20,13 +20,10 @@ export default {
 	},
 	methods: {
 		async payInvoice() {
-			const data = await this.$store.dispatch(
-				'bills/fetchInvoiceAddressPaymentData',
-				{
-					invoiceId: this.invoiceData.invoice_id,
-					invoicePaymentId: this.invoiceData._id,
-				}
-			)
+			const data = await this.$store.dispatch('bills/fetchInvoiceAddressPaymentData', {
+				invoiceId: this.invoiceData.invoice_id,
+				invoicePaymentId: this.invoiceData._id,
+			})
 			if (!data || data.hasProblem) {
 				Toast.open({
 					type: 'is-danger',

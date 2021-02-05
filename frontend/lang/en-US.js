@@ -120,8 +120,7 @@ export default {
 	pay: 'Pay',
 	passwordChangeSuccess: 'Your password successfully changed!',
 	passwordChangeError: 'Failed to change password!',
-	authRecoverSuccess:
-		'Success! Please check your email for further instructions.',
+	authRecoverSuccess: 'Success! Please check your email for further instructions.',
 	authRecoverError: 'Error: make sure email is entered correctly.',
 	actiovation: 'Actiovation',
 	activationSuccess: 'You successfully verified your email!',
@@ -166,14 +165,12 @@ export default {
 	Продлить: 'Prolongate',
 	Закрыть: 'Close',
 	Вывести: 'Withdraw',
-	'Для открытия вклада необходимо добавить кошелек!':
-		'To open a deposit, you need to add a wallet!',
+	'Для открытия вклада необходимо добавить кошелек!': 'To open a deposit, you need to add a wallet!',
 	'Укажите адрес кошелька': 'Enter a new wallet address',
 	'Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды.':
 		'It will be linked to your account forever. Dividends will be charged on it.',
 	'копировать из MM': 'copy from MM',
-	'Также, вы всегда можете обратиться за поддержкой:':
-		'Also you can always contact our support:',
+	'Также, вы всегда можете обратиться за поддержкой:': 'Also you can always contact our support:',
 	'Чат telegram': 'Telegram chat',
 	'Отменить, я передумал': 'Cancel, I changed my mind',
 	Сохранить: 'Send',
@@ -181,12 +178,10 @@ export default {
 	'Если сумма указана верно, прочитайте и согласитесь с условиями':
 		'If the amount is correct, read and agree to the terms and conditions',
 	'условия и положения': 'terms and conditions',
-	investmentTitle:
-		'Open a deposit <br>and start earning <br>up to 101% per annum in USDT',
+	investmentTitle: 'Open a deposit <br>and start earning <br>up to 101% per annum in USDT',
 	'ваш доход составит:': 'your income will be:',
 	'с учетом реинвестирования:': 'including reinvestment:',
-	'Вклад будет доступен к выводу':
-		'The deposit will be available for withdrawal',
+	'Вклад будет доступен к выводу': 'The deposit will be available for withdrawal',
 	после: 'after',
 	walletOnline: 'The wallet is ready to work. USDT approved.',
 	walletOnlineApprove: 'The wallet is ready to work. Now approve USDT',
@@ -207,8 +202,7 @@ export default {
 	noteText:
 		'Be careful! Install the extension only by clicking on this link on the official website: https://metamask.io/ Supported browsers:',
 	'Поддерживаемые браузеры:': 'Supported browsers:',
-	'Понятно, спасибо, установлю позже':
-		"I see, thank you, I'll install it later",
+	'Понятно, спасибо, установлю позже': "I see, thank you, I'll install it later",
 	Установить: 'Install',
 	dividensTitle: 'Withdraw <br>or reinvest <br>the received dividends',
 	withdrawalText:
@@ -224,8 +218,7 @@ export default {
 	Событие: 'Event',
 	'Всего выведено:': 'Total output:',
 	'Получите 5%, 3% или 2%': 'Get 5%, 3% or 2%',
-	'с каждого депозита внесенного по вашей ссылке.':
-		'of every Deposit made via your link.',
+	'с каждого депозита внесенного по вашей ссылке.': 'of every Deposit made via your link.',
 	'Копировать ссылку': 'Copy link',
 	'Поделитесь с друзьями:': 'Share with your friends:',
 	'Вклад, USDT': 'Deposit, USDT',
@@ -233,8 +226,7 @@ export default {
 	'Всего начислено:': 'Total accrued:',
 	'Отменить, не согласен': 'Cancel, do not agree',
 	'Пополнить вклад': 'Replenish deposit',
-	'Получайте фиксированную доходность до 101% вместе с SCHUTZ.':
-		'Get up to 101% fixed annual interest with SCHUTZ.',
+	'Получайте фиксированную доходность до 101% вместе с SCHUTZ.': 'Get up to 101% fixed annual interest with SCHUTZ.',
 	'Укажите новый адрес кошелька': 'Enter a new wallet address',
 	changeWalletText:
 		'If you entered a different wallet by mistake during registration, you can replace it with another one once through SCHUTZ customer support. Our staff will contact you and solve the problem.',
@@ -253,8 +245,7 @@ export default {
 	Нет: 'No',
 	'Вклад успешно пролонгирован': 'Contribution has been successfully extended',
 	'Вклад успешно закрыт': 'Deposit closed successfully',
-	'Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)':
-		'Request sent to Metamask (RE-INVESTMENT)',
+	'Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)': 'Request sent to Metamask (RE-INVESTMENT)',
 	'The reinvest field must be 50 or more': 'Minimum reinvestment 50.00 USDT',
 	'The deposit field must be 500 or more': 'Minimum deposit 500 USDT',
 	'The deposit field must be 100000 or less': 'Maximum deposit 100,000 USDT',

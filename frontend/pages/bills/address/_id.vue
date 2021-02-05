@@ -74,8 +74,7 @@ export default {
 					step: 'any',
 				},
 				trapFocus: true,
-				onConfirm: (value) =>
-					this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
+				onConfirm: (value) => this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
 			})
 		},
 		updateTotalAction(data) {

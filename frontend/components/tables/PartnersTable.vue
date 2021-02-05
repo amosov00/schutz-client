@@ -20,26 +20,12 @@
 					width="200"
 					sortable
 					:custom-sort="sortByDate"
-					>{{
-						props.row.created_at
-							? new Date(props.row.created_at).toLocaleString()
-							: ''
-					}}
+					>{{ props.row.created_at ? new Date(props.row.created_at).toLocaleString() : '' }}
 				</b-table-column>
-				<b-table-column
-					class="text-clamp"
-					field="fullname"
-					:label="$t('fullName')"
-					sortable
-					:custom-sort="sortByName"
+				<b-table-column class="text-clamp" field="fullname" :label="$t('fullName')" sortable :custom-sort="sortByName"
 					>{{ props.row.first_name }} {{ props.row.last_name }}
 				</b-table-column>
-				<b-table-column
-					sortable
-					:custom-sort="sortByEmail"
-					class="text-clamp"
-					field="email"
-					label="E-mail"
+				<b-table-column sortable :custom-sort="sortByEmail" class="text-clamp" field="email" label="E-mail"
 					>{{ props.row.email }}
 				</b-table-column>
 				<b-table-column
@@ -76,22 +62,12 @@
 		</b-table>
 
 		<div class="center mb-6" v-if="partners.length">
-			<button
-				v-if="!hideButton"
-				type="button"
-				@click="showMore()"
-				class="default-button"
-			>
+			<button v-if="!hideButton" type="button" @click="showMore()" class="default-button">
 				{{ $t('показать еще') }}
 			</button>
 		</div>
-		<div v-if="partners.length" class="active-users">
-			Количество активных пользователей: {{ active_users }}
-		</div>
-		<div
-			v-if="partners.length"
-			class="is-size-5 has-background-info total-withdraw mb-6"
-		>
+		<div v-if="partners.length" class="active-users">Количество активных пользователей: {{ active_users }}</div>
+		<div v-if="partners.length" class="is-size-5 has-background-info total-withdraw mb-6">
 			{{ $t('Всего начислено:') }}
 			{{ formatCurrency(total, 'usdt') }} USDT
 		</div>

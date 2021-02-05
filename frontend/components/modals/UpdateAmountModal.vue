@@ -9,9 +9,7 @@
 			</b-field>
 		</section>
 		<footer class="modal-card-foot">
-			<button class="button" type="button" @click="$parent.close()">
-				Cancel
-			</button>
+			<button class="button" type="button" @click="$parent.close()">Cancel</button>
 			<button class="button is-primary" @click="updateAmount">Done</button>
 		</footer>
 	</div>

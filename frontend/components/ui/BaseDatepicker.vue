@@ -50,8 +50,7 @@ export default {
 	created() {
 		const locales = this.$i18n.locales
 		const currentLocaleCode = this.$i18n.locale
-		const { iso: currentLocaleIso } =
-			locales.find(({ code }) => code === currentLocaleCode) || undefined
+		const { iso: currentLocaleIso } = locales.find(({ code }) => code === currentLocaleCode) || undefined
 
 		this.currentLocaleIso = currentLocaleIso
 

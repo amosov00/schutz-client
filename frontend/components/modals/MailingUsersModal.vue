@@ -5,21 +5,13 @@
 		</header>
 		<section class="modal-card-body">
 			<div class="is-flex-direction-column is-flex">
-				<b-checkbox
-					class="mb-3"
-					v-for="{ id, email } in users"
-					v-model="selectedUsers"
-					:key="id"
-					:native-value="id"
-				>
+				<b-checkbox class="mb-3" v-for="{ id, email } in users" v-model="selectedUsers" :key="id" :native-value="id">
 					{{ email }}
 				</b-checkbox>
 			</div>
 		</section>
 		<footer class="modal-card-foot">
-			<button class="button" type="button" @click="$parent.close()">
-				Close
-			</button>
+			<button class="button" type="button" @click="$parent.close()">Close</button>
 			<button class="button is-primary" @click="sendMail">Send</button>
 		</footer>
 	</div>

@@ -1,28 +1,14 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="2"
-			:dots="2"
-			:next-page="localePath('/signup')"
-			:prev-page="localePath('/signup')"
-		>
+		<custom-slider :activeDot="2" :dots="2" :next-page="localePath('/signup')" :prev-page="localePath('/signup')">
 			<template slot="content">
 				<div class="columns is-fullheight">
-					<div
-						class="column is-half is-flex flex-column is-justify-content-space-between"
-					>
+					<div class="column is-half is-flex flex-column is-justify-content-space-between">
 						<div class="is-size-5 mb-5">
 							{{ $t('authTitle') }}
 						</div>
 						<div class="mb-5">
-							<base-input
-								type="text"
-								size="6"
-								label="E-mail:"
-								class="mb-5"
-								v-model="email"
-								@input="handleBlur()"
-							/>
+							<base-input type="text" size="6" label="E-mail:" class="mb-5" v-model="email" @input="handleBlur()" />
 							<base-input
 								type="password"
 								size="6"
@@ -38,9 +24,7 @@
 							<nuxt-link to="/forgot"> {{ $t('Напомнить.') }} </nuxt-link>
 						</div>
 					</div>
-					<div
-						class="column is-half is-flex is-flex-direction-column is-justify-content-space-between"
-					>
+					<div class="column is-half is-flex is-flex-direction-column is-justify-content-space-between">
 						<div class="auth-image">
 							<img :src="status_image" :class="animate_class" />
 						</div>

@@ -39,12 +39,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import {
-	CustomSlider,
-	CustomInput,
-	CustomButton,
-	CustomCheckbox,
-} from '~/components'
+import { CustomSlider, CustomInput, CustomButton, CustomCheckbox } from '~/components'
 import { TransactionDeactivateTable } from '~/components/tables'
 
 import { NTS_CONTRACTS } from '~/consts'

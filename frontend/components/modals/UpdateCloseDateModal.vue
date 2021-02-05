@@ -36,10 +36,7 @@ export default {
 			let closeDate = this.formatedDate
 			closeDate.setHours(12)
 			contractCopy.close_date = closeDate.getTime() / 1000
-			activeDepositCopy.contracts = _.uniqBy(
-				[contractCopy, ...activeDepositCopy.contracts],
-				'contract'
-			)
+			activeDepositCopy.contracts = _.uniqBy([contractCopy, ...activeDepositCopy.contracts], 'contract')
 
 			await this.updateCloseDate(activeDepositCopy)
 

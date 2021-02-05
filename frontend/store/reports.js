@@ -71,15 +71,10 @@ export const mutations = {
 		state.activeDepositTransactions = payload
 	},
 	setActiveDeposits: (state, payload) => (state.activeDeposits = payload),
-	setActiveDepositsByID: (state, payload) =>
-		(state.activeDepositsByID = payload),
-	setActiveDepositsByIDContracts: (state, payload) =>
-		(state.activeDepositsByID.contracts = payload),
+	setActiveDepositsByID: (state, payload) => (state.activeDepositsByID = payload),
+	setActiveDepositsByIDContracts: (state, payload) => (state.activeDepositsByID.contracts = payload),
 
-	[MUTATION.SET_AGREEMENTS](
-		state,
-		{ agreements, total, total_prolong, total_processing, total_payout }
-	) {
+	[MUTATION.SET_AGREEMENTS](state, { agreements, total, total_prolong, total_processing, total_payout }) {
 		state.agreements = agreements
 
 		state.total = total
@@ -90,12 +85,8 @@ export const mutations = {
 }
 export const actions = {
 	async fetchTransactionsByQuery({ commit }, queryParams) {
-		const fromUSDT = queryParams.fromUSDT
-			? formatCurrencyReversed(queryParams.fromUSDT, 'usdt')
-			: null
-		const toUSDT = queryParams.toUSDT
-			? formatCurrencyReversed(queryParams.toUSDT, 'usdt')
-			: null
+		const fromUSDT = queryParams.fromUSDT ? formatCurrencyReversed(queryParams.fromUSDT, 'usdt') : null
+		const toUSDT = queryParams.toUSDT ? formatCurrencyReversed(queryParams.toUSDT, 'usdt') : null
 		const contract = queryParams.contract === 'all' ? '' : queryParams.contract
 
 		if (queryParams.transaction === 'deposits') {
@@ -137,28 +128,14 @@ export const actions = {
 		}
 	},
 	async fetchTransactionsByQueryV1({ commit }, queryParams) {
-		const fromUSDT = queryParams.fromUSDT
-			? formatCurrencyReversed(queryParams.fromUSDT, 'usdt')
-			: null
-		const toUSDT = queryParams.toUSDT
-			? formatCurrencyReversed(queryParams.toUSDT, 'usdt')
-			: null
+		const fromUSDT = queryParams.fromUSDT ? formatCurrencyReversed(queryParams.fromUSDT, 'usdt') : null
+		const toUSDT = queryParams.toUSDT ? formatCurrencyReversed(queryParams.toUSDT, 'usdt') : null
 		const contract = queryParams.contract === 'all' ? '' : queryParams.contract
 		const fromDate = queryParams.fromDate
-			? moment
-					.utc(queryParams.fromDate)
-					.add(1, 'days')
-					.startOf('day')
-					.subtract(3, 'hours')
-					.unix()
+			? moment.utc(queryParams.fromDate).add(1, 'days').startOf('day').subtract(3, 'hours').unix()
 			: 0
 		const toDate = queryParams.toDate
-			? moment
-					.utc(queryParams.toDate)
-					.endOf('day')
-					.add(1, 'days')
-					.subtract(3, 'hours')
-					.unix()
+			? moment.utc(queryParams.toDate).endOf('day').add(1, 'days').subtract(3, 'hours').unix()
 			: 0
 
 		if (queryParams.transaction === 'deposits') {
@@ -205,9 +182,7 @@ export const actions = {
 		})
 	},
 	async fetchActiveDepositTransactions({ commit }, params) {
-		const { data } = await this.$axios.get(
-			`/admin/active-deposits/${params.id}/${params.contract}/`
-		)
+		const { data } = await this.$axios.get(`/admin/active-deposits/${params.id}/${params.contract}/`)
 		commit('setActiveDepositTransactions', data)
 	},
 	async updateCloseDate({ commit }, activeDeposit) {
@@ -223,10 +198,7 @@ export const actions = {
 	},
 	async updateAgreement({ commit }, agreement) {
 		try {
-			await this.$axios.put(
-				`/admin/mailing/agreements/${agreement._id}/`,
-				agreement
-			)
+			await this.$axios.put(`/admin/mailing/agreements/${agreement._id}/`, agreement)
 
 			return true
 		} catch (e) {
@@ -298,20 +270,15 @@ export const getters = {
 	itemsPagination: (state) => (itemType) => (page, limit, sort = null) => {
 		const items = {
 			activeDepositContracts:
-				state.activeDepositsByID &&
-				state.activeDepositsByID.contracts &&
-				state.activeDepositsByID.contracts.length
+				state.activeDepositsByID && state.activeDepositsByID.contracts && state.activeDepositsByID.contracts.length
 					? [...state.activeDepositsByID.contracts]
 					: null,
 			transactions:
-				state.reportData &&
-				state.reportData.transactions &&
-				state.reportData.transactions.length
+				state.reportData && state.reportData.transactions && state.reportData.transactions.length
 					? [...state.reportData.transactions]
 					: null,
 			activeDeposits:
-				state.activeDeposits.active_deposits &&
-				state.activeDeposits.active_deposits.length
+				state.activeDeposits.active_deposits && state.activeDeposits.active_deposits.length
 					? [...state.activeDeposits.active_deposits]
 					: null,
 		}
@@ -335,8 +302,7 @@ export const getters = {
 
 		if (limit === -1) return elements
 
-		const endOn =
-			elements.length < page * limit ? elements.length : page * limit
+		const endOn = elements.length < page * limit ? elements.length : page * limit
 
 		const elementsToShow = []
 

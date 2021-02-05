@@ -4,12 +4,8 @@
 			<div class="section">
 				<h1 class="title">{{ $t('pageNotFound') }}</h1>
 				<div class="section">
-					<nuxt-link to="/profile" class="button is-info">
-						Go to my.schutz.capital
-					</nuxt-link>
-					<a href="https://schutz.capital/" class="button is-primary">
-						Go to schutz.capital
-					</a>
+					<nuxt-link to="/profile" class="button is-info"> Go to my.schutz.capital </nuxt-link>
+					<a href="https://schutz.capital/" class="button is-primary"> Go to schutz.capital </a>
 				</div>
 			</div>
 		</div>

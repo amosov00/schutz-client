@@ -83,15 +83,9 @@ export default {
 		}
 	},
 	async created() {
-		this.user = await this.$store.dispatch(
-			'users/fetchUser',
-			this.$route.params.id
-		)
+		this.user = await this.$store.dispatch('users/fetchUser', this.$route.params.id)
 		if (this.user.ethereum_wallet) {
-			await this.$store.dispatch(
-				'userContractIntegration/fetchTokenBalance',
-				this.user.ethereum_wallet
-			)
+			await this.$store.dispatch('userContractIntegration/fetchTokenBalance', this.user.ethereum_wallet)
 		}
 	},
 	methods: {
@@ -108,15 +102,10 @@ export default {
 			modal.$on('close', async () => await this.reloadActiveDeposits())
 		},
 		showContract(data) {
-			return data.prolongedContract
-				? `${data.contract} (prolonged to ${data.prolongedContract})`
-				: data.contract
+			return data.prolongedContract ? `${data.contract} (prolonged to ${data.prolongedContract})` : data.contract
 		},
 		async update() {
-			if (
-				this.updatedUser.password === '' ||
-				this.updatedUser.repeat_password === ''
-			) {
+			if (this.updatedUser.password === '' || this.updatedUser.repeat_password === '') {
 				delete this.updatedUser.password
 			}
 			let resp = await this.$store.dispatch('updateUser', this.updatedUser)
@@ -133,11 +122,9 @@ export default {
 			}
 		},
 		async reloadActiveDeposits() {
-			await this.$axios
-				.get(`/admin/active-deposits/${this.user._id}/`)
-				.then((resp) => {
-					this.user.active_deposits = resp.data.contracts
-				})
+			await this.$axios.get(`/admin/active-deposits/${this.user._id}/`).then((resp) => {
+				this.user.active_deposits = resp.data.contracts
+			})
 		},
 	},
 	computed: {

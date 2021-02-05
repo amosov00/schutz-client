@@ -10,9 +10,7 @@
 			</p>
 			<p class="is-size-7 mb-60" v-else>
 				You can
-				<a class="is-link" @click="value = depositBalance">
-					withdraw the entire amount
-				</a>
+				<a class="is-link" @click="value = depositBalance"> withdraw the entire amount </a>
 				or part of the accrued dividends, and reinvest the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
@@ -47,37 +45,23 @@
 					/>
 					<span class="is-size-7">
 						<span @click="$parent.close()"> {{ $t('Я принимаю') }} </span>
-						<a
-							href="#"
-							class="terms-link"
-							@click="$store.commit('toggleTermsModal', true)"
-						>
+						<a href="#" class="terms-link" @click="$store.commit('toggleTermsModal', true)">
 							{{ $t('условия и положения') }}
 						</a>
 					</span>
 				</div>
 			</div>
 
-			<div
-				class="actions is-flex is-justify-content-space-between is-align-items-center"
-			>
-				<a
-					@click="$parent.close()"
-					class="cancel has-text-link is-size-7 is-cursor-pointer"
-				>
+			<div class="actions is-flex is-justify-content-space-between is-align-items-center">
+				<a @click="$parent.close()" class="cancel has-text-link is-size-7 is-cursor-pointer">
 					{{ $t('Отменить, я передумал') }}
 				</a>
-				<custom-button
-					:disabled="invalid || !isTermsAcceped"
-					@click.native="action"
-				>
+				<custom-button :disabled="invalid || !isTermsAcceped" @click.native="action">
 					{{ $t('Вывести') }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
-				<terms-and-conditions-modal
-					@accepted="isTermsAcceped = $event"
-				></terms-and-conditions-modal>
+				<terms-and-conditions-modal @accepted="isTermsAcceped = $event"></terms-and-conditions-modal>
 			</b-modal>
 		</div>
 	</ValidationObserver>
@@ -122,15 +106,9 @@ export default {
 					type: 'is-success',
 				})
 				if (this.actionType === 'closeDeposit') {
-					await this.$store.dispatch(
-						'userContractIntegration/closeDeposit',
-						parseInt(this.value)
-					)
+					await this.$store.dispatch('userContractIntegration/closeDeposit', parseInt(this.value))
 				} else if (this.actionType === 'withdraw') {
-					await this.$store.dispatch(
-						'userContractIntegration/withdraw',
-						parseInt(this.value)
-					)
+					await this.$store.dispatch('userContractIntegration/withdraw', parseInt(this.value))
 				}
 				this.$parent.close()
 			}

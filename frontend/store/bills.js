@@ -21,10 +21,9 @@ export const mutations = {
 	},
 	setInvoiceDataByID: (state, payload) => (state.invoiceDataByID = payload),
 	addPaymentTxToInvoiceDataByID: (state, payload) =>
-		(state.invoiceDataByID.payment_transaction_hash = _.union(
-			state.invoiceDataByID.payment_transaction_hash,
-			[payload]
-		)),
+		(state.invoiceDataByID.payment_transaction_hash = _.union(state.invoiceDataByID.payment_transaction_hash, [
+			payload,
+		])),
 	removePaymentTxToInvoiceDataByID: (state, index) =>
 		(state.invoiceDataByID.payment_transaction_hash = state.invoiceDataByID.payment_transaction_hash.filter(
 			(i) => i[0] !== index
@@ -89,18 +88,8 @@ export const actions = {
 		commit('setInvoiceDataByID', data)
 	},
 	async createInvoice({ commit }, invoiceData) {
-		const fromDate = moment
-			.utc(invoiceData.fromDate)
-			.add(1, 'days')
-			.startOf('day')
-			.add(3, 'hours')
-			.unix()
-		const toDate = moment
-			.utc(invoiceData.toDate)
-			.add(1, 'days')
-			.endOf('month')
-			.subtract(3, 'hours')
-			.unix()
+		const fromDate = moment.utc(invoiceData.fromDate).add(1, 'days').startOf('day').add(3, 'hours').unix()
+		const toDate = moment.utc(invoiceData.toDate).add(1, 'days').endOf('month').subtract(3, 'hours').unix()
 		return await this.$axios
 			.post('/admin/invoices/', {
 				timestamp_from: fromDate,
@@ -146,9 +135,7 @@ export const actions = {
 		commit('setAddressInvoiceData', data)
 	},
 	async fetchAddressTransactions({ commit }, id) {
-		const { data } = await this.$axios.get(
-			`/admin/invoices/address/${id}/transactions/`
-		)
+		const { data } = await this.$axios.get(`/admin/invoices/address/${id}/transactions/`)
 		commit('setAddressTransactions', data)
 	},
 	async fetchInvoicePaymentData({}, _id) {
@@ -184,10 +171,7 @@ export const actions = {
 			commit('deleteInvoiceFromStore', id)
 		})
 	},
-	async addPaymentTx(
-		{ commit },
-		{ invoice, index, txHash, customerAddresses }
-	) {
+	async addPaymentTx({ commit }, { invoice, index, txHash, customerAddresses }) {
 		this.$axios
 			.post(`/admin/invoices/${invoice._id}/payment/add/`, {
 				index: index,
@@ -215,15 +199,12 @@ export const actions = {
 	},
 	async getBillExtendedData({}, id) {
 		try {
-			const { data } = await this.$axios.get(
-				`/admin/invoices/${id}/extended/`,
-				{
-					params: {
-						as_excel: true,
-					},
-					responseType: 'blob',
-				}
-			)
+			const { data } = await this.$axios.get(`/admin/invoices/${id}/extended/`, {
+				params: {
+					as_excel: true,
+				},
+				responseType: 'blob',
+			})
 
 			return data
 		} catch (e) {

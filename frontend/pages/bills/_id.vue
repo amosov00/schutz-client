@@ -82,8 +82,7 @@ export default {
 					step: 'any',
 				},
 				trapFocus: true,
-				onConfirm: (value) =>
-					this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
+				onConfirm: (value) => this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
 			})
 		},
 		updateTotalAction(data) {
@@ -107,21 +106,13 @@ export default {
 		},
 		filter() {
 			if (this.searchQuery.length >= 3) {
-				this.filteredTable = _.filter(
-					this.tableData.invoice_addresses,
-					(el) => {
-						if (
-							el.address !== null &&
-							el.address
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())
-						) {
-							return el
-						} else {
-							return false
-						}
+				this.filteredTable = _.filter(this.tableData.invoice_addresses, (el) => {
+					if (el.address !== null && el.address.toLowerCase().startsWith(this.searchQuery.toLowerCase())) {
+						return el
+					} else {
+						return false
 					}
-				)
+				})
 			} else {
 				this.filteredTable = []
 			}
@@ -161,9 +152,7 @@ export default {
 			return this.$store.getters['bills/invoiceDataByID']
 		},
 		createdAt() {
-			return moment(this.tableData.created_at)
-				.utc()
-				.format('Do MMMM YYYY, h:mm:ss a')
+			return moment(this.tableData.created_at).utc().format('Do MMMM YYYY, h:mm:ss a')
 		},
 		exportedFileData() {
 			const data = this.tableData.invoice_addresses.map((el) => {

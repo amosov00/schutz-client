@@ -31,11 +31,7 @@ export const actions = {
 	/* Открытие депозита */
 	async deposit({ commit, dispatch, rootGetters }, value) {
 		const gasPrice = rootGetters['metamask/gasPrice']
-		const referralAddresses = await dispatch(
-			'fetchReferralAddresses',
-			{},
-			{ root: true }
-		)
+		const referralAddresses = await dispatch('fetchReferralAddresses', {}, { root: true })
 		const ethAddress = rootGetters['metamask/ethAddress']
 		const { contracts, metamask } = await this.$web3()
 
@@ -52,12 +48,9 @@ export const actions = {
 						data: contracts.Schutz.methods
 							.deposit(
 								value * 1e6,
-								referralAddresses.referral_1 ||
-									'0x0000000000000000000000000000000000000000',
-								referralAddresses.referral_2 ||
-									'0x0000000000000000000000000000000000000000',
-								referralAddresses.referral_3 ||
-									'0x0000000000000000000000000000000000000000'
+								referralAddresses.referral_1 || '0x0000000000000000000000000000000000000000',
+								referralAddresses.referral_2 || '0x0000000000000000000000000000000000000000',
+								referralAddresses.referral_3 || '0x0000000000000000000000000000000000000000'
 							)
 							.encodeABI(),
 					},
@@ -114,9 +107,7 @@ export const actions = {
 						value: '0x00',
 						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, 'gwei')),
 						gas: Web3.utils.toHex('250000'),
-						data: contracts.Schutz.methods
-							.closeDeposit(value * 1e6)
-							.encodeABI(),
+						data: contracts.Schutz.methods.closeDeposit(value * 1e6).encodeABI(),
 					},
 				],
 			})
@@ -170,9 +161,7 @@ export const actions = {
 						value: '0x00',
 						gasPrice: Web3.utils.toHex(Web3.utils.toWei(`${gasPrice}`, 'gwei')),
 						gas: Web3.utils.toHex('250000'),
-						data: contracts.USDT.methods
-							.approve(contracts.Schutz._address, 1000000e6)
-							.encodeABI(),
+						data: contracts.USDT.methods.approve(contracts.Schutz._address, 1000000e6).encodeABI(),
 					},
 				],
 			})

@@ -1,27 +1,15 @@
 <template>
 	<div>
 		<ValidationObserver v-slot="{ invalid }">
-			<custom-slider
-				:activeDot="1"
-				:dots="2"
-				:next-page="localePath('/')"
-				:prev-page="localePath('/')"
-			>
+			<custom-slider :activeDot="1" :dots="2" :next-page="localePath('/')" :prev-page="localePath('/')">
 				<template slot="content">
 					<div class="columns is-fullheight">
-						<div
-							class="column pt-0 pb-0 is-half is-flex flex-column is-justify-content-space-between"
-						>
+						<div class="column pt-0 pb-0 is-half is-flex flex-column is-justify-content-space-between">
 							<div class="is-size-5 mb-20">
 								{{ $t('Регистрация в системе') }}
 							</div>
 							<div class="mb-20">
-								<ValidationProvider
-									rules="required|email"
-									name="Email"
-									slim="slim"
-									v-slot="{ errors, valid }"
-								>
+								<ValidationProvider rules="required|email" name="Email" slim="slim" v-slot="{ errors, valid }">
 									<base-input
 										size="6"
 										type="email"
@@ -36,12 +24,7 @@
 									/>
 								</ValidationProvider>
 
-								<ValidationProvider
-									rules="required"
-									name="Telegram"
-									slim="slim"
-									v-slot="{ errors, valid }"
-								>
+								<ValidationProvider rules="required" name="Telegram" slim="slim" v-slot="{ errors, valid }">
 									<base-input
 										size="6"
 										label="Telegram:"
@@ -89,12 +72,7 @@
 									/>
 								</ValidationProvider>
 
-								<ValidationProvider
-									rules="required"
-									name="Last Name"
-									slim="slim"
-									v-slot="{ errors, valid }"
-								>
+								<ValidationProvider rules="required" name="Last Name" slim="slim" v-slot="{ errors, valid }">
 									<base-input
 										size="6"
 										:label="`${$t('lastName')}:`"
@@ -164,10 +142,7 @@
 								/>
 							</div>
 							<div class="left-link">
-								<b-checkbox
-									v-model="acceptedConditions"
-									@change.native="handleBlur"
-								>
+								<b-checkbox v-model="acceptedConditions" @change.native="handleBlur">
 									{{ $t('Я принимаю') }}
 									<a href="#" @click="$store.commit('toggleTermsModal', true)">
 										{{ $t('политику конфиденциальности') }}
@@ -175,16 +150,11 @@
 								</b-checkbox>
 							</div>
 						</div>
-						<div
-							class="column pt-0 pb-0 is-half is-flex is-flex-direction-column is-justify-content-space-between"
-						>
+						<div class="column pt-0 pb-0 is-half is-flex is-flex-direction-column is-justify-content-space-between">
 							<div class="auth-image">
 								<img :src="status_image" :class="animate_class" />
 							</div>
-							<custom-button
-								:disabled="invalid || !acceptedConditions"
-								@click.native="signup"
-							>
+							<custom-button :disabled="invalid || !acceptedConditions" @click.native="signup">
 								{{ $t('Зарегистрироваться') }}
 							</custom-button>
 						</div>
@@ -298,8 +268,7 @@ export default {
 			let resp = await this.$store.dispatch('signUp', this.data)
 			if (resp === null) {
 				this.$buefy.toast.open({
-					message:
-						'Successfully registered! Please check your email to verify your account',
+					message: 'Successfully registered! Please check your email to verify your account',
 					type: 'is-success',
 					duration: 5000,
 				})
@@ -358,9 +327,7 @@ export default {
 			},
 		},
 		ethAddress() {
-			return this.$store.getters['metamask/ethAddress']
-				? `«${this.$store.getters['metamask/ethAddress']}»`
-				: ''
+			return this.$store.getters['metamask/ethAddress'] ? `«${this.$store.getters['metamask/ethAddress']}»` : ''
 		},
 	},
 	mounted() {

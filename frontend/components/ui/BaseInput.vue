@@ -26,10 +26,7 @@
 			:min="min"
 			ref="input"
 		/>
-		<div
-			class="bottom-line"
-			:class="{ 'is-danger': isDanger, 'is-success': isSuccess }"
-		></div>
+		<div class="bottom-line" :class="{ 'is-danger': isDanger, 'is-success': isSuccess }"></div>
 		<div class="error is-size-7" v-if="error">
 			{{ error }}
 		</div>

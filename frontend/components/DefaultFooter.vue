@@ -30,28 +30,15 @@
 				<a href="https://www.instagram.com/schutz_capital" target="_blank"
 					><img alt="instagram" src="/social/instagram.png"
 				/></a>
-				<a href="https://medium.com/@schutzcapital" target="_blank"
-					><img alt="medium" src="/social/medium.png"
-				/></a>
-				<a href="https://t.me/Neutrino_NTS_RU" target="_blank"
-					><img alt="telegram" src="/social/telegram.png"
-				/></a>
-				<a href="https://twitter.com/schutzcapital" target="_blank"
-					><img alt="twitter" src="/social/twitter.png"
-				/></a>
-				<a href="https://www.facebook.com/schutz.capital" target="_blank"
-					><img alt="fb" src="/social/fb.png"
-				/></a>
+				<a href="https://medium.com/@schutzcapital" target="_blank"><img alt="medium" src="/social/medium.png" /></a>
+				<a href="https://t.me/Neutrino_NTS_RU" target="_blank"><img alt="telegram" src="/social/telegram.png" /></a>
+				<a href="https://twitter.com/schutzcapital" target="_blank"><img alt="twitter" src="/social/twitter.png" /></a>
+				<a href="https://www.facebook.com/schutz.capital" target="_blank"><img alt="fb" src="/social/fb.png" /></a>
 			</div>
 		</div>
 		<div class="footer__bottom">
 			<div class="footer__copyright">© 2017—2021, <span>SCHUTZ</span></div>
-			<a
-				v-if="false"
-				class="footer__ppt"
-				href="/files/presentation_nts.pdf"
-				target="_blank"
-			>
+			<a v-if="false" class="footer__ppt" href="/files/presentation_nts.pdf" target="_blank">
 				{{ $t('Скачать презентацию') }}
 			</a>
 			<lang-switcher />
@@ -80,9 +67,7 @@ export default {
 				: '/files/Limitation_of_liability.pdf'
 		},
 		privacyPolicyLink() {
-			return this.$i18n.locale === 'ru'
-				? '/files/Politika_konfidensialnosti.pdf'
-				: '/files/Privacy_Policy.pdf'
+			return this.$i18n.locale === 'ru' ? '/files/Politika_konfidensialnosti.pdf' : '/files/Privacy_Policy.pdf'
 		},
 	},
 

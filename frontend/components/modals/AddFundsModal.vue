@@ -3,9 +3,7 @@
 		<div class="add-funds-card">
 			<p class="is-size-5">{{ $t('Укажите сумму вклада в USDT') }}</p>
 			<p class="is-size-7 mb-60">
-				{{
-					$t('Если сумма указана верно, прочитайте и согласитесь с условиями')
-				}}
+				{{ $t('Если сумма указана верно, прочитайте и согласитесь с условиями') }}
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
@@ -39,37 +37,23 @@
 					/>
 					<span class="is-size-7">
 						<span @click="$parent.close()"> {{ $t('Я принимаю') }} </span>
-						<a
-							href="#"
-							class="terms-link"
-							@click="$store.commit('toggleTermsModal', true)"
-						>
+						<a href="#" class="terms-link" @click="$store.commit('toggleTermsModal', true)">
 							{{ $t('условия и положения') }}
 						</a>
 					</span>
 				</div>
 			</div>
 
-			<div
-				class="actions is-flex is-justify-content-space-between is-align-items-center"
-			>
-				<a
-					@click="$parent.close()"
-					class="cancel has-text-link is-size-7 is-cursor-pointer"
-				>
+			<div class="actions is-flex is-justify-content-space-between is-align-items-center">
+				<a @click="$parent.close()" class="cancel has-text-link is-size-7 is-cursor-pointer">
 					{{ $t('Отменить, я передумал') }}
 				</a>
-				<custom-button
-					:disabled="invalid || !isTermsAcceped"
-					@click.native="addFunds"
-				>
+				<custom-button :disabled="invalid || !isTermsAcceped" @click.native="addFunds">
 					{{ $t('Открыть вклад') }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
-				<terms-and-conditions-modal
-					@accepted="isTermsAcceped = $event"
-				></terms-and-conditions-modal>
+				<terms-and-conditions-modal @accepted="isTermsAcceped = $event"></terms-and-conditions-modal>
 			</b-modal>
 		</div>
 	</ValidationObserver>
@@ -112,10 +96,7 @@ export default {
 				if (!status) {
 					return
 				}
-				await this.$store.dispatch(
-					'userContractIntegration/deposit',
-					this.value
-				)
+				await this.$store.dispatch('userContractIntegration/deposit', this.value)
 				this.$parent.close()
 			} else if (!this.isTermsAcceped) {
 				this.$buefy.toast.open({

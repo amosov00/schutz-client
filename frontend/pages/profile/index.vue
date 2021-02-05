@@ -1,11 +1,6 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="1"
-			:dots="4"
-			:next-page="localePath('/investment')"
-			:prev-page="localePath('/partner')"
-		>
+		<custom-slider :activeDot="1" :dots="4" :next-page="localePath('/investment')" :prev-page="localePath('/partner')">
 			<template slot="content">
 				<div class="columns">
 					<div class="column mb-4 is-flex flex-column">
@@ -35,10 +30,7 @@
 						</div>
 						<div v-else class="data-item">
 							<div class="icon metamask"></div>
-							<div
-								class="value has-text-link"
-								@click="openModal('change-wallet')"
-							>
+							<div class="value has-text-link" @click="openModal('change-wallet')">
 								{{ user.ethereum_wallet }}
 							</div>
 						</div>
@@ -54,10 +46,7 @@
 								{{ closeDate }}
 							</div>
 						</div>
-						<a
-							class="has-text-link is-cursor-pointer exit-btn is-size-5"
-							@click="$authLogout"
-						>
+						<a class="has-text-link is-cursor-pointer exit-btn is-size-5" @click="$authLogout">
 							<i class="fas fa-power-off"></i>
 							{{ $t('Выйти') }}
 						</a>
@@ -79,18 +68,10 @@
 						>
 							{{ tokenBalance ? $t('Пополнить вклад') : $t('Открыть вклад') }}
 						</custom-button>
-						<custom-button
-							v-if="lastContract"
-							class="mb-2"
-							@click.native="isProlongateModalActive = true"
-						>
+						<custom-button v-if="lastContract" class="mb-2" @click.native="isProlongateModalActive = true">
 							{{ $t('Продлить') }}
 						</custom-button>
-						<custom-button
-							v-if="lastContract"
-							class="mb-2"
-							@click.native="isCancelModalActive = true"
-						>
+						<custom-button v-if="lastContract" class="mb-2" @click.native="isCancelModalActive = true">
 							{{ $t('Закрыть') }}
 						</custom-button>
 
@@ -102,10 +83,7 @@
 						>
 							{{ $t('Вывести') }} {{ formatCurrency(depositBalance) }}
 						</custom-button>
-						<div
-							v-if="!user.ethereum_wallet"
-							class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered"
-						>
+						<div v-if="!user.ethereum_wallet" class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered">
 							{{ $t('Для открытия вклада необходимо добавить кошелек!') }}
 						</div>
 					</div>
@@ -196,10 +174,7 @@ export default {
 		},
 		changeEthereumAddress() {
 			if (this.copiedWallet.ethereum_wallet) {
-				this.$store.dispatch(
-					'changeEthereumAddress',
-					this.copiedWallet.ethereum_wallet
-				)
+				this.$store.dispatch('changeEthereumAddress', this.copiedWallet.ethereum_wallet)
 			}
 		},
 		async closeAgreement(id) {
@@ -217,12 +192,7 @@ export default {
 	computed: {
 		...mapGetters(['user', 'contractAgreements']),
 		...mapGetters('metamask', ['isConnected', 'gasPrice', 'mode']),
-		...mapGetters('userContractIntegration', [
-			'allowance',
-			'tokenBalance',
-			'interestBalance',
-			'depositBalance',
-		]),
+		...mapGetters('userContractIntegration', ['allowance', 'tokenBalance', 'interestBalance', 'depositBalance']),
 		userFullName() {
 			return this.user ? `${this.user.first_name} ${this.user.last_name}` : null
 		},

@@ -11,16 +11,10 @@
 			</div>
 		</div>
 		<div class="terms__acception">
-			<div
-				class="terms__cancel"
-				@click="$store.commit('toggleTermsModal', false)"
-			>
+			<div class="terms__cancel" @click="$store.commit('toggleTermsModal', false)">
 				{{ $t('Отменить, не согласен') }}
 			</div>
-			<button
-				@click="accept()"
-				class="button terms__accept custom-button is-primary is-size-5 has-text-weight-bold"
-			>
+			<button @click="accept()" class="button terms__accept custom-button is-primary is-size-5 has-text-weight-bold">
 				{{ $t('Принять') }}
 			</button>
 		</div>

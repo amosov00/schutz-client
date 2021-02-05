@@ -31,8 +31,7 @@ export default {
 			},
 			{
 				rel: 'stylesheet',
-				href:
-					'https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700&display=swap',
+				href: 'https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700&display=swap',
 			},
 			{
 				href:
@@ -146,9 +145,7 @@ export default {
 				test: /\.xml$/,
 				loader: 'xml-loader',
 			})
-			const assetsLoader = config.module.rules.find((rule) =>
-				rule.test.test('.png')
-			)
+			const assetsLoader = config.module.rules.find((rule) => rule.test.test('.png'))
 			assetsLoader.test = /\.(png|jpe?g|gif|svg|webp|pdf|ico)$/i
 			return config
 		},

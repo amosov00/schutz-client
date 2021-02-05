@@ -1,11 +1,6 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="3"
-			:dots="4"
-			:next-page="localePath('/partner')"
-			:prev-page="localePath('/investment')"
-		>
+		<custom-slider :activeDot="3" :dots="4" :next-page="localePath('/partner')" :prev-page="localePath('/investment')">
 			<template slot="content">
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex is-flex-direction-column">
@@ -23,14 +18,8 @@
 						<div>
 							<div class="is-size-7 ethereum">{{ $t('Ethereum адрес') }}:</div>
 							<div class="mb-5 ethereum-address">
-								<span v-if="user.ethereum_wallet">{{
-									user.ethereum_wallet
-								}}</span>
-								<a
-									v-else
-									@click="isWalletModalActive = true"
-									class="value has-text-link has-text-weight-light"
-								>
+								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
+								<a v-else @click="isWalletModalActive = true" class="value has-text-link has-text-weight-light">
 									{{ $t('Добавить кошелек') }}
 								</a>
 							</div>
@@ -40,22 +29,13 @@
 								</div>
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
 							</div>
-							<div
-								v-if="mode === metamaskState.ONLINE"
-								class="is-size-7 has-text-grey"
-							>
+							<div v-if="mode === metamaskState.ONLINE" class="is-size-7 has-text-grey">
 								{{ $t('walletOnline') }}
 							</div>
-							<div
-								v-else-if="mode === metamaskState.WAITING"
-								class="is-size-7 has-text-grey"
-							>
+							<div v-else-if="mode === metamaskState.WAITING" class="is-size-7 has-text-grey">
 								{{ $t('walletWaiting') }}
 							</div>
-							<div
-								v-else-if="mode === metamaskState.OFFLINE"
-								class="is-size-7 status-offline"
-							>
+							<div v-else-if="mode === metamaskState.OFFLINE" class="is-size-7 status-offline">
 								{{ $t('walletOffline') }}
 							</div>
 						</div>
