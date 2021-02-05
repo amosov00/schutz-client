@@ -22,8 +22,18 @@ export default {
 	edit: 'Edit',
 	FAQPage: {
 		pageTitle: 'Frequently asked questions',
-		title: 'Title',
-		typeAnswer: 'Type answer here',
+		title: {
+			en: 'Вопрос на английском',
+			ru: 'Вопрос на русском',
+		},
+		typeAnswer: {
+			ru: 'Введите ответ на русском',
+			en: 'Введите ответ на английском',
+		},
+		answer: {
+			en: 'Ответ на английском',
+			ru: 'Ответ на русском',
+		},
 		order: 'Order',
 		confirmDelete: 'Are sure you want to delete this question?',
 	},

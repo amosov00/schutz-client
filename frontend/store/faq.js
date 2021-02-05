@@ -106,19 +106,14 @@ export const actions = {
 	},
 
 	async save({ dispatch }, payload) {
-		const id = payload._id
-		delete payload._id
-
-		return await this.$axios
-			.put(`/admin/faq/${id}/`, payload)
-			.then((res) => {
-				dispatch('fetchList')
-				Toast.open({ message: 'Successfully saved!', type: 'is-primary' })
-				return true
-			})
-			.catch((e) => {
-				Toast.open({ message: 'Error saving question!', type: 'is-danger' })
-				return false
-			})
+		try {
+			const { _id, ...restPayload } = payload
+			await this.$axios.put(`/admin/faq/${_id}/`, restPayload)
+			Toast.open({ message: 'Successfully saved!', type: 'is-primary' })
+			return true
+		} catch (e) {
+			Toast.open({ message: 'Error saving question!', type: 'is-danger' })
+			return false
+		}
 	},
 }
