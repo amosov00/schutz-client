@@ -22,8 +22,18 @@ export default {
 	edit: "Edit",
 	FAQPage: {
 		pageTitle: "Frequently asked questions",
-		title: "Title",
-		typeAnswer: "Type answer here",
+		title: {
+			en: "Title in english",
+			ru: "Title in russian",
+		},
+		typeAnswer: {
+			ru: "Type answer in russian",
+			en: "Type answer in english",
+		},
+		answer: {
+			en: 'Answer in english',
+			ru: 'Answer in russian',
+		},
 		order: "Order",
 		confirmDelete: "Are sure you want to delete this question?"
 	},
@@ -256,5 +266,6 @@ export default {
 	"Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)":"Request sent to Metamask (RE-INVESTMENT)",
 	"The reinvest field must be 50 or more":"Minimum reinvestment 50.00 USDT",
 	"The deposit field must be 500 or more":"Minimum deposit 500 USDT",
-	"The deposit field must be 100000 or less":"Maximum deposit 100,000 USDT"
+	"The deposit field must be 100000 or less":"Maximum deposit 100,000 USDT",
+	"Авторизовать кошлек":"Authorize wallet"
 };
