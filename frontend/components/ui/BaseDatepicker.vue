@@ -29,7 +29,7 @@ export default {
 		type: {
 			type: String,
 			default: () => '',
-		}
+		},
 	},
 
 	data() {
@@ -42,24 +42,21 @@ export default {
 	watch: {
 		selectValue: {
 			handler(value) {
-				this.$emit('input',
-					value
-						? this.$moment(value).format('X')
-						: null
-				)
-			}
+				this.$emit('input', value ? this.$moment(value).format('X') : null)
+			},
 		},
 	},
 
 	created() {
-		const locales = this.$i18n.locales;
-		const currentLocaleCode = this.$i18n.locale;
-		const { iso: currentLocaleIso } = locales.find(({ code }) => code === currentLocaleCode) || undefined;
+		const locales = this.$i18n.locales
+		const currentLocaleCode = this.$i18n.locale
+		const { iso: currentLocaleIso } =
+			locales.find(({ code }) => code === currentLocaleCode) || undefined
 
-		this.currentLocaleIso = currentLocaleIso;
+		this.currentLocaleIso = currentLocaleIso
 
-		this.selectValue = this.value;
-	}
+		this.selectValue = this.value
+	},
 }
 </script>
 

@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import formatCurrency from "~/mixins/formatCurrency";
+import formatCurrency from '~/mixins/formatCurrency'
 import formatDate from '~/mixins/formatDate'
 
 export default {
-	name: "PayInvoiceModal",
-	props: ["invoice"],
+	name: 'PayInvoiceModal',
+	props: ['invoice'],
 	mixins: [formatCurrency, formatDate],
 	data() {
 		return {
@@ -35,10 +35,10 @@ export default {
 			invoicePaymentData: [],
 			invoiceTotals: [],
 			tableColumns: [
-				{field: 'address', label: 'Address'},
-				{field: 'value', label: 'Value', width: 60},
-				{field: 'comment', label: 'Comment'},
-			]
+				{ field: 'address', label: 'Address' },
+				{ field: 'value', label: 'Value', width: 60 },
+				{ field: 'comment', label: 'Comment' },
+			],
 		}
 	},
 	computed: {
@@ -51,47 +51,53 @@ export default {
 	},
 	methods: {
 		async payInvoice(index, data) {
-			await this.$store.dispatch("adminContractIntegration/accrualInterest", data)
-				.then(async txHash => {
+			await this.$store
+				.dispatch('adminContractIntegration/accrualInterest', data)
+				.then(async (txHash) => {
 					if (txHash) {
-						await this.$store.dispatch("bills/addPaymentTx", {
+						await this.$store.dispatch('bills/addPaymentTx', {
 							invoice: this.invoice,
 							index: index,
 							txHash: txHash,
-							customerAddresses: data.customerAddresses
+							customerAddresses: data.customerAddresses,
 						})
 					}
-				}).catch(err => {
+				})
+				.catch((err) => {
 					console.error(err)
 				})
 		},
 		async removePayment(index, data) {
-			return await this.$store.dispatch("bills/removePaymentTx", {
+			return await this.$store.dispatch('bills/removePaymentTx', {
 				invoice: this.invoice,
 				index: index,
 				customerAddresses: data.customerAddresses,
 			})
 		},
 		paymentHashFromIndex(index) {
-			return this.invoice.payment_transaction_hash.filter(i => i[0] === index)[0]
+			return this.invoice.payment_transaction_hash.filter(
+				(i) => i[0] === index
+			)[0]
 		},
 		toTableData(data) {
 			let formattedData = []
 			for (let i = 0; i < data.values.length; i++) {
 				formattedData.push({
-					"address": data.customerAddresses[i],
-					"value": this.formatCurrency(data.values[i], "usdt"),
-					"comment": data.comment,
+					address: data.customerAddresses[i],
+					value: this.formatCurrency(data.values[i], 'usdt'),
+					comment: data.comment,
 				})
 			}
 			return formattedData
-
-		}
+		},
 	},
 
 	async created() {
 		this.loading = true
-		let response = await this.$store.dispatch("bills/fetchInvoicePaymentData", this.invoice._id);
+		let response = await this.$store.dispatch(
+			'bills/fetchInvoicePaymentData',
+			this.invoice._id
+		)
 		if (!response) {
 			this.loading = false
 			return
@@ -100,7 +106,7 @@ export default {
 		this.invoiceTotals = response.totals
 		this.loading = false
 		if (this.invoicePaymentData.length === 0) {
-			console.error("error")
+			console.error('error')
 		}
 	},
 }

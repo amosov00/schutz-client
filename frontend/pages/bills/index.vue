@@ -23,52 +23,54 @@
 </template>
 
 <script>
-import formatCurrency from "~/mixins/formatCurrency";
+import formatCurrency from '~/mixins/formatCurrency'
 import formatDate from '~/mixins/formatDate'
-import PayInvoiceModal from "~/components/modals/PayInvoiceModal";
+import PayInvoiceModal from '~/components/modals/PayInvoiceModal'
 
 export default {
-  name: "bills",
-  layout: "admin",
-  mixins: [formatCurrency, formatDate],
-  middleware: ["adminRequired"],
-  data() {
-    return {
-      loading: false
-    }
-  },
-  methods: {
-    async deleteInvoice(id) {
-      this.$buefy.dialog.confirm({
-        type: 'is-danger',
-        confirmText: this.$t('delete'),
-        cancelText: this.$t('cancel'),
-        message: `<div class="mb-2">${this.$t('deleteBill')}</div><strong>${id}</strong>`,
-        onConfirm: async () => {
-          await this.$store.dispatch('bills/deleteInvoice', id)
-        }
-      })
-    },
-    triggerPayInvoiceModal(invoice) {
-      this.$buefy.modal.open({
-        parent: this,
-        component: PayInvoiceModal,
-        trapFocus: true,
-        props: {
-          invoice: invoice,
-        }
-      });
-    },
-  },
-  computed: {
-    tableData() {
-      return this.$store.getters["bills/createdInvoices"];
-    }
-  },
-  async asyncData({store}) {
-    await store.dispatch("bills/fetchCreatedInvoices")
-  }
-};
+	name: 'bills',
+	layout: 'admin',
+	mixins: [formatCurrency, formatDate],
+	middleware: ['adminRequired'],
+	data() {
+		return {
+			loading: false,
+		}
+	},
+	methods: {
+		async deleteInvoice(id) {
+			this.$buefy.dialog.confirm({
+				type: 'is-danger',
+				confirmText: this.$t('delete'),
+				cancelText: this.$t('cancel'),
+				message: `<div class="mb-2">${this.$t(
+					'deleteBill'
+				)}</div><strong>${id}</strong>`,
+				onConfirm: async () => {
+					await this.$store.dispatch('bills/deleteInvoice', id)
+				},
+			})
+		},
+		triggerPayInvoiceModal(invoice) {
+			this.$buefy.modal.open({
+				parent: this,
+				component: PayInvoiceModal,
+				trapFocus: true,
+				props: {
+					invoice: invoice,
+				},
+			})
+		},
+	},
+	computed: {
+		tableData() {
+			return this.$store.getters['bills/createdInvoices']
+		},
+	},
+	async asyncData({ store }) {
+		await store.dispatch('bills/fetchCreatedInvoices')
+	},
+}
 </script>
 
 <style lang="sass" scoped>

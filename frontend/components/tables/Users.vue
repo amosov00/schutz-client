@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import UserProfile from "@/components/modals/UserProfile";
+import UserProfile from '@/components/modals/UserProfile'
 
 export default {
 	props: {
@@ -46,7 +46,7 @@ export default {
 		showMore: {
 			type: Boolean,
 			required: true,
-		}
+		},
 	},
 
 	methods: {
@@ -55,14 +55,11 @@ export default {
 				factory: () => UserProfile,
 				props: {
 					userId,
-				}
+				},
 			})
-		}
-
-	}
+		},
+	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -19,43 +19,43 @@
 </template>
 
 <script>
-import BillsTable from "~/components/tables/BillsTable";
+import BillsTable from '~/components/tables/BillsTable'
 export default {
-  name: "bills",
-  layout: "admin",
-  middleware: ["authRequired", "adminRequired"],
-  components: { BillsTable },
-  data() {
-    return {
-      timeInterval: {
-        fromDate: null,
-        toDate: null
-      },
-      loading: false
-    };
-  },
-  methods: {
-    async create() {
-      if (this.timeInterval.fromDate && this.timeInterval.toDate) {
-        this.loading = true;
-        const res = await this.$store.dispatch(
-          "bills/createInvoice",
-          this.timeInterval
-        );
-        if (res) {
-          this.loading = false;
-          this.$router.go(-1);
-        } else {
-          this.loading = false;
-          this.$buefy.toast.open({
-            message: "Something went wrong!",
-            type: "is-warning"
-          });
-        }
-      }
-    }
-  }
-};
+	name: 'bills',
+	layout: 'admin',
+	middleware: ['authRequired', 'adminRequired'],
+	components: { BillsTable },
+	data() {
+		return {
+			timeInterval: {
+				fromDate: null,
+				toDate: null,
+			},
+			loading: false,
+		}
+	},
+	methods: {
+		async create() {
+			if (this.timeInterval.fromDate && this.timeInterval.toDate) {
+				this.loading = true
+				const res = await this.$store.dispatch(
+					'bills/createInvoice',
+					this.timeInterval
+				)
+				if (res) {
+					this.loading = false
+					this.$router.go(-1)
+				} else {
+					this.loading = false
+					this.$buefy.toast.open({
+						message: 'Something went wrong!',
+						type: 'is-warning',
+					})
+				}
+			}
+		},
+	},
+}
 </script>
 
 <style></style>

@@ -1,5 +1,4 @@
-import detectEthereumProvider from "@metamask/detect-provider";
-
+import detectEthereumProvider from '@metamask/detect-provider'
 
 export class MetamaskWrapper {
 	constructor() {
@@ -12,18 +11,17 @@ export class MetamaskWrapper {
 	}
 
 	_onConnect(connectInfo) {
-		console.log("_onConnect", connectInfo)
+		console.log('_onConnect', connectInfo)
 	}
 
 	_onDisconnect(error) {
-		console.log("_onDisconnect", error)
+		console.log('_onDisconnect', error)
 	}
 
 	_onAccountsChanged(accounts) {
-		console.log("_onConnect", accounts)
-		MetamaskInstance.app.store.dispatch("metamask/initMetamask", {
+		MetamaskInstance.app.store.dispatch('metamask/initMetamask', {
 			force: true,
-			accounts: accounts
+			accounts: accounts,
 		})
 	}
 
@@ -32,15 +30,14 @@ export class MetamaskWrapper {
 	}
 
 	_onMessage(message) {
-		console.log("_onMessage", message)
-		MetamaskInstance.app.store.dispatch("userContractIntegration/fetchBalances")
+		MetamaskInstance.app.store.dispatch('userContractIntegration/fetchBalances')
 	}
 
 	async init() {
-		const {store} = this.app
+		const { store } = this.app
 		if (window.ethereum) {
 			this.provider = await detectEthereumProvider()
-			await store.dispatch("metamask/initMetamask", {
+			await store.dispatch('metamask/initMetamask', {
 				force: false,
 				accounts: null,
 			})
@@ -50,14 +47,13 @@ export class MetamaskWrapper {
 
 	initEventHandlers() {
 		if (this.isConnected()) {
-			this.provider.on("connect", this._onConnect)
-			this.provider.on("disconnect", this._onDisconnect)
-			this.provider.on("accountsChanged", this._onAccountsChanged)
-			this.provider.on("chainChanged", this._onChainChanged)
-			this.provider.on("message", this._onMessage)
+			window.ethereum.on('connect', this._onConnect)
+			window.ethereum.on('disconnect', this._onDisconnect)
+			window.ethereum.on('accountsChanged', this._onAccountsChanged)
+			window.ethereum.on('chainChanged', this._onChainChanged)
+			window.ethereum.on('message', this._onMessage)
 		}
 	}
 }
-
 
 export const MetamaskInstance = new MetamaskWrapper()

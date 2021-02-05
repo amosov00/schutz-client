@@ -1,4 +1,4 @@
-@import "./transitions/auth-animations.scss";
+@import './transitions/auth-animations.scss';
 
 // Customize
 $text: #ffffff;
@@ -13,7 +13,7 @@ $danger: #d60d0d;
 $grey: #666666;
 $light: #fff;
 
-$body-family: "Nunito", "Verdana", "Arial", sans-serif;
+$body-family: 'Nunito', 'Verdana', 'Arial', sans-serif;
 $fullhd: 860px + (2 * 32px);
 $widescreen: 860px + (2 * 32px);
 $desktop: 860px + (2 * 32px);
@@ -105,9 +105,9 @@ h1.is-1 {
 }
 
 // Then import other variables
-@import "~bulma/bulma.sass";
-@import "~buefy/src/scss/buefy";
-@import "./helpers.scss";
+@import '~bulma/bulma.sass';
+@import '~buefy/src/scss/buefy';
+@import './helpers.scss';
 
 .input,
 .taginput .taginput-container.is-focusable,
@@ -305,15 +305,15 @@ body {
 	min-width: 100%;
 	&.custom-input {
 		.input {
-			color: #FFFFFF;
+			color: #ffffff;
 
 			&::placeholder {
-				color: #FFFFFF;
+				color: #ffffff;
 			}
 		}
 
 		.bottom-line {
-			background-color: #FFFFFF;
+			background-color: #ffffff;
 		}
 	}
 

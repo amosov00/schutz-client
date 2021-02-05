@@ -1,7 +1,7 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5">{{ $t("Укажите сумму реинвестирования") }}</p>
+			<p class="is-size-5">{{ $t('Укажите сумму реинвестирования') }}</p>
 			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
 				Вы можете
 				<a class="is-link" @click="value = interestBalance">
@@ -41,38 +41,38 @@
 						v-model="isTermsAcceped"
 						required
 						@keydown.native="
-							e => {
-								e.stopPropagation();
+							(e) => {
+								e.stopPropagation()
 							}
 						"
 					/>
 					<span class="is-size-7">
-						{{ $t("Я принимаю") }}
+						{{ $t('Я принимаю') }}
 						<a
 							href="#"
-							class="terms-link "
+							class="terms-link"
 							@click="$store.commit('toggleTermsModal', true)"
 						>
-							{{ $t("условия и положения") }}
+							{{ $t('условия и положения') }}
 						</a>
 					</span>
 				</div>
 			</div>
 
 			<div
-				class="actions is-flex is-justify-content-space-between is-align-items-center "
+				class="actions is-flex is-justify-content-space-between is-align-items-center"
 			>
 				<a
 					@click="$parent.close()"
 					class="cancel has-text-link is-size-7 is-cursor-pointer"
 				>
-					{{ $t("Отменить, я передумал") }}
+					{{ $t('Отменить, я передумал') }}
 				</a>
 				<custom-button
 					:disabled="invalid || !isTermsAcceped"
 					@click.native="reinvest"
 				>
-					{{ $t("Реинвестировать") }}
+					{{ $t('Реинвестировать') }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
@@ -85,77 +85,77 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
-import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
-import metamaskSignature from "~/mixins/metamaskSignature";
-import { mapGetters } from "vuex";
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import TermsAndConditionsModal from '~/components/content/TermsAndConditionsModal'
+import metamaskSignature from '~/mixins/metamaskSignature'
+import { mapGetters } from 'vuex'
 
 export default {
-	name: "reinvest-modal",
+	name: 'reinvest-modal',
 	props: [metamaskSignature],
 	data() {
 		return {
-			value: ""
-		};
+			value: '',
+		}
 	},
 	components: {
 		ValidationObserver,
 		ValidationProvider,
-		TermsAndConditionsModal
+		TermsAndConditionsModal,
 	},
 	methods: {
 		async reinvest() {
-			const isValid = await this.$refs.observer.validate();
+			const isValid = await this.$refs.observer.validate()
 			if (isValid && this.isTermsAcceped) {
-				let status = await this.makeMetamaskSignature();
+				let status = await this.makeMetamaskSignature()
 				if (!status) {
-					return;
+					return
 				}
 
 				this.$buefy.toast.open({
-					message: this.$t("Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)"),
-					type: "is-success"
-				});
+					message: this.$t('Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)'),
+					type: 'is-success',
+				})
 				await this.$store.dispatch(
-					"userContractIntegration/reinvest",
+					'userContractIntegration/reinvest',
 					this.value
-				);
-				this.$parent.close();
+				)
+				this.$parent.close()
 			}
 		},
 		logKey(e) {
-			if (e.code === "Enter") {
-				this.reinvest();
+			if (e.code === 'Enter') {
+				this.reinvest()
 			}
-		}
+		},
 	},
 	computed: {
-		...mapGetters("userContractIntegration", ["interestBalance"]),
+		...mapGetters('userContractIntegration', ['interestBalance']),
 		isTermsAcceped: {
 			get() {
-				return this.$store.getters.isTermsAcceped;
+				return this.$store.getters.isTermsAcceped
 			},
 			set(newValue) {
-				this.$store.commit("setIsTermsAcceped", newValue);
-			}
+				this.$store.commit('setIsTermsAcceped', newValue)
+			},
 		},
 		terms: {
 			get() {
-				return this.$store.state.terms_modal;
+				return this.$store.state.terms_modal
 			},
 			set(newValue) {
-				this.$store.commit("toggleTermsModal", newValue);
-			}
-		}
+				this.$store.commit('toggleTermsModal', newValue)
+			},
+		},
 	},
 	mounted() {
-		document.addEventListener("keydown", this.logKey);
+		document.addEventListener('keydown', this.logKey)
 	},
 	beforeDestroy() {
-		this.$store.commit("setIsTermsAcceped", false);
-		document.removeEventListener("keydown", this.logKey);
-	}
-};
+		this.$store.commit('setIsTermsAcceped', false)
+		document.removeEventListener('keydown', this.logKey)
+	},
+}
 </script>
 
 <style lang="scss">
@@ -178,7 +178,7 @@ export default {
 			padding-left: 34px;
 
 			&::before {
-				content: "";
+				content: '';
 				display: block;
 				width: 24px;
 				height: 24px;
@@ -210,7 +210,7 @@ export default {
 	}
 
 	&::before {
-		content: "";
+		content: '';
 		display: block;
 		width: 14px;
 		height: 13px;

@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import etherscan from "~/mixins/etherscan";
-import tableMixin from "~/components/tables/ReportTables/tableMixin";
-import {mapActions, mapGetters} from "vuex";
-import UpdateCloseDateModal from "~/components/modals/UpdateCloseDateModal";
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import etherscan from '~/mixins/etherscan'
+import tableMixin from '~/components/tables/ReportTables/tableMixin'
+import { mapActions, mapGetters } from 'vuex'
+import UpdateCloseDateModal from '~/components/modals/UpdateCloseDateModal'
 
 export default {
 	mixins: [formatDate, formatCurrency, etherscan, tableMixin],
@@ -47,11 +47,11 @@ export default {
 		}),
 
 		total() {
-			return this.activeDepositDetails.total;
+			return this.activeDepositDetails.total
 		},
 
 		totalActive() {
-			return this.activeDepositDetails.total_active;
+			return this.activeDepositDetails.total_active
 		},
 	},
 
@@ -62,7 +62,9 @@ export default {
 		}),
 
 		showContract(data) {
-			return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
+			return data.prolongedContract
+				? `${data.contract} (${data.prolongedContract})`
+				: data.contract
 		},
 
 		showCloseDateModal(data) {
@@ -72,16 +74,18 @@ export default {
 				trapFocus: true,
 				props: {
 					activeDeposit: this.activeDepositDetails,
-					contract: data
-				}
-			});
+					contract: data,
+				},
+			})
 
-			modal.$on('close', async () => (await this.fetchActiveDepositByID(this.activeDepositDetails._id)))
-		}
-	}
+			modal.$on(
+				'close',
+				async () =>
+					await this.fetchActiveDepositByID(this.activeDepositDetails._id)
+			)
+		},
+	},
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

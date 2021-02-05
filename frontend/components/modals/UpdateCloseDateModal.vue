@@ -12,38 +12,41 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import moment from "moment";
-import _ from "lodash";
-import {mapActions} from "vuex";
+import formatDate from '~/mixins/formatDate'
+import moment from 'moment'
+import _ from 'lodash'
+import { mapActions } from 'vuex'
 
 export default {
-  props: ["contract", "activeDeposit"],
-  mixins: [formatDate],
-  data() {
-    return {
-      formatedDate: new Date(this.contract.close_date * 1000)
-    };
-  },
-  methods: {
-  	...mapActions({
+	props: ['contract', 'activeDeposit'],
+	mixins: [formatDate],
+	data() {
+		return {
+			formatedDate: new Date(this.contract.close_date * 1000),
+		}
+	},
+	methods: {
+		...mapActions({
 			updateCloseDate: 'reports/updateCloseDate',
 		}),
 
-    async update() {
-      let activeDepositCopy = Object.assign({}, this.activeDeposit)
-      let contractCopy = Object.assign({}, this.contract)
-      let closeDate = this.formatedDate
-      closeDate.setHours(12)
-      contractCopy.close_date = closeDate.getTime() / 1000;
-      activeDepositCopy.contracts = _.uniqBy([contractCopy, ...activeDepositCopy.contracts], "contract")
+		async update() {
+			let activeDepositCopy = Object.assign({}, this.activeDeposit)
+			let contractCopy = Object.assign({}, this.contract)
+			let closeDate = this.formatedDate
+			closeDate.setHours(12)
+			contractCopy.close_date = closeDate.getTime() / 1000
+			activeDepositCopy.contracts = _.uniqBy(
+				[contractCopy, ...activeDepositCopy.contracts],
+				'contract'
+			)
 
-			await this.updateCloseDate(activeDepositCopy);
+			await this.updateCloseDate(activeDepositCopy)
 
-      this.$parent.close();
-    }
-  }
-};
+			this.$parent.close()
+		},
+	},
+}
 </script>
 
 <style></style>

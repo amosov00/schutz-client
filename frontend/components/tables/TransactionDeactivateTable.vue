@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency"
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
 
 export default {
-	name: "TransactionDeactivateTable",
+	name: 'TransactionDeactivateTable',
 	mixins: [formatDate, formatCurrency],
 	props: {
 		data: {
@@ -34,12 +34,12 @@ export default {
 	},
 	methods: {
 		showContract(data) {
-			return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
+			return data.prolongedContract
+				? `${data.contract} (${data.prolongedContract})`
+				: data.contract
 		},
-	}
+	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

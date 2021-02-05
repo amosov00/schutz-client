@@ -1,10 +1,10 @@
 <template>
 	<div class="add-wallet-card">
-		<p class="is-size-5">{{ $t("Укажите адрес кошелька") }}</p>
+		<p class="is-size-5">{{ $t('Укажите адрес кошелька') }}</p>
 		<p class="is-size-7 mb-60">
 			{{
 				$t(
-					"Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды."
+					'Он будет привязан к вашей учетной записи навсегда. На него будут начисляться дивиденды.'
 				)
 			}}
 		</p>
@@ -16,13 +16,13 @@
 				v-model="wallet"
 			/>
 			<div class="mm-copy ml-2 mb-2" @click="pasteFromMM">
-				<a class="has-text-link"> {{ $t("копировать из MM") }} </a>
+				<a class="has-text-link"> {{ $t('копировать из MM') }} </a>
 			</div>
 		</div>
 
 		<div class="support">
 			<p class="is-size-7 mb-2">
-				{{ $t("Также, вы всегда можете обратиться за поддержкой:") }}
+				{{ $t('Также, вы всегда можете обратиться за поддержкой:') }}
 			</p>
 			<div class="links">
 				<a
@@ -30,55 +30,55 @@
 					target="_blank"
 					class="is-size-7 has-text-link has-text-weight-light telegram"
 				>
-					{{ $t("Чат telegram") }}
+					{{ $t('Чат telegram') }}
 				</a>
 			</div>
 		</div>
 		<div
-			class="actions is-flex is-justify-content-space-between is-align-items-center "
+			class="actions is-flex is-justify-content-space-between is-align-items-center"
 		>
 			<a
 				@click="$parent.close()"
 				class="cancel has-text-link is-size-7 is-cursor-pointer"
 			>
-				{{ $t("Отменить, я передумал") }}
+				{{ $t('Отменить, я передумал') }}
 			</a>
 			<custom-button @click.native="addWallet">
-				{{ $t("Сохранить") }}
+				{{ $t('Сохранить') }}
 			</custom-button>
 		</div>
 	</div>
 </template>
 <script>
 export default {
-	name: "add-new-wallet-modal",
+	name: 'add-new-wallet-modal',
 	data() {
 		return {
-			telegramSupport: "",
-			wallet: "0x"
-		};
+			telegramSupport: '',
+			wallet: '0x',
+		}
 	},
 	mounted() {
-		this.telegramSupport = this.$config.TELEGRAM_SUPPORT_URL;
+		this.telegramSupport = this.$config.TELEGRAM_SUPPORT_URL
 	},
 	methods: {
 		async addWallet() {
 			if (this.wallet) {
-				const res = await this.$store.dispatch("addWallet", this.wallet);
+				const res = await this.$store.dispatch('addWallet', this.wallet)
 				if (res) {
-					this.$authFetchUser();
-					this.$parent.close();
+					this.$authFetchUser()
+					this.$parent.close()
 				}
 			}
 		},
 		pasteFromMM() {
-			const wallet = window?.ethereum?.selectedAddress;
+			const wallet = window?.ethereum?.selectedAddress
 			if (wallet) {
-				this.wallet = wallet;
+				this.wallet = wallet
 			}
-		}
-	}
-};
+		},
+	},
+}
 </script>
 
 <style lang="scss">
@@ -95,7 +95,7 @@ export default {
 			padding-left: 34px;
 
 			&::before {
-				content: "";
+				content: '';
 				display: block;
 				width: 24px;
 				height: 24px;
@@ -125,7 +125,7 @@ export default {
 	}
 
 	&::before {
-		content: "";
+		content: '';
 		display: block;
 		width: 14px;
 		height: 13px;

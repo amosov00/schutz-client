@@ -21,16 +21,16 @@ import NavbarPersonalArea from '~/components/NavBar/NavbarPersonalArea'
 
 export default {
 	components: {
-		LeftMenu, NavbarPersonalArea
+		LeftMenu,
+		NavbarPersonalArea,
 	},
 	middleware: ['fetchUser', 'web3'],
 }
 </script>
 <style lang="scss" scoped>
-
 .wrapper {
 	margin: 0 auto;
-	background: #F9F9FB;
+	background: #f9f9fb;
 }
 
 .container {
@@ -58,7 +58,6 @@ export default {
 	flex: 1 1 0;
 	background: #ffffff;
 }
-
 </style>
 <style lang="scss">
 .admin-page {
@@ -80,7 +79,7 @@ export default {
 		width: 100%;
 
 		&:focus {
-			border-color: #0495FB;
+			border-color: #0495fb;
 			box-shadow: 0 0 0 0.125em rgba(4, 149, 251, 0.25);
 		}
 	}

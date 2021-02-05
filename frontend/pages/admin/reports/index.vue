@@ -50,11 +50,11 @@
 </template>
 
 <script>
-import { CustomSlider, CustomInput, CustomButton } from "~/components"
-import { ReportsTable } from "~/components/tables";
-import { mapActions } from "vuex";
+import { CustomSlider, CustomInput, CustomButton } from '~/components'
+import { ReportsTable } from '~/components/tables'
+import { mapActions } from 'vuex'
 
-import {NTS_CONTRACTS} from "~/consts";
+import { NTS_CONTRACTS } from '~/consts'
 
 export default {
 	components: {
@@ -64,8 +64,8 @@ export default {
 		CustomButton,
 	},
 
-	layout: "profile",
-	middleware: ["managerOrAdminRequired"],
+	layout: 'profile',
+	middleware: ['managerOrAdminRequired'],
 
 	data() {
 		return {
@@ -84,64 +84,64 @@ export default {
 
 			contractOptions: [
 				{
-					text: "Schutz",
-					value: NTS_CONTRACTS.SCHUTZ
+					text: 'Schutz',
+					value: NTS_CONTRACTS.SCHUTZ,
 				},
 				{
-					text: "Schutz v1",
-					value: NTS_CONTRACTS.SCHUTZV1
+					text: 'Schutz v1',
+					value: NTS_CONTRACTS.SCHUTZV1,
 				},
 				{
-					text: "NTSCD",
-					value: NTS_CONTRACTS.NTSCD
+					text: 'NTSCD',
+					value: NTS_CONTRACTS.NTSCD,
 				},
 				{
-					text: "NTS80",
-					value: NTS_CONTRACTS.NTS80
+					text: 'NTS80',
+					value: NTS_CONTRACTS.NTS80,
 				},
 				{
-					text: "NTS165",
-					value: NTS_CONTRACTS.NTS165
+					text: 'NTS165',
+					value: NTS_CONTRACTS.NTS165,
 				},
 				{
-					text: "NTS81",
-					value: NTS_CONTRACTS.NTS81
+					text: 'NTS81',
+					value: NTS_CONTRACTS.NTS81,
 				},
 				{
-					text: "All",
-					value: "all"
-				}
+					text: 'All',
+					value: 'all',
+				},
 			],
 
 			transactionOptions: [
 				{
-					text: "Investments",
-					value: "investments"
+					text: 'Investments',
+					value: 'investments',
 				},
 				{
-					text: "Dividend Withdraw",
-					value: "dividend_withdraw"
+					text: 'Dividend Withdraw',
+					value: 'dividend_withdraw',
 				},
 				{
-					text: "Dividend Accrual",
-					value: "dividend_accural"
+					text: 'Dividend Accrual',
+					value: 'dividend_accural',
 				},
 				{
-					text: "Deposit Withdraw",
-					value: "deposit_withdraw"
+					text: 'Deposit Withdraw',
+					value: 'deposit_withdraw',
 				},
 				{
-					text: "Deposit Accrual",
-					value: "deposit_accural"
+					text: 'Deposit Accrual',
+					value: 'deposit_accural',
 				},
 				{
-					text: "Active Deposits",
-					value: "deposits"
+					text: 'Active Deposits',
+					value: 'deposits',
 				},
 				{
-					text: "All",
-					value: "all"
-				}
+					text: 'All',
+					value: 'all',
+				},
 			],
 
 			loading: false,
@@ -154,35 +154,31 @@ export default {
 		}),
 
 		async search() {
-			this.loading = true;
+			this.loading = true
 
-			await this.fetchTransactionsByQuery(this.queryParams);
-			this.contractType = this.queryParams.contract;
+			await this.fetchTransactionsByQuery(this.queryParams)
+			this.contractType = this.queryParams.contract
 
-			this.tableType = this.queryParams.transaction;
+			this.tableType = this.queryParams.transaction
 
-			this.loading = false;
+			this.loading = false
 		},
 	},
 
-	async asyncData({store}) {
-		return await store.dispatch("reports/fetchTransactionsByQuery", {
-			query: "",
-			contract: "",
-			transaction: "all",
+	async asyncData({ store }) {
+		return await store.dispatch('reports/fetchTransactionsByQuery', {
+			query: '',
+			contract: '',
+			transaction: 'all',
 			fromDate: null,
-			toDate: null
-		});
-	}
-
+			toDate: null,
+		})
+	},
 }
 </script>
 
 <style lang="scss" scoped>
 .reports__container {
-
-
-
 	.reports__body {
 		display: grid;
 		grid-template-columns: 1fr 50px 1fr;
@@ -195,7 +191,6 @@ export default {
 				background-repeat: no-repeat;
 				background-position: center center;
 				background-size: 250px 330px;
-
 			}
 		}
 	}

@@ -189,279 +189,282 @@
 </template>
 
 <script>
-import UpdateCloseDateModal from "~/components/modals/UpdateCloseDateModal";
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import XLSX from "xlsx";
-import moment from "moment";
+import UpdateCloseDateModal from '~/components/modals/UpdateCloseDateModal'
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import XLSX from 'xlsx'
+import moment from 'moment'
 
 export default {
-  components: {UpdateCloseDateModal},
-  props: [
-    "colsType",
-    "loading",
-    "contractName",
-    "queryParams",
-    "activeDepositTransactions"
-  ],
-  mixins: [formatDate, formatCurrency],
-  methods: {
-    showContract(data) {
-      return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
-    },
-    showCloseDateModal(data) {
-      const modal = this.$buefy.modal.open({
-          parent: this,
-          component: UpdateCloseDateModal,
-          trapFocus: true,
-          props: {
-            activeDeposit: this.activeDepositsByID,
-            contract: data
-          }
-        });
+	components: { UpdateCloseDateModal },
+	props: [
+		'colsType',
+		'loading',
+		'contractName',
+		'queryParams',
+		'activeDepositTransactions',
+	],
+	mixins: [formatDate, formatCurrency],
+	methods: {
+		showContract(data) {
+			return data.prolongedContract
+				? `${data.contract} (${data.prolongedContract})`
+				: data.contract
+		},
+		showCloseDateModal(data) {
+			const modal = this.$buefy.modal.open({
+				parent: this,
+				component: UpdateCloseDateModal,
+				trapFocus: true,
+				props: {
+					activeDeposit: this.activeDepositsByID,
+					contract: data,
+				},
+			})
 
-      modal.$on('close', async () => (await this.reloadActiveDeposits()))
-    },
-    async reloadActiveDeposits() {
-      await this.$store.dispatch("reports/fetchActiveDepositByID", this.activeDepositsByID._id)
-    },
-    saveAsExcel() {
-      const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileData);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, dataTableWS, "data"); // sheetAName is name of Worksheet
-      XLSX.utils.sheet_add_aoa(dataTableWS, this.exportedTotalsData, {
-        origin: -1
-      });
-      // export Excel file
-      XLSX.writeFile(wb, `${this.colsType}_${this.exportedFileDate}.xlsx`);
-    }
-  },
-  computed: {
-    activeDepositsByID() {
-      return this.$store.getters["reports/activeDepositsByID"]
-    },
-    tableData() {
-      return this.$store.getters["reports/transactions"] !== null
-        ? this.$store.getters["reports/transactions"]
-        : [];
-    },
-    activeDeposits() {
-      return this.$store.getters["reports/activeDeposits"] !== null
-        ? this.$store.getters["reports/activeDeposits"]
-        : [];
-    },
-    totals() {
-      return this.$store.getters["reports/totals"]
-        ? this.$store.getters["reports/totals"]
-        : "";
-    },
-    exportedFileDate() {
-      if (!this.queryParams.fromDate && !this.queryParams.toDate) {
-        return "all";
-      } else if (this.queryParams.fromDate && this.queryParams.toDate) {
-        return `${moment
-          .utc(this.queryParams.fromDate)
-          .utcOffset(240)
-          .format("DD-MM-YYYY")}_${moment
-          .utc(this.queryParams.toDate)
-          .utcOffset(240)
-          .format("DD-MM-YYYY")}`;
-      } else if (this.queryParams.fromDate && !this.queryParams.toDate) {
-        return `${moment
-          .utc(this.queryParams.fromDate)
-          .utcOffset(240)
-          .format("DD-MM-YYYY")}_${moment()
-          .utc()
-          .format("DD-MM-YYYY")}`;
-      }
-    },
-    exportedFileData() {
-			return this.tableData.map(el => {
-				if (this.colsType === "investments") {
+			modal.$on('close', async () => await this.reloadActiveDeposits())
+		},
+		async reloadActiveDeposits() {
+			await this.$store.dispatch(
+				'reports/fetchActiveDepositByID',
+				this.activeDepositsByID._id
+			)
+		},
+		saveAsExcel() {
+			const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileData)
+			const wb = XLSX.utils.book_new()
+			XLSX.utils.book_append_sheet(wb, dataTableWS, 'data') // sheetAName is name of Worksheet
+			XLSX.utils.sheet_add_aoa(dataTableWS, this.exportedTotalsData, {
+				origin: -1,
+			})
+			// export Excel file
+			XLSX.writeFile(wb, `${this.colsType}_${this.exportedFileDate}.xlsx`)
+		},
+	},
+	computed: {
+		activeDepositsByID() {
+			return this.$store.getters['reports/activeDepositsByID']
+		},
+		tableData() {
+			return this.$store.getters['reports/transactions'] !== null
+				? this.$store.getters['reports/transactions']
+				: []
+		},
+		activeDeposits() {
+			return this.$store.getters['reports/activeDeposits'] !== null
+				? this.$store.getters['reports/activeDeposits']
+				: []
+		},
+		totals() {
+			return this.$store.getters['reports/totals']
+				? this.$store.getters['reports/totals']
+				: ''
+		},
+		exportedFileDate() {
+			if (!this.queryParams.fromDate && !this.queryParams.toDate) {
+				return 'all'
+			} else if (this.queryParams.fromDate && this.queryParams.toDate) {
+				return `${moment
+					.utc(this.queryParams.fromDate)
+					.utcOffset(240)
+					.format('DD-MM-YYYY')}_${moment
+					.utc(this.queryParams.toDate)
+					.utcOffset(240)
+					.format('DD-MM-YYYY')}`
+			} else if (this.queryParams.fromDate && !this.queryParams.toDate) {
+				return `${moment
+					.utc(this.queryParams.fromDate)
+					.utcOffset(240)
+					.format('DD-MM-YYYY')}_${moment().utc().format('DD-MM-YYYY')}`
+			}
+		},
+		exportedFileData() {
+			return this.tableData.map((el) => {
+				if (this.colsType === 'investments') {
 					return {
 						Date: this.timestampToDate(el.args.timestamp),
 						Event: el.event,
 						Address: el.args.customerAddress,
 						TxHash: el.transactionHash,
 						Contract: el.contract,
-						"Amount ETH":
-							this.formatCurrency(el.args.ETH, "eth") ||
-							this.formatCurrency(el.args.incomingValue, "eth") ||
-							this.formatCurrency(el.args.incomingEthereum, "eth"),
-						Rate: this.formatCurrency(el.args.RATE, "rate"),
-						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt"),
-						Reinvested: el.isReinvested ? "reinvested" : ""
-					};
-				} else if (this.colsType === "dividend_withdraw") {
+						'Amount ETH':
+							this.formatCurrency(el.args.ETH, 'eth') ||
+							this.formatCurrency(el.args.incomingValue, 'eth') ||
+							this.formatCurrency(el.args.incomingEthereum, 'eth'),
+						Rate: this.formatCurrency(el.args.RATE, 'rate'),
+						'Amount USDT': this.formatCurrency(el.args.USDT, 'usdt'),
+						Reinvested: el.isReinvested ? 'reinvested' : '',
+					}
+				} else if (this.colsType === 'dividend_withdraw') {
 					return {
 						Date: this.timestampToDate(el.args.timestamp),
 						Address: el.args.customerAddress,
 						TxHash: el.transactionHash,
 						Contract: el.contract,
-						"Amount ETH":
-							this.formatCurrency(el.args.ETH, "eth") ||
-							this.formatCurrency(el.args.incomingValue, "eth") ||
-							this.formatCurrency(el.args.incomingEthereum, "eth"),
-						Rate: this.formatCurrency(el.args.RATE, "rate"),
-						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-					};
-				} else if (this.colsType === "deposit_accural") {
+						'Amount ETH':
+							this.formatCurrency(el.args.ETH, 'eth') ||
+							this.formatCurrency(el.args.incomingValue, 'eth') ||
+							this.formatCurrency(el.args.incomingEthereum, 'eth'),
+						Rate: this.formatCurrency(el.args.RATE, 'rate'),
+						'Amount USDT': this.formatCurrency(el.args.USDT, 'usdt'),
+					}
+				} else if (this.colsType === 'deposit_accural') {
 					return {
 						Date: this.timestampToDate(el.args.timestamp),
 						Address: el.args.customerAddress,
 						TxHash: el.transactionHash,
 						Contract: el.contract,
-						"Amount ETH":
-							this.formatCurrency(el.args.ETH, "eth") ||
-							this.formatCurrency(el.args.incomingValue, "eth") ||
-							this.formatCurrency(el.args.incomingEthereum, "eth"),
-						Rate: this.formatCurrency(el.args.RATE, "rate"),
-						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-					};
-				} else if (this.colsType === "dividend_accural") {
+						'Amount ETH':
+							this.formatCurrency(el.args.ETH, 'eth') ||
+							this.formatCurrency(el.args.incomingValue, 'eth') ||
+							this.formatCurrency(el.args.incomingEthereum, 'eth'),
+						Rate: this.formatCurrency(el.args.RATE, 'rate'),
+						'Amount USDT': this.formatCurrency(el.args.USDT, 'usdt'),
+					}
+				} else if (this.colsType === 'dividend_accural') {
 					return {
 						Date: this.timestampToDate(el.args.timestamp),
 						Address: el.args.customerAddress,
 						TxHash: el.transactionHash,
 						Contract: el.contract,
-						"Amount ETH":
-							this.formatCurrency(el.args.ETH, "eth") ||
-							this.formatCurrency(el.args.incomingValue, "eth") ||
-							this.formatCurrency(el.args.incomingEthereum, "eth"),
-						Rate: this.formatCurrency(el.args.RATE, "rate"),
-						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-					};
-				} else if (this.colsType === "deposit_withdraw") {
+						'Amount ETH':
+							this.formatCurrency(el.args.ETH, 'eth') ||
+							this.formatCurrency(el.args.incomingValue, 'eth') ||
+							this.formatCurrency(el.args.incomingEthereum, 'eth'),
+						Rate: this.formatCurrency(el.args.RATE, 'rate'),
+						'Amount USDT': this.formatCurrency(el.args.USDT, 'usdt'),
+					}
+				} else if (this.colsType === 'deposit_withdraw') {
 					return {
 						Date: this.timestampToDate(el.args.timestamp),
 						Address: el.args.customerAddress,
 						TxHash: el.transactionHash,
 						Contract: el.contract,
-						"Amount ETH":
-							this.formatCurrency(el.args.ETH, "eth") ||
-							this.formatCurrency(el.args.incomingValue, "eth") ||
-							this.formatCurrency(el.args.incomingEthereum, "eth"),
-						Rate: this.formatCurrency(el.args.RATE, "rate"),
-						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt")
-					};
-				} else if (this.colsType === "all") {
+						'Amount ETH':
+							this.formatCurrency(el.args.ETH, 'eth') ||
+							this.formatCurrency(el.args.incomingValue, 'eth') ||
+							this.formatCurrency(el.args.incomingEthereum, 'eth'),
+						Rate: this.formatCurrency(el.args.RATE, 'rate'),
+						'Amount USDT': this.formatCurrency(el.args.USDT, 'usdt'),
+					}
+				} else if (this.colsType === 'all') {
 					return {
 						Date: this.timestampToDate(el.args.timestamp),
 						Event: el.event,
 						Address: el.args.customerAddress,
 						TxHash: el.transactionHash,
 						Contract: el.contract,
-						"Amount USDT": this.formatCurrency(el.args.USDT, "usdt"),
-						Reinvested: el.isReinvested ? "reinvested" : ""
-					};
+						'Amount USDT': this.formatCurrency(el.args.USDT, 'usdt'),
+						Reinvested: el.isReinvested ? 'reinvested' : '',
+					}
 				}
-			});
-    },
-    exportedTotalsData() {
-      if (this.colsType === "all") {
-        return [
-          [
-            this.totals.deposit_accural
-              ? `Deposits accural: ${this.formatCurrency(
-                  this.totals.deposit_accural,
-                  "usdt"
-                )} USDT`
-              : null
-          ],
-          [
-            this.totals.deposit_withdraw
-              ? `Deposits withdraw: ${this.formatCurrency(
-                  this.totals.deposit_withdraw,
-                  "usdt"
-                )} USDT`
-              : null
-          ],
-          [
-            this.totals.dividend_accural
-              ? `Dividends accrual: ${this.formatCurrency(
-                  this.totals.dividend_accural,
-                  "usdt"
-                )} USDT`
-              : null
-          ],
-          [
-            this.totals.dividend_withdraw
-              ? `Dividends withdraw: ${this.formatCurrency(
-                  this.totals.dividend_withdraw,
-                  "usdt"
-                )} USDT`
-              : null
-          ],
-          [
-            this.totals.deposits
-              ? `Deposits: ${this.formatCurrency(
-                  this.totals.deposits,
-                  "usdt"
-                )} USDT`
-              : null
-          ],
-          [
-            this.totals.reinvestment
-              ? `Reinvestment: ${this.formatCurrency(
-                  this.totals.reinvestment,
-                  "usdt"
-                )} USDT`
-              : null
-          ]
-        ];
-      } else {
-        return [
-          [
-            this.totals.dividends
-              ? `Deposits: ${this.formatCurrency(
-                  this.totals.dividends,
-                  "usdt"
-                )} USDT`
-              : null
-          ],
-          [
-            this.totals.reinvestment
-              ? `Total: ${this.formatCurrency(
-                  this.totals.investments,
-                  "usdt"
-                )} USDT`
-              : null
-          ]
-        ];
-      }
-    }
-  }
-};
+			})
+		},
+		exportedTotalsData() {
+			if (this.colsType === 'all') {
+				return [
+					[
+						this.totals.deposit_accural
+							? `Deposits accural: ${this.formatCurrency(
+									this.totals.deposit_accural,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+					[
+						this.totals.deposit_withdraw
+							? `Deposits withdraw: ${this.formatCurrency(
+									this.totals.deposit_withdraw,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+					[
+						this.totals.dividend_accural
+							? `Dividends accrual: ${this.formatCurrency(
+									this.totals.dividend_accural,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+					[
+						this.totals.dividend_withdraw
+							? `Dividends withdraw: ${this.formatCurrency(
+									this.totals.dividend_withdraw,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+					[
+						this.totals.deposits
+							? `Deposits: ${this.formatCurrency(
+									this.totals.deposits,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+					[
+						this.totals.reinvestment
+							? `Reinvestment: ${this.formatCurrency(
+									this.totals.reinvestment,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+				]
+			} else {
+				return [
+					[
+						this.totals.dividends
+							? `Deposits: ${this.formatCurrency(
+									this.totals.dividends,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+					[
+						this.totals.reinvestment
+							? `Total: ${this.formatCurrency(
+									this.totals.investments,
+									'usdt'
+							  )} USDT`
+							: null,
+					],
+				]
+			}
+		},
+	},
+}
 </script>
 
 <style lang="scss">
 .w-20 {
-  width: 20px;
+	width: 20px;
 }
 .green {
-  color: green;
+	color: green;
 }
 .red {
-  color: red;
+	color: red;
 }
 .b-table {
-  & > .level {
-    flex-direction: row-reverse;
-  }
-  td.text-right {
-    text-align: right !important;
-  }
-  th.text-right {
-    text-align: right !important;
-  }
-  th {
-    text-align: right !important;
-  }
+	& > .level {
+		flex-direction: row-reverse;
+	}
+	td.text-right {
+		text-align: right !important;
+	}
+	th.text-right {
+		text-align: right !important;
+	}
+	th {
+		text-align: right !important;
+	}
 
-  th.right {
-    & > * {
-    float: right;
-    }
-  }
+	th.right {
+		& > * {
+			float: right;
+		}
+	}
 }
 </style>

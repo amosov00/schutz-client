@@ -15,36 +15,36 @@
 </template>
 
 <script>
-import ReportsTable from "~/components/tables/ReportsTable";
+import ReportsTable from '~/components/tables/ReportsTable'
 export default {
-  name: "reports",
-  layout: "profile",
-  middleware: ["authRequired", "adminRequired"],
-  components: { ReportsTable },
-  computed: {
-    activeDepositTransactions() {
-      return this.$store.getters["reports/activeDepositTransactions"];
-    }
-  },
-  methods: {
-    clipboardSuccessHandler() {
-      this.$buefy.toast.open({
-        message: "Copied!",
-        type: "is-success"
-      });
-    }
-  },
-  asyncData({ store, params }) {
-    return store.dispatch("reports/fetchActiveDepositTransactions", params);
-  }
-};
+	name: 'reports',
+	layout: 'profile',
+	middleware: ['authRequired', 'adminRequired'],
+	components: { ReportsTable },
+	computed: {
+		activeDepositTransactions() {
+			return this.$store.getters['reports/activeDepositTransactions']
+		},
+	},
+	methods: {
+		clipboardSuccessHandler() {
+			this.$buefy.toast.open({
+				message: 'Copied!',
+				type: 'is-success',
+			})
+		},
+	},
+	asyncData({ store, params }) {
+		return store.dispatch('reports/fetchActiveDepositTransactions', params)
+	},
+}
 </script>
 
 <style scoped>
 .ml-5 {
-  margin-left: 20px;
+	margin-left: 20px;
 }
 .mb-30 {
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 </style>

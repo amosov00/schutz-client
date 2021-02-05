@@ -20,18 +20,18 @@
 </template>
 
 <script>
-import { CustomSlider } from '~/components';
-import { mapGetters } from "vuex";
-import etherscan from "~/mixins/etherscan";
-import UserProfile from "~/components/modals/UserProfile";
-import { ReportsTable } from "~/components/tables";
+import { CustomSlider } from '~/components'
+import { mapGetters } from 'vuex'
+import etherscan from '~/mixins/etherscan'
+import UserProfile from '~/components/modals/UserProfile'
+import { ReportsTable } from '~/components/tables'
 
 export default {
 	middleware: ['authRequired', 'adminRequired'],
 
 	layout: 'profile',
 
-	mixins: [ etherscan ],
+	mixins: [etherscan],
 
 	components: {
 		ReportsTable,
@@ -46,16 +46,16 @@ export default {
 
 	computed: {
 		...mapGetters({
-			activeDepositsDetailedInfo: 'reports/activeDepositsByID'
+			activeDepositsDetailedInfo: 'reports/activeDepositsByID',
 		}),
 
 		userId() {
-			return this.activeDepositsDetailedInfo.user_id;
+			return this.activeDepositsDetailedInfo.user_id
 		},
 
 		address() {
-			return this.activeDepositsDetailedInfo.address;
-		}
+			return this.activeDepositsDetailedInfo.address
+		},
 	},
 
 	methods: {
@@ -64,10 +64,9 @@ export default {
 				factory: () => UserProfile,
 				props: {
 					userId,
-				}
+				},
 			})
-		}
-
+		},
 	},
 
 	async asyncData({ store, params }) {

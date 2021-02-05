@@ -11,16 +11,16 @@
 </template>
 
 <script>
-import Proxy from "~/components/Proxy";
+import Proxy from '~/components/Proxy'
 
 export default {
-	components: {Proxy},
+	components: { Proxy },
 
 	props: {
 		modal: {
 			type: Object,
-			required: true
-		}
+			required: true,
+		},
 	},
 
 	data() {
@@ -30,14 +30,14 @@ export default {
 	},
 
 	mounted() {
-		this.open = true;
-	}
+		this.open = true
+	},
 }
 </script>
 
 <style lang="scss">
 .modal-card {
-	background: #F9F9F6;
+	background: #f9f9f6;
 	border-radius: 12px;
 	color: #000000;
 	padding: 45px;

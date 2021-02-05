@@ -46,131 +46,139 @@
 </template>
 
 <script>
-import formatCurrency from "~/mixins/formatCurrency";
-import formatDate from "~/mixins/formatDate";
-import PayInvoiceButton from "~/components/PayInvoiceButton";
-import PayInvoiceModal from "~/components/modals/PayInvoiceModal";
-import moment from "moment";
-import XLSX from "xlsx";
-import _ from "lodash";
-import {saveAs} from 'file-saver';
+import formatCurrency from '~/mixins/formatCurrency'
+import formatDate from '~/mixins/formatDate'
+import PayInvoiceButton from '~/components/PayInvoiceButton'
+import PayInvoiceModal from '~/components/modals/PayInvoiceModal'
+import moment from 'moment'
+import XLSX from 'xlsx'
+import _ from 'lodash'
+import { saveAs } from 'file-saver'
 
 export default {
-  name: "bills_id",
-  layout: "admin",
-  mixins: [formatCurrency, formatDate],
-  components: {PayInvoiceButton},
-  middleware: ["authRequired", "adminRequired"],
-  data() {
-    return {
-      searchQuery: "",
-      filteredTable: [],
-    };
-  },
-  created() {
-    this.$store.dispatch("bills/fetchInvoiceById", this.$route.params.id);
-  },
-  methods: {
-    updateTotalModal(data) {
-      this.$buefy.dialog.prompt({
-        message: `Total USDT`,
-        inputAttrs: {
-          type: "number",
-          placeholder: "Type total here",
-          value: (data.value / 1e6).toFixed(2),
-          min: 0,
-          step: "any"
-        },
-        trapFocus: true,
-        onConfirm: value =>
-          this.updateTotalAction({total_usdt: value * 1e6, id: data.id})
-      });
-    },
-    updateTotalAction(data) {
-      this.$store
-        .dispatch("bills/updateTotal", data)
-        .then(() =>
-          this.$buefy.toast.open({
-            message: "Total updated!",
-            type: "is-success"
-          })
-        )
-        .catch(() =>
-          this.$buefy.toast.open({
-            message: "Something went wrong!",
-            type: "is-danger"
-          })
-        );
-    },
-    changeInput(e) {
-      this.filter();
-    },
-    filter() {
-      if (this.searchQuery.length >= 3) {
-        this.filteredTable = _.filter(this.tableData.invoice_addresses, el => {
-          if (
-            el.address !== null &&
-            el.address.toLowerCase().startsWith(this.searchQuery.toLowerCase())
-          ) {
-            return el;
-          } else {
-            return false;
-          }
-        });
-      } else {
-        this.filteredTable = [];
-      }
-    },
-    saveAsExcel() {
-      const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileData);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, dataTableWS, "data"); // sheetAName is name of Worksheet
-      XLSX.writeFile(wb, `bills.xlsx`);
-    },
-    async saveAsExcelAll() {
-      this.$axios.get(`/admin/invoices/${this.tableData._id}/extended/`, {
-        params: {as_excel: true},
-        responseType: "blob"
-      }).then(resp => {
-        saveAs(resp.data, `invoice_${this.tableData._id}_all.xlsx`)
-      }).catch(e => {
-        console.log(e)
-      })
-    },
-    triggerPayInvoiceModal() {
-      this.$buefy.modal.open({
-        parent: this,
-        component: PayInvoiceModal,
-        trapFocus: true,
-        props: {
-          invoice: this.tableData,
-        }
-      });
-    },
-  },
-  computed: {
-    tableData() {
-      return this.$store.getters["bills/invoiceDataByID"];
-    },
-    createdAt() {
-      return moment(this.tableData.created_at)
-        .utc()
-        .format("Do MMMM YYYY, h:mm:ss a");
-    },
-    exportedFileData() {
-      const data = this.tableData.invoice_addresses.map(el => {
-        return {
-          ID: el._id,
-          Address: el.address,
-          "TxHash": el.payment_transaction_hash,
-          "Invested USDT": this.formatCurrency(el.deposit_usdt, "usdt"),
-          "Total USDT": this.formatCurrency(el.total_usdt, "usdt"),
-        }
-      })
-      return data
-    }
-  }
-};
+	name: 'bills_id',
+	layout: 'admin',
+	mixins: [formatCurrency, formatDate],
+	components: { PayInvoiceButton },
+	middleware: ['authRequired', 'adminRequired'],
+	data() {
+		return {
+			searchQuery: '',
+			filteredTable: [],
+		}
+	},
+	created() {
+		this.$store.dispatch('bills/fetchInvoiceById', this.$route.params.id)
+	},
+	methods: {
+		updateTotalModal(data) {
+			this.$buefy.dialog.prompt({
+				message: `Total USDT`,
+				inputAttrs: {
+					type: 'number',
+					placeholder: 'Type total here',
+					value: (data.value / 1e6).toFixed(2),
+					min: 0,
+					step: 'any',
+				},
+				trapFocus: true,
+				onConfirm: (value) =>
+					this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
+			})
+		},
+		updateTotalAction(data) {
+			this.$store
+				.dispatch('bills/updateTotal', data)
+				.then(() =>
+					this.$buefy.toast.open({
+						message: 'Total updated!',
+						type: 'is-success',
+					})
+				)
+				.catch(() =>
+					this.$buefy.toast.open({
+						message: 'Something went wrong!',
+						type: 'is-danger',
+					})
+				)
+		},
+		changeInput(e) {
+			this.filter()
+		},
+		filter() {
+			if (this.searchQuery.length >= 3) {
+				this.filteredTable = _.filter(
+					this.tableData.invoice_addresses,
+					(el) => {
+						if (
+							el.address !== null &&
+							el.address
+								.toLowerCase()
+								.startsWith(this.searchQuery.toLowerCase())
+						) {
+							return el
+						} else {
+							return false
+						}
+					}
+				)
+			} else {
+				this.filteredTable = []
+			}
+		},
+		saveAsExcel() {
+			const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileData)
+			const wb = XLSX.utils.book_new()
+			XLSX.utils.book_append_sheet(wb, dataTableWS, 'data') // sheetAName is name of Worksheet
+			XLSX.writeFile(wb, `bills.xlsx`)
+		},
+		async saveAsExcelAll() {
+			this.$axios
+				.get(`/admin/invoices/${this.tableData._id}/extended/`, {
+					params: { as_excel: true },
+					responseType: 'blob',
+				})
+				.then((resp) => {
+					saveAs(resp.data, `invoice_${this.tableData._id}_all.xlsx`)
+				})
+				.catch((e) => {
+					console.log(e)
+				})
+		},
+		triggerPayInvoiceModal() {
+			this.$buefy.modal.open({
+				parent: this,
+				component: PayInvoiceModal,
+				trapFocus: true,
+				props: {
+					invoice: this.tableData,
+				},
+			})
+		},
+	},
+	computed: {
+		tableData() {
+			return this.$store.getters['bills/invoiceDataByID']
+		},
+		createdAt() {
+			return moment(this.tableData.created_at)
+				.utc()
+				.format('Do MMMM YYYY, h:mm:ss a')
+		},
+		exportedFileData() {
+			const data = this.tableData.invoice_addresses.map((el) => {
+				return {
+					ID: el._id,
+					Address: el.address,
+					TxHash: el.payment_transaction_hash,
+					'Invested USDT': this.formatCurrency(el.deposit_usdt, 'usdt'),
+					'Total USDT': this.formatCurrency(el.total_usdt, 'usdt'),
+				}
+			})
+			return data
+		},
+	},
+}
 </script>
 
 <style lang="sass">

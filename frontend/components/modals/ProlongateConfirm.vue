@@ -1,5 +1,5 @@
 <template>
-	<div class="modal-card" style="height: 300px; padding:0px">
+	<div class="modal-card" style="height: 300px; padding: 0px">
 		<section class="modal-card-body" v-if="$i18n.locale === 'ru'">
 			<h2 class="confirm-text" v-if="!status">
 				Вы действительно хотите пролонгировать вклад на 12 мес ?
@@ -21,14 +21,14 @@
 		</section>
 		<footer class="modal-card-foot">
 			<button class="button" type="button" @click="$parent.close()">
-				{{ status ? "Ok" : $t("Нет") }}
+				{{ status ? 'Ok' : $t('Нет') }}
 			</button>
 			<button
 				v-if="!status"
 				class="button is-primary"
 				@click="prolongAgreement()"
 			>
-				{{ $t("Да") }}
+				{{ $t('Да') }}
 			</button>
 		</footer>
 	</div>
@@ -36,40 +36,40 @@
 
 <script>
 export default {
-	props: ["lastContract"],
+	props: ['lastContract'],
 
 	data() {
 		return {
-			status: false
-		};
+			status: false,
+		}
 	},
 
 	methods: {
 		async prolongAgreement() {
 			if (this.lastContract) {
 				const res = await this.$store.dispatch(
-					"prolongAgreement",
+					'prolongAgreement',
 					this.lastContract._id
-				);
+				)
 				if (!res) {
 					this.$buefy.toast.open({
-						message: this.$t("investment.errorMessage"),
-						type: "is-danger",
-						queue: false
-					});
+						message: this.$t('investment.errorMessage'),
+						type: 'is-danger',
+						queue: false,
+					})
 				} else {
 					this.$buefy.toast.open({
-						message: this.$t("Вклад успешно пролонгирован"),
-						type: "is-success",
-						queue: false
-					});
-					this.status = true;
+						message: this.$t('Вклад успешно пролонгирован'),
+						type: 'is-success',
+						queue: false,
+					})
+					this.status = true
 				}
-				await this.$store.dispatch("fetchContractAgreements");
+				await this.$store.dispatch('fetchContractAgreements')
 			}
-		}
-	}
-};
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>

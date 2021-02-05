@@ -74,12 +74,12 @@
 </template>
 
 <script>
-import { CustomSlider } from "~/components";
-import {mapGetters} from "vuex";
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import PayInvoiceButton from "~/components/PayInvoiceButton";
-import etherscan from "~/mixins/etherscan";
+import { CustomSlider } from '~/components'
+import { mapGetters } from 'vuex'
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import PayInvoiceButton from '~/components/PayInvoiceButton'
+import etherscan from '~/mixins/etherscan'
 
 export default {
 	layout: 'profile',
@@ -90,73 +90,71 @@ export default {
 
 	mixins: [formatDate, formatCurrency, etherscan],
 
-	middleware: ["authRequired", "adminRequired"],
+	middleware: ['authRequired', 'adminRequired'],
 
 	computed: {
 		...mapGetters({
 			invoiceData: 'bills/addressInvoiceData',
 			transactions: 'bills/addressTransactions',
-		})
+		}),
 	},
 
 	methods: {
 		onCopy(e) {
 			this.$buefy.toast.open({
 				message: `Copied: ${e.text}`,
-				type: "is-success"
-			});
+				type: 'is-success',
+			})
 		},
 
 		onError() {
 			this.$buefy.toast.open({
-				message: "Copying failed!",
-				type: "is-danger"
-			});
+				message: 'Copying failed!',
+				type: 'is-danger',
+			})
 		},
 
 		updateTotalModal(data) {
 			this.$buefy.dialog.prompt({
 				message: `Total USDT`,
 				inputAttrs: {
-					type: "number",
-					placeholder: "Type total here",
+					type: 'number',
+					placeholder: 'Type total here',
 					value: (data.value / 1e6).toFixed(2),
 					min: 0,
-					step: "any"
+					step: 'any',
 				},
 				trapFocus: true,
-				onConfirm: value =>
-					this.updateTotalAction({total_usdt: value * 1e6, id: data.id})
-			});
+				onConfirm: (value) =>
+					this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
+			})
 		},
 
 		updateTotalAction(data) {
 			this.$store
-				.dispatch("bills/updateTotal", data)
+				.dispatch('bills/updateTotal', data)
 				.then(() =>
 					this.$buefy.toast.open({
-						message: "Total updated!",
-						type: "is-success"
+						message: 'Total updated!',
+						type: 'is-success',
 					})
 				)
 				.catch(() => {
 					this.$buefy.toast.open({
-						message: "Something went wrong!",
-						type: "is-danger"
-					});
-				});
-		}
+						message: 'Something went wrong!',
+						type: 'is-danger',
+					})
+				})
+		},
 	},
 
 	async asyncData({ store, params }) {
-		await store.dispatch("bills/fetchDetailedAddressData", params.id);
-	}
-
+		await store.dispatch('bills/fetchDetailedAddressData', params.id)
+	},
 }
 </script>
 
 <style lang="scss">
 .bill_address_details__container {
-
 }
 </style>

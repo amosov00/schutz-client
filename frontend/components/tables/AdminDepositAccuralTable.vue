@@ -101,13 +101,13 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import etherscan from "~/mixins/etherscan";
-import { AdminUpdateModal, AdminUpdateStatusModal } from "~/components/modals";
-import { mapActions } from "vuex";
-import UserProfile from "~/components/modals/UserProfile";
-import { getResult } from "~/consts";
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import etherscan from '~/mixins/etherscan'
+import { AdminUpdateModal, AdminUpdateStatusModal } from '~/components/modals'
+import { mapActions } from 'vuex'
+import UserProfile from '~/components/modals/UserProfile'
+import { getResult } from '~/consts'
 
 export default {
 	props: {
@@ -129,7 +129,7 @@ export default {
 		count: {
 			type: Number,
 			required: true,
-		}
+		},
 	},
 
 	data() {
@@ -143,7 +143,7 @@ export default {
 	computed: {
 		showMoreButton() {
 			return this.count > this.pagination.limit * this.pagination.page
-		}
+		},
 	},
 
 	methods: {
@@ -167,12 +167,12 @@ export default {
 
 					options: {
 						prompt: true,
-					}
+					},
 				})
 
 				await this.doUpdateAgreement(updatedData)
 			} catch (e) {
-				this.showErrorNotification();
+				this.showErrorNotification()
 			}
 		},
 
@@ -181,7 +181,7 @@ export default {
 				factory: () => UserProfile,
 				props: {
 					userId,
-				}
+				},
 			})
 		},
 
@@ -199,34 +199,47 @@ export default {
 					},
 				})
 
-				await this.doUpdateAgreement(updatedData);
+				await this.doUpdateAgreement(updatedData)
 			} catch (e) {
-				this.showErrorNotification();
+				this.showErrorNotification()
 			}
 		},
 
 		async doUpdateAgreement(updatedData) {
-			await this.updateAgreement(updatedData);
+			await this.updateAgreement(updatedData)
 
-			this.$buefy.toast.open({ message: 'Agreement updated!', type: 'is-primary', queue: false })
+			this.$buefy.toast.open({
+				message: 'Agreement updated!',
+				type: 'is-primary',
+				queue: false,
+			})
 
-			this.$emit('updateAgreements');
+			this.$emit('updateAgreements')
 		},
 
 		showErrorNotification() {
-			this.$buefy.toast.open({ message: this.$t('investment.errorMessage'), type: 'is-danger', queue: false })
+			this.$buefy.toast.open({
+				message: this.$t('investment.errorMessage'),
+				type: 'is-danger',
+				queue: false,
+			})
 		},
 
 		async pay(data) {
-			const userData = await this.getUserById(data.user_id);
+			const userData = await this.getUserById(data.user_id)
 
 			if (!userData) {
-				return this.$buefy.toast.open({ message: 'Failed to fetch user wallet', type: 'is-danger' })
+				return this.$buefy.toast.open({
+					message: 'Failed to fetch user wallet',
+					type: 'is-danger',
+				})
 			}
 
 			const txHash = await this.depositAccural({
-			 	values: [data.amount],
-				customerAddresses: [userData.ethereum_wallet_payout || userData.ethereum_wallet],
+				values: [data.amount],
+				customerAddresses: [
+					userData.ethereum_wallet_payout || userData.ethereum_wallet,
+				],
 				comment: `${data.contract} close`,
 			})
 
@@ -236,13 +249,11 @@ export default {
 					ids: [data._id],
 				})
 
-				await this.$emit('updateAgreements');
+				await this.$emit('updateAgreements')
 			}
 		},
-	}
-
+	},
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

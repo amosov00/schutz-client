@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { exportHelper } from "~/utils/exportHelper";
+import { mapGetters } from 'vuex'
+import { exportHelper } from '~/utils/exportHelper'
 
 export default {
 	props: {
@@ -33,7 +33,7 @@ export default {
 		showExport: {
 			type: Boolean,
 			default: true,
-		}
+		},
 	},
 
 	data() {
@@ -53,24 +53,31 @@ export default {
 		tableComponent() {
 			return {
 				all: () => import('@/components/tables/ReportTables/All.vue'),
-				investments: () => import('@/components/tables/ReportTables/Investment.vue'),
-				dividend_withdraw: () => import('@/components/tables/ReportTables/DividendWithdraw.vue'),
-				dividend_accural: () => import('@/components/tables/ReportTables/DividendAccural.vue'),
-				deposit_accural: () => import('@/components/tables/ReportTables/DepositAccural.vue'),
-				deposits: () => import('@/components/tables/ReportTables/ActiveDeposit.vue'),
-				deposit_withdraw: () => import('@/components/tables/ReportTables/DepositWithdraw.vue'),
-				active_deposit_details: () => import('~/components/tables/ReportTables/ActiveDepositDetails.vue')
+				investments: () =>
+					import('@/components/tables/ReportTables/Investment.vue'),
+				dividend_withdraw: () =>
+					import('@/components/tables/ReportTables/DividendWithdraw.vue'),
+				dividend_accural: () =>
+					import('@/components/tables/ReportTables/DividendAccural.vue'),
+				deposit_accural: () =>
+					import('@/components/tables/ReportTables/DepositAccural.vue'),
+				deposits: () =>
+					import('@/components/tables/ReportTables/ActiveDeposit.vue'),
+				deposit_withdraw: () =>
+					import('@/components/tables/ReportTables/DepositWithdraw.vue'),
+				active_deposit_details: () =>
+					import('~/components/tables/ReportTables/ActiveDepositDetails.vue'),
 			}
 		},
 
 		activeDepositContracts() {
-			return this.itemsPagination('activeDepositContracts');
+			return this.itemsPagination('activeDepositContracts')
 		},
 
 		table() {
 			return {
 				component: this.tableComponent[this.tableType],
-				data: this.tableData[this.tableType]
+				data: this.tableData[this.tableType],
 			}
 		},
 
@@ -87,9 +94,9 @@ export default {
 				deposit_accural: this.transactions(this.page, -1) || [],
 				deposit_withdraw: this.transactions(this.page, -1) || [],
 				deposits: this.activeDeposit(this.page, -1) || [],
-				active_deposit_details: this.activeDepositContracts(this.page, -1) || [],
+				active_deposit_details:
+					this.activeDepositContracts(this.page, -1) || [],
 			}
-
 		},
 
 		activeDeposit() {
@@ -104,20 +111,28 @@ export default {
 				dividend_accural: this.transactions(this.page, this.limit) || [],
 				deposit_accural: this.transactions(this.page, this.limit) || [],
 				deposit_withdraw: this.transactions(this.page, this.limit) || [],
-				deposits: this.activeDeposit(this.page, this.limit, { element: 'amount_usdt', direction: -1 }) || [],
-				active_deposit_details: this.activeDepositContracts(this.page, this.limit) || [],
+				deposits:
+					this.activeDeposit(this.page, this.limit, {
+						element: 'amount_usdt',
+						direction: -1,
+					}) || [],
+				active_deposit_details:
+					this.activeDepositContracts(this.page, this.limit) || [],
 			}
 		},
 	},
 
 	methods: {
 		onMore() {
-			this.page = this.page += 1;
+			this.page = this.page += 1
 		},
 
 		exportData() {
 			return exportHelper({
-				data: this.tableType === 'deposits' ? this.activeDeposit(1, -1) : this.transactions(1, -1),
+				data:
+					this.tableType === 'deposits'
+						? this.activeDeposit(1, -1)
+						: this.transactions(1, -1),
 				type: this.tableType,
 				totals: this.totals,
 			})
@@ -126,6 +141,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

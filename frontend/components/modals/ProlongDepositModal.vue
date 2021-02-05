@@ -18,53 +18,55 @@
 </template>
 
 <script>
-import {NTS_CONTRACTS} from "@/consts";
+import { NTS_CONTRACTS } from '@/consts'
 
 export default {
-  name: "ProlongDepositModal",
-  props: ["user", "contract"],
-  data() {
-    return {
-      loading: false,
-      contractFrom: "",
-      contractTo: NTS_CONTRACTS.SCHUTZ,
-      availableContracts: [NTS_CONTRACTS.SCHUTZ, this.contract]
-    }
-  },
-  computed: {
-    userDepositsTitles() {
-      return this.user.active_deposits.reduce((acc, curr) => {
-        acc.push(curr.contract)
-        return acc
-      }, [])
-    },
-
-  },
-  methods: {
-    async prolongDeposit() {
-      await this.$store.dispatch("admin/prolongContract", {
-        userId: this.user._id,
-        data: {
-          contract_from: this.contractFrom,
-          contract_to: this.contractTo,
-        },
-      }).then(resp => {
-        this.$emit('close')
-        this.$buefy.toast.open({
-          message: 'Успешно выполнено!',
-          type: 'is-success'
-        })
-      }).catch(err => {
-        this.$buefy.toast.open({
-          message: 'Ошибка: что-то пошло не так!',
-          type: 'is-danger'
-        })
-      })
-    },
-  },
-  created() {
-    this.contractFrom = this.contract
-  }
+	name: 'ProlongDepositModal',
+	props: ['user', 'contract'],
+	data() {
+		return {
+			loading: false,
+			contractFrom: '',
+			contractTo: NTS_CONTRACTS.SCHUTZ,
+			availableContracts: [NTS_CONTRACTS.SCHUTZ, this.contract],
+		}
+	},
+	computed: {
+		userDepositsTitles() {
+			return this.user.active_deposits.reduce((acc, curr) => {
+				acc.push(curr.contract)
+				return acc
+			}, [])
+		},
+	},
+	methods: {
+		async prolongDeposit() {
+			await this.$store
+				.dispatch('admin/prolongContract', {
+					userId: this.user._id,
+					data: {
+						contract_from: this.contractFrom,
+						contract_to: this.contractTo,
+					},
+				})
+				.then((resp) => {
+					this.$emit('close')
+					this.$buefy.toast.open({
+						message: 'Успешно выполнено!',
+						type: 'is-success',
+					})
+				})
+				.catch((err) => {
+					this.$buefy.toast.open({
+						message: 'Ошибка: что-то пошло не так!',
+						type: 'is-danger',
+					})
+				})
+		},
+	},
+	created() {
+		this.contractFrom = this.contract
+	},
 }
 </script>
 

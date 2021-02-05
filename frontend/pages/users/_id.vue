@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import {ValidationObserver, ValidationProvider} from 'vee-validate'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import moment from 'moment'
 import formatDate from '~/mixins/formatDate'
 import ProlongDepositModal from '~/components/modals/ProlongDepositModal'
@@ -76,16 +76,22 @@ export default {
 	layout: 'admin',
 	mixins: [formatDate],
 	middleware: ['authRequired', 'adminRequired'],
-	components: {ValidationObserver, ValidationProvider},
+	components: { ValidationObserver, ValidationProvider },
 	data() {
 		return {
 			user: {},
 		}
 	},
 	async created() {
-		this.user = await this.$store.dispatch('users/fetchUser', this.$route.params.id)
+		this.user = await this.$store.dispatch(
+			'users/fetchUser',
+			this.$route.params.id
+		)
 		if (this.user.ethereum_wallet) {
-			await this.$store.dispatch('userContractIntegration/fetchTokenBalance', this.user.ethereum_wallet)
+			await this.$store.dispatch(
+				'userContractIntegration/fetchTokenBalance',
+				this.user.ethereum_wallet
+			)
 		}
 	},
 	methods: {
@@ -96,13 +102,15 @@ export default {
 				trapFocus: true,
 				props: {
 					user: this.user,
-					contract: contract
-				}
+					contract: contract,
+				},
 			})
-			modal.$on('close', async () => (await this.reloadActiveDeposits()))
+			modal.$on('close', async () => await this.reloadActiveDeposits())
 		},
 		showContract(data) {
-			return data.prolongedContract ? `${data.contract} (prolonged to ${data.prolongedContract})` : data.contract
+			return data.prolongedContract
+				? `${data.contract} (prolonged to ${data.prolongedContract})`
+				: data.contract
 		},
 		async update() {
 			if (
@@ -115,19 +123,21 @@ export default {
 			if (resp.status === 200) {
 				this.$buefy.toast.open({
 					message: this.$t('dataUpdated'),
-					type: 'is-success'
+					type: 'is-success',
 				})
 			} else {
 				this.$buefy.toast.open({
 					message: this.$t('dataNotUpdated'),
-					type: 'is-danger'
+					type: 'is-danger',
 				})
 			}
 		},
 		async reloadActiveDeposits() {
-			await this.$axios.get(`/admin/active-deposits/${this.user._id}/`).then(resp => {
-				this.user.active_deposits = resp.data.contracts
-			})
+			await this.$axios
+				.get(`/admin/active-deposits/${this.user._id}/`)
+				.then((resp) => {
+					this.user.active_deposits = resp.data.contracts
+				})
 		},
 	},
 	computed: {
@@ -135,7 +145,7 @@ export default {
 			return this.timestampToDate(this.user.created_at)
 		},
 		updatedUser() {
-			return {...this.user}
+			return { ...this.user }
 		},
 		closeDate: {
 			get: function () {
@@ -143,19 +153,16 @@ export default {
 			},
 			set: function (newValue) {
 				this.user.close_date = moment(newValue).unix()
-			}
+			},
 		},
 		activeDeposits() {
 			return this.user.active_deposits
-		}
-	}
+		},
+	},
 }
 </script>
 
-<style
-	lang="sass"
-	scoped
->
+<style lang="sass" scoped>
 .hero-body
 	margin: 10px
 

@@ -23,33 +23,61 @@
 </template>
 
 <script>
-import InlineSvg from "vue-inline-svg";
+import InlineSvg from 'vue-inline-svg'
 
 export default {
-  name: "LeftMenu",
-  components: {InlineSvg},
+	name: 'LeftMenu',
+	components: { InlineSvg },
 
-  computed: {
-    links_main() {
-      return [
-        {url: "/profile", icon: "profile", text: this.$t("profile")},
-        {url: "/investment", icon: "investments", text: this.$t("investments")},
-        {url: "/dividends", icon: "dividends", text: this.$t("dividends")},
-        {url: "/partner", icon: "partner-program", text: this.$t("partnerProgram")},
-        {url: "/faq", icon: "help", text: this.$t("faq")},
-      ];
-    },
-    links_admin() {
-      return [
-        // { url: "/", icon: "dashboard", text: this.$t("dashboard"), perm: this.$userIsManager},
-        {url: "/users", icon: "profile", text: this.$t("users"), perm: this.$userIsManager},
-        {url: "/reports", icon: "reports", text: this.$t("reports"), perm: this.$userIsManager},
-        {url: "/bills", icon: "bills", text: this.$t("bills"), perm: this.$userIsSuperuser},
-        {url: "/deposit-accural", icon: "reports", text: this.$t("Начисление депозита"), perm: this.$userIsSuperuser}
-      ];
-    }
-  }
-};
+	computed: {
+		links_main() {
+			return [
+				{ url: '/profile', icon: 'profile', text: this.$t('profile') },
+				{
+					url: '/investment',
+					icon: 'investments',
+					text: this.$t('investments'),
+				},
+				{ url: '/dividends', icon: 'dividends', text: this.$t('dividends') },
+				{
+					url: '/partner',
+					icon: 'partner-program',
+					text: this.$t('partnerProgram'),
+				},
+				{ url: '/faq', icon: 'help', text: this.$t('faq') },
+			]
+		},
+		links_admin() {
+			return [
+				// { url: "/", icon: "dashboard", text: this.$t("dashboard"), perm: this.$userIsManager},
+				{
+					url: '/users',
+					icon: 'profile',
+					text: this.$t('users'),
+					perm: this.$userIsManager,
+				},
+				{
+					url: '/reports',
+					icon: 'reports',
+					text: this.$t('reports'),
+					perm: this.$userIsManager,
+				},
+				{
+					url: '/bills',
+					icon: 'bills',
+					text: this.$t('bills'),
+					perm: this.$userIsSuperuser,
+				},
+				{
+					url: '/deposit-accural',
+					icon: 'reports',
+					text: this.$t('Начисление депозита'),
+					perm: this.$userIsSuperuser,
+				},
+			]
+		},
+	},
+}
 </script>
 
 <style lang="sass" scoped>

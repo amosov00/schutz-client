@@ -10,8 +10,8 @@
 				<div class="columns">
 					<div class="column">
 						<div class="is-size-5 mb-4">
-							{{ $t("Получите 5%, 3% или 2%") }} <br />
-							{{ $t("с каждого депозита внесенного по вашей ссылке.") }}
+							{{ $t('Получите 5%, 3% или 2%') }} <br />
+							{{ $t('с каждого депозита внесенного по вашей ссылке.') }}
 						</div>
 						<div v-if="$i18n.locale == 'ru'">
 							<p class="is-size-7 has-text-grey mb-4">
@@ -70,7 +70,7 @@
 					<div class="column is-12-mobile is-6-desktop">
 						<div>
 							<div class="is-size-7 mb-1">
-								{{ $t("Поделитесь с друзьями:") }}
+								{{ $t('Поделитесь с друзьями:') }}
 							</div>
 							<div class="is-flex">
 								<ShareNetwork
@@ -100,14 +100,14 @@
 							v-if="tokenBalance"
 							class="is-fullwidth"
 						>
-							{{ $t("Копировать ссылку") }}
+							{{ $t('Копировать ссылку') }}
 						</custom-button>
 						<custom-button
 							@click.native="$router.push(localePath('/investment'))"
 							class="is-fullwidth"
 							v-else
 						>
-							{{ $t("Открыть вклад") }}
+							{{ $t('Открыть вклад') }}
 						</custom-button>
 					</div>
 				</div>
@@ -118,85 +118,85 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import PartnersTable from "~/components/tables/PartnersTable";
-import { mainSliderController } from "@/utils/slider";
+import { mapGetters } from 'vuex'
+import PartnersTable from '~/components/tables/PartnersTable'
+import { mainSliderController } from '@/utils/slider'
 
 export default {
-	name: "partner",
-	layout: "profile",
-	middleware: ["authRequired"],
+	name: 'partner',
+	layout: 'profile',
+	middleware: ['authRequired'],
 	transition: mainSliderController,
 	components: {
-		PartnersTable
+		PartnersTable,
 	},
 	async asyncData({ store }) {
 		if (store.getters.partners.length === 0) {
-			await store.dispatch("fetchPartners");
+			await store.dispatch('fetchPartners')
 		}
 	},
 	computed: {
-		...mapGetters(["referralLink"]),
-		...mapGetters("userContractIntegration", ["tokenBalance"])
+		...mapGetters(['referralLink']),
+		...mapGetters('userContractIntegration', ['tokenBalance']),
 	},
 	data: () => ({
 		isDepositOpen: true,
 		loading: {
-			referralLink: false
+			referralLink: false,
 		},
 		socialLinks: [
-			{ name: "twitter", icon: "twitter.svg", path: "/" },
-			{ name: "facebook", icon: "fb.svg", path: "/" },
-			{ name: "vk", icon: "vk.svg", path: "/" },
-			{ name: "telegram", icon: "telegram.svg", path: "/" }
-		]
+			{ name: 'twitter', icon: 'twitter.svg', path: '/' },
+			{ name: 'facebook', icon: 'fb.svg', path: '/' },
+			{ name: 'vk', icon: 'vk.svg', path: '/' },
+			{ name: 'telegram', icon: 'telegram.svg', path: '/' },
+		],
 	}),
 	methods: {
 		onlyCtrlC(e) {
-			this.focusInput(e);
-			if (e.key.toLowerCase() === "c" && e.ctrlKey) {
+			this.focusInput(e)
+			if (e.key.toLowerCase() === 'c' && e.ctrlKey) {
 				this.$buefy.toast.open({
-					message: "Copied to clipboard",
-					type: "is-primary",
-					queue: false
-				});
-				return;
+					message: 'Copied to clipboard',
+					type: 'is-primary',
+					queue: false,
+				})
+				return
 			}
-			e.preventDefault();
+			e.preventDefault()
 		},
 		focusInput(e) {
-			e.target.select();
+			e.target.select()
 		},
 		copy() {
-			this.$refs.reflink.select();
-			document.execCommand("copy");
+			this.$refs.reflink.select()
+			document.execCommand('copy')
 			this.$buefy.toast.open({
-				message: "Ссылка скопирована",
-				type: "is-success",
-				duration: 5000
-			});
+				message: 'Ссылка скопирована',
+				type: 'is-success',
+				duration: 5000,
+			})
 		},
 		baseUrl() {
-			const getUrl = window.location;
+			const getUrl = window.location
 			return (
 				getUrl.protocol +
-				"//" +
+				'//' +
 				getUrl.host +
-				"/" +
-				getUrl.pathname.split("/")[1]
-			);
-		}
+				'/' +
+				getUrl.pathname.split('/')[1]
+			)
+		},
 	},
 	async mounted() {
-		this.loading.referralLink = true;
-		await this.$store.dispatch("fetchReferralLink");
-		this.loading.referralLink = false;
-	}
-};
+		this.loading.referralLink = true
+		await this.$store.dispatch('fetchReferralLink')
+		this.loading.referralLink = false
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/transitions/slide-fade.scss";
+@import '~@/assets/scss/transitions/slide-fade.scss';
 
 .social-link {
 	display: flex;

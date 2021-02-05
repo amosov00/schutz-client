@@ -13,7 +13,6 @@
 </template>
 
 <script>
-
 export default {
 	props: {
 		title: {
@@ -24,30 +23,30 @@ export default {
 		closeDate: {
 			type: Number,
 			required: true,
-		}
+		},
 	},
 
 	data() {
 		return {
 			form: {
 				close_date: null,
-			}
+			},
 		}
 	},
 
 	methods: {
 		closeModal() {
-			this.$modal.close();
+			this.$modal.close()
 		},
 
 		update() {
-			this.$modal.resolve(this.$moment(this.closeDate).format('X'));
-		}
+			this.$modal.resolve(this.$moment(this.closeDate).format('X'))
+		},
 	},
 
 	created() {
-		this.form.close_date = this.$moment(this.closeDate * 1000).toDate();
-	}
+		this.form.close_date = this.$moment(this.closeDate * 1000).toDate()
+	},
 }
 </script>
 

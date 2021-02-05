@@ -54,55 +54,55 @@
 
 <script>
 import draggable from 'vuedraggable'
-import {quillEditor} from 'vue-quill-editor'
-import {mapActions, mapGetters, mapMutations} from "vuex";
+import { quillEditor } from 'vue-quill-editor'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
-  name: "users",
-  layout: "profile",
-  middleware: ["authRequired"],
-  components: {draggable, quillEditor},
+	name: 'users',
+	layout: 'profile',
+	middleware: ['authRequired'],
+	components: { draggable, quillEditor },
 
 	data() {
 		return {
 			newQuestion: {
 				title: '',
 				body: '',
-				order: ''
+				order: '',
 			},
 			isEdit: false,
 			isOpen: -1,
 			editable: {},
 			states: [],
 			quillOptions: {
-				placeholder: this.$t('FAQPage.typeAnswer')
+				placeholder: this.$t('FAQPage.typeAnswer'),
 			},
-		};
+		}
 	},
 
-  computed: {
-  	...mapGetters({
+	computed: {
+		...mapGetters({
 			getList: 'faq/list',
 			getTempModel: 'faq/getTempModel',
 			getState: 'faq/getState',
 		}),
 
-    isManagerOrHigher() {
-      return this.$userIsManager();
-    },
+		isManagerOrHigher() {
+			return this.$userIsManager()
+		},
 
-    list: {
-      get() {
-        return this.getList;
-      },
-      set(value) {
-        this.setList(value);
-      }
-    },
-  },
+		list: {
+			get() {
+				return this.getList
+			},
+			set(value) {
+				this.setList(value)
+			},
+		},
+	},
 
-  methods: {
-  	...mapActions({
+	methods: {
+		...mapActions({
 			addFaq: 'faq/add',
 			setOrder: 'faq/setOrder',
 			saveFaq: 'faq/save',
@@ -115,20 +115,20 @@ export default {
 			setState: 'faq/setState',
 		}),
 
-    onEditorChange({ quill, html, text }, index) {
-      this.doSetTempModel(index, 'body', html)
-    },
+		onEditorChange({ quill, html, text }, index) {
+			this.doSetTempModel(index, 'body', html)
+		},
 
-    onInputChange(index, key, event) {
-      this.doSetTempModel(index, key, event.target.value)
-    },
+		onInputChange(index, key, event) {
+			this.doSetTempModel(index, key, event.target.value)
+		},
 
-    doSetTempModel(index, key, data) {
+		doSetTempModel(index, key, data) {
 			this.setTempModelByKey({ index, key, data })
-    },
+		},
 
-    editMode(index) {
-      const collapse = JSON.parse(JSON.stringify(this.getList[index]))
+		editMode(index) {
+			const collapse = JSON.parse(JSON.stringify(this.getList[index]))
 
 			this.setTempModel({
 				index,
@@ -136,74 +136,74 @@ export default {
 					body: collapse.body,
 					order: collapse.order,
 					title: collapse.title,
-					_id: collapse._id
-				}
+					_id: collapse._id,
+				},
 			})
 
-      this.doSetState(index, 'isEdit', true)
-    },
-
-    toggleCollapse(index, key, data) {
-    	this.setState({ index, key, data })
+			this.doSetState(index, 'isEdit', true)
 		},
 
-    doSetState(index, key, data) {
+		toggleCollapse(index, key, data) {
 			this.setState({ index, key, data })
 		},
 
-    async add() {
-      const isAdded = await this.addFaq(this.newQuestion);
+		doSetState(index, key, data) {
+			this.setState({ index, key, data })
+		},
 
-      if (isAdded) {
-        this.newQuestion.title = ''
-        this.newQuestion.body = ''
-        this.newQuestion.order = ''
-      }
-    },
+		async add() {
+			const isAdded = await this.addFaq(this.newQuestion)
 
-    async order(target) {
-      const moved = JSON.parse(JSON.stringify(target.moved))
+			if (isAdded) {
+				this.newQuestion.title = ''
+				this.newQuestion.body = ''
+				this.newQuestion.order = ''
+			}
+		},
 
-      const {element, newIndex} = moved
+		async order(target) {
+			const moved = JSON.parse(JSON.stringify(target.moved))
 
-      const id = element._id
+			const { element, newIndex } = moved
 
-      delete element._id
+			const id = element._id
 
-      element.order = newIndex + 1
+			delete element._id
 
-      await this.setOrder({
+			element.order = newIndex + 1
+
+			await this.setOrder({
 				id,
-				data: element
+				data: element,
 			})
-    },
+		},
 
-    async remove(id) {
-      this.$buefy.dialog.confirm({
-        type: 'is-danger',
-        confirmText: this.$t('delete'),
-        cancelText: this.$t('cancel'),
-        message: this.$t('FAQPage.confirmDelete'),
-        onConfirm: async () => await this.removeFaq(id),
-      })
-    },
+		async remove(id) {
+			this.$buefy.dialog.confirm({
+				type: 'is-danger',
+				confirmText: this.$t('delete'),
+				cancelText: this.$t('cancel'),
+				message: this.$t('FAQPage.confirmDelete'),
+				onConfirm: async () => await this.removeFaq(id),
+			})
+		},
 
-    async save(index) {
-      const edited = this.getTempModel(index)
+		async save(index) {
+			const edited = this.getTempModel(index)
 
-      const isSaved = await this.saveFaq(JSON.parse(JSON.stringify(edited)))
+			const isSaved = await this.saveFaq(JSON.parse(JSON.stringify(edited)))
 
-      if (isSaved) {
-        this.editable = {}
-        this.isEdit = false
-      }
-    }
-  },
+			if (isSaved) {
+				this.editable = {}
+				this.isEdit = false
+			}
+		},
+	},
 
-  async asyncData({store}) {
-    await store.dispatch('faq/fetchList')
-  }
-};
+	async asyncData({ store }) {
+		await store.dispatch('faq/fetchList')
+	},
+}
 </script>
 
 <style lang="sass" scoped>

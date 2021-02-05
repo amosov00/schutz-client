@@ -44,7 +44,9 @@
 						<div class="auth-image">
 							<img :src="status_image" :class="animate_class" />
 						</div>
-						<custom-button @click.native="login"> {{ $t('login') }} </custom-button>
+						<custom-button @click.native="login">
+							{{ $t('login') }}
+						</custom-button>
 					</div>
 				</div>
 			</template>
@@ -53,79 +55,79 @@
 </template>
 
 <script>
-import { authSliderController } from "@/utils/slider";
+import { authSliderController } from '@/utils/slider'
 
 export default {
-	name: "login",
-	layout: "auth",
-	middleware: ["fetchUser", "userRedirect"],
+	name: 'login',
+	layout: 'auth',
+	middleware: ['fetchUser', 'userRedirect'],
 	transition: authSliderController,
 	data() {
 		return {
-			email: "",
-			password: "",
+			email: '',
+			password: '',
 			loading: false,
 			passwordError: false,
-			status_image: "/login.svg",
-			animate_class: ""
-		};
+			status_image: '/login.svg',
+			animate_class: '',
+		}
 	},
 	watch: {
 		password() {
-			this.passwordError = false;
-			this.handleBlur();
-		}
+			this.passwordError = false
+			this.handleBlur()
+		},
 	},
 	methods: {
 		failAnimate() {
-			this.animate_class = "shake";
-			this.status_image = "/login_failure.svg";
+			this.animate_class = 'shake'
+			this.status_image = '/login_failure.svg'
 			setTimeout(() => {
-				this.animate_class = "";
-			}, 1000);
+				this.animate_class = ''
+			}, 1000)
 		},
 
 		handleBlur() {
 			if (this.email && this.password) {
 				if (this.password.length >= 8) {
-					if (this.status_image !== "/login_success.svg") {
-						this.animate_class = "flipInX";
+					if (this.status_image !== '/login_success.svg') {
+						this.animate_class = 'flipInX'
 					}
-					this.status_image = "/login_success.svg";
+					this.status_image = '/login_success.svg'
 				} else {
-					if (this.status_image !== "/login.svg") {
-						this.animate_class = "flipInX";
+					if (this.status_image !== '/login.svg') {
+						this.animate_class = 'flipInX'
 					}
-					this.status_image = "/login.svg";
+					this.status_image = '/login.svg'
 				}
 			}
 			setTimeout(() => {
-				this.animate_class = "";
-			}, 1000);
+				this.animate_class = ''
+			}, 1000)
 		},
 
 		async login() {
-			this.loading = true;
-			let resp = await this.$authLogin(this.email, this.password);
+			this.loading = true
+			let resp = await this.$authLogin(this.email, this.password)
 			if (resp === false) {
-				this.failAnimate();
+				this.failAnimate()
 				this.$buefy.toast.open({
-					message: "Неверный логин или пароль.",
-					type: "is-warning",
-					duration: 6000
-				});
+					message: 'Неверный логин или пароль.',
+					type: 'is-warning',
+					duration: 6000,
+				})
 			} else {
-				this.status_image = "/login.svg";
+				this.status_image = '/login.svg'
 			}
-			this.passwordError = true;
-			this.loading = false;
-		}
-	}
-};
+			this.passwordError = true
+			this.loading = false
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/transitions/slide-fade.scss";
+@import '~@/assets/scss/transitions/slide-fade.scss';
 
 .left-link {
 	line-height: 80px;

@@ -26,14 +26,14 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import { mapActions } from 'vuex'
 
 export default {
 	data() {
 		return {
 			timeInterval: {
 				fromDate: null,
-				toDate: null
+				toDate: null,
 			},
 
 			loading: false,
@@ -48,22 +48,22 @@ export default {
 
 		async create() {
 			if (this.timeInterval.fromDate && this.timeInterval.toDate) {
-				this.loading = true;
-				const res = await this.createInvoice(this.timeInterval);
+				this.loading = true
+				const res = await this.createInvoice(this.timeInterval)
 
 				if (res) {
-					await this.fetchInvoices();
+					await this.fetchInvoices()
 				} else {
 					this.$buefy.toast.open({
-						message: "Something went wrong!",
-						type: "is-warning"
-					});
+						message: 'Something went wrong!',
+						type: 'is-warning',
+					})
 				}
 
-				this.loading = false;
+				this.loading = false
 			}
 		},
-	}
+	},
 }
 </script>
 

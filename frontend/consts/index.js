@@ -1,16 +1,16 @@
 export const NTS_CONTRACTS = {
-	NTSCD: "NTSCD",
-	NTS80: "NTS80",
-	NTS81: "NTS81",
-	NTS165: "NTS165",
-	SCHUTZ: "Schutz",
-	SCHUTZV1: "SchutzV1"
+	NTSCD: 'NTSCD',
+	NTS80: 'NTS80',
+	NTS81: 'NTS81',
+	NTS165: 'NTS165',
+	SCHUTZ: 'Schutz',
+	SCHUTZV1: 'SchutzV1',
 }
 
 export const METAMASK_STATE = {
-	OFFLINE: "offline",
-	WAITING: "waiting",
-	ONLINE: "online"
+	OFFLINE: 'offline',
+	WAITING: 'waiting',
+	ONLINE: 'online',
 }
 
 export const getResult = (res) => {

@@ -1,21 +1,21 @@
-import {makeEthSignature} from "~/utils";
+import { makeEthSignature } from '~/utils'
 
 export default {
 	methods: {
 		async makeMetamaskSignature() {
-			let signature;
+			let signature
 			try {
-				const {metamask} = await this.$web3()
+				const { metamask } = await this.$web3()
 				signature = await makeEthSignature(this.$store, metamask.provider)
 			} catch (e) {
 				this.$buefy.toast.open({
-					message: "Failed to sign terms and conditions",
-					type: "is-error"
-				});
+					message: 'Failed to sign terms and conditions',
+					type: 'is-error',
+				})
 				return false
 			}
 			await this.$store.dispatch('agreeTermsAndConditions', signature)
-			return true;
-		}
-	}
+			return true
+		},
+	},
 }

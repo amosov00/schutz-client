@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="level">
 			<div class="level-left page-title">
-				{{ $t("История транзакций") }}
+				{{ $t('История транзакций') }}
 			</div>
 		</div>
 		<b-table
@@ -74,7 +74,7 @@
 					sortable
 					:custom-sort="sortByAmount"
 				>
-					{{ formatCurrency(props.row.args.USDT, "usdt") }}
+					{{ formatCurrency(props.row.args.USDT, 'usdt') }}
 				</b-table-column>
 			</template>
 		</b-table>
@@ -86,153 +86,153 @@
 				@click="showMore()"
 				class="default-button"
 			>
-				{{ $t("показать еще") }}
+				{{ $t('показать еще') }}
 			</button>
 		</div>
 
 		<div class="is-size-5 has-background-info total-withdraw mb-6">
-			{{ $t("Всего выведено:") }}
-			{{ `${formatCurrency(withdrawTotal, "usdt")}` }} USDT <br />
-			{{ $t("Всего начислено дивидендов:") }}
-			{{ `${formatCurrency(accrualTotal, "usdt")}` }} USDT
+			{{ $t('Всего выведено:') }}
+			{{ `${formatCurrency(withdrawTotal, 'usdt')}` }} USDT <br />
+			{{ $t('Всего начислено дивидендов:') }}
+			{{ `${formatCurrency(accrualTotal, 'usdt')}` }} USDT
 		</div>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import formatText from "~/mixins/formatText";
+import { mapGetters } from 'vuex'
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import formatText from '~/mixins/formatText'
 
 export default {
-	name: "DividendsTable",
+	name: 'DividendsTable',
 	mixins: [formatDate, formatCurrency, formatText],
 	computed: {
-		...mapGetters(["user"]),
+		...mapGetters(['user']),
 		tableData() {
-			return this.$store.getters.transactions;
+			return this.$store.getters.transactions
 		},
 		filteredData() {
-			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
+			let d = this.$store.getters.dividendsWithFilter(this.currentProduct)
 			d.sort((a, b) => {
 				if (this.sort_date) {
-					if (this.sort_date == "asc") {
-						return b.args.timestamp - a.args.timestamp;
+					if (this.sort_date == 'asc') {
+						return b.args.timestamp - a.args.timestamp
 					} else {
-						return a.args.timestamp - b.args.timestamp;
+						return a.args.timestamp - b.args.timestamp
 					}
 				}
 
 				if (this.sort_amount) {
-					if (this.sort_amount == "asc") {
-						return b.args.USDT - a.args.USDT;
+					if (this.sort_amount == 'asc') {
+						return b.args.USDT - a.args.USDT
 					} else {
-						return a.args.USDT - b.args.USDT;
+						return a.args.USDT - b.args.USDT
 					}
 				}
 
 				if (this.sort_contract) {
-					if (this.sort_contract == "asc") {
-						return b.contract.localeCompare(a.contract);
+					if (this.sort_contract == 'asc') {
+						return b.contract.localeCompare(a.contract)
 					} else {
-						return a.contract.localeCompare(b.contract);
+						return a.contract.localeCompare(b.contract)
 					}
 				}
 
 				if (this.sort_event) {
-					if (this.sort_event == "asc") {
-						return b.event.localeCompare(a.event);
+					if (this.sort_event == 'asc') {
+						return b.event.localeCompare(a.event)
 					} else {
-						return a.event.localeCompare(b.event);
+						return a.event.localeCompare(b.event)
 					}
 				}
-			});
-			return d.slice(0, this.limit);
+			})
+			return d.slice(0, this.limit)
 		},
 		withdrawTotal() {
-			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
-			let result = 0;
-			d.forEach(el => {
+			let d = this.$store.getters.dividendsWithFilter(this.currentProduct)
+			let result = 0
+			d.forEach((el) => {
 				switch (el.event) {
-					case "Dividend Withdraw":
-						result += el.args.USDT;
-						break;
+					case 'Dividend Withdraw':
+						result += el.args.USDT
+						break
 				}
-			});
+			})
 			if (this.limit > this.filteredData.length) {
-				this.hide_button = true;
+				this.hide_button = true
 			}
-			return result;
+			return result
 		},
 		accrualTotal() {
-			let d = this.$store.getters.dividendsWithFilter(this.currentProduct);
-			let result = 0;
-			d.forEach(el => {
+			let d = this.$store.getters.dividendsWithFilter(this.currentProduct)
+			let result = 0
+			d.forEach((el) => {
 				switch (el.event) {
-					case "Dividend Accrual":
-						result += el.args.USDT;
-						break;
+					case 'Dividend Accrual':
+						result += el.args.USDT
+						break
 				}
-			});
-			return result;
+			})
+			return result
 		},
 		getStatusClass() {
-			if (this.status === "online") {
-				return "status-online";
+			if (this.status === 'online') {
+				return 'status-online'
 			}
-			return "status-offline";
+			return 'status-offline'
 		},
 		txTotals() {
-			return this.$store.getters.txTotals;
-		}
+			return this.$store.getters.txTotals
+		},
 	},
 
 	methods: {
 		showMore() {
-			this.limit += 5;
+			this.limit += 5
 			if (this.limit > this.filteredData.length) {
-				this.hide_button = true;
+				this.hide_button = true
 			}
 		},
 		sortByDate(a, b, isAsc) {
-			this.sort_date = isAsc ? "asc" : "desc";
-			this.sort_event = false;
-			this.sort_contract = false;
-			this.sort_amount = false;
+			this.sort_date = isAsc ? 'asc' : 'desc'
+			this.sort_event = false
+			this.sort_contract = false
+			this.sort_amount = false
 		},
 		sortByAmount(a, b, isAsc) {
-			this.sort_date = false;
-			this.sort_event = false;
-			this.sort_contract = false;
-			this.sort_amount = isAsc ? "asc" : "desc";
+			this.sort_date = false
+			this.sort_event = false
+			this.sort_contract = false
+			this.sort_amount = isAsc ? 'asc' : 'desc'
 		},
 		sortByContract(a, b, isAsc) {
-			this.sort_date = false;
-			this.sort_event = false;
-			this.sort_contract = isAsc ? "asc" : "desc";
-			this.sort_amount = false;
+			this.sort_date = false
+			this.sort_event = false
+			this.sort_contract = isAsc ? 'asc' : 'desc'
+			this.sort_amount = false
 		},
 		sortByEvent(a, b, isAsc) {
-			this.sort_date = false;
-			this.sort_event = isAsc ? "asc" : "desc";
-			this.sort_contract = false;
-			this.sort_amount = false;
-		}
+			this.sort_date = false
+			this.sort_event = isAsc ? 'asc' : 'desc'
+			this.sort_contract = false
+			this.sort_amount = false
+		},
 	},
 
 	data: () => ({
 		limit: 5,
 		hide_button: false,
 		isEmpty: false,
-		currentProduct: "All",
-		products: ["All", "NTSCD", "NTS80", "NTS81", "NTS165"],
-		sort_date: "asc",
+		currentProduct: 'All',
+		products: ['All', 'NTSCD', 'NTS80', 'NTS81', 'NTS165'],
+		sort_date: 'asc',
 		sort_event: false,
 		sort_contract: false,
-		sort_amount: false
-	})
-};
+		sort_amount: false,
+	}),
+}
 </script>
 
 <style lang="scss">

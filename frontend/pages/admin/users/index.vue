@@ -25,17 +25,17 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from 'vuex'
 import formatDate from '~/mixins/formatDate'
-import XLSX from "xlsx";
-import { UsersTable } from "@/components/tables";
-import CustomSlider from "@/components/ui/CustomSlider";
-import CustomInput from "@/components/ui/CustomInput";
+import XLSX from 'xlsx'
+import { UsersTable } from '@/components/tables'
+import CustomSlider from '@/components/ui/CustomSlider'
+import CustomInput from '@/components/ui/CustomInput'
 
 export default {
-	name: "users",
-	layout: "profile",
-	middleware: ["managerOrAdminRequired"],
+	name: 'users',
+	layout: 'profile',
+	middleware: ['managerOrAdminRequired'],
 	mixins: [formatDate],
 	components: {
 		UsersTable,
@@ -49,59 +49,59 @@ export default {
 		}),
 
 		exportedFileDate() {
-			return this.users.map(el => {
+			return this.users.map((el) => {
 				return {
 					ID: el._id,
-					"Register date": this.createdTime(el.created_at),
+					'Register date': this.createdTime(el.created_at),
 					Email: el.email,
 					Telegram: el.telegram,
-					"First name": el.first_name,
-					"Last name": el.last_name,
+					'First name': el.first_name,
+					'Last name': el.last_name,
 					Address: el.ethereum_wallet,
-					"Referral 1": el.referral_1,
-					"Referral 2": el.referral_2,
-					"Referral 3": el.referral_3,
+					'Referral 1': el.referral_1,
+					'Referral 2': el.referral_2,
+					'Referral 3': el.referral_3,
 				}
 			})
 		},
 
 		showMoreButton() {
-			return this.totalUsers >= this.limit * this.page;
-		}
+			return this.totalUsers >= this.limit * this.page
+		},
 	},
 	data() {
 		return {
 			isEmpty: false,
-			searchQuery: "",
+			searchQuery: '',
 			filteredUsers: [],
 			page: 1,
 			limit: 20,
-		};
+		}
 	},
 
 	watch: {
 		searchQuery: {
 			handler(value) {
-				this.page = 1;
-				this.limit = 20;
+				this.page = 1
+				this.limit = 20
 
-				this.fetchUsers({ page: this.page, limit: this.limit, query: value });
-			}
-		}
+				this.fetchUsers({ page: this.page, limit: this.limit, query: value })
+			},
+		},
 	},
 
 	methods: {
 		...mapActions({
-				fetchUsers: 'users/fetchUsers',
-			}),
+			fetchUsers: 'users/fetchUsers',
+		}),
 
 		changeInput() {
-			this.filter();
+			this.filter()
 		},
 
 		filter() {
 			if (this.searchQuery.length >= 3) {
-				this.filteredUsers = _.filter(this.users, el => {
+				this.filteredUsers = _.filter(this.users, (el) => {
 					if (
 						(el._id !== null &&
 							el._id
@@ -140,34 +140,34 @@ export default {
 								.toLowerCase()
 								.startsWith(this.searchQuery.toLowerCase()))
 					) {
-						return el;
+						return el
 					} else {
-						return false;
+						return false
 					}
-				});
+				})
 			} else {
-				this.filteredUsers = [];
+				this.filteredUsers = []
 			}
 		},
 
 		saveAsExcel() {
-			const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileDate);
-			const wb = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(wb, dataTableWS, "data"); // sheetAName is name of Worksheet
+			const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileDate)
+			const wb = XLSX.utils.book_new()
+			XLSX.utils.book_append_sheet(wb, dataTableWS, 'data') // sheetAName is name of Worksheet
 			// export Excel file
-			XLSX.writeFile(wb, `users.xlsx`);
+			XLSX.writeFile(wb, `users.xlsx`)
 		},
 
 		async onMore() {
-			this.page = this.page + 1;
+			this.page = this.page + 1
 
 			await this.fetchUsers({ page: this.page, limit: this.limit })
-		}
+		},
 	},
 	async asyncData({ store }) {
-		return await store.dispatch("users/fetchUsers", { page: 1, limit: 20, });
-	}
-};
+		return await store.dispatch('users/fetchUsers', { page: 1, limit: 20 })
+	},
+}
 </script>
 
 <style lang="scss" scoped>
@@ -215,7 +215,7 @@ export default {
 
 .total__container {
 	height: 50px;
-	background: #FAD896;
+	background: #fad896;
 	border-radius: 12px;
 	margin-bottom: 50px;
 	padding: 10px 20px;
