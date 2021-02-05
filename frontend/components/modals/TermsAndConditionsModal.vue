@@ -387,7 +387,7 @@
 						</div>
 						<div class="page__list_item" data-number="2.1.3">
 							The manager has the right to change this "Agreement", as well as the
-							"<a target="_blank" href="https://my.schutz.capital/files/Limitation_of_liability.pdf">Limitation of Liability</a>" without obligation to notifying the Investor about the
+							"<a target="_blank" href="/files/Limitation_of_liability.pdf">Limitation of Liability</a>" without obligation to notifying the Investor about the
 							changes made to the above documents.
 						</div>
 						<div class="page__list_item" data-number="2.1.4">

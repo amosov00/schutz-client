@@ -329,7 +329,7 @@ export default {
 			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
 			let t = {
 				investments: 0,
-				deposit_accural: 0,
+				deposit_accrual: 0,
 				deposit_withdraw: 0
 			};
 
@@ -339,7 +339,7 @@ export default {
 						t.investments += el.args.USDT;
 						break;
 					case "Deposit Accrual":
-						t.deposit_accural += el.args.USDT;
+						t.deposit_accrual += el.args.USDT;
 						break;
 					case "Deposit Withdraw":
 						t.deposit_withdraw += el.args.USDT;

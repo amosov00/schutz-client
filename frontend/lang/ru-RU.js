@@ -253,5 +253,6 @@ export default {
 	"Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)":"Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)",
 	"The reinvest field must be 50 or more":"Минимальная сумма 50.00 USDT",
 	"The deposit field must be 500 or more":"Минимальная сумма вклада 500 USDT",
-	"The deposit field must be 100000 or less":"Максимальная сумма вклада 100,000 USDT"
+	"The deposit field must be 100000 or less":"Максимальная сумма вклада 100,000 USDT",
+	"Авторизовать кошлек":"Авторизовать кошлек"
 };
