@@ -33,15 +33,15 @@
 							.card-header-title {{$t('FAQPage.answer.ru')}}
 							.content(v-html="collapse.ru.body")
 						.mt-2(v-if="getState(index, 'isEdit')")
-						label.label {{$t('FAQPage.title.en')}}
-						input.input(type="text" @input="onInputChange(index,'en.title', $event)"
-							:value="getTempModel(index).en.title" :placeholder="$t('FAQPage.title.en')").mb-2
-						label.label {{$t('FAQPage.title.ru')}}
-						input.input(type="text" @input="onInputChange(index,'ru.title', $event)"
-							:value="getTempModel(index).ru.title" :placeholder="$t('FAQPage.title.ru')").mb-2
-						label.label {{$t('FAQPage.order')}}
-						input.input(type="number" @input="onInputChange(index, 'order', $event)"
-							:value="getTempModel(index, 'order')" :placeholder="$t('FAQPage.order')").mb-2
+							label.label {{$t('FAQPage.title.en')}}
+							input.input(type="text" @input="onInputChange(index,'en.title', $event)"
+								:value="getTempModel(index).en.title" :placeholder="$t('FAQPage.title.en')").mb-2
+							label.label {{$t('FAQPage.title.ru')}}
+							input.input(type="text" @input="onInputChange(index,'ru.title', $event)"
+								:value="getTempModel(index).ru.title" :placeholder="$t('FAQPage.title.ru')").mb-2
+							label.label {{$t('FAQPage.order')}}
+							input.input(type="number" @input="onInputChange(index, 'order', $event)"
+								:value="getTempModel(index, 'order')" :placeholder="$t('FAQPage.order')").mb-2
 							label.label {{$t('FAQPage.typeAnswer.en')}}
 							quill-editor(:options="quillOptions"
 								:content="getTempModel(index).en.body"

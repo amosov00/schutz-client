@@ -23,16 +23,16 @@ export default {
 	FAQPage: {
 		pageTitle: 'Frequently asked questions',
 		title: {
-			en: 'Вопрос на английском',
-			ru: 'Вопрос на русском',
+			en: 'Title in english',
+			ru: 'Title in russian',
 		},
 		typeAnswer: {
-			ru: 'Введите ответ на русском',
-			en: 'Введите ответ на английском',
+			ru: 'Type answer in russian',
+			en: 'Type answer in english',
 		},
 		answer: {
-			en: 'Ответ на английском',
-			ru: 'Ответ на русском',
+			en: 'Answer in english',
+			ru: 'Answer in russian',
 		},
 		order: 'Order',
 		confirmDelete: 'Are sure you want to delete this question?',
