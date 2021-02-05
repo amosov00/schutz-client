@@ -31,7 +31,12 @@ export const mutations = {
   },
 
   SET_TEMP_MODEL_BY_KEY: (state, p) => {
-    state.list[p.index]['tempModel'][p.key] = p.data
+  	const { index, key, data } = p
+		const setPath = (object, path, value) => path
+			.split('.')
+			.reduce((o,p,i) => o[p] = path.split('.').length === ++i ? value : o[p] || {}, object)
+    // state.list[index]['tempModel'][key] = data
+		setPath(state.list[index].tempModel, key, data)
   }
 };
 
@@ -100,20 +105,16 @@ export const actions = {
   },
 
   async save({dispatch}, payload) {
+		try {
+    	const { _id, ...restPayload } = payload;
+    	await this.$axios.put(`/admin/faq/${_id}/`, restPayload)
 
-    const id = payload._id
-    delete payload._id
-
-    return await this.$axios.put(`/admin/faq/${id}/`, payload)
-      .then(res => {
-        dispatch('fetchList')
-        Toast.open({message: 'Successfully saved!', type: 'is-primary'})
-        return true
-      })
-      .catch(e => {
-        Toast.open({message: 'Error saving question!', type: 'is-danger'})
-        return false
-      })
+			Toast.open({message: 'Successfully saved!', type: 'is-primary'})
+			return true
+		} catch (e) {
+			Toast.open({message: 'Error saving question!', type: 'is-danger'})
+			return false
+		}
   }
 
 };
