@@ -16,15 +16,15 @@
 </template>
 
 <script>
-import { CustomSlider } from "~/components";
-import { BillTable } from "~/components/tables";
-import {mapGetters} from "vuex";
-import {itemPagination} from "~/utils/pagination";
-import { AdminCreateBill } from "~/components";
+import { CustomSlider } from '~/components'
+import { BillTable } from '~/components/tables'
+import { mapGetters } from 'vuex'
+import { itemPagination } from '~/utils/pagination'
+import { AdminCreateBill } from '~/components'
 
 export default {
-	layout: "profile",
-	middleware: ["managerOrAdminRequired"],
+	layout: 'profile',
+	middleware: ['managerOrAdminRequired'],
 
 	components: {
 		CustomSlider,
@@ -37,7 +37,7 @@ export default {
 			pagination: {
 				page: 1,
 				limit: 20,
-			}
+			},
 		}
 	},
 
@@ -47,13 +47,13 @@ export default {
 		}),
 
 		billsWithPagination() {
-			return itemPagination(this.bills)(this.pagination);
-		}
+			return itemPagination(this.bills)(this.pagination)
+		},
 	},
 
-	async asyncData({store}) {
-		await store.dispatch("bills/fetchCreatedInvoices")
-	}
+	async asyncData({ store }) {
+		await store.dispatch('bills/fetchCreatedInvoices')
+	},
 }
 </script>
 

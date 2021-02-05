@@ -27,7 +27,7 @@ export default {
 		disabled: {
 			type: Boolean,
 			default: () => false,
-		}
+		},
 	},
 
 	data() {
@@ -37,7 +37,7 @@ export default {
 	},
 
 	created() {
-		this.checkboxValue = this.value;
+		this.checkboxValue = this.value
 	},
 }
 </script>
@@ -56,7 +56,7 @@ export default {
 		border-radius: 10px;
 		width: 40px;
 		height: 20px;
-		background: #164D78;
+		background: #164d78;
 		padding: 3px;
 		display: flex;
 
@@ -66,7 +66,7 @@ export default {
 
 		.custom__switcher_toggle {
 			border-radius: 50%;
-			background: #FFFFFF;
+			background: #ffffff;
 			width: 14px;
 			height: 14px;
 		}

@@ -1,18 +1,10 @@
 <template>
 	<div>
-		<div
-			class="lang-switcher pb-2"
-			v-if="$i18n.locale == 'ru'"
-			@click="$i18n.setLocale('en')"
-		>
+		<div class="lang-switcher pb-2" v-if="$i18n.locale == 'ru'" @click="$i18n.setLocale('en')">
 			<span>RU</span>
 			<img class="flag" :src="require(`~/static/img/ru.png`)" alt="ru" />
 		</div>
-		<div
-			class="lang-switcher pb-2"
-			v-if="$i18n.locale == 'en'"
-			@click="$i18n.setLocale('ru')"
-		>
+		<div class="lang-switcher pb-2" v-if="$i18n.locale == 'en'" @click="$i18n.setLocale('ru')">
 			<span>EN</span>
 			<img class="flag" :src="require(`~/static/img/en.png`)" alt="eng" />
 		</div>
@@ -21,39 +13,39 @@
 
 <script>
 export default {
-	name: "LangSwitcher",
+	name: 'LangSwitcher',
 
 	computed: {
 		filteredLanguages() {
-			return this.languages.filter(lang => lang.name !== this.selected.name);
-		}
+			return this.languages.filter((lang) => lang.name !== this.selected.name)
+		},
 	},
 
 	created() {
-		this.languages.filter(el => {
+		this.languages.filter((el) => {
 			if (el.iso === this.$i18n.getLocaleCookie()) {
-				this.selected = el;
+				this.selected = el
 			}
-		});
+		})
 	},
 
 	methods: {
 		setLang(lang) {
-			this.selected = lang;
+			this.selected = lang
 		},
 		tooltip(lang) {
-			return `Показать на ${lang.tooltip} языке`;
-		}
+			return `Показать на ${lang.tooltip} языке`
+		},
 	},
 
 	data: () => ({
-		selected: { name: "RU", icon: "ru.png", tooltip: "русском", iso: "ru" },
+		selected: { name: 'RU', icon: 'ru.png', tooltip: 'русском', iso: 'ru' },
 		languages: [
-			{ name: "EN", icon: "en.png", tooltip: "английском", iso: "en" },
-			{ name: "RU", icon: "ru.png", tooltip: "русском", iso: "ru" }
-		]
-	})
-};
+			{ name: 'EN', icon: 'en.png', tooltip: 'английском', iso: 'en' },
+			{ name: 'RU', icon: 'ru.png', tooltip: 'русском', iso: 'ru' },
+		],
+	}),
+}
 </script>
 
 <style lang="scss" scoped>

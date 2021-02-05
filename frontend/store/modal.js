@@ -1,5 +1,5 @@
-import uniqid from 'uniqid';
-import createDeferred from 'deferred';
+import uniqid from 'uniqid'
+import createDeferred from 'deferred'
 
 const MUTATIONS = {
 	OPEN: 'OPEN',
@@ -13,82 +13,80 @@ const MUTATIONS = {
 export const state = () => ({
 	stack: [],
 	deferred: null,
-});
+})
 
 export const getters = {
-	stack: state => state.stack,
-};
+	stack: (state) => state.stack,
+}
 
 export const actions = {
 	open({ commit }, modal) {
-		commit(MUTATIONS.OPEN, modal);
+		commit(MUTATIONS.OPEN, modal)
 
 		if (modal.options && modal.options.prompt) {
-			const deferred = createDeferred();
+			const deferred = createDeferred()
 			commit(MUTATIONS.SET_PROMISE, deferred)
 
-			return deferred.promise;
+			return deferred.promise
 		}
-
 	},
 
 	close({ commit, state }) {
-		commit(MUTATIONS.CLOSE);
+		commit(MUTATIONS.CLOSE)
 
-		const { deferred } = state;
+		const { deferred } = state
 
 		if (deferred) {
-			commit(MUTATIONS.REJECT);
+			commit(MUTATIONS.REJECT)
 		}
 	},
 
 	resolve({ commit, state }, payload) {
-		const deferred = state.deferred;
+		const deferred = state.deferred
 
-		commit(MUTATIONS.CLOSE);
+		commit(MUTATIONS.CLOSE)
 
 		if (payload) {
-			return deferred.resolve(payload);
+			return deferred.resolve(payload)
 		}
 
-		return deferred.resolve();
+		return deferred.resolve()
 	},
 
 	reject({ commit, state }) {
-		const deferred = state.deferred;
+		const deferred = state.deferred
 
-		commit(MUTATIONS.CLOSE);
+		commit(MUTATIONS.CLOSE)
 
-		return deferred.reject();
+		return deferred.reject()
 	},
-};
+}
 
 export const mutations = {
 	[MUTATIONS.OPEN](state, modal) {
 		state.stack.push({
 			id: uniqid(),
 			modal,
-		});
+		})
 	},
 
 	[MUTATIONS.CLOSE](state) {
-		state.stack.pop();
+		state.stack.pop()
 	},
 
 	[MUTATIONS.CLOSE_ALL](state) {
-		state.stack = [];
+		state.stack = []
 	},
 
 	[MUTATIONS.SET_PROMISE](state, deferred) {
-		state.deferred = deferred;
+		state.deferred = deferred
 	},
 
 	[MUTATIONS.REJECT](state) {
-		const deferred = state.deferred;
+		const deferred = state.deferred
 
 		if (deferred) {
-			deferred.reject();
+			deferred.reject()
 		}
 	},
-};
-
+}

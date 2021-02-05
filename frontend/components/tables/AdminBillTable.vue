@@ -25,13 +25,13 @@
 </template>
 
 <script>
-import tableMixin from "~/components/tables/ReportTables/tableMixin";
+import tableMixin from '~/components/tables/ReportTables/tableMixin'
 import formatCurrency from '~/mixins/formatCurrency'
-import formatDate from "~/mixins/formatDate";
-import PayInvoiceModal from "~/components/modals/PayInvoiceModal";
+import formatDate from '~/mixins/formatDate'
+import PayInvoiceModal from '~/components/modals/PayInvoiceModal'
 
 export default {
-	mixins: [ tableMixin, formatCurrency, formatDate ],
+	mixins: [tableMixin, formatCurrency, formatDate],
 
 	methods: {
 		triggerPayInvoiceModal(invoice) {
@@ -41,8 +41,8 @@ export default {
 				trapFocus: true,
 				props: {
 					invoice: invoice,
-				}
-			});
+				},
+			})
 		},
 
 		async deleteInvoice(id) {
@@ -53,13 +53,11 @@ export default {
 				message: `<div class="mb-2">${this.$t('deleteBill')}</div><strong>${id}</strong>`,
 				onConfirm: async () => {
 					await this.$store.dispatch('bills/deleteInvoice', id)
-				}
+				},
 			})
 		},
-	}
+	},
 }
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

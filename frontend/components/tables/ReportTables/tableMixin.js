@@ -1,4 +1,4 @@
-import {mapGetters} from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
 	props: {
@@ -20,7 +20,7 @@ export default {
 		count: {
 			type: Number,
 			required: true,
-		}
+		},
 	},
 
 	computed: {
@@ -29,15 +29,13 @@ export default {
 		}),
 
 		showMoreButton() {
-			return this.count > this.pagination.limit * this.pagination.page;
-		}
+			return this.count > this.pagination.limit * this.pagination.page
+		},
 	},
 
 	methods: {
 		showContract(data) {
-			return data.prolongedContract
-				? `${data.contract} (${data.prolongedContract})`
-				: data.contract;
+			return data.prolongedContract ? `${data.contract} (${data.prolongedContract})` : data.contract
 		},
-	}
+	},
 }

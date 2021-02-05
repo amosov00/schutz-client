@@ -1,7 +1,7 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5">{{ $t("Укажите сумму вывода") }}</p>
+			<p class="is-size-5">{{ $t('Укажите сумму вывода') }}</p>
 			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
 				Вы можете
 				<a class="is-link" @click="value = depositBalance">вывести всю сумму</a>
@@ -10,9 +10,7 @@
 			</p>
 			<p class="is-size-7 mb-60" v-else>
 				You can
-				<a class="is-link" @click="value = depositBalance">
-					withdraw the entire amount
-				</a>
+				<a class="is-link" @click="value = depositBalance"> withdraw the entire amount </a>
 				or part of the accrued dividends, and reinvest the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
@@ -40,134 +38,114 @@
 						v-model="isTermsAcceped"
 						required
 						@keydown.native="
-							e => {
-								e.stopPropagation();
+							(e) => {
+								e.stopPropagation()
 							}
 						"
 					/>
 					<span class="is-size-7">
-						<span @click="$parent.close()"> {{ $t("Я принимаю") }} </span>
-						<a
-							href="#"
-							class="terms-link "
-							@click="$store.commit('toggleTermsModal', true)"
-						>
-							{{ $t("условия и положения") }}
+						<span @click="$parent.close()"> {{ $t('Я принимаю') }} </span>
+						<a href="#" class="terms-link" @click="$store.commit('toggleTermsModal', true)">
+							{{ $t('условия и положения') }}
 						</a>
 					</span>
 				</div>
 			</div>
 
-			<div
-				class="actions is-flex is-justify-content-space-between is-align-items-center "
-			>
-				<a
-					@click="$parent.close()"
-					class="cancel has-text-link is-size-7 is-cursor-pointer"
-				>
-					{{ $t("Отменить, я передумал") }}
+			<div class="actions is-flex is-justify-content-space-between is-align-items-center">
+				<a @click="$parent.close()" class="cancel has-text-link is-size-7 is-cursor-pointer">
+					{{ $t('Отменить, я передумал') }}
 				</a>
-				<custom-button
-					:disabled="invalid || !isTermsAcceped"
-					@click.native="action"
-				>
-					{{ $t("Вывести") }}
+				<custom-button :disabled="invalid || !isTermsAcceped" @click.native="action">
+					{{ $t('Вывести') }}
 				</custom-button>
 			</div>
 			<b-modal :active.sync="terms" has-modal-card>
-				<terms-and-conditions-modal
-					@accepted="isTermsAcceped = $event"
-				></terms-and-conditions-modal>
+				<terms-and-conditions-modal @accepted="isTermsAcceped = $event"></terms-and-conditions-modal>
 			</b-modal>
 		</div>
 	</ValidationObserver>
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
-import TermsAndConditionsModal from "@/components/modals/TermsAndConditionsModal";
-import { mapGetters } from "vuex";
-import metamaskSignature from "~/mixins/metamaskSignature";
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import TermsAndConditionsModal from '~/components/content/TermsAndConditionsModal'
+import { mapGetters } from 'vuex'
+import metamaskSignature from '~/mixins/metamaskSignature'
 
 export default {
-	name: "WithdrawAndCloseDepositModal",
+	name: 'WithdrawAndCloseDepositModal',
 	mixins: [metamaskSignature],
 	props: {
 		actionType: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
 	},
 	data() {
 		return {
-			value: ""
-		};
+			value: '',
+		}
 	},
 	components: {
 		ValidationObserver,
 		ValidationProvider,
-		TermsAndConditionsModal
+		TermsAndConditionsModal,
 	},
 	methods: {
 		async action() {
-			const isValid = await this.$refs.observer.validate();
+			const isValid = await this.$refs.observer.validate()
 			if (isValid && this.isTermsAcceped) {
-				let status = await this.makeMetamaskSignature();
+				let status = await this.makeMetamaskSignature()
 				if (!status) {
-					return;
+					return
 				}
 
 				this.$buefy.toast.open({
-					message: "Запрос в Metamask отправлен (ВЫВОД)",
-					type: "is-success"
-				});
-				if (this.actionType === "closeDeposit") {
-					await this.$store.dispatch(
-						"userContractIntegration/closeDeposit",
-						parseInt(this.value)
-					);
-				} else if (this.actionType === "withdraw") {
-					await this.$store.dispatch(
-						"userContractIntegration/withdraw",
-						parseInt(this.value)
-					);
+					message: 'Запрос в Metamask отправлен (ВЫВОД)',
+					type: 'is-success',
+				})
+				if (this.actionType === 'closeDeposit') {
+					await this.$store.dispatch('userContractIntegration/closeDeposit', parseInt(this.value))
+				} else if (this.actionType === 'withdraw') {
+					await this.$store.dispatch('userContractIntegration/withdraw', parseInt(this.value))
 				}
-				this.$parent.close();
+				this.$parent.close()
 			}
 		},
 		logKey(e) {
-			if (e.code === "Enter") {
-				this.action();
+			if (e.code === 'Enter') {
+				this.action()
 			}
-		}
+		},
 	},
 	computed: {
-		...mapGetters({ depositBalance: "userContractIntegration/depositBalance" }),
+		...mapGetters({ depositBalance: 'userContractIntegration/depositBalance' }),
 		isTermsAcceped: {
 			get() {
-				return this.$store.getters.isTermsAcceped;
+				return this.$store.getters.isTermsAcceped
 			},
 			set(newValue) {
-				this.$store.commit("setIsTermsAcceped", newValue);
-			}
+				this.$store.commit('setIsTermsAcceped', newValue)
+			},
 		},
 		terms: {
 			get() {
-				return this.$store.state.terms_modal;
+				return this.$store.state.terms_modal
 			},
 			set(newValue) {
-				this.$store.commit("toggleTermsModal", newValue);
-			}
-		}
+				this.$store.commit('toggleTermsModal', newValue)
+			},
+		},
 	},
 	mounted() {
-		document.addEventListener("keydown", this.logKey);
+		document.addEventListener('keydown', this.logKey)
 	},
 	beforeDestroy() {
-		this.$store.commit("setIsTermsAcceped", false);
-		document.removeEventListener("keydown", this.logKey);
-	}
-};
+		this.$store.commit('setIsTermsAcceped', false)
+		document.removeEventListener('keydown', this.logKey)
+	},
+}
 </script>
 
 <style lang="scss">
@@ -190,7 +168,7 @@ export default {
 			padding-left: 34px;
 
 			&::before {
-				content: "";
+				content: '';
 				display: block;
 				width: 24px;
 				height: 24px;
@@ -222,7 +200,7 @@ export default {
 	}
 
 	&::before {
-		content: "";
+		content: '';
 		display: block;
 		width: 14px;
 		height: 13px;

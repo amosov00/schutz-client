@@ -38,24 +38,24 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
-import {CustomSlider, CustomInput, CustomButton, CustomCheckbox} from "~/components"
-import {TransactionDeactivateTable} from "~/components/tables";
+import { mapActions } from 'vuex'
+import { CustomSlider, CustomInput, CustomButton, CustomCheckbox } from '~/components'
+import { TransactionDeactivateTable } from '~/components/tables'
 
-import {NTS_CONTRACTS} from "~/consts";
+import { NTS_CONTRACTS } from '~/consts'
 
 export default {
-	name: "deactivate",
+	name: 'deactivate',
 
-	layout: "profile",
-	middleware: ["adminRequired"],
+	layout: 'profile',
+	middleware: ['adminRequired'],
 
 	components: {
 		CustomSlider,
 		CustomInput,
 		CustomButton,
 		CustomCheckbox,
-		TransactionDeactivateTable
+		TransactionDeactivateTable,
 	},
 
 	data() {
@@ -66,7 +66,7 @@ export default {
 				close_timestamp: null,
 				deactivate: true,
 			},
-			transactions: []
+			transactions: [],
 		}
 	},
 
@@ -76,30 +76,29 @@ export default {
 			for (let [key, value] of Object.entries(NTS_CONTRACTS)) {
 				options.push({
 					text: key,
-					value: value
+					value: value,
 				})
 			}
 			return options
-		}
+		},
 	},
 
 	methods: {
 		...mapActions({
-			transactionsDeactivateFetch: "admin/transactionsDeactivateFetch",
-			transactionsDeactivateUpdate: "admin/transactionsDeactivateUpdate"
+			transactionsDeactivateFetch: 'admin/transactionsDeactivateFetch',
+			transactionsDeactivateUpdate: 'admin/transactionsDeactivateUpdate',
 		}),
 		async search() {
 			this.transactions = await this.transactionsDeactivateFetch(this.params)
 		},
 		async update() {
 			this.transactions = await this.transactionsDeactivateUpdate(this.params)
-		}
-	}
+		},
+	},
 }
 </script>
 
 <style lang="scss" scoped>
-
 .transactions_deactivate__action_block {
 	grid-column-start: 3;
 	display: flex;
@@ -107,5 +106,4 @@ export default {
 	height: 100%;
 	flex-direction: column;
 }
-
 </style>
