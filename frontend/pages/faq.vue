@@ -99,7 +99,6 @@ export default {
 			},
 			isEdit: false,
 			isOpen: -1,
-			editable: {},
 			states: [],
 			quillOptions: {
 				en: {
@@ -226,8 +225,7 @@ export default {
       const isSaved = await this.saveFaq({ en, ru, order, _id })
 
       if (isSaved) {
-        this.editable = {}
-        this.isEdit = false
+				this.doSetState(index, 'isEdit', false)
       }
     }
   },
