@@ -2,7 +2,6 @@
 	.custom-input
 		.base-label {{ label }}
 		b-select(
-			:placeholder="label"
 			expanded
 			v-model="selectValue"
 		)

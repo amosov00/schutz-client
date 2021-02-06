@@ -45,6 +45,11 @@ $toast-border-radius: 0;
 	}
 }
 
+.b-table .table tr.detail {
+	box-shadow: none !important;
+	background: transparent !important;
+}
+
 h1.is-1 {
 	font-weight: 500;
 	font-size: 38px;
