@@ -5,15 +5,15 @@
 			base-input.admin_search__bar.light(type="text" v-model="form.en.title" :placeholder="$t('FAQPage.title.en')").mb-5
 			base-input.admin_search__bar.light(type="text" v-model="form.ru.title" :placeholder="$t('FAQPage.title.ru')").mb-5
 			base-input.admin_search__bar.light(number-arrows type="number" v-model="form.order" :placeholder="$t('FAQPage.order')").mb-5
-		quill-editor(
-			:options="quillOptions.en"
-			v-model="form.en.body"
-		).faq-quill.mb-3
-		quill-editor(
-			:options="quillOptions.ru"
-			v-model="form.ru.body"
-		).faq-quill.mb-6
-		button.is-success.button.default-button.mr-2(@click="add") {{$t('add')}}
+			quill-editor(
+				:options="quillOptions.en"
+				v-model="form.en.body"
+			).faq-quill.mb-3
+			quill-editor(
+				:options="quillOptions.ru"
+				v-model="form.ru.body"
+			).faq-quill.mb-6
+			button.is-success.button.default-button.mr-2(@click="add") {{$t('add')}}
 		.faq-list(v-if="isManagerOrHigher").mb-5
 			b-collapse.mb-3.card(animation="slide" v-for="(collapse, index) of list"
 				:key="index" :open="getState(index, 'isOpen')"
@@ -224,7 +224,8 @@ export default {
 
 		async save(index) {
 			const { en, ru, order, _id } = this.getTempModel(index)
-			const isSaved = await this.saveFaq({ en, ru, order, _id })
+			await this.saveFaq({ en, ru, order, _id })
+
 			this.doSetState(index, 'isEdit', false)
 		},
 	},
@@ -264,7 +265,7 @@ export default {
 	&-content
 		background-color: #F9F9FB
 		padding: 10px 10px 10px 55px
-	color: #363636
+		color: #363636
 
 	&-header-title
 		display: flex
