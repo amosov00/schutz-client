@@ -97,10 +97,29 @@ export default {
 			type: Boolean,
 			default: () => false,
 		},
+		debounce: {
+			type: [Number, String],
+			default: 0,
+		}
 	},
+
+	data() {
+		return {
+			debouncer: null,
+		}
+	},
+
 	methods: {
 		onInput(e) {
-			this.$emit('input', e.target.value)
+			if (this.debounce) {
+				clearTimeout(this.debouncer)
+
+				this.debouncer = setTimeout(() => {
+					this.$emit('input', e.target.value)
+				}, Number(this.debounce))
+			} else {
+				this.$emit('input', e.target.value)
+			}
 		},
 
 		filterNumber($event) {
@@ -115,12 +134,17 @@ export default {
 			}
 		},
 	},
+
 	mounted() {
 		if (this.setFocus) {
 			setTimeout(() => {
 				this.$refs.input.focus()
 			}, 10)
 		}
+	},
+
+	beforeDestroy() {
+		clearTimeout(this.debouncer)
 	},
 }
 </script>

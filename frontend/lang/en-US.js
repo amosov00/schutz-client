@@ -259,4 +259,5 @@ export default {
 	'The reinvest field must be 50 or more': 'Minimum reinvestment 50.00 USDT',
 	'The deposit field must be 500 or more': 'Minimum deposit 500 USDT',
 	'The deposit field must be 100000 or less': 'Maximum deposit 100,000 USDT',
+	action: "Action",
 }

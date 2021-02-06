@@ -100,14 +100,19 @@ export default {
 					active: this.$router.path === '/faq',
 				},
 				{
-					text: 'Деактивация транзакций',
-					action: () => this.$router.push('/admin/transactions/deactivate'),
-					active: this.$router.path === '/admin/transactions/deactivate',
+					text: "Деактивация транзакций",
+					action: () => this.$router.push("/admin/transactions/deactivate"),
+					active: this.$router.path === "/admin/transactions/deactivate",
 				},
-			]
-		},
+				{
+					text: "Журнал логов",
+					action: () => this.$router.push("/admin/logs"),
+					active: this.$router.path === "/admin/logs",
+				}
+			];
+		}
 	},
-}
+};
 </script>
 
 <style lang="scss">
