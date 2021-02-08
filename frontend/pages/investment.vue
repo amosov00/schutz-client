@@ -185,7 +185,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import formatDate from '~/mixins/formatDate'
-import AddFundsModal from '../components/modals/AddFundsModal'
+import { AddFundsModal } from '../components/modals/userContractIntegrations'
 import formatCurrency from '~/mixins/formatCurrency'
 import formatText from '~/mixins/formatText'
 import moment from 'moment'

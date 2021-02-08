@@ -215,6 +215,7 @@ export default {
 	'Понятно, спасибо, установлю позже': "I see, thank you, I'll install it later",
 	Установить: 'Install',
 	dividensTitle: 'Withdraw <br>or reinvest <br>the received dividends',
+	closeDepositModalTitle: 'Close deposit',
 	withdrawalText:
 		'You can <a class="is-link">withdraw the entire amount</a> or part of the accrued dividends, and reinvest the rest.',
 	reinvestText:

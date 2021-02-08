@@ -100,16 +100,16 @@
 			<add-funds-modal />
 		</b-modal>
 		<b-modal :active.sync="isWithdrawCloseDepositModalActive" has-modal-card>
-			<withdraw-and-close-deposit-modal action-type="closeDeposit" />
+			<close-deposit-modal />
 		</b-modal>
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
-			<ChangeWalletModal />
+			<change-wallet-modal />
 		</b-modal>
 		<b-modal :active.sync="isProlongateModalActive" has-modal-card>
-			<ProlongateConfirm :lastContract="lastContract" />
+			<prolongate-confirm :lastContract="lastContract" />
 		</b-modal>
 		<b-modal :active.sync="isCancelModalActive" has-modal-card>
-			<WithdrawConfirm :lastContract="lastContract" />
+			<withdraw-confirm :lastContract="lastContract" />
 		</b-modal>
 	</div>
 </template>
@@ -124,9 +124,8 @@ import ProlongateConfirm from '~/components/modals/ProlongateConfirm'
 import WithdrawConfirm from '~/components/modals/WithdrawConfirm'
 import formatCurrency from '~/mixins/formatCurrency'
 import formatDate from '~/mixins/formatDate'
-import AddFundsModal from '~/components/modals/AddFundsModal'
+import { AddFundsModal, CloseDepositModal } from '~/components/modals/userContractIntegrations'
 import ChangeWalletModal from '~/components/modals/ChangeWalletModal'
-import WithdrawAndCloseDepositModal from '~/components/modals/WithdrawAndCloseDepositModal'
 import { mainSliderController } from '@/utils'
 import moment from 'moment'
 import { METAMASK_STATE } from '~/consts'
@@ -143,7 +142,7 @@ export default {
 		ValidationObserver,
 		AddNewWalletModal,
 		AddFundsModal,
-		WithdrawAndCloseDepositModal,
+		CloseDepositModal,
 		ChangeWalletModal,
 		ProlongateConfirm,
 		WithdrawConfirm,

@@ -57,7 +57,7 @@
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="isCloseDepositModalActive" has-modal-card>
-			<withdraw-and-close-deposit-modal action-type="withdraw" />
+			<withdraw-modal />
 		</b-modal>
 		<b-modal :active.sync="isReinvestModalActive" has-modal-card>
 			<reinvest-modal />
@@ -68,13 +68,12 @@
 <script>
 import formatCurrency from '~/mixins/formatCurrency'
 import { mapGetters } from 'vuex'
-import WithdrawAndCloseDepositModal from './modals/WithdrawAndCloseDepositModal'
-import ReinvestModal from './modals/ReinvestModal'
+import { WithdrawModal, ReinvestModal } from './modals/userContractIntegrations'
 import { METAMASK_STATE } from '~/consts'
 
 export default {
 	name: 'DividendProducts',
-	components: { ReinvestModal, WithdrawAndCloseDepositModal },
+	components: { ReinvestModal, WithdrawModal },
 	mixins: [formatCurrency],
 
 	async created() {
