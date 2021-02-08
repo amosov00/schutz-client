@@ -4,20 +4,19 @@
 			<p class="is-size-5">{{ $t("Укажите сумму вывода") }}</p>
 			<p class="is-size-7 mb-60" v-if="$i18n.locale === 'ru'">
 				Вы можете
-				<a class="is-link" @click="value = depositBalance">вывести всю сумму</a>
+				<a class="is-link" @click="value = interestBalance">вывести всю сумму</a>
 				или часть начисленных дивидендов, остальное реинвестировать.
-				{{ depositBalance }}
 			</p>
 			<p class="is-size-7 mb-60" v-else>
 				You can
-				<a class="is-link" @click="value = depositBalance">
+				<a class="is-link" @click="value = interestBalance">
 					withdraw the entire amount
 				</a>
 				or part of the accrued dividends, and reinvest the rest.
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					:rules="`required|min_value:1|max_value:${depositBalance}`"
+					:rules="`required|min_value:1|max_value:${interestBalance}`"
 					slim
 					v-slot="{ errors, valid }"
 					name="amount"
@@ -142,7 +141,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters({ depositBalance: "userContractIntegration/depositBalance" }),
+		...mapGetters("userContractIntegration", ["interestBalance"]),
 		isTermsAcceped: {
 			get() {
 				return this.$store.getters.isTermsAcceped;
