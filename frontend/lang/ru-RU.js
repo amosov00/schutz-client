@@ -214,6 +214,7 @@ export default {
 	Установить: 'Установить',
 	dividensTitle: 'Выводите<br /> или реинвестируйте<br /> полученные дивиденды',
 	closeDepositModalTitle: 'Закрытие депозита',
+	closeDepositModalSubtitle: 'Вы можете вывести только всю сумму',
 	withdrawalText:
 		'Вы можете <a class="is-link">вывести всю сумму</a> или часть начисленных дивидендов, остальное реинвестировать.',
 	reinvestText:

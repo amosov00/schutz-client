@@ -74,7 +74,7 @@ import { mapGetters } from 'vuex'
 
 export default {
 	name: 'reinvest-modal',
-	props: [metamaskSignature],
+	mixins: [metamaskSignature],
 	data() {
 		return {
 			value: '',
@@ -93,7 +93,6 @@ export default {
 				if (!status) {
 					return
 				}
-
 				this.$buefy.toast.open({
 					message: this.$t('Запрос в Metamask отправлен (РЕИНВЕСТИРОВАНИЕ)'),
 					type: 'is-success',

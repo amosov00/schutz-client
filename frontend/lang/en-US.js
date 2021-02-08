@@ -216,6 +216,7 @@ export default {
 	Установить: 'Install',
 	dividensTitle: 'Withdraw <br>or reinvest <br>the received dividends',
 	closeDepositModalTitle: 'Close deposit',
+	closeDepositModalSubtitle: 'You can withdraw only entire amount of the accrued dividends',
 	withdrawalText:
 		'You can <a class="is-link">withdraw the entire amount</a> or part of the accrued dividends, and reinvest the rest.',
 	reinvestText:

@@ -1,7 +1,8 @@
 <template>
 	<ValidationObserver ref="observer" v-slot="{ invalid }">
 		<div class="add-funds-card">
-			<p class="is-size-5 mb-60">{{ $t('closeDepositModalTitle') }}</p>
+			<p class="is-size-5">{{ $t('closeDepositModalTitle') }}</p>
+			<p class="is-size-7 mb-60">{{ $t('closeDepositModalSubtitle') }}</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
 					:rules="`required|min_value:0.01|max_value:${depositBalance}`"
