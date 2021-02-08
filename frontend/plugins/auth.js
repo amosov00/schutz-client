@@ -32,9 +32,9 @@ export default ({ app, route, redirect }, inject) => {
 			})
 	})
 	inject('authLogout', () => {
-		if (route.path !== app.localePath('/')) {
-			redirect(app.localePath('/'))
-		}
+		// if (route.path !== app.localePath('/')) {
+		// }
+		redirect(app.localePath('/'))
 		app.$cookies.remove('token', {
 			path: '/',
 			domain: app.$domainForCookie(),
