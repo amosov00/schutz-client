@@ -14,7 +14,7 @@
 			</p>
 			<div class="is-flex is-align-items-flex-start mb-60 mw-600">
 				<ValidationProvider
-					:rules="`required|min_value:1|max_value:${targetBalance}`"
+					:rules="`required|min_value:0.01|max_value:${targetBalance}`"
 					slim
 					v-slot="{ errors, valid }"
 					name="amount"
