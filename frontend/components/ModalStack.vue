@@ -9,21 +9,19 @@
 </template>
 
 <script>
-import Modal from "@/components/Modal";
+import Modal from '@/components/Modal'
 
 export default {
 	components: {
-		Modal
+		Modal,
 	},
 	props: {
 		stack: {
 			type: Array,
 			required: true,
-		}
+		},
 	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

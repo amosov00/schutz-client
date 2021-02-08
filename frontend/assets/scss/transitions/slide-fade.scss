@@ -1,9 +1,9 @@
 .slide-fade-right-enter-active {
-	transition: all .3s ease;
+	transition: all 0.3s ease;
 	transform: translateX(0);
 }
 .slide-fade-right-leave-active {
-	transition: all .3s ease;
+	transition: all 0.3s ease;
 	transform: translateX(200%);
 }
 .slide-fade-right-enter {
@@ -14,19 +14,18 @@
 	transform: translateX(-200%);
 }
 
-
 .slide-fade-left-enter-active {
-	transition: all .3s ease;
+	transition: all 0.3s ease;
 	transform: translateX(0);
 }
 
 .slide-fade-left-leave-active {
-	transition: all .3s ease;
+	transition: all 0.3s ease;
 	transform: translateX(200%);
 }
 
 .slide-fade-left-enter {
-	transform: translateX(-200%)
+	transform: translateX(-200%);
 }
 
 .slide-fade-left-leave-to {

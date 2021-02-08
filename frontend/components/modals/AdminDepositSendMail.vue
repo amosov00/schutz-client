@@ -20,7 +20,7 @@ export default {
 		users: {
 			type: Array,
 			required: true,
-		}
+		},
 	},
 
 	data() {
@@ -31,18 +31,16 @@ export default {
 
 	methods: {
 		closeModal() {
-			this.$modal.close();
+			this.$modal.close()
 		},
 
 		send() {
 			this.$modal.resolve({
 				user_ids: this.selectedUserIds,
-			});
+			})
 		},
-	}
+	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

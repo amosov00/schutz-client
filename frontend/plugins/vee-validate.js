@@ -1,4 +1,4 @@
-import { extend, localize } from "vee-validate";
+import { extend, localize } from 'vee-validate'
 import {
 	required,
 	email,
@@ -10,40 +10,40 @@ import {
 	alpha,
 	alpha_spaces,
 	min_value,
-	max_value
-} from "vee-validate/dist/rules";
-import en from "vee-validate/dist/locale/en.json";
+	max_value,
+} from 'vee-validate/dist/rules'
+import en from 'vee-validate/dist/locale/en.json'
 
 // Install English and Arabic locales.
 localize({
-	en
-});
+	en,
+})
 
-extend("email", {
+extend('email', {
 	...email,
-	message: "This field must be a valid email"
-});
-extend("min", {
+	message: 'This field must be a valid email',
+})
+extend('min', {
 	...min,
-	message: "Password must be greater than or equal to 8 characters"
-});
-extend("max", max);
-extend("regex", regex);
-extend("alpha", alpha);
-extend("alpha_num", alpha_num);
-extend("alpha_spaces", alpha_spaces);
-extend("required", {
+	message: 'Password must be greater than or equal to 8 characters',
+})
+extend('max', max)
+extend('regex', regex)
+extend('alpha', alpha)
+extend('alpha_num', alpha_num)
+extend('alpha_spaces', alpha_spaces)
+extend('required', {
 	...required,
-	message: "This field is required"
-});
-extend("confirmed", {
+	message: 'This field is required',
+})
+extend('confirmed', {
 	...confirmed,
-	message: "Password does not match"
-});
-extend("min_value", {
+	message: 'Password does not match',
+})
+extend('min_value', {
 	...min_value,
 	// message: "Value must be greater than or equal to 50 characters"
-});
-extend("max_value", {
-	...max_value
-});
+})
+extend('max_value', {
+	...max_value,
+})

@@ -48,35 +48,38 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import etherscan from "~/mixins/etherscan";
-import tableMixin from "~/components/tables/ReportTables/tableMixin";
-import { saveAs } from 'file-saver';
-import {mapGetters} from "vuex";
-import UserProfile from "~/components/modals/UserProfile";
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import etherscan from '~/mixins/etherscan'
+import tableMixin from '~/components/tables/ReportTables/tableMixin'
+import { saveAs } from 'file-saver'
+import { mapGetters } from 'vuex'
+import UserProfile from '~/components/modals/UserProfile'
 
 export default {
 	mixins: [formatDate, formatCurrency, etherscan, tableMixin],
 
 	computed: {
 		...mapGetters({
-			activeDeposits: 'reports/activeDeposits'
+			activeDeposits: 'reports/activeDeposits',
 		}),
 	},
 
 	methods: {
 		async saveAsExcelAll() {
-			this.$axios.get("/admin/active-deposits/extended/",{
-				params: {
-					as_excel: true,
-				},
-				responseType: "blob"
-			}).then(resp => {
-				saveAs(resp.data, `active_deposits_all.xlsx`)
-			}).catch(e => {
-				console.log(e)
-			})
+			this.$axios
+				.get('/admin/active-deposits/extended/', {
+					params: {
+						as_excel: true,
+					},
+					responseType: 'blob',
+				})
+				.then((resp) => {
+					saveAs(resp.data, `active_deposits_all.xlsx`)
+				})
+				.catch((e) => {
+					console.log(e)
+				})
 		},
 
 		openUserModal(userId) {
@@ -84,13 +87,11 @@ export default {
 				factory: () => UserProfile,
 				props: {
 					userId,
-				}
+				},
 			})
 		},
 	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

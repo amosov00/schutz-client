@@ -28,21 +28,21 @@
 </template>
 
 <script>
-import { CustomSlider } from "~/components";
-import { ActiveDepositTransactions } from "~/components/tables/ReportTables";
-import {mapGetters} from "vuex";
-import etherscan from "~/mixins/etherscan";
-import {itemPagination} from "~/utils/pagination";
+import { CustomSlider } from '~/components'
+import { ActiveDepositTransactions } from '~/components/tables/ReportTables'
+import { mapGetters } from 'vuex'
+import etherscan from '~/mixins/etherscan'
+import { itemPagination } from '~/utils/pagination'
 
 export default {
-	middleware: ["authRequired", "adminRequired"],
+	middleware: ['authRequired', 'adminRequired'],
 
 	components: {
 		CustomSlider,
 		ActiveDepositTransactions,
 	},
 
-	mixins: [ etherscan ],
+	mixins: [etherscan],
 
 	layout: 'profile',
 
@@ -51,54 +51,53 @@ export default {
 			pagination: {
 				page: 1,
 				limit: 20,
-			}
+			},
 		}
 	},
 
 	computed: {
 		...mapGetters({
-			activeDepositTransactions: 'reports/activeDepositTransactions'
+			activeDepositTransactions: 'reports/activeDepositTransactions',
 		}),
 
 		address() {
-			return this.activeDepositTransactions.ethereum_wallet;
+			return this.activeDepositTransactions.ethereum_wallet
 		},
 
 		contract() {
-			return this.activeDepositTransactions.contract;
+			return this.activeDepositTransactions.contract
 		},
 
 		isActive() {
-			return this.activeDepositTransactions.is_active;
+			return this.activeDepositTransactions.is_active
 		},
 
 		transactions() {
-			return this.activeDepositTransactions.transactions;
+			return this.activeDepositTransactions.transactions
 		},
 
 		transactionsWithPagination() {
-			return itemPagination(this.transactions)(this.pagination);
-		}
+			return itemPagination(this.transactions)(this.pagination)
+		},
 	},
 
 	methods: {
 		clipboardSuccessHandler() {
 			this.$buefy.toast.open({
-				message: "Copied!",
-				type: "is-success"
-			});
-		}
+				message: 'Copied!',
+				type: 'is-success',
+			})
+		},
 	},
 
 	async asyncData({ store, params }) {
-		return await store.dispatch("reports/fetchActiveDepositTransactions", params);
-	}
+		return await store.dispatch('reports/fetchActiveDepositTransactions', params)
+	},
 }
 </script>
 
 <style lang="scss">
 .contract_details__container {
-
 	.contract_details__line {
 		font-size: 1.25rem;
 		font-weight: 400;

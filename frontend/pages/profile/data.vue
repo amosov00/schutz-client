@@ -1,14 +1,10 @@
-<template>
-
-</template>
+<template></template>
 
 <script>
-  export default {
-    name: "data",
-    middleware: ['authRequired', ]
-  }
+export default {
+	name: 'data',
+	middleware: ['authRequired'],
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

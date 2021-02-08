@@ -7,24 +7,24 @@
 </template>
 
 <script>
-  import InlineSvg from "vue-inline-svg";
+import InlineSvg from 'vue-inline-svg'
 
-  export default {
-    name: "PayoutButton",
-    components: { InlineSvg },
-    props: {
-      customTooltipLabel: String,
-      allowPayment: Boolean
-    },
-  }
+export default {
+	name: 'PayoutButton',
+	components: { InlineSvg },
+	props: {
+		customTooltipLabel: String,
+		allowPayment: Boolean,
+	},
+}
 </script>
 
 <style lang="sass" scoped>
-  .btn-cashout
-    border: 0
-    background: transparent
-    &:hover
-      cursor: pointer
-  .b-tooltip:after
-    box-shadow: 0px 5px 8px 1px rgba(0, 1, 0, 0.1)
+.btn-cashout
+  border: 0
+  background: transparent
+  &:hover
+    cursor: pointer
+.b-tooltip:after
+  box-shadow: 0px 5px 8px 1px rgba(0, 1, 0, 0.1)
 </style>

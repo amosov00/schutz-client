@@ -35,52 +35,48 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
+import { mapGetters } from 'vuex'
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
 export default {
-  name: "transactions-all",
-  layout: "profile",
-  middleware: ["authRequired", "adminRequired"],
-  mixins: [formatDate, formatCurrency],
-  methods: {
-    async searchAddress() {
-      this.loading = true;
-      await this.$store
-        .dispatch("searchAddress", this.addressQuery)
-        .finally(() => (this.loading = false));
-    }
-  },
+	name: 'transactions-all',
+	layout: 'profile',
+	middleware: ['authRequired', 'adminRequired'],
+	mixins: [formatDate, formatCurrency],
+	methods: {
+		async searchAddress() {
+			this.loading = true
+			await this.$store.dispatch('searchAddress', this.addressQuery).finally(() => (this.loading = false))
+		},
+	},
 
-  computed: {
-    ...mapGetters(["user", "findedAddress"]),
-    tableData() {
-      return this.$store.getters.transactions !== null
-        ? this.$store.getters.transactions
-        : [];
-    },
-    getStatusClass() {
-      if (this.status === "online") {
-        return "status-online";
-      }
-      return "status-offline";
-    }
-  },
+	computed: {
+		...mapGetters(['user', 'findedAddress']),
+		tableData() {
+			return this.$store.getters.transactions !== null ? this.$store.getters.transactions : []
+		},
+		getStatusClass() {
+			if (this.status === 'online') {
+				return 'status-online'
+			}
+			return 'status-offline'
+		},
+	},
 
-  data: () => ({
-    isEmpty: false,
-    isDepositOpen: true,
-    status: "online",
-    currentProduct: "All",
-    products: ["All", "NTSCD", "NTS80", "NTS81", "NTS165"],
-    addressQuery: "",
-    loading: false
-  }),
+	data: () => ({
+		isEmpty: false,
+		isDepositOpen: true,
+		status: 'online',
+		currentProduct: 'All',
+		products: ['All', 'NTSCD', 'NTS80', 'NTS81', 'NTS165'],
+		addressQuery: '',
+		loading: false,
+	}),
 
-  async asyncData({ store }) {
-    return await store.dispatch("fetchTransactions", "investments");
-  }
-};
+	async asyncData({ store }) {
+		return await store.dispatch('fetchTransactions', 'investments')
+	},
+}
 </script>
 
 <style lang="sass" scoped>

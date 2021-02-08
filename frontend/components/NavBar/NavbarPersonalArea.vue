@@ -30,35 +30,32 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex"
-import InlineSvg from "vue-inline-svg";
-import LangSwitcher from "~/components/NavBar/LangSwitcher";
-import PayoutButton from "~/components/NavBar/PayoutButton";
+import { mapGetters } from 'vuex'
+import InlineSvg from 'vue-inline-svg'
+import LangSwitcher from '~/components/NavBar/LangSwitcher'
+import PayoutButton from '~/components/NavBar/PayoutButton'
 import formatCurrency from '~/mixins/formatCurrency'
-import moment from "moment";
+import moment from 'moment'
 
 export default {
-  name: "NavbarPersonalArea",
-  components: {PayoutButton, LangSwitcher, InlineSvg},
-  mixins: [formatCurrency],
-  data: () => ({
-
-  }),
-  computed: {
-  	...mapGetters("userContractIntegration", ["tokenBalance", "interestBalance"]),
-    userActiveDeposits() {
-      if (!this.$store.getters.user || !this.$store.getters.user.active_deposits) {
-        return ""
-      }
-      return this.$store.getters.user.active_deposits.reduce((acc, curr) => {
-        acc += `${curr.contract}: ${moment.unix(curr.close_date).utc().format("DD/MM/YYYY")}\n`
-        return acc
-      }, "")
-    }
-  },
-  methods: {
-  },
-};
+	name: 'NavbarPersonalArea',
+	components: { PayoutButton, LangSwitcher, InlineSvg },
+	mixins: [formatCurrency],
+	data: () => ({}),
+	computed: {
+		...mapGetters('userContractIntegration', ['tokenBalance', 'interestBalance']),
+		userActiveDeposits() {
+			if (!this.$store.getters.user || !this.$store.getters.user.active_deposits) {
+				return ''
+			}
+			return this.$store.getters.user.active_deposits.reduce((acc, curr) => {
+				acc += `${curr.contract}: ${moment.unix(curr.close_date).utc().format('DD/MM/YYYY')}\n`
+				return acc
+			}, '')
+		},
+	},
+	methods: {},
+}
 </script>
 
 <style lang="sass" scoped>

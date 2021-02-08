@@ -1,119 +1,121 @@
 /** Paste your SASS/SCSS/LESS code here */
 .flex-column {
-  flex-direction: column;
+	flex-direction: column;
 }
 
 .no-resize {
-  resize: none !important;
+	resize: none !important;
 }
 
 .input-shadow {
-  box-shadow: inset 0px 6px 4px rgba(0, 0, 0, 0.06);
+	box-shadow: inset 0px 6px 4px rgba(0, 0, 0, 0.06);
 }
 
 .min-h-100 {
-  min-height: 100% !important;
+	min-height: 100% !important;
 }
 
 .input-text-center > input {
-  text-align: center;
+	text-align: center;
 }
 
 .product-link {
-  font-size: 16px;
-  line-height: 19px;
-  color: #0495FB;
-  border-bottom: 1px dashed #0495FB;
-  cursor: pointer;
+	font-size: 16px;
+	line-height: 19px;
+	color: #0495fb;
+	border-bottom: 1px dashed #0495fb;
+	cursor: pointer;
 }
 
 .product-link:hover {
-  opacity: 0.75;
+	opacity: 0.75;
 }
 
 .product-link-active {
-  border-bottom: 0;
-  color: #555555;
-  cursor: default;
-  pointer-events: none;
+	border-bottom: 0;
+	color: #555555;
+	cursor: default;
+	pointer-events: none;
 }
 
 .divider {
-  height: 1px;
-  background-color: #000000;
-  margin-top: 30px;
-  opacity: 0.2;
+	height: 1px;
+	background-color: #000000;
+	margin-top: 30px;
+	opacity: 0.2;
 }
 
 .total {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-  margin-bottom: 20px;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 24px;
+	margin-bottom: 20px;
 }
 
 .table thead th {
-  padding-bottom: 20px;
+	padding-bottom: 20px;
 }
 
-.table td, .table th {
-  padding-top: 0.25em;
-  padding-bottom: 0.2em;
+.table td,
+.table th {
+	padding-top: 0.25em;
+	padding-bottom: 0.2em;
 }
 
 .text-clamp {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
-.table td, .table tr {
-  overflow: hidden;
-  max-width: 80px;
-  font-size: 15px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+.table td,
+.table tr {
+	overflow: hidden;
+	max-width: 80px;
+	font-size: 15px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 
 .overflow-hidden {
-  overflow: hidden;
+	overflow: hidden;
 }
 
 .w-100 {
-  width: 100%;
+	width: 100%;
 }
 
 .overflow-reset:hover {
-  overflow: initial !important;
+	overflow: initial !important;
 }
 
 .validaton-error {
-  display: block;
-  margin-top: 6px;
-  font-size: 12px;
-  color: #bc002a;
+	display: block;
+	margin-top: 6px;
+	font-size: 12px;
+	color: #bc002a;
 }
 
 .p-0 {
-  padding: 0;
+	padding: 0;
 }
 
 .mb-60 {
-  margin-bottom: 60px;
+	margin-bottom: 60px;
 }
 
 .mb-20 {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .mt-auto {
-  margin-top: auto;
+	margin-top: auto;
 }
 
 .is-cursor-pointer {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .text-nowrap {
-  white-space: nowrap;
+	white-space: nowrap;
 }

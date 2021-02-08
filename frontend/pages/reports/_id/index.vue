@@ -10,26 +10,25 @@
 </template>
 
 <script>
-import ReportsTable from "~/components/tables/ReportsTable";
+import ReportsTable from '~/components/tables/ReportsTable'
 
 export default {
-  name: "reports",
-  layout: "admin",
-  middleware: ["authRequired", "adminRequired"],
-  components: {ReportsTable},
-  computed: {
-    activeDepositsByID() {
-      return this.$store.getters["reports/activeDepositsByID"]
-    },
-  },
-  asyncData({store, params}) {
-    store.dispatch('reports/fetchActiveDepositByID', params.id)
-  },
+	name: 'reports',
+	layout: 'admin',
+	middleware: ['authRequired', 'adminRequired'],
+	components: { ReportsTable },
+	computed: {
+		activeDepositsByID() {
+			return this.$store.getters['reports/activeDepositsByID']
+		},
+	},
+	asyncData({ store, params }) {
+		store.dispatch('reports/fetchActiveDepositByID', params.id)
+	},
 }
 </script>
 
 <style lang="sass">
 .is-5
   font-size: 1.15rem
-
 </style>

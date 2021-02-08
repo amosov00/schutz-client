@@ -2,7 +2,6 @@
 	.custom-input
 		.base-label {{ label }}
 		b-select(
-			:placeholder="label"
 			expanded
 			v-model="selectValue"
 		)
@@ -30,7 +29,7 @@ export default {
 		value: {
 			type: [String, Number],
 			default: () => '',
-		}
+		},
 	},
 
 	data() {
@@ -42,16 +41,16 @@ export default {
 	watch: {
 		selectValue: {
 			handler(value) {
-				this.$emit('change', value);
+				this.$emit('change', value)
 
 				this.$emit('input', value)
-			}
+			},
 		},
 	},
 
 	created() {
-		this.selectValue = this.value;
-	}
+		this.selectValue = this.value
+	},
 }
 </script>
 
@@ -66,7 +65,7 @@ export default {
 		position: absolute;
 		width: 100%;
 		top: calc(100% + 5px);
-		color: #D60D0D;
+		color: #d60d0d;
 	}
 
 	.control {
@@ -75,19 +74,18 @@ export default {
 
 	&.has-icon {
 		&::after {
-			font-family: "Font Awesome 5 Free";
+			font-family: 'Font Awesome 5 Free';
 			font-weight: 600;
 		}
 		&.is-success::after {
-			content: "\f00c";
-			color: #00C236;
+			content: '\f00c';
+			color: #00c236;
 		}
 
 		&.is-danger::after {
-			content: "\f071";
-			color: #D60D0D;
+			content: '\f071';
+			color: #d60d0d;
 		}
-
 	}
 	.base-label {
 		white-space: nowrap;
@@ -120,7 +118,7 @@ export default {
 		width: 100%;
 		height: 1px;
 		background-color: #666666;
-		transition: background-color .3s;
+		transition: background-color 0.3s;
 	}
 }
 </style>

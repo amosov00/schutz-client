@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import formatCurrency from "~/mixins/formatCurrency";
+import formatCurrency from '~/mixins/formatCurrency'
 
 export default {
 	props: {
@@ -30,32 +30,29 @@ export default {
 		return {
 			form: {
 				amount: '',
-			}
+			},
 		}
 	},
 
 	methods: {
 		closeModal() {
-			this.$modal.close();
+			this.$modal.close()
 		},
 
 		update() {
-
 			this.$modal.resolve({
 				_id: this.agreement._id,
-				amount: this.formatCurrencyReversed(this.form.amount, 'usdt')
-			});
+				amount: this.formatCurrencyReversed(this.form.amount, 'usdt'),
+			})
 
-			this.closeModal();
-		}
+			this.closeModal()
+		},
 	},
 
 	created() {
 		this.form.amount = this.formatCurrency(this.agreement.amount, 'usdt')
-	}
+	},
 }
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

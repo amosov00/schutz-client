@@ -39,108 +39,82 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from 'vuex'
 import formatDate from '~/mixins/formatDate'
-import XLSX from "xlsx";
+import XLSX from 'xlsx'
 
 export default {
-	name: "users",
-	layout: "admin",
-	middleware: ["managerOrAdminRequired"],
+	name: 'users',
+	layout: 'admin',
+	middleware: ['managerOrAdminRequired'],
 	mixins: [formatDate],
 	computed: {
-		...mapGetters("users", ["users"]),
+		...mapGetters('users', ['users']),
 		exportedFileDate() {
-			const data = this.users.map(el => {
+			const data = this.users.map((el) => {
 				return {
 					ID: el._id,
-					"Register date": this.createdTime(el.created_at),
+					'Register date': this.createdTime(el.created_at),
 					Email: el.email,
 					Telegram: el.telegram,
-					"First name": el.first_name,
-					"Last name": el.last_name,
+					'First name': el.first_name,
+					'Last name': el.last_name,
 					Address: el.ethereum_wallet,
-					"Referral 1": el.referral_1,
-					"Referral 2": el.referral_2,
-					"Referral 3": el.referral_3,
+					'Referral 1': el.referral_1,
+					'Referral 2': el.referral_2,
+					'Referral 3': el.referral_3,
 				}
 			})
 			return data
-		}
+		},
 	},
 	data() {
 		return {
 			isEmpty: false,
-			searchQuery: "",
-			filteredUsers: []
-		};
+			searchQuery: '',
+			filteredUsers: [],
+		}
 	},
 	methods: {
 		changeInput(e) {
-			this.filter();
+			this.filter()
 		},
 		filter() {
 			if (this.searchQuery.length >= 3) {
-				this.filteredUsers = _.filter(this.users, el => {
+				this.filteredUsers = _.filter(this.users, (el) => {
 					if (
-						(el._id !== null &&
-							el._id
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.email !== null &&
-							el.email
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.first_name !== null &&
-							el.first_name
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.last_name !== null &&
-							el.last_name
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.telegram !== null &&
-							el.telegram
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
+						(el._id !== null && el._id.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.email !== null && el.email.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.first_name !== null && el.first_name.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.last_name !== null && el.last_name.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.telegram !== null && el.telegram.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
 						(el.ethereum_wallet !== null &&
-							el.ethereum_wallet
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.referral_1 !== null &&
-							el.referral_1
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.referral_2 !== null &&
-							el.referral_2
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase())) ||
-						(el.referral_3 !== null &&
-							el.referral_3
-								.toLowerCase()
-								.startsWith(this.searchQuery.toLowerCase()))
+							el.ethereum_wallet.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.referral_1 !== null && el.referral_1.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.referral_2 !== null && el.referral_2.toLowerCase().startsWith(this.searchQuery.toLowerCase())) ||
+						(el.referral_3 !== null && el.referral_3.toLowerCase().startsWith(this.searchQuery.toLowerCase()))
 					) {
-						return el;
+						return el
 					} else {
-						return false;
+						return false
 					}
-				});
+				})
 			} else {
-				this.filteredUsers = [];
+				this.filteredUsers = []
 			}
 		},
 		saveAsExcel() {
-			const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileDate);
-			const wb = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(wb, dataTableWS, "data"); // sheetAName is name of Worksheet
+			const dataTableWS = XLSX.utils.json_to_sheet(this.exportedFileDate)
+			const wb = XLSX.utils.book_new()
+			XLSX.utils.book_append_sheet(wb, dataTableWS, 'data') // sheetAName is name of Worksheet
 			// export Excel file
-			XLSX.writeFile(wb, `users.xlsx`);
-		}
+			XLSX.writeFile(wb, `users.xlsx`)
+		},
 	},
 	async created() {
-		await this.$store.dispatch("users/fetchUsersV1");
-	}
-};
+		await this.$store.dispatch('users/fetchUsersV1')
+	},
+}
 </script>
 
 <style lang="sass" scoped></style>

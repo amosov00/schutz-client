@@ -27,27 +27,27 @@ export default {
 			statuses: [
 				{
 					text: 'Не ответил',
-					value: 1
+					value: 1,
 				},
 				{
 					text: 'Закрыть',
-					value: 2
+					value: 2,
 				},
 				{
 					text: 'Продлить',
-					value: 3
-				}
+					value: 3,
+				},
 			],
 
 			form: {
 				result: '',
-			}
+			},
 		}
 	},
 
 	methods: {
 		closeModal() {
-			this.$modal.close();
+			this.$modal.close()
 		},
 
 		update() {
@@ -56,16 +56,14 @@ export default {
 				result: this.form.result,
 			})
 
-			this.closeModal();
-		}
+			this.closeModal()
+		},
 	},
 
 	created() {
-		this.form.result = this.agreement.result ? this.agreement.result : '';
-	}
+		this.form.result = this.agreement.result ? this.agreement.result : ''
+	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

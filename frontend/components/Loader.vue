@@ -4,28 +4,27 @@
 </template>
 
 <script>
-	export default {
-		props: {
-			showed: {
-				type: Boolean,
-			},
-			loader_style: {
-				type: String,
-				default: '/images/loading_2.gif'
-			}
-
-		}
-	}
+export default {
+	props: {
+		showed: {
+			type: Boolean,
+		},
+		loader_style: {
+			type: String,
+			default: '/images/loading_2.gif',
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>
-	.loader-container {
-		text-align: center;
+.loader-container {
+	text-align: center;
 
-		padding: 50px;
+	padding: 50px;
 
-		img {
-			width: 48px;
-		}
+	img {
+		width: 48px;
 	}
+}
 </style>

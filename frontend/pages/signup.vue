@@ -4,19 +4,12 @@
 			<custom-slider :activeDot="1" :dots="2" :next-page="localePath('/')" :prev-page="localePath('/')">
 				<template slot="content">
 					<div class="columns is-fullheight">
-						<div
-							class="column pt-0 pb-0 is-half is-flex flex-column is-justify-content-space-between"
-						>
+						<div class="column pt-0 pb-0 is-half is-flex flex-column is-justify-content-space-between">
 							<div class="is-size-5 mb-20">
-								{{$t('Регистрация в системе')}}
+								{{ $t('Регистрация в системе') }}
 							</div>
 							<div class="mb-20">
-								<ValidationProvider
-									rules="required|email"
-									name="Email"
-									slim="slim"
-									v-slot="{ errors, valid }"
-								>
+								<ValidationProvider rules="required|email" name="Email" slim="slim" v-slot="{ errors, valid }">
 									<base-input
 										size="6"
 										type="email"
@@ -31,12 +24,7 @@
 									/>
 								</ValidationProvider>
 
-								<ValidationProvider
-									rules="required"
-									name="Telegram"
-									slim="slim"
-									v-slot="{ errors, valid }"
-								>
+								<ValidationProvider rules="required" name="Telegram" slim="slim" v-slot="{ errors, valid }">
 									<base-input
 										size="6"
 										label="Telegram:"
@@ -84,12 +72,7 @@
 									/>
 								</ValidationProvider>
 
-								<ValidationProvider
-									rules="required"
-									name="Last Name"
-									slim="slim"
-									v-slot="{ errors, valid }"
-								>
+								<ValidationProvider rules="required" name="Last Name" slim="slim" v-slot="{ errors, valid }">
 									<base-input
 										size="6"
 										:label="`${$t('lastName')}:`"
@@ -159,10 +142,7 @@
 								/>
 							</div>
 							<div class="left-link">
-								<b-checkbox
-									v-model="acceptedConditions"
-									@change.native="handleBlur"
-								>
+								<b-checkbox v-model="acceptedConditions" @change.native="handleBlur">
 									{{ $t('Я принимаю') }}
 									<a href="#" @click="$store.commit('toggleTermsModal', true)">
 										{{ $t('политику конфиденциальности') }}
@@ -170,16 +150,11 @@
 								</b-checkbox>
 							</div>
 						</div>
-						<div
-							class="column pt-0 pb-0 is-half is-flex is-flex-direction-column is-justify-content-space-between"
-						>
+						<div class="column pt-0 pb-0 is-half is-flex is-flex-direction-column is-justify-content-space-between">
 							<div class="auth-image">
 								<img :src="status_image" :class="animate_class" />
 							</div>
-							<custom-button
-								:disabled="invalid || !acceptedConditions"
-								@click.native="signup"
-							>
+							<custom-button :disabled="invalid || !acceptedConditions" @click.native="signup">
 								{{ $t('Зарегистрироваться') }}
 							</custom-button>
 						</div>
@@ -189,8 +164,8 @@
 			<div class="container">
 				<div class="sh-privacy">
 					<h1>{{ $t('Политика конфиденциальности SCHUTZ') }}</h1>
-					
-					<privacy-policy-body/>
+
+					<privacy-policy-body />
 				</div>
 			</div>
 		</ValidationObserver>
@@ -201,40 +176,40 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from "vee-validate";
-import PrivacyPolicy from "@/components/modals/PrivacyPolicyModal";
-import { authSliderController } from "@/utils/slider";
-import PrivacyPolicyBody from '@/components/content_lang/PrivacyPolicy'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import PrivacyPolicy from '@/components/modals/PrivacyPolicyModal'
+import { authSliderController } from '@/utils/slider'
+import PrivacyPolicyBody from '@/components/content/PrivacyPolicy'
 
 export default {
-	name: "signup",
-	layout: "auth",
+	name: 'signup',
+	layout: 'auth',
 	components: {
 		ValidationObserver,
 		ValidationProvider,
 		PrivacyPolicy,
-		PrivacyPolicyBody
+		PrivacyPolicyBody,
 	},
 	transition: authSliderController,
-	middleware: ["userRedirect"],
+	middleware: ['userRedirect'],
 	data() {
 		return {
 			data: {
-				email: "",
-				first_name: "",
-				last_name: "",
-				telegram: "",
-				ethereum_wallet: "",
-				password: "",
-				repeat_password: "",
-				referral_id: ""
+				email: '',
+				first_name: '',
+				last_name: '',
+				telegram: '',
+				ethereum_wallet: '',
+				password: '',
+				repeat_password: '',
+				referral_id: '',
 			},
 			acceptedConditions: false,
 			lockReferralIdInput: false,
 			loading: false,
-			status_image: "/registration.svg",
-			animate_class: ""
-		};
+			status_image: '/registration.svg',
+			animate_class: '',
+		}
 	},
 	methods: {
 		handleBlur() {
@@ -249,73 +224,72 @@ export default {
 				this.data.referral_id &&
 				this.acceptedConditions
 			) {
-				if (this.status_image != "/registration_success.svg") {
-					this.animate_class = "pulse";
-					this.status_image = "/registration_success.svg";
+				if (this.status_image != '/registration_success.svg') {
+					this.animate_class = 'pulse'
+					this.status_image = '/registration_success.svg'
 					setTimeout(() => {
-						this.animate_class = "";
-					}, 1000);
+						this.animate_class = ''
+					}, 1000)
 				}
 			} else {
-				if (this.status_image != "/registration.svg") {
-					this.animate_class = "pulse";
-					this.status_image = "/registration.svg";
+				if (this.status_image != '/registration.svg') {
+					this.animate_class = 'pulse'
+					this.status_image = '/registration.svg'
 					setTimeout(() => {
-						this.animate_class = "";
-					}, 1000);
+						this.animate_class = ''
+					}, 1000)
 				}
 			}
 		},
 
 		failAnimate() {
-			this.animate_class = "shake";
-			this.status_image = "/registration_failure.svg";
+			this.animate_class = 'shake'
+			this.status_image = '/registration_failure.svg'
 			setTimeout(() => {
-				this.animate_class = "";
-			}, 1000);
+				this.animate_class = ''
+			}, 1000)
 		},
 		async signup() {
 			if (!this.acceptedConditions) {
 				this.$buefy.toast.open({
-					message: "You have to confirm terms of the agreement",
-					type: "is-warning"
-				});
-				return false;
+					message: 'You have to confirm terms of the agreement',
+					type: 'is-warning',
+				})
+				return false
 			}
 			if (!this.data.referral_id) {
 				this.$buefy.dialog.alert({
 					message: `Требуется реферальный код. Если вы впервые на сайте, обратитесь в службу <a href="https://t.me/Neutrino_NTS_RU">поддержки</a>`,
-					confirmText: "Ok!"
-				});
-				return false;
+					confirmText: 'Ok!',
+				})
+				return false
 			}
-			this.loading = true;
-			let resp = await this.$store.dispatch("signUp", this.data);
+			this.loading = true
+			let resp = await this.$store.dispatch('signUp', this.data)
 			if (resp === null) {
 				this.$buefy.toast.open({
-					message:
-						"Successfully registered! Please check your email to verify your account",
-					type: "is-success",
-					duration: 5000
-				});
-				this.$router.push("/");
+					message: 'Successfully registered! Please check your email to verify your account',
+					type: 'is-success',
+					duration: 5000,
+				})
+				this.$router.push('/')
 			} else {
-				this.failAnimate();
-				resp.map(el => {
+				this.failAnimate()
+				resp.map((el) => {
 					this.$buefy.toast.open({
 						message: el.message,
-						type: "is-danger"
-					});
-				});
-				this.loading = false;
+						type: 'is-danger',
+					})
+				})
+				this.loading = false
 
-				return false;
+				return false
 			}
-		}
+		},
 	},
 
 	watch: {
-		data(newValue, oldValue) {}
+		data(newValue, oldValue) {},
 	},
 
 	computed: {
@@ -331,54 +305,52 @@ export default {
 				this.data.referral_id &&
 				this.acceptedConditions
 			) {
-				this.animate_class = "flipInX";
+				this.animate_class = 'flipInX'
 				setTimeout(() => {
-					this.animate_class = "";
-				}, 1000);
-				return (this.status_image = "/registration_success.svg");
+					this.animate_class = ''
+				}, 1000)
+				return (this.status_image = '/registration_success.svg')
 			} else {
-				this.status_image = "/registration.svg";
-				return false;
+				this.status_image = '/registration.svg'
+				return false
 			}
 		},
 		modalMessage() {
-			return this.$t("modalMessage");
+			return this.$t('modalMessage')
 		},
 		terms: {
 			get() {
-				return this.$store.state.terms_modal;
+				return this.$store.state.terms_modal
 			},
 			set(newValue) {
-				this.$store.commit("toggleTermsModal", newValue);
-			}
+				this.$store.commit('toggleTermsModal', newValue)
+			},
 		},
 		ethAddress() {
-			return this.$store.getters["metamask/ethAddress"]
-				? `«${this.$store.getters["metamask/ethAddress"]}»`
-				: "";
-		}
+			return this.$store.getters['metamask/ethAddress'] ? `«${this.$store.getters['metamask/ethAddress']}»` : ''
+		},
 	},
 	mounted() {
-		this.getImage;
-		let idFromCookies = this.$cookies.get("referral_id");
+		this.getImage
+		let idFromCookies = this.$cookies.get('referral_id')
 		if (this.$route.query.referral) {
-			this.$cookies.set("referral_id", this.$route.query.referral, {
+			this.$cookies.set('referral_id', this.$route.query.referral, {
 				maxAge: 60 * 60 * 24 * 365,
-				path: "/",
-				domain: this.$domainForCookie()
-			});
-			this.data.referral_id = this.$route.query.referral;
-			this.lockReferralIdInput = true;
+				path: '/',
+				domain: this.$domainForCookie(),
+			})
+			this.data.referral_id = this.$route.query.referral
+			this.lockReferralIdInput = true
 		} else if (idFromCookies) {
-			this.data.referral_id = idFromCookies;
-			this.lockReferralIdInput = true;
+			this.data.referral_id = idFromCookies
+			this.lockReferralIdInput = true
 		}
-	}
-};
+	},
+}
 </script>
 
 <style lang="scss">
-@import "~@/assets/scss/transitions/slide-fade.scss";
+@import '~@/assets/scss/transitions/slide-fade.scss';
 .sh-privacy {
 	margin-bottom: 50px;
 

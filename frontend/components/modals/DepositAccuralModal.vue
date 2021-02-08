@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import formatCurrency from "~/mixins/formatCurrency";
+import formatCurrency from '~/mixins/formatCurrency'
 import formatDate from '~/mixins/formatDate'
 
 export default {
-	name: "PayInvoiceModal",
+	name: 'PayInvoiceModal',
 	mixins: [formatCurrency, formatDate],
-	props: ["fromTimestamp"],
+	props: ['fromTimestamp'],
 	data() {
 		return {
 			loading: false,
@@ -25,10 +25,10 @@ export default {
 			ids: [],
 			totalUSDT: 0,
 			tableColumns: [
-				{field: 'address', label: 'Address'},
-				{field: 'value', label: 'Value', width: 60},
-				{field: 'comment', label: 'Comment'},
-			]
+				{ field: 'address', label: 'Address' },
+				{ field: 'value', label: 'Value', width: 60 },
+				{ field: 'comment', label: 'Comment' },
+			],
 		}
 	},
 	computed: {
@@ -38,12 +38,13 @@ export default {
 	},
 	methods: {
 		async passRepay() {
-			return await this.$store.dispatch("adminContractIntegration/accrualDeposit", this.paymentData)
-				.then(async txHash => {
+			return await this.$store
+				.dispatch('adminContractIntegration/accrualDeposit', this.paymentData)
+				.then(async (txHash) => {
 					if (txHash) {
 						await this.$store.dispatch('reports/updateAgreementPayment', {
 							ids: this.ids,
-							txHash
+							txHash,
 						})
 						await this.$emit('updateAgreements')
 					}
@@ -53,20 +54,23 @@ export default {
 			let formattedData = []
 			for (let i = 0; i < data.values.length; i++) {
 				formattedData.push({
-					"address": data.customerAddresses[i],
-					"value": this.formatCurrency(data.values[i], "usdt"),
-					"comment": data.comment,
+					address: data.customerAddresses[i],
+					value: this.formatCurrency(data.values[i], 'usdt'),
+					comment: data.comment,
 				})
 			}
 			return formattedData
-		}
+		},
 	},
 	async created() {
 		this.loading = true
-		const data = await this.$store.dispatch("reports/fetchAgreementPayment", this.fromTimestamp);
+		const data = await this.$store.dispatch('reports/fetchAgreementPayment', this.fromTimestamp)
 		this.loading = false
 		if (!data) {
-			this.$buefy.toast.open({message: "Failed to fetch data", type: "is-danger"})
+			this.$buefy.toast.open({
+				message: 'Failed to fetch data',
+				type: 'is-danger',
+			})
 			return
 		}
 		this.paymentData = data

@@ -8,15 +8,15 @@
 </template>
 
 <script>
-  import LangSwitcher from "~/components/NavBar/LangSwitcher";
+import LangSwitcher from '~/components/NavBar/LangSwitcher'
 
-  export default {
-    name: "NavbarAuth",
-    components: { LangSwitcher }
-  }
+export default {
+	name: 'NavbarAuth',
+	components: { LangSwitcher },
+}
 </script>
 
 <style lang="sass" scoped>
-  .navbar
-    background: none
+.navbar
+  background: none
 </style>

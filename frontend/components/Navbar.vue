@@ -3,8 +3,8 @@
 		<div class="header">
 			<div class="left">
 				<a class="logo" :href="localePath('/')">
-					<img src="../static/logo.svg" alt="Schutz"/>
-					<span> {{ $t("logoText") }} </span>
+					<img src="../static/logo.svg" alt="Schutz" />
+					<span> {{ $t('logoText') }} </span>
 				</a>
 				<div class="links">
 					<p class="link-item" v-for="link in links" :key="link.name">
@@ -12,7 +12,9 @@
 						<nuxt-link
 							:to="localePath(link.link)"
 							class="link"
-							:class="{active: link.link === activePage || `${link.link}/` === activePage}"
+							:class="{
+								active: link.link === activePage || `${link.link}/` === activePage,
+							}"
 						>
 							{{ $t(link.name) }}
 						</nuxt-link>
@@ -23,89 +25,94 @@
 			<div class="dropdown__container" v-if="showAdminDropdown">
 				<CustomDropdown :items="adminDropdownItems">
 					<div slot="label" class="dropdown__label">
-						{{ $t("adminPanel") }}
+						{{ $t('adminPanel') }}
 					</div>
 				</CustomDropdown>
 			</div>
 			<div class="right">
 				<a :href="closeLink" class="profile">
-					<span> {{ $t("closeProfile") }} </span>
+					<span> {{ $t('closeProfile') }} </span>
 				</a>
-				<lang-switcher/>
+				<lang-switcher />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import LangSwitcher from "./LangSwitcher";
-import CustomDropdown from "@/components/ui/CustomDropdown";
+import LangSwitcher from './LangSwitcher'
+import CustomDropdown from '@/components/ui/CustomDropdown'
 
 export default {
 	components: {
 		LangSwitcher,
-		CustomDropdown
+		CustomDropdown,
 	},
 	props: {
 		links: {
 			type: Array,
-			required: true
-		}
+			required: true,
+		},
 	},
 	computed: {
 		closeLink() {
-			if (this.$i18n.locale === "ru") {
-				return this.$config.LANDING_BASE_URL;
+			if (this.$i18n.locale === 'ru') {
+				return this.$config.LANDING_BASE_URL
 			} else {
-				return `${this.$config.LANDING_BASE_URL}/${this.$i18n.locale}`;
+				return `${this.$config.LANDING_BASE_URL}/${this.$i18n.locale}`
 			}
 		},
 		activePage() {
-			let path = this.$route.path.replace(`/${this.$i18n.locale}`, "");
-			if (path === "") path = "/";
-			return path;
+			let path = this.$route.path.replace(`/${this.$i18n.locale}`, '')
+			if (path === '') path = '/'
+			return path
 		},
 
 		showAdminDropdown() {
-			return this.$userIsManager();
+			return this.$userIsManager()
 		},
 
 		adminDropdownItems() {
 			return [
 				{
-					text: "Пользователи",
-					action: () => this.$router.push("/admin/users"),
-					active: this.$route.path === "/admin/users"
+					text: 'Пользователи',
+					action: () => this.$router.push('/admin/users'),
+					active: this.$route.path === '/admin/users',
 				},
 				{
-					text: "Отчеты",
-					action: () => this.$router.push("/admin/reports"),
-					active: this.$route.path === "/admin/reports"
+					text: 'Отчеты',
+					action: () => this.$router.push('/admin/reports'),
+					active: this.$route.path === '/admin/reports',
 				},
 				{
-					text: "Начисление дивидендов",
-					action: () => this.$router.push("/admin/bills"),
-					active: this.$route.path === "/admin/bills"
+					text: 'Начисление дивидендов',
+					action: () => this.$router.push('/admin/bills'),
+					active: this.$route.path === '/admin/bills',
 				},
 				{
-					text: "Начисление вкладов",
-					action: () => this.$router.push("/admin/deposit-accrual"),
-					active: this.$route.path === "/admin/deposit-accrual"
+					text: 'Начисление вкладов',
+					action: () => this.$router.push('/admin/deposit-accrual'),
+					active: this.$route.path === '/admin/deposit-accrual',
 				},
 				{
-					text: "Вопросы - ответы",
-					action: () => this.$router.push("/faq"),
-					active: this.$router.path === "/faq",
+					text: 'Вопросы - ответы',
+					action: () => this.$router.push('/faq'),
+					active: this.$router.path === '/faq',
 				},
 				{
-					text: "Деактивация транзакций",
-					action: () => this.$router.push("/admin/transactions/deactivate"),
-					active: this.$router.path === "/admin/transactions/deactivate",
-				}
-			];
-		}
+					text: 'Деактивация транзакций',
+					action: () => this.$router.push('/admin/transactions/deactivate'),
+					active: this.$router.path === '/admin/transactions/deactivate',
+				},
+				{
+					text: 'Журнал логов',
+					action: () => this.$router.push('/admin/logs'),
+					active: this.$router.path === '/admin/logs',
+				},
+			]
+		},
 	},
-};
+}
 </script>
 
 <style lang="scss">
@@ -246,7 +253,7 @@ export default {
 			color: #ffffff;
 
 			&::before {
-				content: "";
+				content: '';
 				width: 24px;
 				height: 24px;
 				display: flex;
