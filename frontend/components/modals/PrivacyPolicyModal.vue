@@ -2,43 +2,39 @@
 	<div class="s-modal">
 		<div class="s-modal__scroll">
 			<div class="s-modal____content terms">
-				<div class="terms__title"> {{ $t('Политика конфиденциальности SCHUTZ') }} </div>
+				<div class="terms__title">
+					{{ $t('Политика конфиденциальности SCHUTZ') }}
+				</div>
 				<div class="terms__body">
-					<privacy-policy-body/>
+					<privacy-policy-body />
 				</div>
 			</div>
 		</div>
 		<div class="terms__acception">
-			<div
-				class="terms__cancel"
-				@click="$store.commit('toggleTermsModal', false)"
-			>
+			<div class="terms__cancel" @click="$store.commit('toggleTermsModal', false)">
 				{{ $t('Отменить, не согласен') }}
 			</div>
-			<button
-				@click="accept()"
-				class="button terms__accept custom-button is-primary is-size-5 has-text-weight-bold"
-			>
-				{{$t('Принять')}}
+			<button @click="accept()" class="button terms__accept custom-button is-primary is-size-5 has-text-weight-bold">
+				{{ $t('Принять') }}
 			</button>
 		</div>
 	</div>
 </template>
 
 <script>
-import PrivacyPolicyBody from '@/components/content_lang/PrivacyPolicy'
+import PrivacyPolicyBody from '@/components/content/PrivacyPolicy'
 export default {
-	name: "privacy-policy-modal",
-	components:{
-		PrivacyPolicyBody
+	name: 'privacy-policy-modal',
+	components: {
+		PrivacyPolicyBody,
 	},
 	methods: {
 		accept() {
-			this.$emit("accepted", true);
-			this.$store.commit("toggleTermsModal", false);
-		}
-	}
-};
+			this.$emit('accepted', true)
+			this.$store.commit('toggleTermsModal', false)
+		},
+	},
+}
 </script>
 
 <style lang="scss">

@@ -1,11 +1,6 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="2"
-			:dots="4"
-			:next-page="localePath('/dividends')"
-			:prev-page="localePath('/profile')"
-		>
+		<custom-slider :activeDot="2" :dots="4" :next-page="localePath('/dividends')" :prev-page="localePath('/profile')">
 			<template slot="content">
 				<div class="columns">
 					<div class="column is-half">
@@ -13,26 +8,19 @@
 							<div class="is-size-5 mb-5" v-html="$t('investmentTitle')"></div>
 							<div class="mb-5 calc">
 								<div class="is-size-7 mb-2 has-text-grey">
-									{{ $t("Укажите сумму вклада в USDT") }}
+									{{ $t('Укажите сумму вклада в USDT') }}
 								</div>
-								<base-input
-									v-model="input"
-									type="number"
-									size="4"
-									:max="999999"
-									:maxLength="8"
-									onlyNumber
-								/>
+								<base-input v-model="input" type="number" size="4" :max="999999" :maxLength="8" onlyNumber />
 							</div>
 							<div class="mb-5">
-								<div class="is-size-7">{{ $t("ваш доход составит:") }}</div>
+								<div class="is-size-7">{{ $t('ваш доход составит:') }}</div>
 								<div class="is-size-2">
 									{{ Math.round(profit) }}
 								</div>
 							</div>
 							<div class="mb-5">
 								<div class="is-size-7">
-									{{ $t("с учетом реинвестирования:") }}
+									{{ $t('с учетом реинвестирования:') }}
 								</div>
 								<div class="is-size-1">
 									{{ Math.round(reinvest) }}
@@ -40,34 +28,27 @@
 							</div>
 							<div>
 								<div class="is-size-7 mb-4 has-text-grey">
-									{{ $t("Вклад будет доступен к выводу") }} <br/>
-									{{ $t("после") }} {{ getWithdrawDate }}
+									{{ $t('Вклад будет доступен к выводу') }} <br />
+									{{ $t('после') }} {{ getWithdrawDate }}
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="column is-half is-flex is-flex-direction-column ">
+					<div class="column is-half is-flex is-flex-direction-column">
 						<div>
-							<div class="is-size-4">{{ $t("Вклад USDT") }}:</div>
+							<div class="is-size-4">{{ $t('Вклад USDT') }}:</div>
 							<div class="is-size-2 mb-5">
 								{{ formatCurrency(tokenBalance) }}
 							</div>
-							<div class="is-size-7 ethereum">{{ $t("Ethereum адрес") }}:</div>
+							<div class="is-size-7 ethereum">{{ $t('Ethereum адрес') }}:</div>
 							<div class="ethereum-address mb-5">
 								<span v-if="user.ethereum_wallet">{{ user.ethereum_wallet }}</span>
-								<a
-									v-else
-									@click="isWalletModalActive = true"
-									class="value has-text-link has-text-weight-light"
-								>
-									{{ $t("Добавить кошелек") }}
+								<a v-else @click="isWalletModalActive = true" class="value has-text-link has-text-weight-light">
+									{{ $t('Добавить кошелек') }}
 								</a>
 							</div>
 							<div class="is-flex mb-3 is-align-items-center">
-								<div
-									:class="`status-${mode}`"
-									class="is-size-4 status mr-5"
-								>
+								<div :class="`status-${mode}`" class="is-size-4 status mr-5">
 									{{ mode }}
 								</div>
 								<div class="is-size-6">Gas price (fast): {{ gasPrice }}</div>
@@ -75,7 +56,6 @@
 							<div v-if="mode === metamaskState.ONLINE" class="is-size-7 has-text-grey">
 								<span v-if="allowance === 0">{{ $t('walletOnlineApprove') }}</span>
 								<span v-else>{{ $t('walletOnline') }}</span>
-
 							</div>
 							<div v-else-if="mode === metamaskState.WAITING" class="is-size-7 status-offline">
 								{{ $t('walletWaiting') }}
@@ -89,7 +69,7 @@
 							@click.native="isMetaMaskInstallModalActive = true"
 							class="mt-auto"
 						>
-							{{ $t("Авторизовать кошлек") }}
+							{{ $t('Авторизовать кошлек') }}
 						</custom-button>
 						<custom-button
 							v-else-if="isMetamaskInstalled && allowance === 0"
@@ -97,7 +77,7 @@
 							class="mt-auto"
 							:disabled="!metamaskActionsAreAllowed"
 						>
-							{{ $t("Одобрить USDT") }}
+							{{ $t('Одобрить USDT') }}
 						</custom-button>
 						<custom-button
 							v-else-if="isMetamaskInstalled && tokenBalance > 0"
@@ -105,7 +85,7 @@
 							class="mt-auto"
 							:disabled="!metamaskActionsAreAllowed"
 						>
-							{{ $t("Пополнить депозит") }}
+							{{ $t('Пополнить депозит') }}
 						</custom-button>
 						<custom-button
 							v-else
@@ -113,7 +93,7 @@
 							class="mt-auto"
 							:disabled="!metamaskActionsAreAllowed"
 						>
-							{{ $t("Открыть вклад") }}
+							{{ $t('Открыть вклад') }}
 						</custom-button>
 					</div>
 				</div>
@@ -122,7 +102,7 @@
 		<div class="container">
 			<div class="level">
 				<div class="level-left page-title">
-					{{ $t("История транзакций") }}
+					{{ $t('История транзакций') }}
 				</div>
 			</div>
 			<b-table
@@ -142,35 +122,15 @@
 					>
 						{{ timestampToDateTime(props.row.args.timestamp) }}
 					</b-table-column>
-					<b-table-column
-						sortable
-						field="event"
-						:label="$t('Событие')"
-						width="20%"
-						:custom-sort="sortByEvent"
-					>
+					<b-table-column sortable field="event" :label="$t('Событие')" width="20%" :custom-sort="sortByEvent">
 						<span class="text-nowrap">{{ $t(props.row.event) }}</span>
 						<span class="tag is-link" v-if="props.row.isReinvested">
-							{{ $t("Реинвестиция") }}
+							{{ $t('Реинвестиция') }}
 						</span>
 					</b-table-column>
-					<b-table-column
-						class="has-text-primary overflow-reset"
-						field="txHash"
-						:label="$t('Хэш')"
-						width="20%"
-					>
-						<b-tooltip
-							class="w-100"
-							:label="props.row.transactionHash"
-							type="is-black"
-							position="is-bottom"
-						>
-							<a
-								:href="'https://etherscan.io/tx/' + props.row.transactionHash"
-								target="_blank"
-								class="is-flex"
-							>
+					<b-table-column class="has-text-primary overflow-reset" field="txHash" :label="$t('Хэш')" width="20%">
+						<b-tooltip class="w-100" :label="props.row.transactionHash" type="is-black" position="is-bottom">
+							<a :href="'https://etherscan.io/tx/' + props.row.transactionHash" target="_blank" class="is-flex">
 								{{ hashSlice(props.row.transactionHash) }}
 							</a>
 						</b-tooltip>
@@ -196,85 +156,74 @@
 						sortable
 						:custom-sort="sortByAmount"
 					>
-						{{ formatCurrency(props.row.args.USDT, "usdt") }}
+						{{ formatCurrency(props.row.args.USDT, 'usdt') }}
 					</b-table-column>
 				</template>
 			</b-table>
 
 			<div class="center mb-6">
-				<button
-					v-if="!hide_button"
-					type="button"
-					@click="showMore()"
-					class="default-button"
-				>
-					{{ $t("показать еще") }}
+				<button v-if="!hide_button" type="button" @click="showMore()" class="default-button">
+					{{ $t('показать еще') }}
 				</button>
 			</div>
 			<div class="is-size-5 has-background-info total-withdraw mb-6">
-				<div v-for="(total, k) in totals" :key="k">
-					{{ $t(k) }}: {{ `${formatCurrency(total, "usdt")}` }} USDT
-				</div>
+				<div v-for="(total, k) in totals" :key="k">{{ $t(k) }}: {{ `${formatCurrency(total, 'usdt')}` }} USDT</div>
 			</div>
 		</div>
 		<b-modal :active.sync="isWalletModalActive" has-modal-card>
 			<add-new-wallet-modal></add-new-wallet-modal>
 		</b-modal>
 		<b-modal :active.sync="isMetaMaskInstallModalActive" has-modal-card>
-			<install-meta-mask-modal/>
+			<install-meta-mask-modal />
 		</b-modal>
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
-			<AddFundsModal :preparedData="input" has-modal-card/>
+			<AddFundsModal :preparedData="input" has-modal-card />
 		</b-modal>
 	</div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex";
-import formatDate from "~/mixins/formatDate";
-import AddFundsModal from "../components/modals/AddFundsModal";
-import formatCurrency from "~/mixins/formatCurrency";
-import formatText from "~/mixins/formatText";
-import moment from "moment";
-import gsap from "gsap";
-import AddNewWalletModal from "../components/modals/AddNewWalletModal";
-import InstallMetaMaskModal from "../components/modals/installMetaMaskModal";
-import {mainSliderController} from "@/utils/slider";
-import {METAMASK_STATE} from "~/consts";
+import { mapGetters, mapActions } from 'vuex'
+import formatDate from '~/mixins/formatDate'
+import AddFundsModal from '../components/modals/AddFundsModal'
+import formatCurrency from '~/mixins/formatCurrency'
+import formatText from '~/mixins/formatText'
+import moment from 'moment'
+import gsap from 'gsap'
+import AddNewWalletModal from '../components/modals/AddNewWalletModal'
+import InstallMetaMaskModal from '../components/modals/installMetaMaskModal'
+import { mainSliderController } from '@/utils/slider'
+import { METAMASK_STATE } from '~/consts'
 
 export default {
-	name: "investment",
-	layout: "profile",
-	middleware: ["authRequired"],
+	name: 'investment',
+	layout: 'profile',
+	middleware: ['authRequired'],
 	mixins: [formatDate, formatCurrency, formatText],
 	transition: mainSliderController,
 	components: {
 		InstallMetaMaskModal,
 		AddNewWalletModal,
-		AddFundsModal
+		AddFundsModal,
 	},
 
 	async created() {
 		if (!this.$store.state.metamask.gasPrice) {
-			await this.$store.dispatch("metamask/getGasPrice");
+			await this.$store.dispatch('metamask/getGasPrice')
 		}
 	},
 	watch: {
 		input: {
 			handler(newVal) {
-				this.animateNumbers(newVal);
+				this.animateNumbers(newVal)
 			},
-			immediate: true
-		}
+			immediate: true,
+		},
 	},
 	computed: {
-		...mapGetters(["user", "txTotals"]),
-		...mapGetters("metamask", ["gasPrice", "isConnected", "mode"]),
-		...mapGetters("userContractIntegration", [
-			"depositBalance",
-			"allowance",
-			"tokenBalance"
-		]),
+		...mapGetters(['user', 'txTotals']),
+		...mapGetters('metamask', ['gasPrice', 'isConnected', 'mode']),
+		...mapGetters('userContractIntegration', ['depositBalance', 'allowance', 'tokenBalance']),
 		isMetamaskInstalled() {
 			return this.isConnected && this.user.ethereum_wallet
 		},
@@ -282,102 +231,100 @@ export default {
 			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
 		},
 		tableData() {
-			return this.$store.getters.transactions.transactions !== null
-				? this.$store.getters.transactions.transactions
-				: [];
+			return this.$store.getters.transactions.transactions !== null ? this.$store.getters.transactions.transactions : []
 		},
 		filteredData() {
-			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
+			let d = this.$store.getters.investmentsWithFilter(this.currentProduct)
 			d.sort((a, b) => {
 				if (this.sort_date) {
-					if (this.sort_date === "asc") {
-						return b.args.timestamp - a.args.timestamp;
+					if (this.sort_date === 'asc') {
+						return b.args.timestamp - a.args.timestamp
 					} else {
-						return a.args.timestamp - b.args.timestamp;
+						return a.args.timestamp - b.args.timestamp
 					}
 				}
 
 				if (this.sort_amount) {
-					if (this.sort_amount === "asc") {
-						return b.args.USDT - a.args.USDT;
+					if (this.sort_amount === 'asc') {
+						return b.args.USDT - a.args.USDT
 					} else {
-						return a.args.USDT - b.args.USDT;
+						return a.args.USDT - b.args.USDT
 					}
 				}
 
 				if (this.sort_contract) {
-					if (this.sort_contract === "asc") {
-						return b.contract.localeCompare(a.contract);
+					if (this.sort_contract === 'asc') {
+						return b.contract.localeCompare(a.contract)
 					} else {
-						return a.contract.localeCompare(b.contract);
+						return a.contract.localeCompare(b.contract)
 					}
 				}
 
 				if (this.sort_event) {
-					if (this.sort_event === "asc") {
-						return b.event.localeCompare(a.event);
+					if (this.sort_event === 'asc') {
+						return b.event.localeCompare(a.event)
 					} else {
-						return a.event.localeCompare(b.event);
+						return a.event.localeCompare(b.event)
 					}
 				}
-			});
+			})
 
-			return d.slice(0, this.limit);
+			return d.slice(0, this.limit)
 		},
 
 		totals() {
-			let d = this.$store.getters.investmentsWithFilter(this.currentProduct);
+			let d = this.$store.getters.investmentsWithFilter(this.currentProduct)
 			let t = {
 				investments: 0,
-				deposit_accrual: 0,
-				deposit_withdraw: 0
-			};
-
-			d.forEach(el => {
-				switch (el.event) {
-					case "Deposit":
-						t.investments += el.args.USDT;
-						break;
-					case "Deposit Accrual":
-						t.deposit_accrual += el.args.USDT;
-						break;
-					case "Deposit Withdraw":
-						t.deposit_withdraw += el.args.USDT;
-						break;
-				}
-			});
-
-			if (this.limit > this.filteredData.length) {
-				this.hide_button = true;
+				deposit_accural: 0,
+				deposit_withdraw: 0,
 			}
 
-			return t;
+			d.forEach((el) => {
+				switch (el.event) {
+					case 'Deposit':
+						t.investments += el.args.USDT
+						break
+					case 'Deposit Accrual':
+						t.deposit_accural += el.args.USDT
+						break
+					case 'Deposit Withdraw':
+						t.deposit_withdraw += el.args.USDT
+						break
+				}
+			})
+
+			if (this.limit > this.filteredData.length) {
+				this.hide_button = true
+			}
+
+			return t
 		},
 
 		getWithdrawDate() {
-			const offset = moment().utcOffset();
+			const offset = moment().utcOffset()
 			return moment()
-				.startOf("month")
+				.startOf('month')
 				.locale(this.$i18n.locale)
-				.add(offset, "minutes")
-				.add(13, "month")
-				.add(19, "days")
-				.format("DD MMM YYYY");
+				.add(offset, 'minutes')
+				.add(13, 'month')
+				.add(19, 'days')
+				.format('DD MMM YYYY')
 		},
 	},
 	data: () => ({
 		limit: 5,
 		hide_button: false,
-		profit: "",
-		reinvest: "",
-		input: "2500",
+		profit: '',
+		reinvest: '',
+		input: '2500',
 		isEmpty: false,
-		currentProduct: "All",
-		products: ["All", "NTS80", "NTS81", "NTS165"],
+		currentProduct: 'All',
+		products: ['All', 'NTS80', 'NTS81', 'NTS165'],
 		isWalletModalActive: false,
 		isMetaMaskInstallModalActive: false,
 		isAddFundsModalActive: false,
-		sort_date: "asc",
+		sort_date: 'asc',
 		sort_event: false,
 		sort_contract: false,
 		sort_amount: false,
@@ -385,53 +332,53 @@ export default {
 	}),
 	methods: {
 		...mapActions({
-			allowUSDT: "userContractIntegration/allowUSDT",
+			allowUSDT: 'userContractIntegration/allowUSDT',
 		}),
 		showMore() {
-			this.limit += 5;
+			this.limit += 5
 			if (this.limit > this.filteredData.length) {
-				this.hide_button = true;
+				this.hide_button = true
 			}
 		},
 		setProduct(product) {
-			this.currentProduct = product;
+			this.currentProduct = product
 		},
 		animateNumbers(newVal) {
 			gsap.to(this.$data, 0.5, {
 				profit: newVal * 1.8,
-				reinvest: newVal * 2.018
-			});
+				reinvest: newVal * 2.018,
+			})
 		},
 
 		sortByDate(a, b, isAsc) {
-			this.sort_date = isAsc ? "asc" : "desc";
-			this.sort_event = false;
-			this.sort_contract = false;
-			this.sort_amount = false;
+			this.sort_date = isAsc ? 'asc' : 'desc'
+			this.sort_event = false
+			this.sort_contract = false
+			this.sort_amount = false
 		},
 		sortByAmount(a, b, isAsc) {
-			this.sort_date = false;
-			this.sort_event = false;
-			this.sort_contract = false;
-			this.sort_amount = isAsc ? "asc" : "desc";
+			this.sort_date = false
+			this.sort_event = false
+			this.sort_contract = false
+			this.sort_amount = isAsc ? 'asc' : 'desc'
 		},
 		sortByContract(a, b, isAsc) {
-			this.sort_date = false;
-			this.sort_event = false;
-			this.sort_contract = isAsc ? "asc" : "desc";
-			this.sort_amount = false;
+			this.sort_date = false
+			this.sort_event = false
+			this.sort_contract = isAsc ? 'asc' : 'desc'
+			this.sort_amount = false
 		},
 		sortByEvent(a, b, isAsc) {
-			this.sort_date = false;
-			this.sort_event = isAsc ? "asc" : "desc";
-			this.sort_contract = false;
-			this.sort_amount = false;
-		}
+			this.sort_date = false
+			this.sort_event = isAsc ? 'asc' : 'desc'
+			this.sort_contract = false
+			this.sort_amount = false
+		},
 	},
-	async asyncData({store}) {
-		await store.dispatch("fetchTransactions", "investments");
-	}
-};
+	async asyncData({ store }) {
+		await store.dispatch('fetchTransactions', 'investments')
+	},
+}
 </script>
 <style lang="scss">
 .has-text-right {
@@ -445,7 +392,7 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-@import "~@/assets/scss/transitions/slide-fade.scss";
+@import '~@/assets/scss/transitions/slide-fade.scss';
 
 .ethereum-address {
 	font-size: 14px;
@@ -468,7 +415,7 @@ export default {
 	position: relative;
 
 	&::before {
-		content: "";
+		content: '';
 		display: block;
 		position: absolute;
 		top: 0;
@@ -488,7 +435,7 @@ export default {
 	text-transform: capitalize;
 
 	&:before {
-		content: "";
+		content: '';
 		position: relative;
 		width: 10px;
 		height: 10px;
@@ -513,7 +460,6 @@ export default {
 			background-color: #d6640d;
 		}
 	}
-
 
 	&-online {
 		color: #00c236;

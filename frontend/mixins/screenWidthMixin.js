@@ -1,19 +1,19 @@
 let screenWidthMixin = {
-  data() {
-    return {
-      screenWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-    }
-  },
-  computed: {
+	data() {
+		return {
+			screenWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+		}
+	},
+	computed: {
 		isMobile() {
-			return this.screenWidth <= 768;
+			return this.screenWidth <= 768
 		},
-  },
-  mounted() {
+	},
+	mounted() {
 		window.addEventListener('resize', () => {
-			this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-		});
-	}
-};
+			this.screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+		})
+	},
+}
 
-export default screenWidthMixin;
+export default screenWidthMixin

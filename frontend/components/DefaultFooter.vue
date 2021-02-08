@@ -3,76 +3,56 @@
 		<div class="separate"></div>
 		<div class="footer__nav">
 			<a :href="getLink('/')">
-				{{ $t("Криптодепозиты") }}
+				{{ $t('Криптодепозиты') }}
 			</a>
 			<a :href="getLink('/about-us')">
-				{{ $t("О нас") }}
+				{{ $t('О нас') }}
 			</a>
-			<a :href="getLink('/payouts')">{{ $t("Выплаты") }}</a>
-			<a :href="getLink('/strategies')">{{ $t("Стратегии") }}</a>
-			<a :href="getLink('/help')">{{ $t("Вопросы и ответы") }}</a>
-			<a :href="getLink('/contacts')">{{ $t("Контакты") }}</a>
+			<a :href="getLink('/payouts')">{{ $t('Выплаты') }}</a>
+			<a :href="getLink('/strategies')">{{ $t('Стратегии') }}</a>
+			<a :href="getLink('/help')">{{ $t('Вопросы и ответы') }}</a>
+			<a :href="getLink('/contacts')">{{ $t('Контакты') }}</a>
 		</div>
 		<div class="footer__social-container">
 			<div>
-				<a
-					:href="limitationOfLiabilityFileLink"
-					class="mr-50"
-					target="_blank"
-				>
-					{{ $t("Ограничение ответственности") }}
+				<a :href="limitationOfLiabilityFileLink" class="mr-50" target="_blank">
+					{{ $t('Ограничение ответственности') }}
 				</a>
 
-				<a
-					:href="privacyPolicyLink"
-					target="_blank"
-				>
-					{{ $t("Политика конфиденциальности") }}
+				<a :href="privacyPolicyLink" target="_blank">
+					{{ $t('Политика конфиденциальности') }}
 				</a>
 			</div>
 			<div class="footer__social">
 				<a href="https://t.me/neutrinofund" target="_blank">
-					<img alt="telegram" src="/social/telegram.png"/>
+					<img alt="telegram" src="/social/telegram.png" />
 				</a>
 				<a href="https://www.instagram.com/schutz_capital" target="_blank"
-				><img alt="instagram" src="/social/instagram.png"
+					><img alt="instagram" src="/social/instagram.png"
 				/></a>
-				<a href="https://medium.com/@schutzcapital" target="_blank"
-				><img alt="medium" src="/social/medium.png"
-				/></a>
-				<a href="https://t.me/Neutrino_NTS_RU" target="_blank"
-				><img alt="telegram" src="/social/telegram.png"
-				/></a>
-				<a href="https://twitter.com/schutzcapital" target="_blank"
-				><img alt="twitter" src="/social/twitter.png"
-				/></a>
-				<a href="https://www.facebook.com/schutz.capital" target="_blank"
-				><img alt="fb" src="/social/fb.png"
-				/></a>
+				<a href="https://medium.com/@schutzcapital" target="_blank"><img alt="medium" src="/social/medium.png" /></a>
+				<a href="https://t.me/Neutrino_NTS_RU" target="_blank"><img alt="telegram" src="/social/telegram.png" /></a>
+				<a href="https://twitter.com/schutzcapital" target="_blank"><img alt="twitter" src="/social/twitter.png" /></a>
+				<a href="https://www.facebook.com/schutz.capital" target="_blank"><img alt="fb" src="/social/fb.png" /></a>
 			</div>
 		</div>
 		<div class="footer__bottom">
 			<div class="footer__copyright">© 2017—2021, <span>SCHUTZ</span></div>
-			<a
-				v-if="false"
-				class="footer__ppt"
-				href="/files/presentation_nts.pdf"
-				target="_blank"
-			>
-				{{ $t("Скачать презентацию") }}
+			<a v-if="false" class="footer__ppt" href="/files/presentation_nts.pdf" target="_blank">
+				{{ $t('Скачать презентацию') }}
 			</a>
-			<lang-switcher/>
+			<lang-switcher />
 		</div>
 	</div>
 </template>
 
 <script>
-import LangSwitcher from "@/components/LangSwitcher";
+import LangSwitcher from '@/components/LangSwitcher'
 
 export default {
-	name: "DefaultFooter",
+	name: 'DefaultFooter',
 	components: {
-		LangSwitcher
+		LangSwitcher,
 	},
 	computed: {
 		contacts() {
@@ -82,20 +62,22 @@ export default {
 			return this.$config.TELEGRAM_SUPPORT_URL
 		},
 		limitationOfLiabilityFileLink() {
-			return this.$i18n.locale === 'ru' ? '/files/Ogranicheniye_otvetstvennosti.pdf' : '/files/Limitation_of_liability.pdf'
+			return this.$i18n.locale === 'ru'
+				? '/files/Ogranicheniye_otvetstvennosti.pdf'
+				: '/files/Limitation_of_liability.pdf'
 		},
 		privacyPolicyLink() {
 			return this.$i18n.locale === 'ru' ? '/files/Politika_konfidensialnosti.pdf' : '/files/Privacy_Policy.pdf'
-		}
+		},
 	},
 
 	methods: {
 		getLink(r) {
-			let page = `schutz.capital${this.localePath(r)}`.replace("//", "/");
-			return `https://${page}`;
-		}
+			let page = `schutz.capital${this.localePath(r)}`.replace('//', '/')
+			return `https://${page}`
+		},
 	},
-};
+}
 </script>
 
 <style lang="scss" scoped>

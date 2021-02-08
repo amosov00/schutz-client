@@ -55,21 +55,21 @@
 </template>
 
 <script>
-import { CustomSlider } from "~/components";
-import formatCurrency from "~/mixins/formatCurrency";
-import formatDate from "~/mixins/formatDate";
-import {mapActions, mapGetters} from "vuex";
-import PayInvoiceModal from "~/components/modals/PayInvoiceModal";
-import {exportHelper} from "~/utils/exportHelper";
-import {saveAs} from 'file-saver';
-import PayInvoiceButton from "~/components/PayInvoiceButton";
-import etherscan from "~/mixins/etherscan";
-import {itemPagination} from "~/utils/pagination";
+import { CustomSlider } from '~/components'
+import formatCurrency from '~/mixins/formatCurrency'
+import formatDate from '~/mixins/formatDate'
+import { mapActions, mapGetters } from 'vuex'
+import PayInvoiceModal from '~/components/modals/PayInvoiceModal'
+import { exportHelper } from '~/utils/exportHelper'
+import { saveAs } from 'file-saver'
+import PayInvoiceButton from '~/components/PayInvoiceButton'
+import etherscan from '~/mixins/etherscan'
+import { itemPagination } from '~/utils/pagination'
 
 export default {
 	layout: 'profile',
 
-	middleware: ["authRequired", "adminRequired"],
+	middleware: ['authRequired', 'adminRequired'],
 
 	mixins: [formatCurrency, formatDate, etherscan],
 
@@ -84,7 +84,7 @@ export default {
 			pagination: {
 				page: 1,
 				limit: 20,
-			}
+			},
 		}
 	},
 
@@ -98,7 +98,7 @@ export default {
 		},
 
 		items() {
-			let items = this.tableData.invoice_addresses;
+			let items = this.tableData.invoice_addresses
 
 			if (this.searchQuery.length >= 3) {
 				return itemPagination(items)({
@@ -107,11 +107,11 @@ export default {
 					query: {
 						fields: ['address'],
 						text: this.searchQuery,
-					}
+					},
 				})
 			}
 
-			return itemPagination(items)({...this.pagination, getTotal: true});
+			return itemPagination(items)({ ...this.pagination, getTotal: true })
 		},
 	},
 
@@ -128,38 +128,37 @@ export default {
 				trapFocus: true,
 				props: {
 					invoice: this.tableData,
-				}
-			});
+				},
+			})
 		},
 
 		updateTotalModal(data) {
 			this.$buefy.dialog.prompt({
 				message: `Total USDT`,
 				inputAttrs: {
-					type: "number",
-					placeholder: "Type total here",
+					type: 'number',
+					placeholder: 'Type total here',
 					value: (data.value / 1e6).toFixed(2),
 					min: 0,
-					step: "any"
+					step: 'any',
 				},
 				trapFocus: true,
-				onConfirm: value =>
-					this.updateTotalAction({total_usdt: value * 1e6, id: data.id})
-			});
+				onConfirm: (value) => this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
+			})
 		},
 
 		async updateTotalAction(data) {
 			try {
-				await this.updateTotal(data);
+				await this.updateTotal(data)
 
 				this.$buefy.toast.open({
-					message: "Total updated!",
-					type: "is-success"
+					message: 'Total updated!',
+					type: 'is-success',
 				})
 			} catch (e) {
 				this.$buefy.toast.open({
-					message: "Something went wrong!",
-					type: "is-danger"
+					message: 'Something went wrong!',
+					type: 'is-danger',
 				})
 			}
 		},
@@ -173,22 +172,21 @@ export default {
 
 		async saveAsExcelAll() {
 			const { _id: id } = this.tableData
-			const data = await this.getBillExtendedData(id);
+			const data = await this.getBillExtendedData(id)
 
-			saveAs(data, `invoice_${id}_all.xlsx`);
-		}
+			saveAs(data, `invoice_${id}_all.xlsx`)
+		},
 	},
 
 	async asyncData({ params, store }) {
-		const { id } = params;
+		const { id } = params
 
-		await store.dispatch("bills/fetchInvoiceById", id);
-	}
+		await store.dispatch('bills/fetchInvoiceById', id)
+	},
 }
 </script>
 
 <style lang="scss">
 .bill_details__container {
-
 }
 </style>

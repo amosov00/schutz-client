@@ -54,16 +54,14 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import etherscan from "~/mixins/etherscan";
-import tableMixin from "~/components/tables/ReportTables/tableMixin";
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import etherscan from '~/mixins/etherscan'
+import tableMixin from '~/components/tables/ReportTables/tableMixin'
 
 export default {
 	mixins: [formatDate, formatCurrency, etherscan, tableMixin],
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

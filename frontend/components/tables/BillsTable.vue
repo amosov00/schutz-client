@@ -13,24 +13,24 @@
 <script>
 import formatCurrency from '~/mixins/formatCurrency'
 export default {
-  mixins: [formatCurrency],
-  props: {
-    loading: {
-      type: Boolean
-    },
-    tableData: {
-      type: Array,
-      default: []
-    }
-  },
-  methods: {
-    // formatAmount(num) {
-    //   let num_parts = (num.toFixed(4) / 1e18).toString().split(".");
-    //     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    //     return num_parts.join(".");
-    // }
-  }
-};
+	mixins: [formatCurrency],
+	props: {
+		loading: {
+			type: Boolean,
+		},
+		tableData: {
+			type: Array,
+			default: [],
+		},
+	},
+	methods: {
+		// formatAmount(num) {
+		//   let num_parts = (num.toFixed(4) / 1e18).toString().split(".");
+		//     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		//     return num_parts.join(".");
+		// }
+	},
+}
 </script>
 
 <style></style>

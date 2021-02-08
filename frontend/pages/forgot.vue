@@ -1,34 +1,22 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="1"
-			:dots="1"
-			next-page="/signup"
-			prev-page="/signup"
-		>
+		<custom-slider :activeDot="1" :dots="1" next-page="/signup" prev-page="/signup">
 			<template slot="content">
 				<div class="columns is-fullheight">
 					<div class="column is-half is-flex flex-column">
 						<div class="is-size-5 mb-5">
-							{{ $t("Восстановление пароля") }}
+							{{ $t('Восстановление пароля') }}
 						</div>
 						<div class="email-input">
-							<base-input
-								type="text"
-								size="6"
-								label="E-mail:"
-								v-model="email"
-							/>
+							<base-input type="text" size="6" label="E-mail:" v-model="email" />
 						</div>
 					</div>
-					<div
-						class="column is-half is-flex is-flex-direction-column is-justify-content-space-between"
-					>
+					<div class="column is-half is-flex is-flex-direction-column is-justify-content-space-between">
 						<div class="auth-image">
 							<img src="/login_success.svg" />
 						</div>
 						<custom-button @click.native="recover">
-							{{ $t("send") }}
+							{{ $t('send') }}
 						</custom-button>
 					</div>
 				</div>
@@ -48,37 +36,37 @@
 
 <script>
 export default {
-	name: "login",
-	layout: "auth",
+	name: 'login',
+	layout: 'auth',
 	component: {},
 	data() {
 		return {
-			email: "",
-			loading: false
-		};
+			email: '',
+			loading: false,
+		}
 	},
 	methods: {
 		async recover() {
-			this.loading = true;
+			this.loading = true
 
-			if (await this.$store.dispatch("startRecover", { email: this.email })) {
+			if (await this.$store.dispatch('startRecover', { email: this.email })) {
 				this.$buefy.toast.open({
-					message: this.$i18n.t("authRecoverSuccess"),
-					type: "is-primary"
-				});
-				this.email = "";
-				this.$nuxt.$router.replace({ path: "/" });
+					message: this.$i18n.t('authRecoverSuccess'),
+					type: 'is-primary',
+				})
+				this.email = ''
+				this.$nuxt.$router.replace({ path: '/' })
 			} else {
 				this.$buefy.toast.open({
-					message: this.$i18n.t("authRecoverError"),
-					type: "is-danger"
-				});
+					message: this.$i18n.t('authRecoverError'),
+					type: 'is-danger',
+				})
 			}
 
-			this.loading = false;
-		}
-	}
-};
+			this.loading = false
+		},
+	},
+}
 </script>
 
 <style lang="scss" scoped>

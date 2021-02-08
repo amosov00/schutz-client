@@ -1,1 +1,1 @@
-export {default as metamaskSignature} from "./metamaskSignature"
+export { default as metamaskSignature } from './metamaskSignature'

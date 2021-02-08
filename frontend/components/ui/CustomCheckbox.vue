@@ -27,7 +27,7 @@ export default {
 		disabled: {
 			type: Boolean,
 			default: () => false,
-		}
+		},
 	},
 
 	data() {
@@ -37,15 +37,13 @@ export default {
 	},
 
 	created() {
-		this.checkboxValue = this.value;
+		this.checkboxValue = this.value
 	},
 }
 </script>
 
 <style lang="scss">
 .custom__checkbox_block {
-
-
 	input {
 		display: none;
 	}
@@ -59,14 +57,13 @@ export default {
 		.custom__checkbox_indicator {
 			height: 14px;
 			width: 14px;
-			border: 1px solid #164A75;
+			border: 1px solid #164a75;
 			padding: 2px;
-
 
 			.filled {
 				width: 100%;
 				height: 100%;
-				background: #164A75;
+				background: #164a75;
 			}
 		}
 

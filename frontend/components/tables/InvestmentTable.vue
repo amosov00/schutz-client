@@ -36,35 +36,35 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
 
 export default {
-  name: "investmentTable",
-  mixins: [formatDate, formatCurrency],
-  computed: {
-    investments() {
-      let filter = this.currentProduct === "All" ? null : this.currentProduct;
-      return this.$store.getters.investmentsWithFilter(filter);
-    },
-    getStatusClass() {
-      if (this.status === "online") {
-        return "status-online";
-      }
-      return "status-offline";
-    }
-  },
-  data: () => ({
-    isEmpty: false,
-    currentProduct: "All",
-    products: ["All", "NTSCD", "NTS80", "NTS81", "NTS165"]
-  }),
-  methods: {
-    setProduct(product) {
-      this.currentProduct = product;
-    }
-  }
-};
+	name: 'investmentTable',
+	mixins: [formatDate, formatCurrency],
+	computed: {
+		investments() {
+			let filter = this.currentProduct === 'All' ? null : this.currentProduct
+			return this.$store.getters.investmentsWithFilter(filter)
+		},
+		getStatusClass() {
+			if (this.status === 'online') {
+				return 'status-online'
+			}
+			return 'status-offline'
+		},
+	},
+	data: () => ({
+		isEmpty: false,
+		currentProduct: 'All',
+		products: ['All', 'NTSCD', 'NTS80', 'NTS81', 'NTS165'],
+	}),
+	methods: {
+		setProduct(product) {
+			this.currentProduct = product
+		},
+	},
+}
 </script>
 
 <style scoped></style>

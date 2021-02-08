@@ -1,11 +1,6 @@
 <template>
 	<div>
-		<custom-slider
-			:activeDot="1"
-			:dots="4"
-			:next-page="localePath('/investment')"
-			:prev-page="localePath('/partner')"
-		>
+		<custom-slider :activeDot="1" :dots="4" :next-page="localePath('/investment')" :prev-page="localePath('/partner')">
 			<template slot="content">
 				<div class="columns">
 					<div class="column mb-4 is-flex flex-column">
@@ -24,21 +19,18 @@
 						<div class="data-item">
 							<div class="icon password"></div>
 							<a class="value has-text-link" @click="openModal('password')">
-								{{ $t("Сменить пароль") }}
+								{{ $t('Сменить пароль') }}
 							</a>
 						</div>
 						<div v-if="!user.ethereum_wallet" class="data-item">
 							<div class="icon metamask"></div>
 							<a class="value has-text-link" @click="openModal('wallet')">
-								{{ $t("Добавить кошелек") }}
+								{{ $t('Добавить кошелек') }}
 							</a>
 						</div>
 						<div v-else class="data-item">
 							<div class="icon metamask"></div>
-							<div
-								class="value has-text-link"
-								@click="openModal('change-wallet')"
-							>
+							<div class="value has-text-link" @click="openModal('change-wallet')">
 								{{ user.ethereum_wallet }}
 							</div>
 						</div>
@@ -47,19 +39,16 @@
 				<div class="columns is-flex-grow-1">
 					<div class="column is-half is-flex flex-column">
 						<div>
-							<div class="is-size-5">{{ $t("Вклад USDT") }}:</div>
+							<div class="is-size-5">{{ $t('Вклад USDT') }}:</div>
 							<div class="is-size-2">{{ formatCurrency(tokenBalance) }}</div>
 							<div v-if="tokenBalance" class="closing-date">
-								{{ $t("Дата закрытия") }} <br/>
+								{{ $t('Дата закрытия') }} <br />
 								{{ closeDate }}
 							</div>
 						</div>
-						<a
-							class="has-text-link is-cursor-pointer exit-btn is-size-5"
-							@click="$authLogout"
-						>
+						<a class="has-text-link is-cursor-pointer exit-btn is-size-5" @click="$authLogout">
 							<i class="fas fa-power-off"></i>
-							{{ $t("Выйти") }}
+							{{ $t('Выйти') }}
 						</a>
 					</div>
 					<div class="column is-half is-flex is-flex-direction-column">
@@ -69,7 +58,7 @@
 							class="mb-2"
 							@click.native="openModal('funds')"
 						>
-							{{ $t("Пополнить депозит") }}
+							{{ $t('Пополнить депозит') }}
 						</custom-button>
 						<custom-button
 							v-else
@@ -77,21 +66,13 @@
 							class="mb-2"
 							@click.native="$router.push('/investment')"
 						>
-							{{ tokenBalance ? $t("Пополнить вклад") : $t("Открыть вклад") }}
+							{{ tokenBalance ? $t('Пополнить вклад') : $t('Открыть вклад') }}
 						</custom-button>
-						<custom-button
-							v-if="lastContract"
-							class="mb-2"
-							@click.native="isProlongateModalActive = true"
-						>
-							{{ $t("Продлить") }}
+						<custom-button v-if="lastContract" class="mb-2" @click.native="isProlongateModalActive = true">
+							{{ $t('Продлить') }}
 						</custom-button>
-						<custom-button
-							v-if="lastContract"
-							class="mb-2"
-							@click.native="isCancelModalActive = true"
-						>
-							{{ $t("Закрыть") }}
+						<custom-button v-if="lastContract" class="mb-2" @click.native="isCancelModalActive = true">
+							{{ $t('Закрыть') }}
 						</custom-button>
 
 						<custom-button
@@ -100,63 +81,60 @@
 							class="mb-2"
 							@click.native="openModal('close-deposit')"
 						>
-							{{ $t("Вывести") }} {{ formatCurrency(depositBalance) }}
+							{{ $t('Вывести') }} {{ formatCurrency(depositBalance) }}
 						</custom-button>
-						<div
-							v-if="!user.ethereum_wallet"
-							class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered"
-						>
-							{{ $t("Для открытия вклада необходимо добавить кошелек!") }}
+						<div v-if="!user.ethereum_wallet" class="has-text-danger mt-auto is-size-7 is-fullwidth has-text-centered">
+							{{ $t('Для открытия вклада необходимо добавить кошелек!') }}
 						</div>
 					</div>
 				</div>
 			</template>
 		</custom-slider>
 		<b-modal :active.sync="isAddWalletModalActive" has-modal-card>
-			<add-new-wallet-modal/>
+			<add-new-wallet-modal />
 		</b-modal>
 		<b-modal :active.sync="isPasswordChangeModalActive" has-modal-card>
-			<password-change/>
+			<password-change />
 		</b-modal>
 		<b-modal :active.sync="isAddFundsModalActive" has-modal-card>
-			<add-funds-modal/>
+			<add-funds-modal />
 		</b-modal>
 		<b-modal :active.sync="isWithdrawCloseDepositModalActive" has-modal-card>
-			<withdraw-and-close-deposit-modal action-type="closeDeposit"/>
+			<withdraw-and-close-deposit-modal action-type="closeDeposit" />
 		</b-modal>
 		<b-modal :active.sync="isChangeWalletModalActive" has-modal-card>
-			<ChangeWalletModal/>
+			<ChangeWalletModal />
 		</b-modal>
 		<b-modal :active.sync="isProlongateModalActive" has-modal-card>
-			<ProlongateConfirm :lastContract="lastContract"/>
+			<ProlongateConfirm :lastContract="lastContract" />
 		</b-modal>
 		<b-modal :active.sync="isCancelModalActive" has-modal-card>
-			<WithdrawConfirm :lastContract="lastContract"/>
+			<WithdrawConfirm :lastContract="lastContract" />
 		</b-modal>
 	</div>
 </template>
 
 <script>
-import InlineSvg from "vue-inline-svg";
-import PasswordChange from "~/components/PasswordChange";
-import {ValidationObserver, ValidationProvider} from "vee-validate";
-import {mapGetters} from "vuex";
-import AddNewWalletModal from "~/components/modals/AddNewWalletModal";
-import ProlongateConfirm from "~/components/modals/ProlongateConfirm";
-import WithdrawConfirm from "~/components/modals/WithdrawConfirm";
-import formatCurrency from "~/mixins/formatCurrency";
-import formatDate from "~/mixins/formatDate";
-import AddFundsModal from "~/components/modals/AddFundsModal";
-import ChangeWalletModal from "~/components/modals/ChangeWalletModal";
-import WithdrawAndCloseDepositModal from "~/components/modals/WithdrawAndCloseDepositModal";
-import {mainSliderController} from "@/utils";
-import moment from "moment";
-import {METAMASK_STATE} from "~/consts";
+import InlineSvg from 'vue-inline-svg'
+import PasswordChange from '~/components/PasswordChange'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import { mapGetters } from 'vuex'
+import AddNewWalletModal from '~/components/modals/AddNewWalletModal'
+import ProlongateConfirm from '~/components/modals/ProlongateConfirm'
+import WithdrawConfirm from '~/components/modals/WithdrawConfirm'
+import formatCurrency from '~/mixins/formatCurrency'
+import formatDate from '~/mixins/formatDate'
+import AddFundsModal from '~/components/modals/AddFundsModal'
+import ChangeWalletModal from '~/components/modals/ChangeWalletModal'
+import WithdrawAndCloseDepositModal from '~/components/modals/WithdrawAndCloseDepositModal'
+import { mainSliderController } from '@/utils'
+import moment from 'moment'
+import { METAMASK_STATE } from '~/consts'
 
 export default {
-	name: "index",
-	layout: "profile",
-	middleware: ["authRequired"],
+	name: 'index',
+	layout: 'profile',
+	middleware: ['authRequired'],
 	mixins: [formatCurrency, formatDate],
 	components: {
 		InlineSvg,
@@ -168,145 +146,137 @@ export default {
 		WithdrawAndCloseDepositModal,
 		ChangeWalletModal,
 		ProlongateConfirm,
-		WithdrawConfirm
+		WithdrawConfirm,
 	},
 	transition: mainSliderController,
 	methods: {
 		openModal(modal) {
 			switch (modal) {
-				case "close-deposit":
-					this.isWithdrawCloseDepositModalActive = true;
-					break;
-				case "wallet":
-					this.isAddWalletModalActive = true;
-					break;
-				case "password":
-					this.isPasswordChangeModalActive = true;
-					break;
-				case "funds":
-					this.isAddFundsModalActive = true;
-					break;
-				case "change-wallet":
-					this.isChangeWalletModalActive = true;
-					break;
+				case 'close-deposit':
+					this.isWithdrawCloseDepositModalActive = true
+					break
+				case 'wallet':
+					this.isAddWalletModalActive = true
+					break
+				case 'password':
+					this.isPasswordChangeModalActive = true
+					break
+				case 'funds':
+					this.isAddFundsModalActive = true
+					break
+				case 'change-wallet':
+					this.isChangeWalletModalActive = true
+					break
 			}
 		},
 		focusInput(e) {
-			e.target.select();
+			e.target.select()
 		},
 		changeEthereumAddress() {
 			if (this.copiedWallet.ethereum_wallet) {
-				this.$store.dispatch(
-					"changeEthereumAddress",
-					this.copiedWallet.ethereum_wallet
-				);
+				this.$store.dispatch('changeEthereumAddress', this.copiedWallet.ethereum_wallet)
 			}
 		},
 		async closeAgreement(id) {
-			const res = await this.$store.dispatch("closeAgreement", id);
+			const res = await this.$store.dispatch('closeAgreement', id)
 			if (!res) {
 				this.$buefy.toast.open({
-					message: this.$t("investment.errorMessage"),
-					type: "is-danger",
-					queue: false
-				});
+					message: this.$t('investment.errorMessage'),
+					type: 'is-danger',
+					queue: false,
+				})
 			}
-			await this.$store.dispatch("fetchContractAgreements");
-		}
+			await this.$store.dispatch('fetchContractAgreements')
+		},
 	},
 	computed: {
-		...mapGetters(["user", "contractAgreements"]),
-		...mapGetters("metamask", ["isConnected", "gasPrice", "mode"]),
-		...mapGetters("userContractIntegration", [
-			"allowance",
-			"tokenBalance",
-			"interestBalance",
-			"depositBalance"
-		]),
+		...mapGetters(['user', 'contractAgreements']),
+		...mapGetters('metamask', ['isConnected', 'gasPrice', 'mode']),
+		...mapGetters('userContractIntegration', ['allowance', 'tokenBalance', 'interestBalance', 'depositBalance']),
 		userFullName() {
 			return this.user ? `${this.user.first_name} ${this.user.last_name}` : null
 		},
 		metamaskActionsAreAllowed() {
-			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE;
+			return this.user.ethereum_wallet && this.mode === METAMASK_STATE.ONLINE
 		},
 		lastContract() {
 			if (this.contractAgreements && this.contractAgreements.length) {
-				return this.contractAgreements[0];
+				return this.contractAgreements[0]
 			}
-			return null;
+			return null
 		},
 		userWallet: {
 			get: function () {
-				return this.user.ethereum_wallet;
+				return this.user.ethereum_wallet
 			},
 			set: function (newValue) {
-				this.newEthereumWallet = newValue;
-			}
+				this.newEthereumWallet = newValue
+			},
 		},
 		copiedWallet() {
-			return {...this.user};
+			return { ...this.user }
 		},
 		closeDate() {
-			let dates = this.user.dates;
+			let dates = this.user.dates
 			if (!dates.length) {
-				return;
+				return
 			}
 
-			let current_time = moment().unix(Number);
-			let index = 0;
+			let current_time = moment().unix(Number)
+			let index = 0
 
-			dates = dates.filter(item => item.close_date > current_time);
+			dates = dates.filter((item) => item.close_date > current_time)
 			if (!dates.length) {
-				return;
+				return
 			}
 
-			let nearest = dates[0].close_date - current_time;
+			let nearest = dates[0].close_date - current_time
 
 			for (let i in dates) {
 				if (dates[i].close_date - current_time < nearest) {
-					index = i;
+					index = i
 				}
 			}
 			return moment(dates[index].close_date * 1000)
 				.locale(this.$i18n.locale)
-				.format("DD MMM YYYY");
-		}
+				.format('DD MMM YYYY')
+		},
 	},
 	async created() {
 		if (!this.$store.state.metamask.gasPrice) {
-			await this.$store.dispatch("metamask/getGasPrice");
+			await this.$store.dispatch('metamask/getGasPrice')
 		}
-		await this.$store.dispatch("fetchContractAgreements");
+		await this.$store.dispatch('fetchContractAgreements')
 	},
 	mounted() {
 		for (let prop in this.profile) {
-			this.profile[prop].value = this.user[prop];
+			this.profile[prop].value = this.user[prop]
 		}
 	},
 	data: () => ({
 		isProfileUpdating: false,
 		regex_telegram: /^[a-zA-Z0-9_\@]*$/,
 		profile: {
-			first_name: {value: "", label: "First name"},
-			last_name: {value: "", label: "Last name"},
-			email: {value: "", label: "Email"},
-			telegram: {value: "", label: "Telegram"},
-			ethereum_wallet_payout: {value: "", label: ""}
+			first_name: { value: '', label: 'First name' },
+			last_name: { value: '', label: 'Last name' },
+			email: { value: '', label: 'Email' },
+			telegram: { value: '', label: 'Telegram' },
+			ethereum_wallet_payout: { value: '', label: '' },
 		},
-		newEthereumWallet: "",
+		newEthereumWallet: '',
 		isPasswordChangeModalActive: false,
 		isAddWalletModalActive: false,
 		isAddFundsModalActive: false,
 		isWithdrawCloseDepositModalActive: false,
 		isChangeWalletModalActive: false,
 		isProlongateModalActive: false,
-		isCancelModalActive: false
-	})
-};
+		isCancelModalActive: false,
+	}),
+}
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/transitions/slide-fade.scss";
+@import '~@/assets/scss/transitions/slide-fade.scss';
 
 .exit-btn {
 	margin-top: auto;

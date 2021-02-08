@@ -68,14 +68,14 @@
 </template>
 
 <script>
-import CustomCheckbox from "~/components/ui/CustomCheckbox";
-import CustomSwitcher from "~/components/ui/CustomSwitcher";
-import CustomInput from "~/components/ui/CustomInput";
-import CustomButton from "~/components/ui/CustomButton";
-import {mapActions, mapGetters} from "vuex";
-import {ValidationObserver, ValidationProvider} from 'vee-validate'
-import formatDate from "~/mixins/formatDate";
-import ProlongDepositModal from "~/components/modals/ProlongDepositModal";
+import CustomCheckbox from '~/components/ui/CustomCheckbox'
+import CustomSwitcher from '~/components/ui/CustomSwitcher'
+import CustomInput from '~/components/ui/CustomInput'
+import CustomButton from '~/components/ui/CustomButton'
+import { mapActions, mapGetters } from 'vuex'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
+import formatDate from '~/mixins/formatDate'
+import ProlongDepositModal from '~/components/modals/ProlongDepositModal'
 
 export default {
 	mixins: [formatDate],
@@ -84,7 +84,7 @@ export default {
 		userId: {
 			type: String,
 			required: true,
-		}
+		},
 	},
 
 	components: {
@@ -116,23 +116,23 @@ export default {
 				last_name: '',
 				password: '',
 				repeat_password: '',
-			}
+			},
 		}
 	},
 
 	async created() {
-		this.loading = true;
+		this.loading = true
 
 		this.user = this.userDetailsById(this.userId)
 
-		if(!this.user) {
-			await this.$store.dispatch('users/getById', this.userId);
+		if (!this.user) {
+			await this.$store.dispatch('users/getById', this.userId)
 			this.user = this.userDetailsById(this.userId)
 		}
 
-		Object.assign(this.form, this.user);
+		Object.assign(this.form, this.user)
 
-		this.loading = false;
+		this.loading = false
 	},
 
 	computed: {
@@ -152,8 +152,8 @@ export default {
 		},
 
 		referralLink() {
-			return this.user.referral_link;
-		}
+			return this.user.referral_link
+		},
 	},
 
 	methods: {
@@ -165,15 +165,15 @@ export default {
 		onCopy(e) {
 			this.$buefy.toast.open({
 				message: `Copied: ${e.text}`,
-				type: "is-success"
-			});
+				type: 'is-success',
+			})
 		},
 
 		onError(e) {
 			this.$buefy.toast.open({
-				message: "Copying failed!",
-				type: "is-danger"
-			});
+				message: 'Copying failed!',
+				type: 'is-danger',
+			})
 		},
 
 		showContract(data) {
@@ -181,9 +181,9 @@ export default {
 		},
 
 		toReportsPage(userId) {
-			this.$router.push(`/admin/reports/${userId}`);
+			this.$router.push(`/admin/reports/${userId}`)
 
-			this.closeModal();
+			this.closeModal()
 		},
 
 		async showProlongDepositModal(contract) {
@@ -193,14 +193,14 @@ export default {
 				trapFocus: true,
 				props: {
 					user: this.user,
-					contract: contract
-				}
+					contract: contract,
+				},
 			})
-			modal.$on('close', async () => (await this.reloadActiveDeposits()))
+			modal.$on('close', async () => await this.reloadActiveDeposits())
 		},
 
 		async reloadActiveDeposits() {
-			await this.$axios.get(`/admin/active-deposits/${this.user._id}/`).then(resp => {
+			await this.$axios.get(`/admin/active-deposits/${this.user._id}/`).then((resp) => {
 				this.user.active_deposits = resp.data.contracts
 			})
 		},
@@ -208,23 +208,21 @@ export default {
 		async update() {
 			try {
 				if (this.form.password === '' || this.form.repeat_password === '') {
-					delete this.form.password;
-					delete this.form.repeat_password;
+					delete this.form.password
+					delete this.form.repeat_password
 				}
 
-				await this.updateUser(this.form);
-				await this.fetchUsers({ page: 1, limit: 10, });
+				await this.updateUser(this.form)
+				await this.fetchUsers({ page: 1, limit: 10 })
 
-				this.closeModal();
-			} catch (e) {
-
-			}
+				this.closeModal()
+			} catch (e) {}
 		},
 
 		closeModal() {
-			this.$modal.close();
+			this.$modal.close()
 		},
-	}
+	},
 }
 </script>
 
@@ -269,13 +267,14 @@ export default {
 		.action__text {
 			cursor: pointer;
 			user-select: none;
-			color: #30A1FF;
+			color: #30a1ff;
 			text-decoration: underline dashed;
 		}
 	}
 
 	.information__block {
-		.user_id__block, .balance__block {
+		.user_id__block,
+		.balance__block {
 			font-weight: bold;
 			font-size: 14px;
 			line-height: 19px;
@@ -301,7 +300,7 @@ export default {
 		.referral__block {
 			display: flex;
 			overflow: hidden;
-			color: #30A1FF;
+			color: #30a1ff;
 			max-width: 100%;
 			align-items: center;
 			margin-bottom: 27px;

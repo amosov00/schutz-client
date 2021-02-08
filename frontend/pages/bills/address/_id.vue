@@ -52,80 +52,79 @@
 </template>
 
 <script>
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import PayInvoiceButton from "~/components/PayInvoiceButton";
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import PayInvoiceButton from '~/components/PayInvoiceButton'
 
 export default {
-  name: "bills_address",
-  layout: "admin",
-  mixins: [formatDate, formatCurrency],
-  components: {PayInvoiceButton},
-  middleware: ["authRequired", "adminRequired"],
-  methods: {
-    updateTotalModal(data) {
-      this.$buefy.dialog.prompt({
-        message: `Total USDT`,
-        inputAttrs: {
-          type: "number",
-          placeholder: "Type total here",
-          value: (data.value / 1e6).toFixed(2),
-          min: 0,
-          step: "any"
-        },
-        trapFocus: true,
-        onConfirm: value =>
-          this.updateTotalAction({total_usdt: value * 1e6, id: data.id})
-      });
-    },
-    updateTotalAction(data) {
-      this.$store
-        .dispatch("bills/updateTotal", data)
-        .then(() =>
-          this.$buefy.toast.open({
-            message: "Total updated!",
-            type: "is-success"
-          })
-        )
-        .catch(e => {
-          this.$buefy.toast.open({
-            message: "Something went wrong!",
-            type: "is-danger"
-          });
-        });
-    },
-    toFixed4(value) {
-      return value.toFixed(4)
-    },
-    onCopy(e) {
-      this.$buefy.toast.open({
-        message: `Copied: ${e.text}`,
-        type: "is-success"
-      });
-    },
-    onError(e) {
-      this.$buefy.toast.open({
-        message: "Copying failed!",
-        type: "is-danger"
-      });
-    }
-  },
-  computed: {
-    invoiceData() {
-      return this.$store.getters["bills/addressInvoiceData"];
-    },
-    tableData() {
-      return this.$store.getters["bills/addressTransactions"];
-    }
-  },
-  asyncData({store, route}) {
-    return store.dispatch("bills/fetchDetailedAddressData", route.params.id);
-  }
-};
+	name: 'bills_address',
+	layout: 'admin',
+	mixins: [formatDate, formatCurrency],
+	components: { PayInvoiceButton },
+	middleware: ['authRequired', 'adminRequired'],
+	methods: {
+		updateTotalModal(data) {
+			this.$buefy.dialog.prompt({
+				message: `Total USDT`,
+				inputAttrs: {
+					type: 'number',
+					placeholder: 'Type total here',
+					value: (data.value / 1e6).toFixed(2),
+					min: 0,
+					step: 'any',
+				},
+				trapFocus: true,
+				onConfirm: (value) => this.updateTotalAction({ total_usdt: value * 1e6, id: data.id }),
+			})
+		},
+		updateTotalAction(data) {
+			this.$store
+				.dispatch('bills/updateTotal', data)
+				.then(() =>
+					this.$buefy.toast.open({
+						message: 'Total updated!',
+						type: 'is-success',
+					})
+				)
+				.catch((e) => {
+					this.$buefy.toast.open({
+						message: 'Something went wrong!',
+						type: 'is-danger',
+					})
+				})
+		},
+		toFixed4(value) {
+			return value.toFixed(4)
+		},
+		onCopy(e) {
+			this.$buefy.toast.open({
+				message: `Copied: ${e.text}`,
+				type: 'is-success',
+			})
+		},
+		onError(e) {
+			this.$buefy.toast.open({
+				message: 'Copying failed!',
+				type: 'is-danger',
+			})
+		},
+	},
+	computed: {
+		invoiceData() {
+			return this.$store.getters['bills/addressInvoiceData']
+		},
+		tableData() {
+			return this.$store.getters['bills/addressTransactions']
+		},
+	},
+	asyncData({ store, route }) {
+		return store.dispatch('bills/fetchDetailedAddressData', route.params.id)
+	},
+}
 </script>
 
 <style>
 .ml-2 {
-  margin-left: 10px;
+	margin-left: 10px;
 }
 </style>

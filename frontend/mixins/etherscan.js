@@ -6,6 +6,6 @@ export default {
 
 		getTxLink(txHash) {
 			return `https://etherscan.io/tx/${txHash}`
-		}
-	}
+		},
+	},
 }

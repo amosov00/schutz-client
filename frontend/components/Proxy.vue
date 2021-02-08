@@ -8,13 +8,13 @@ export default {
 		props: {
 			type: Object,
 			default: null,
-		}
+		},
 	},
 
 	render(createElement) {
 		return createElement(this.component, {
 			props: this.props,
 		})
-	}
+	},
 }
 </script>

@@ -22,11 +22,9 @@ export default {
 		disabled: {
 			type: Boolean,
 			default: () => false,
-		}
+		},
 	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

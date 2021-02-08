@@ -41,15 +41,15 @@
 </template>
 
 <script>
-import { CustomSlider, CustomButton } from '@/components';
-import {mapActions, mapGetters} from "vuex";
-import formatDate from "~/mixins/formatDate";
-import formatCurrency from "~/mixins/formatCurrency";
-import AdminDepositAccuralTable from "~/components/tables/AdminDepositAccuralTable";
-import { AdminDepositSendMail } from "~/components/modals";
-import uniqBy from 'lodash/uniqBy';
-import PassRepayModal from "~/components/modals/DepositAccuralModal";
-import {exportHelper} from "~/utils/exportHelper";
+import { CustomSlider, CustomButton } from '@/components'
+import { mapActions, mapGetters } from 'vuex'
+import formatDate from '~/mixins/formatDate'
+import formatCurrency from '~/mixins/formatCurrency'
+import AdminDepositAccuralTable from '~/components/tables/AdminDepositAccuralTable'
+import { AdminDepositSendMail } from '~/components/modals'
+import uniqBy from 'lodash/uniqBy'
+import PassRepayModal from '~/components/modals/DepositAccuralModal'
+import { exportHelper } from '~/utils/exportHelper'
 
 export default {
 	layout: 'profile',
@@ -77,7 +77,7 @@ export default {
 			pagination: {
 				page: 1,
 				limit: 20,
-			}
+			},
 		}
 	},
 
@@ -89,22 +89,27 @@ export default {
 		}),
 
 		totals() {
-			return [{
-				label: 'USDT',
-				amount: this.formatCurrency(this.allTotals.total, 'usdt'),
-			}, {
-				label: 'Users',
-				amount: this.users.length,
-			}, {
-				label: 'Payouts',
-				amount: this.formatCurrency(this.allTotals.totalPayout, 'usdt'),
-			}, {
-				label: 'Prolong',
-				amount: this.formatCurrency(this.allTotals.totalProlong, 'usdt'),
-			}, {
-				label: 'Processing',
-				amount: this.formatCurrency(this.allTotals.totalProcessing, 'usdt'),
-			},
+			return [
+				{
+					label: 'USDT',
+					amount: this.formatCurrency(this.allTotals.total, 'usdt'),
+				},
+				{
+					label: 'Users',
+					amount: this.users.length,
+				},
+				{
+					label: 'Payouts',
+					amount: this.formatCurrency(this.allTotals.totalPayout, 'usdt'),
+				},
+				{
+					label: 'Prolong',
+					amount: this.formatCurrency(this.allTotals.totalProlong, 'usdt'),
+				},
+				{
+					label: 'Processing',
+					amount: this.formatCurrency(this.allTotals.totalProcessing, 'usdt'),
+				},
 			]
 		},
 
@@ -117,7 +122,7 @@ export default {
 		},
 
 		allAgreements() {
-			return this.agreementsWithFilter({ searchQuery: '', limit: -1 });
+			return this.agreementsWithFilter({ searchQuery: '', limit: -1 })
 		},
 
 		users() {
@@ -128,9 +133,9 @@ export default {
 	watch: {
 		fromDate: {
 			handler(time) {
-				this.onDateChange(time);
-			}
-		}
+				this.onDateChange(time)
+			},
+		},
 	},
 
 	methods: {
@@ -140,29 +145,26 @@ export default {
 		}),
 
 		async onDateChange(time) {
-			const timestamp = this.getTimestamp(time);
+			const timestamp = this.getTimestamp(time)
 
-			this.loading = true;
+			this.loading = true
 
 			await this.fetchAgreements(timestamp)
 
-			this.loading = false;
+			this.loading = false
 		},
 
 		getMore() {
-			this.pagination.page += 1;
+			this.pagination.page += 1
 		},
 
 		getTimestamp(time) {
-			if(typeof time !== 'object') {
+			if (typeof time !== 'object') {
 				time = new Date(time * 1000)
 			}
 
 			const offset = this.$moment().utcOffset()
-			return this.$moment(time)
-				.add(offset, 'minutes')
-				.add(19, 'days')
-				.format('X')
+			return this.$moment(time).add(offset, 'minutes').add(19, 'days').format('X')
 		},
 
 		async openUserEmailSendModal() {
@@ -178,10 +180,10 @@ export default {
 						email,
 						id: user_id,
 					})),
-				}
+				},
 			})
 
-			await this.doSendMailing(data);
+			await this.doSendMailing(data)
 		},
 
 		async doSendMailing({ user_ids }) {
@@ -193,12 +195,24 @@ export default {
 					target_close_date_timestamp: timestamp,
 				})
 
-				this.$buefy.toast.open({ message: 'Mails sent!', type: 'is-primary', queue: false })
+				this.$buefy.toast.open({
+					message: 'Mails sent!',
+					type: 'is-primary',
+					queue: false,
+				})
 			} catch ({ response: { data: errorMessages } }) {
 				if (errorMessages.some(({ message }) => message === 'Email already sent to that close date')) {
-					return this.$buefy.toast.open({ message: 'Email to this user is already sent!', type: 'is-danger', queue: false })
+					return this.$buefy.toast.open({
+						message: 'Email to this user is already sent!',
+						type: 'is-danger',
+						queue: false,
+					})
 				} else {
-					return this.$buefy.toast.open({ message: this.$t('investment.errorMessage'), type: 'is-danger', queue: false })
+					return this.$buefy.toast.open({
+						message: this.$t('investment.errorMessage'),
+						type: 'is-danger',
+						queue: false,
+					})
 				}
 			}
 		},
@@ -209,8 +223,8 @@ export default {
 				component: PassRepayModal,
 				trapFocus: true,
 				props: {
-					fromTimestamp: this.getTimestamp(this.$moment().startOf('month').toDate())
-				}
+					fromTimestamp: this.getTimestamp(this.$moment().startOf('month').toDate()),
+				},
 			})
 		},
 
