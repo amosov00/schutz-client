@@ -100,7 +100,7 @@ export default {
 		debounce: {
 			type: [Number, String],
 			default: 0,
-		}
+		},
 	},
 
 	data() {

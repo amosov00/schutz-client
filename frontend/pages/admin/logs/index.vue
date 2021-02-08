@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { CustomSlider } from "~/components";
+import { CustomSlider } from '~/components'
 import { mapActions, mapGetters } from 'vuex'
 import LogTable from '~/components/tables/LogTable'
 
@@ -70,15 +70,18 @@ export default {
 		}),
 
 		type() {
-			return [...this.types.map(type => ({
-				text: type,
-				value: type,
-			})), { text: 'All', value: null }]
+			return [
+				...this.types.map((type) => ({
+					text: type,
+					value: type,
+				})),
+				{ text: 'All', value: null },
+			]
 		},
 
 		showMoreButton() {
 			return this.logsCount > this.pagination.page_size * this.pagination.page
-		}
+		},
 	},
 
 	methods: {
@@ -90,18 +93,18 @@ export default {
 	watch: {
 		queryParams: {
 			handler(newValue) {
-				this.pagination.page = 1;
-				this.fetchLogs({...newValue, ...this.pagination});
+				this.pagination.page = 1
+				this.fetchLogs({ ...newValue, ...this.pagination })
 			},
 			deep: true,
 		},
 
 		pagination: {
 			handler(newValue) {
-				this.fetchLogs({...newValue, ...this.queryParams});
+				this.fetchLogs({ ...newValue, ...this.queryParams })
 			},
 			deep: true,
-		}
+		},
 	},
 
 	async asyncData({ store }) {
@@ -113,6 +116,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

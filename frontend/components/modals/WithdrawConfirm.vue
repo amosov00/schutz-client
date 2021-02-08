@@ -3,15 +3,14 @@
 		<section class="modal-card-body" v-if="$i18n.locale === 'ru'">
 			<h2 class="confirm-text" v-if="!status">Вы действительно хотите закрыть вклад и вывести средства?</h2>
 			<h2 class="confirm-text" v-else>
-				Вклад будет начислен и доступен к выводу после
-				20 {{ $moment().add(1, 'month').format('MMMM') }}.
+				Вклад будет начислен и доступен к выводу после 20 {{ $moment().add(1, 'month').format('MMMM') }}.
 			</h2>
 		</section>
 		<section class="modal-card-body" v-else>
 			<h2 class="confirm-text" v-if="!status">Are you sure you want to close the deposit and withdraw funds?</h2>
 			<h2 class="confirm-text" v-else>
-				The deposit will be credited and available for withdrawal 
-				after 20 {{ $moment().locale('en').add(1, 'month').format('MMMM') }}.
+				The deposit will be credited and available for withdrawal after 20
+				{{ $moment().locale('en').add(1, 'month').format('MMMM') }}.
 			</h2>
 		</section>
 		<footer class="modal-card-foot">

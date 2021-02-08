@@ -45,7 +45,7 @@
 <script>
 import formatDate from '~/mixins/formatDate'
 import UserProfile from '~/components/modals/UserProfile'
-import isObject from 'lodash/isObject';
+import isObject from 'lodash/isObject'
 
 export default {
 	mixins: [formatDate],
@@ -64,7 +64,7 @@ export default {
 		showMore: {
 			type: Boolean,
 			default: true,
-		}
+		},
 	},
 
 	methods: {
@@ -78,16 +78,14 @@ export default {
 		},
 
 		normalizeObject(object) {
-			return Object.entries(object);
+			return Object.entries(object)
 		},
 
 		isObject(value) {
-			return isObject(value);
-		}
-	}
+			return isObject(value)
+		},
+	},
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
